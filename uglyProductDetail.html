@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <!-- jQuery 라이브러리 -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    
+    <style>
+        div * {box-sizing: border-box;}
+
+        .all {
+            margin: auto;
+            width: 1400px;
+        }
+
+        /* --------------------top주문상세란-------------------- */
+
+        .item p {
+            font-size: 18px;
+            margin: 0;
+        }
+        .item .sale {
+            color: #ff6741;
+            font-size: 18px;
+            font-weight: bold;
+        }
+        .item .originPrice {
+            text-decoration: line-through;
+            color: gray;
+            font-size: 18px;
+            font-weight: bold;
+            padding-right: 10px;
+        }
+        .item .salePrice {
+            color: black;
+            font-size: 18px;
+            font-weight: bold;
+        }
+        table tr {
+            height: 30px;
+        }
+        
+        select {
+            width: 380px;
+            padding: .8em .5em;
+            border: 1px solid #dadada;
+            border-radius: 8px;
+            font-family: inherit;
+            background: url('https://img1.daumcdn.net/thumb/R1280x0/?scode=mtistory2&fname=https%3A%2F%2Ft1.daumcdn.net%2Fcfile%2Ftistory%2F99761B495C84AA8716') no-repeat 95% 50%;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+        }
+        select::-ms-expand {
+            display: none;
+        }
+
+        .order_btn .cart{
+            width: 270px;
+            height: 45px;
+            border: 1px solid #ff6741;
+            border-radius: 5px;
+            background-color: white;
+            color: #ff6741;
+            margin-top: 15px;
+            margin-right: 5px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .order_btn .cart:hover {
+            border: 2px solid #ff6741;
+        }
+        .order_btn .order{
+            width: 270px;
+            height: 45px;
+            border: 1px solid #ff6741;
+            border-radius: 5px;
+            background-color: #ff6741;
+            color: white;
+            margin-top: 15px;
+            margin-left: 5px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .order_btn .order:hover {
+            filter: brightness(0.9);
+        }
+
+        /* --------------------상품상세글-------------------- */
+
+        .move button {
+            width: 32.8%;
+            height: 45px;
+            padding-bottom: 15px;
+            font-size: 16px;
+            font-weight: bold;
+            background-color: white;
+            color: gray;
+            border: none;
+            border-bottom: 4px solid #dadada;
+        }
+        .move button:hover {
+            color: rgb(68, 68, 68);
+            border-bottom: 4px solid #ff6741;
+            cursor: pointer;
+        }
+
+        hr {border: 1px solid #dadada;}
+
+        .delivery h1 {
+            margin-top: 70px;
+        }
+        .delivery .delivery_day {
+            height: 100px;
+            background-color: #ff6741;
+            color: white;
+            font-weight: bold;
+            text-align: center;
+            line-height: 100px;
+        }
+        
+        .productDetail h1 {   
+            text-align: center;
+            margin-top: 100px;
+            color: #ff6741;
+        }
+        .productItem {
+            margin: 50px 0;
+        }
+        .productItem img {
+            width: 90%;
+        }
+        .productItem p {
+            width: 90%;
+            font-size: 15px;
+            text-align: left;
+            line-height: 30px;
+        }
+        .productItem h2 {
+            text-align: left;
+            width: 90%;
+        }
+
+        /* --------------------댓글-------------------- */
+        .review {
+            margin: 100px 0;
+        }
+        .review h1 {
+            color: #ff6741;
+            text-align: left;
+            margin-left: 140px;
+            margin-bottom: 20px;
+        }
+        .review .review_content {
+            height: 45px;
+            border: 1px solid #dadada;
+            border-radius: 5px;
+            margin-top: 4px;
+            cursor: pointer;
+        }
+        .review .review_btn {
+            width: 100%;
+            height: 45px;
+            border: none;
+            border-radius: 5px;
+            color: gray;
+            cursor: pointer;
+        }
+        
+
+        /* --------------------관련레시피-------------------- */
+        #recipeAll {
+            width: 80%;
+        }
+        #recipeAll h1 {
+            color: #ff6741;
+            text-align: left;
+            margin-bottom: 20px;
+        }
+        .recipe {
+            /* border: 1px solid red; */
+            float: left;
+            width: 23%;
+            margin: 0 10px;
+            margin-bottom: 100px;
+            cursor: pointer;
+        }
+        .recipeImg {
+            width: 150px;
+        }
+        .recipeImg:hover {
+          filter: brightness(0.9);
+        }
+        .recipe h4 {
+            margin: 5px 0;
+            font-size: 14px;
+        }
+        .recipe span {
+            font-size: 13px;
+           
+        }
+        .recipeStyle {
+            color: #ff6741;
+            font-weight: bold;
+        }
+        
+        /* --------------------위로가기 버튼-------------------- */
+        .btn_gotop {
+            display:none;
+            position:fixed;
+            bottom:30px;
+            right:50px;
+            z-index:999;
+            cursor:pointer;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="all" align="center">
+
+        <!-- 상단으로 이동하기 버튼 -->
+        <div class="btn_gotop">
+            <img width="50px" src="https://blog.kakaocdn.net/dn/s6jL5/btqHsbU8DSJ/yBeqQLZS4Kg866xEHCvA20/img.png" >
+        </div>
+
+        <div class="container" style="width: 80%">
+            
+            <div class="top">
+
+                <div style="float: left; text-align: center;">
+                    <img style="width: 450px; height: 450px;" alt="productPhoto" src="https://all-to-delicious.s3.ap-northeast-2.amazonaws.com/atd/a2dcorp.co.kr/admin/product/detail/product_image/fad4d9eb88024db2bd699900e152a9eb.png">
+                </div>
+    
+
+                <div style="width: 50%; float: right;" >
+
+                    <div class="form-group" style="text-align: left;">
+                        <h2 id="product_title">전북 고창 못난이 무농약 햇 감자 3kg</h2>
+                        <h4 id="product_exp">크기가 작아 버려질 위기에 처한 못난이 무농약 햇 감자입니다.</h4>
+                    </div>
+
+                    <div class="item" style="text-align: left;">
+                        <span class="sale">44%</span>
+                        <span class="originPrice">38,000</span>
+                        <span class="salePrice">21,000</span>
+                        <span class="salePrice">원</span>
+                    </div>
+                    <br><hr>
+                    
+                    <form action="">
+                        <div class="form-group" style="text-align: left;">
+                            <table>
+                                <tr>
+                                    <th width="100px">생산지</th>
+                                    <td>전북 고창</td>
+                                </tr>
+                                <tr>
+                                    <th>생산 일자</th>
+                                    <td>2023-10-06</td>
+                                </tr>
+                                <tr>
+                                    <th>배송비</th>
+                                    <td>2500<span>원</span></td>
+                                </tr>
+                                <tr>
+                                    <th></th>
+                                    <td style="color: gray; font-size: 12px;">도서 or 산간 지역 추가 3,000원 부과</td>
+                                </tr>
+                                <tr>
+                                    <th>구매수량</th>
+                                    <td>
+                                        <select class="form-control" id="select_count">
+                                            <c:forEach begin="1" end="${productInfo.stock}" var="count">
+                                                <!-- <option>${stock}</option> -->
+                                                <option>1</option>
+                                                <option>2</option>
+                                                <option>3</option>
+                                            </c:forEach>
+                                        </select>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                        
+                        <br><hr>
+                        
+                        <div class="order_btn">
+                            <div style="text-align: center;">
+                                <button class="cart" type="button">장바구니</button>
+                                <button class="order" type="submit">주문하기</button>
+                            </div>
+                        </div>
+                            
+                    </form>
+                </div>
+                
+            </div>
+
+            <div>
+                <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
+            </div>
+            
+            <div class="move" align="left">
+                <button id="btn1">상세정보</button>
+                <button id="btn2">후기</button>
+                <button id="btn3">관련 레시피</button>
+            </div>
+            
+            <!-- 상세정보(배송일정, 상세정보, 후기(댓글), 관련레시피) -->
+            
+            <div class="delivery" align="left">
+                <h1>배송 일정</h1>
+                <p class="delivery_day">발송 요일 : 월, 금 출고</p>
+                <p>📦 주문 마감 시간 : 발송 전일 오후 5시</p>
+                <p>📦 발송 요일이 공휴일일 경우 공휴일 다음날 출고</p>
+                <hr>
+                <p style="color: gray; font-size: 13px;">* 순차 출고 안내 : 공휴일 또는 연휴가 지나고 순차 출고됩니다. 조금만 기다려주세요!</p>
+            </div>
+            
+            <div class="productDetail" >
+                
+                <h1>'전북 고창 못난이 무농약 햇 감자'</h1>
+
+                <div class="productItem">
+                    <img src="https://uglyus.s3.ap-northeast-2.amazonaws.com/assets/ustore/items/57minipotato/02_xZqQnq8KW.jpg">    
+                    <p>
+                        건강한 땅의 힘, 친환경 자재로 길렀어요. 유기 생물과 지렁이 등 양질의 토양을 만들어주는 미생물들이 살기 좋은 여건을 만들기 위해 제초제도 사용하지 않아요. <br>
+                        쑥쑥 자라나는 잡초를 모두 사람의 손으로 제거하는, 건강하고 안전한 먹거리를 위한 수고로움이 담긴 감자랍니다.
+                    </p>
+                </div>
+                <div class="productItem">
+                    <img src="https://uglyus.s3.ap-northeast-2.amazonaws.com/assets/ustore/items/57minipotato/03_7AbUzykOz.jpg">    
+                    <p>
+                        영양분과 미네랄이 풍부한 붉은 황토에서 자라 맛도 영양도 좋은 감자인 다양한 일반 감자 품종 수미, 두백, 대지마 등이 시기에 따라 변경되어 들어가요. 은은한 단맛이 일품이랍니다.
+                    </p>
+                </div>
+                <div class="productItem">
+                    <img src="https://uglyus.s3.ap-northeast-2.amazonaws.com/assets/ustore/items/57minipotato/04_H2eXuvtrq.jpg">    
+                    <p>
+                        50g ~ 200g 사이의 감자들을 크기 무선별하여 보내드려요.<br> 작은 감자는 손질없이 껍질째 먹고 큰 감자는 요리에 사용하거나 냄비에 쪄서 바로 드셔보세요. <br>
+                        20~50g 사이의 올망졸망 조림을 해먹기 좋은 감자들을 크기 무선별로 보내드려요.<br> 조림용 감자는 껍질 손질 없이 감자조림이나 구이로 맛나게 즐겨보세요!
+                    </p>
+                </div>
+                
+                <div class="productItem">
+                    <h2>이렇게 보내드려요</h2>
+                    <img src="https://uglyus.s3.ap-northeast-2.amazonaws.com/assets/ustore/items/57minipotato/05_-I5gVQZO1v.jpg">    
+                    <p>
+                        • 흙묻은 상태 그대로 신선하게 보내드립니다. <br>
+                        • 종이박스에 감자만 담아 보내드려요. <br>
+                        • <50~150g 세가지 제철감자 4.5kg>에는 일반감자, 서홍감자, 홍선감자 세가지가 각각 1.5kg씩 담깁니다. <br>
+                    </p>
+                </div>
+                <div class="productItem">
+                    <h2>이렇게 보관하세요</h2>
+                    <img src="https://uglyus.s3.ap-northeast-2.amazonaws.com/assets/ustore/items/57minipotato/06__BrJn1T9vx.jpg">    
+                    <p>
+                        🥔 수령 즉시 반드시 반나절 정도 그늘에 말려주신 다음 냉장 보관 해주세요. <br>
+                        박스 내부의 습기는 배송중 생기는 온도차에 의해 자연스럽게 발생되는 것입니다. 수령 즉시 그늘진 곳에 12시간 정도 건조시켜주신 후 냉장 보관해주시면 됩니다. <br>
+                        🥔 상온에 보관하면 싹이 빨리 자라요. <br>
+                        감자는 상온 보관시 싹이 빨리 자라고, 햇빛을 받으면 초록색으로 변하는 녹변 현상이 발생해요. 감자를 빠르게 소진 예정이라 상온 보관을 하신다면 2~3도 사이 그늘지고 서늘한 곳에 신문지 등을 덮어 보관해주세요.
+                    </p>
+                </div>
+
+            </div>
+                
+                
+        </div>
+
+
+        
+        <!-- 댓글 기능은 나중에 ajax 배우고 접목시킬예정! 우선은 화면구현만 해놓음 -->
+        <div class="review">
+            <h1 id="reviewArea">상품 후기</h1>
+            <table class="table" align="center" width="80%" style="padding-left: 20px;">
+                <thead>
+                    <tr>
+                        <th colspan="2">
+                            <textarea class="review_content" name="" id="content" cols="90" rows="2" style="resize:none; width:100%"></textarea>
+                        </th>
+                        <th style="vertical-align: middle">
+                            <button class="review_btn">등록하기</button>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th>user02</th>
+                        <td>잘받았습니다! 너무 맛있어요</td>
+                        <td align="center">2023-03-03</td>
+                    </tr>
+                    <tr>
+                        <th>user01</th>
+                        <td>막상 받아보니까 하나도 못생기지 않았어요ㅎㅎ</td>
+                        <td align="center">2023-01-08</td>
+                    </tr>
+                    <tr>
+                        <th>admin</th>
+                        <td>못생기면 어떻누~ 맛만 좋고만~ㅋㅋㅋ</td>
+                        <td align="center">2022-12-02</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+
+        <!-- 관련 레시피 -->
+        <div id="recipeAll">
+            <h1>해당 상품 관련 레시피</h1>
+            <div class="recipe" align="left">
+                <div class="recipeImg">
+                    <img width="255px" src="https://all-to-delicious.s3.ap-northeast-2.amazonaws.com/atd/a2dcorp.co.kr/earth/recipe/thumbnail/pc/20220123/b9742c9305db4cbcbfee12b8e1699937.jpg">
+                </div>
+                <div class="recipeInfo">
+                    <span class="recipeStyle">난이도 : </span> 
+                    <span>누구나</span>
+                    <span>&nbsp; | &nbsp;</span>
+                    <span class="recipeStyle">소요시간 : </span>
+                    <span>15</span>
+                    <span>분이내</span>
+                    <h4>간만 잘 맞추면 맛은 보장! 감자양파국</h4>
+                </div>
+            </div>
+            <div class="recipe" align="left">
+                <div class="recipeImg">
+                    <img width="255px" src="https://all-to-delicious.s3.ap-northeast-2.amazonaws.com/atd/a2dcorp.co.kr/earth/recipe/thumbnail/pc/20220123/15a5a1c5cc1c407ea3d8fa1968b910dd.jpg">
+                </div>
+                <div class="recipeInfo">
+                    <span class="recipeStyle">난이도 : </span> 
+                    <span>누구나</span>
+                    <span>&nbsp; | &nbsp;</span>
+                    <span class="recipeStyle">소요시간 : </span>
+                    <span>15</span>
+                    <span>분이내</span>
+                    <h4 width="100%">간만 잘 맞추면 맛은 보장! 감자양파국</h4>
+                </div>
+            </div>
+            <div class="recipe" align="left">
+                <div class="recipeImg">
+                    <img width="255px" src="https://all-to-delicious.s3.ap-northeast-2.amazonaws.com/atd/a2dcorp.co.kr/earth/recipe/thumbnail/pc/20220203/131897533e5f42aa836b56513a26e631.jpg">
+                </div>
+                <div class="recipeInfo">
+                    <span class="recipeStyle">난이도 : </span> 
+                    <span>누구나</span>
+                    <span>&nbsp; | &nbsp;</span>
+                    <span class="recipeStyle">소요시간 : </span>
+                    <span>15</span>
+                    <span>분이내</span>
+                    <h4>간만 잘 맞추면 맛은 보장! 감자양파국</h4>
+                </div>
+            </div>
+            <div class="recipe" align="left">
+                <div class="recipeImg">
+                    <img width="255px" src="https://all-to-delicious.s3.ap-northeast-2.amazonaws.com/atd/a2dcorp.co.kr/earth/recipe/thumbnail/pc/20220123/c6f63529e4184603bfca715c94be002a.jpg">
+                </div>
+                <div class="recipeInfo">
+                    <span class="recipeStyle">난이도 : </span> 
+                    <span>누구나</span>
+                    <span>&nbsp; | &nbsp;</span>
+                    <span class="recipeStyle">소요시간 : </span>
+                    <span>15</span>
+                    <span>분이내</span>
+                    <h4>간만 잘 맞추면 맛은 보장! 감자양파국</h4>
+                </div>
+            </div>
+
+        </div>
+            
+    </div>
+
+
+
+
+
+
+    <script>
+        // 후기(댓글)로 이동
+        const btn2 = document.getElementById('btn2');
+        const reviewArea = document.getElementById('reviewArea');
+    
+        btn2.addEventListener('click', () => {
+            window.scrollBy({top: reviewArea.getBoundingClientRect().top, behavior: 'smooth'});
+        });
+
+        // 관련 레시피로 이동
+        const btn3 = document.getElementById('btn3');
+        const recipeAll = document.getElementById('recipeAll');
+    
+        btn3.addEventListener('click', () => {
+            window.scrollBy({top: recipeAll.getBoundingClientRect().top, behavior: 'smooth'});
+        });
+
+        // 상단으로 이동
+        $(window).scroll(function(){
+            if ($(this).scrollTop() > 300){
+                $('.btn_gotop').show();
+            } else{
+                $('.btn_gotop').hide();
+            }
+        });
+        $('.btn_gotop').click(function(){
+            $('html, body').animate({scrollTop:0},400);
+            return false;
+        });
+    </script>
+
+    
+</body>
+</html>
