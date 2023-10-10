@@ -1,0 +1,59 @@
+DROP TABLE QACATEGORY; --못난이 1대1 문의 카테고리
+DROP TABLE QA; -- 못난이 1대1 문의
+DROP TABLE NOTICE; -- 못난이 공지사항
+
+DROP SEQUENCE SEQ_QA_NO;
+
+--------------------------QA CATEGORY 관련 -----------
+
+CREATE TABLE QACATEGORY(
+    
+);
+
+
+---------------------------- QA 관련 ------------------
+
+CREATE TABLE QA(
+    QA_NO NUMBER PRIMARY KEY,
+    QA_CATEGORY VARCHAR2(500) NOT NULL,
+    FOREIGN KEY (USER_ID) REFERENCES MEMBER (USER_ID),
+    A_ID VARCHAR2(50) NOT NULL,
+    Q_TITLE VARCHAR2(500) NOT NULL,
+    Q_CONTENT VARCHAR2(4000) NOT NULL,
+    A_CONTENT VARCHAR2(4000) NOT NULL,
+    ENROLL_DATE DATE DEFAULT SYSDATE,
+    STATUS VARCHAR2(5) DEFAULT 'Y' CHECK (STATUS IN('Y', 'N')) 
+);
+
+COMMENT ON COLUMN QA.QA_NO IS '글번호';
+COMMENT ON COLUMN QA.QA_CATEGORY IS '카테고리';
+COMMENT ON COLUMN QA.A_ID IS '답변자 아이디';
+COMMENT ON COLUMN QA.Q_TITLE IS '질문글 제목';
+COMMENT ON COLUMN QA.Q_CONTENT IS '질문글 내용';
+COMMENT ON COLUMN QA.A_CONTENT IS '답변글 내용';
+COMMENT ON COLUMN QA.ENROLL_DATE IS '작성일';
+COMMENT ON COLUMN QA.STATUS IS '상태';
+
+CREATE SEQUENCE SEQ_QA_NO NOCACHE;
+
+INSERT
+  INTO QA
+VALUES (SEQ_QA_NO.NEXTVAL,1,'mrcho','admin','제품 파손시 보상에 관련하여 질문있습니다.','제품이 손상된채로 배송이 왔는데 이에관련한 보상정책이 궁금합니다.','보상정책관련한 내용은 자주묻는질문에 답변이 있습니다. 이 점 참고하여 주세요!','20231008',DEFAULT);
+INSERT
+  INTO QA
+VALUES (SEQ_QA_NO.NEXTVAL,2,'mrcho','admin','배송 관련하여 질문있습니다.','배송시에 신선도 관련하여 질문사항있습니다.','저희 못난이 맛난이는 신선도를 위하여 얼음팩을 빵빵하게 넣으드리고 있습니다.','20231008',DEFAULT);
+INSERT
+  INTO QA
+VALUES (SEQ_QA_NO.NEXTVAL,3,'mrcho','admin','구독 관련하여 질문있습니다.','구독 장기이용시 혜택이 있나요?','구독 관련글을 참조해주세요!','20231008',DEFAULT);
+
+--------------------공지사항 관련--------------------
+CREATE TABLE NOTICE(
+    NOTICE_NO NUMBER PRIMARY KEY,
+    NOTICE_WRITER VARCHAR2(50) NOT NULL,
+    NOTICE_TITLE VARCHAR2(500) NOT NULL,
+    NOTICE_CONTENT VARCHAR2(4000) NOT NULL,
+     STATUS VARCHAR2(5) DEFAULT 'Y' CHECK (STATUS IN('Y', 'N'))
+);
+
+COMMENT
+
