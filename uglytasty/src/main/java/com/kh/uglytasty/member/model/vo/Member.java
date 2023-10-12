@@ -16,10 +16,14 @@ public class Member {
 	 private String userId;
 	 private String userPwd;
 	 private String userName;
-	 private String phone;
 	 private String email;
-	 private String address;
+	 private String phone;
+	 private String addressBase;
+	 private String addressDetail;
 	 private String status;
 	 private String subscribe;
+	 private String provider;
+	 private String accessToken;
+	 private String refreshToken;
 
 }

@@ -9,6 +9,22 @@
 	<!-- *유의사항 : 미리 등록해두려면 해당 클래스가 진짜!! 실제로!! 존재하고 있는 상태여야함!* -->
 	<typeAliases>
 		<typeAlias type="com.kh.uglytasty.member.model.vo.Member" alias="Member"/>
+		<typeAlias type="com.kh.uglytasty.delivery.model.vo.Delivery" alias="Delivery"/>
+		<typeAlias type="com.kh.uglytasty.notice.model.vo.Notice" alias="Notice"/>
+		<typeAlias type="com.kh.uglytasty.order.model.vo.Order" alias="Order"/>
+		<typeAlias type="com.kh.uglytasty.order.model.vo.Cart" alias="Cart"/>
+		<typeAlias type="com.kh.uglytasty.order.model.vo.OrderStatus" alias="OrderStatus"/>
+		<typeAlias type="com.kh.uglytasty.product.model.vo.Product" alias="Product"/>
+		<typeAlias type="com.kh.uglytasty.product.model.vo.Review" alias="Review"/>
+		<typeAlias type="com.kh.uglytasty.product.model.vo.Attachment" alias="Attachment"/>
+		<typeAlias type="com.kh.uglytasty.qa.model.vo.QA" alias="QA"/>
+		<typeAlias type="com.kh.uglytasty.recipe.model.vo.Recipe" alias="Recipe"/>
+		<typeAlias type="com.kh.uglytasty.recipe.model.vo.Ingredient" alias="Ingredient"/>
+		<typeAlias type="com.kh.uglytasty.recipe.model.vo.Reply" alias="Reply"/>
+		<typeAlias type="com.kh.uglytasty.recipe.model.vo.Liked" alias="Liked"/>
+		<typeAlias type="com.kh.uglytasty.subscribe.model.vo.Subscribe" alias="Subscribe"/>
+		<typeAlias type="com.kh.uglytasty.subscribe.model.vo.SubHistory" alias="SubHistory"/>
+		<typeAlias type="com.kh.uglytasty.subscribe.model.vo.Subcomp" alias="Subcomp"/>
 	</typeAliases>
 	
 	<!-- 
