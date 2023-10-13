@@ -19,12 +19,12 @@
 		<typeAlias type="com.kh.uglytasty.product.model.vo.Attachment" alias="Attachment"/>
 		<typeAlias type="com.kh.uglytasty.qa.model.vo.QA" alias="QA"/>
 		<typeAlias type="com.kh.uglytasty.recipe.model.vo.Recipe" alias="Recipe"/>
-		<typeAlias type="com.kh.uglytasty.recipe.model.vo.Ingredient" alias="Ingredient"/>
+		<typeAlias type="com.kh.uglytasty.recipe.model.vo.Ingredients" alias="Ingredients"/>
 		<typeAlias type="com.kh.uglytasty.recipe.model.vo.Reply" alias="Reply"/>
 		<typeAlias type="com.kh.uglytasty.recipe.model.vo.Liked" alias="Liked"/>
 		<typeAlias type="com.kh.uglytasty.subscribe.model.vo.Subscribe" alias="Subscribe"/>
 		<typeAlias type="com.kh.uglytasty.subscribe.model.vo.SubHistory" alias="SubHistory"/>
-		<typeAlias type="com.kh.uglytasty.subscribe.model.vo.Subcomp" alias="Subcomp"/>
+		<typeAlias type="com.kh.uglytasty.subscribe.model.vo.SubComp" alias="Subcomp"/>
 	</typeAliases>
 	
 	<!-- 
