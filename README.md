@@ -1,7 +1,16 @@
-# 못난이맛난이 UGLYTASTY
-![못난이맛난이logo](https://github.com/squidsquad6/uglytasty/assets/145431108/f4b8c61c-9653-4845-b87c-551f11857bef)
-<img src="https://github.com/squidsquad6/uglytasty/assets/145431108/f4b8c61c-9653-4845-b87c-551f11857bef"  width="500" height="100"/>
+# 못난이맛난이 UGLYTASTY 🥕🥦🥔🍎
+<img src="https://github.com/squidsquad6/uglytasty/assets/145431108/f4b8c61c-9653-4845-b87c-551f11857bef"  width="510" height="120"/>
 
-### 프로젝트 설명
-못난이 농산물 판매 및 레시피 제공으로 판매자와 소비자가 일석이조를 누리는 사이트
+### 🖥 프로젝트 설명
+못난이 농산물 판매로 환경, 판매자, 소비자 모두에게 순기능을 발생시키기고 구매한 채소를 활용할 수 있는 레시피를 제공하여 소비자로 하여금 그러한 순기능을 더욱 극대화할 수 있는 웹 사이트 구현
+
+### 💡 주요 기능
+- 소셜 로그인(카카오, 네이버, 구글)
+- 못난이 농산물 구독 서비스
+- 못난이 농산물 단품 마켓
+- 구독 서비스 및 상품 결제를 위한 결제 API
+- 택배사 API 활용 운송 관리
+- 주소 찾기 API
+- 못난이 농산물 활용 레시피 게시판, 댓글
+- 고객 센터(1:1 문의, 공지사항)
 
