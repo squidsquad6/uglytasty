@@ -21,9 +21,13 @@
 		      , user_name
 		      , phone
 		      , email
-		      , address
+		      , address_base
+		      , address_detail
 		      , status
 		      , subscribe
+		      , provider
+		      , access_token
+		      , refresh_token
 		  from  member
 		 where status = 'Y'
 		   and user_id = #{userId}
