@@ -2,7 +2,7 @@
 <img src="https://github.com/squidsquad6/uglytasty/assets/145431108/f4b8c61c-9653-4845-b87c-551f11857bef"  width="500" height="120"/>  
 
 ### 🗂 Report
-<img src="https://github.com/squidsquad6/uglytasty/assets/134485735/ce85b8de-4a37-464b-8562-335339c8f100" width="400" height="600"/>
+<img src="https://github.com/squidsquad6/uglytasty/assets/134485735/ce85b8de-4a37-464b-8562-335339c8f100" width="600" height="900"/>
 <img src="https://github.com/squidsquad6/uglytasty/assets/134485735/84f2b922-dfe3-4289-9d6f-58a421ab9cd3" width="" height=""/>
 <img src="https://github.com/squidsquad6/uglytasty/assets/134485735/4ba4ff79-0604-4c72-93ec-20831f1687ab" width="" height=""/>
 <img src="https://github.com/squidsquad6/uglytasty/assets/134485735/a06fe31c-d3cb-4400-b645-dd30b1da3747" width="" height=""/>
