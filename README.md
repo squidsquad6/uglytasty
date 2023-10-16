@@ -1,6 +1,21 @@
 # 못난이맛난이 UGLYTASTY 🥕🥦🥔🍎
 <img src="https://github.com/squidsquad6/uglytasty/assets/145431108/f4b8c61c-9653-4845-b87c-551f11857bef"  width="500" height="120"/>  
 
+### 🗂 Report
+![파이널 6조 B급탈출-못난이맛난이 최종 보고서_page-0014](https://github.com/squidsquad6/uglytasty/assets/134485735/df9ab679-59ce-44e3-b072-2e5643d4e4e7)
+![파이널 6조 B급탈출-못난이맛난이 최종 보고서_page-0013](https://github.com/squidsquad6/uglytasty/assets/134485735/50248ab0-ea12-49d2-aebc-f1ad0ebe61ea)
+![파이널 6조 B급탈출-못난이맛난이 최종 보고서_page-0012](https://github.com/squidsquad6/uglytasty/assets/134485735/b8474a18-a5d3-423b-9330-48cee38c2d56)
+![파이널 6조 B급탈출-못난이맛난이 최종 보고서_page-0011](https://github.com/squidsquad6/uglytasty/assets/134485735/3f19c34a-486f-40ce-bbff-a3ec77149f41)
+![파이널 6조 B급탈출-못난이맛난이 최종 보고서_page-0010](https://github.com/squidsquad6/uglytasty/assets/134485735/57c7ffc5-421c-4934-8240-add5d58dd8e1)
+![파이널 6조 B급탈출-못난이맛난이 최종 보고서_page-0009](https://github.com/squidsquad6/uglytasty/assets/134485735/2ad9f903-874d-448f-8359-012fdf825213)
+![파이널 6조 B급탈출-못난이맛난이 최종 보고서_page-0008](https://github.com/squidsquad6/uglytasty/assets/134485735/b93be36e-b374-42d6-af5d-b2496ab67469)
+![파이널 6조 B급탈출-못난이맛난이 최종 보고서_page-0007](https://github.com/squidsquad6/uglytasty/assets/134485735/88bb93bc-1fd1-4f57-a3ca-3431806866c7)
+![파이널 6조 B급탈출-못난이맛난이 최종 보고서_page-0006](https://github.com/squidsquad6/uglytasty/assets/134485735/7c6cf7bd-9556-4a0e-85ae-87bb2c056b12)
+![파이널 6조 B급탈출-못난이맛난이 최종 보고서_page-0005](https://github.com/squidsquad6/uglytasty/assets/134485735/a06fe31c-d3cb-4400-b645-dd30b1da3747)
+![파이널 6조 B급탈출-못난이맛난이 최종 보고서_page-0004](https://github.com/squidsquad6/uglytasty/assets/134485735/4ba4ff79-0604-4c72-93ec-20831f1687ab)
+![파이널 6조 B급탈출-못난이맛난이 최종 보고서_page-0003](https://github.com/squidsquad6/uglytasty/assets/134485735/84f2b922-dfe3-4289-9d6f-58a421ab9cd3)
+![파이널 6조 B급탈출-못난이맛난이 최종 보고서_page-0002](https://github.com/squidsquad6/uglytasty/assets/134485735/ce85b8de-4a37-464b-8562-335339c8f100)
+
 
 
 ### 🖥 About Project
