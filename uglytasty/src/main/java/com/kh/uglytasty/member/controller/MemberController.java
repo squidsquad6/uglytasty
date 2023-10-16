@@ -20,10 +20,10 @@ public class MemberController {
 	@RequestMapping("login.me")
 	public String loginMember(Member m, Model model, HttpSession session) {
 		
-		System.out.println("전" + m);
+		//System.out.println("전" + m);
 		
 		Member loginMember = mService.loginMember(m);
-		System.out.println("후" + loginMember);
+		//System.out.println("후" + loginMember);
 			
 		if(loginMember == null) { 
 			// 로그인 실패 => 에러메세지 requestScope에 담아서 에러 페이지(/WEB-INF/views/common/errorPage.jsp)로 포워딩
