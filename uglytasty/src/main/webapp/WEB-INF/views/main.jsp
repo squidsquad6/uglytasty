@@ -9,7 +9,7 @@
 </head>
 <body>
 
-	<jsp:forward page="member/loginMemberForm.jsp"/>
+	<jsp:include page="common/header.jsp"/>
 
 </body>
 </html>
