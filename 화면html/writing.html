@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        div * {box-sizing: border-box;}
+        
+        .container{
+            margin: auto;
+            width: 1000px;
+            height:800px;
+            
+        }
+        input {
+            background-color: #dedede;
+            color: black;
+        }
+        input::placeholder{
+            color:black;
+        }
+        /* 제목 부분 */
+        .content_1{
+            width:1000px;
+            height:70px;   
+            
+            border-bottom: 1px solid gray;
+            margin-bottom: 50px;
+        }
+        .title_1{
+            width:100px;
+            height: 50px;
+            
+            float:left;
+            
+            
+        }
+        .title_2{
+            width:500px;
+            height: 50px;
+            
+            float: left;;
+            
+        }
+        #title{
+            height:40px;
+            width: 900px;
+            
+            
+        }
+
+      
+        
+        /*카테고리 부분*/
+        
+        .category_2{
+            width:1000px;
+            height:50px;
+            border-bottom: 1px solid gray;
+        }
+
+        .category{
+            height: 30px;
+        }
+        /* 내용 부분*/
+        .content_3{
+            margin-top: 30px;
+        }
+
+        textarea {
+            resize: none;
+            border-bottom: 1px solid black;
+            font-size: 20px;
+            position: relative;
+            width: 900px;
+            height:300px;
+        }
+        
+        .span1{
+            position: absolute;
+            bottom: 20.5rem;
+            right: 24rem;
+        }
+        
+        /* 버튼 부분*/
+        .content_4{
+            margin-top:40px;
+            margin-left: 300px;
+        }
+
+        #cancel{
+            width: 200px;
+            height: 60px;
+            background-color: white;
+            border: 0.5px solid black;
+        }
+        #enroll{
+            width: 200px;
+            height: 60px;
+            background-color: yellow;
+            border: 0.5px solid black;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="content">
+            <h1 style="text-align: center; height: 80px;">1:1문의</h1>
+            <form action="">
+                <!--  제목 부분 -->
+                <div class="content_1">
+                    <label class="title_1">
+                        제목
+                        <small>
+                            *
+                        </small>
+                    </label>
+                    <div class="title_2">
+                        <input type="text" required autocomplete="off" name="title" placeholder="1:1문의드립니다." id="title">
+                    </div>
+                </div>
+                <!-- 카테고리 부분-->
+                <div class="cotent_2">
+                    <label class="title_1">
+                        카테고리
+                        <small>
+                            *
+                        </small>
+                    </label>
+                    <div class="category_2">
+                        <select class="category">
+                            <option value="all">전체</option>
+                            <option value="58">상품문의</option>
+                            <option value="59">배송문의</option>
+                            <option value="60">주문 취소 문의</option>
+                            <option value="61">반품/교환 문의</option>
+                            <option value="62">주문 결제 문의</option>
+                            <option value="63">회원정보 문의</option>
+                            <option value="64">기타 문의</option>
+                        </select>
+                    </div>
+                </div>
+                <!-- 내용부분-->
+                <div class="content_3">
+                    <label class="title_1">
+                        내용
+                        <small>
+                            *
+                        </small>
+                    </label>
+                    <div>
+                    <textarea maxlength="2000" name="contents" required placeholder="내용을 남겨주세요.(최소 20자이상)"></textarea>
+                    <!--
+                    <span class="span1">
+                        <b>0</b>
+                        /
+                        2,000
+                        자
+                    </span>
+                    -->
+                    </div>
+                    <!-- 버튼 부분-->
+                    <div class="content_4">
+                        <button id="cancel">취소</button>
+                        <button id="enroll">등록하기</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

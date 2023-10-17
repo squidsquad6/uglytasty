@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        div {box-sizing:border-box;}
+
+        .question{
+            margin: auto;
+            text-align: center;
+            width: 100%;
+            width:1000px;
+            height:800px;
+            
+        }
+        .cate{
+           height: 400px;
+           
+        }
+        .category{
+            float:right;
+            height: 50px;
+            width:180px;
+
+        }
+
+        /*글번호 및 글제목*/
+        .contents{
+            margin-top: 10px;
+            height: 250px;
+            width:100%;
+            float:right;
+            text-align: center;
+            
+        }
+        
+       .write{
+        width:100%;
+        height:100px;
+        text-align: center;
+        float:right;
+       }
+       #write_1{
+        width:1000px;
+        height:50px;
+        margin-top: 5px;
+        margin-bottom: 5px;
+        background-color: #dedede;
+       }
+       .search{
+        height:400px;
+        
+       }
+       #search1{
+        height: 50px;
+        width: 150px;
+       }
+
+       #search2{
+        height: 50px;
+        width:150px
+       }
+       #search3{    
+        height: 44px;
+        width: 600px;
+       }
+
+       #search4{
+        height:50px;
+        background-color: white;
+        border: 0.5px solid black;
+        width: 70px;
+       }
+
+
+    </style>
+</head>
+<body>
+    <h1 style="text-align: center;">1:1문의</h1>
+    <div class="question">
+                <div class="cate">
+                    
+                    <div class="cate_1">
+                        <select class="category">
+                            <option value="all">전체</option>
+                            <option value="58">상품문의</option>
+                            <option value="59">배송문의</option>
+                            <option value="60">주문 취소 문의</option>
+                            <option value="61">반품/교환 문의</option>
+                            <option value="62">주문 결제 문의</option>
+                            <option value="63">회원정보 문의</option>
+                            <option value="64">기타 문의</option>
+                        </select>
+                    </div>
+                    <!-- 글제목 및 번호-->
+                    <div class="contents">
+                        게시글이 없습니다.
+                    </div>
+
+                    <div class="write">
+                        <button id="write_1">글쓰기</button>
+                    </div>
+
+                </div>
+                
+            <div class="search">
+                <select  id="search1">
+                    <option value="all">전체</option>
+                    <option value="#">일주일</option>
+                        <option value="#">한달</option>
+                </select>
+                <select id="search2">
+                    <option value="title">제목</option>
+                    <option value="contents">내용</option>
+                        <option value="title&contents">제목+내용</option>
+                </select>
+                <input type="text" id="search3">
+                <button id="search4">검색</button>
+            </div>
+        </div>
+    </body> 
+        
+    
+    
+</html>
