@@ -14,11 +14,12 @@
 <title>Insert title here</title>
 
 
-    <!-- Alertify -->
-   <!-- JavaScript -->
-   <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
+	<!-- Alertify -->
+	<!-- JavaScript -->
+	<script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
 
-   <!-- Latest compiled and minified CSS -->
+	<!-- Latest compiled and minified CSS -->
+
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
 
     <!-- jQuery library -->
@@ -33,9 +34,7 @@
     <!-- 공통 폰트 -->
     <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.8/dist/web/static/pretendard.css" />
 
-    
-    
-    
+
     
     <style>
 
