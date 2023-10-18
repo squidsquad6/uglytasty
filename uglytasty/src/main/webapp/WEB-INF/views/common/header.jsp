@@ -48,6 +48,14 @@
             background-color: transparent;
         }
 
+        
+        #header_menulist a:hover {
+            color: #ff6741;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #ff6741;
+        }
+
+
         /* ================ 로고 이미지 + 메뉴 리스트 =============== */
 
         #header_logoimg_menulist{
@@ -112,6 +120,14 @@
     
 </head>
 <body>
+
+	<c:if test="${ not empty alertMsg }">
+		<script>
+			alertify.alert("${ alertMsg }");
+		</script>
+		<c:remove var="alertMsg" scope="session"/>
+	</c:if>
+
 	
 	<div class="YRcontent">
 
