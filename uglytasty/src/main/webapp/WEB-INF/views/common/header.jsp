@@ -47,6 +47,12 @@
             align-items: center;
             background-color: transparent;
         }
+        
+        #header_menulist a:hover {
+            color: #ff6741;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #ff6741;
+        }
 
         
         #header_menulist a:hover {
@@ -84,6 +90,7 @@
         }
         #header_menulist span{ /* 메뉴(글씨) */
             font-size: 15px;
+            margin-right:0px;
         }
 
         /* =============== 로그인 + 장바구니 + 마이페이지 + 로그아웃 ============ */
@@ -140,7 +147,7 @@
 
                     <div id="header_logoimg" class="flex-fill">
                         <!-- 로고이미지 -->
-                        <a href="메인으로" style="margin-right: 25px;">
+                        <a href="메인으로" style="margin-right: 40px;">
                             <img src="http://owzl.github.io/uglytasty_logoimg.png" alt="">
                         </a>
                     </div>
