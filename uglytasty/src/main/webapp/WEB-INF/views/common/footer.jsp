@@ -188,7 +188,7 @@
                 <img src="http://owzl.github.io/uglytasty_logobw.png" style="width: 170px; margin-bottom: 14px;">
 
                 <div class="ft_under_hr_p">
-                    <p>상호명 : 주식회사 B급탈출 &nbsp;|&nbsp; 대표 : 정유리 &nbsp;|&nbsp; 사업자등록번호 : 123-45-67890 &nbsp;|&nbsp; 소재지 : 서울특별시 강남구 테헤란로14길 6 남도빌당 3층 H</p>
+                    <p>상호명 : 주식회사 B급탈출 &nbsp;|&nbsp; 대표 : 정유리 &nbsp;|&nbsp; 사업자등록번호 : 123-45-67890 &nbsp;|&nbsp; 소재지 : 서울특별시 강남구 테헤란로14길 6 남도빌딩 3층 H</p>
                     <p>통신판매업 신고번호 : 2023-서울남부-0918 &nbsp;|&nbsp; <a href="#">제휴 및 납품 문의 : bgrade@uglytasty.co.kr</a> &nbsp;|&nbsp; <a href="#">농산물 납품 및 긴급구출 제보 : bgrade@uglytasty.co.kr</a></p>
                 </div>
 
