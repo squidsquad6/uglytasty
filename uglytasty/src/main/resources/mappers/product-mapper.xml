@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
+<mapper namespace="productMapper">
+
+	<resultMap type="Product" id="productResult">
+		<result column="product_no" property="productNo" />
+		<result column="product_name" property="productName" />
+		<result column="price" property="price" />
+		<result column="sale" property="sale" />
+		<result column="explanation" property="explanation" />
+		<result column="location" property="location" />
+		<result column="production_date" property="productionDate" />
+		<result column="stock" property="stock" />
+		<result column="status" property="status" />
+		<result column="count" property="count" />
+		<result column="enroll_date" property="enrollDate" />
+				
+		<result column="file_no" property="fileNo" />
+		<result column="ref_pno" property="refProductNo" />
+		<result column="origin_name" property="originName" />
+		<result column="change_name" property="changeName" />
+		<result column="file_exp" property="fileExp" />
+		<result column="file_level" property="fileLevel" />
+	</resultMap>
+	
+	
+	<!-- 
+	<resultMap type="Attachment" id="attachmentResult">
+		<result column="file_no" property="fileNo" />
+		<result column="ref_pno" property="refPno" />
+		<result column="origin_name" property="originName" />
+		<result column="change_name" property="changeName" />
+		<result column="file_exp" property="fileExp" />
+		<result column="upload_date" property="uploadDate" />
+		<result column="status" property="status" />
+		<result column="file_level" property="fileLevel" />
+	</resultMap>
+	 -->
+	
+	
+	<select id="selectProductList" resultMap="productResult">
+		select
+				product_no
+			  , product_name
+			  , price
+			  , sale
+			  , explanation
+			  , location
+			  , to_char(production_date, 'YYYY-MM-DD') as "production_date"
+			  , stock
+			  , count
+			  , to_char(enroll_date, 'YYYY-MM-DD') as "enroll_date"
+              , change_name
+              , file_level
+		  from product p
+          join attachment a on (p.product_no = a.ref_pno)
+		 where (p.status = 'Y' or p.status = 'R')
+           and a.file_level = 1
+		 order
+		    by product_no desc
+	</select>
+	
+	<update id="increaseCount">
+		update product
+		   set count = count + 1
+		 where product_no = #{productNo}
+	</update>
+	
+	<select id="selectDetailProduct" resultMap="productResult">
+		select
+				product_no
+			  , product_name
+			  , price
+			  , sale
+			  , explanation
+			  , location
+			  , to_char(production_date, 'YYYY-MM-DD') as "production_date"
+			  , stock
+			  , count
+			  , to_char(enroll_date, 'YYYY-MM-DD') as "enroll_date"
+			  , file_no
+			  , ref_pno
+			  , origin_name
+			  , change_name
+			  , file_exp
+			  , file_level
+		 from product p
+		 join attachment a on (p.product_no = a.ref_pno)
+		where product_no = #{productNo}
+		  and a.status = 'Y'
+	</select>
+	
+	
+	
+	<!-- 등록시 엑셀 상품 데이터 조회 -->
+	<select id="selectSearchProduct" resultMap="productResult">
+		select
+				product_no
+			  , product_name
+			  , price
+			  , sale
+			  , explanation
+			  , location
+			  , to_char(production_date, 'YYYY-MM-DD') as "production_date" <!-- 별칭:컬럼명 -->
+			  , stock
+		  from product
+		 where product_no = #{productNo}
+	</select>
+	
+	<insert id="insertProduct">
+		insert
+		  into product
+		  (
+		  	product_no
+		  , product_name
+		  , price
+		  , sale
+		  , explanation
+		  , location
+		  , production_date
+		  , stock
+		  )
+		  values
+		  (
+		  	seq_product_no.nextval
+		  , #{productName}
+		  , #{price}
+		  , #{sale}
+		  , #{explanation}
+		  , #{location}
+		  , #{productionDate}
+		  , #{stock}
+		  )
+	</insert>
+	
+	<!-- 
+	<select id="selectPno" resultType="_int">	
+		select
+       		   product_no
+		  from product
+		 where product_name = #{pName}
+	</select>
+	 -->
+	 
+	<insert id="insertAttachment">
+		insert
+		  into Attachment
+		  (
+		    file_no
+		  , ref_pno
+		  , origin_name
+		  , change_name
+		  , file_exp
+		  , file_level
+		  )
+		  values
+		  (
+		    seq_attachment_no.nextval
+		  , seq_product_no.currval
+		  , #{originName}
+		  , #{changeName}
+		  , #{fileExp}
+		  , #{fileLevel}
+		  )
+	</insert>
+
+
+</mapper>
