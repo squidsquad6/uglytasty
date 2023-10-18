@@ -20,10 +20,12 @@ public class MemberController {
 	@RequestMapping("login.me")
 	public String loginMember(Member m, Model model, HttpSession session) {
 		
+
 		System.out.println("전" + m);
 		
 		Member loginMember = mService.loginMember(m);
 		System.out.println("후" + loginMember);
+
 			
 		if(loginMember == null) { 
 			// 로그인 실패 => 에러메세지 requestScope에 담아서 에러 페이지(/WEB-INF/views/common/errorPage.jsp)로 포워딩
@@ -47,27 +49,44 @@ public class MemberController {
 			session.setAttribute("loginMember", loginMember);
 			
 			
+
+			//model.addAttribute("errorMsg", "로그인 성공!");
+			//return "common/errorPage";
+			// sendRedirect
+
 			model.addAttribute("errorMsg", "로그인 성공!");
+
 			return "redirect:/";
 		}
 	}
 	
-	
+
+	/** 로그인 폼 띄우기
+	 * @return
+	 */
 	@RequestMapping("loginForm.me")
-    public String loginForm() {
-       return "member/loginMemberForm";
-    }
+		public String loginForm() {
+		
+		return "member/loginMemberForm";
+	}
 	
 	
+	/** 로그아웃
+	 * @param session
+	 * @return
+	 */
 	@RequestMapping("logout.me")
-    public String logoutMember(HttpSession session) {
-      
-       session.invalidate();
-      
-       return "redirect:/";   
-    }
+	public String logoutMember(HttpSession session) {
+		
+		// 세션 무력화(세션에 설정된 모든 것이 다 지워짐)
+		session.invalidate();
+		
+		return "redirect:/"; 	// 메인으로.. 자료형:String
+	}
+
 
 	
 	
 	
+
 }

@@ -1,4 +1,4 @@
-package com.kh.uglytasty.subscribe.model.vo;
+package com.kh.uglytasty.recipe.model.vo;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -6,24 +6,22 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-
 @NoArgsConstructor	// 기본 생성자
 @AllArgsConstructor	// 전체 매개변수 생성자
 @Setter				// setter 메소드
 @Getter				// getter 메소드
 @ToString			// toString 메소드
-public class Subscribe {
+public class Recipe {
 	
+	private int recipeNo;
 	private String userId;
-	private String startDate;
-	private String endDate;
-	private String boxSize;
-	private String term;
+	private String recipeTitle;
+	private String recipeImage;
+	private String recipeExplanation;
+	private String recipeContent;
+	private int count;
+	private String difficulty;
+	private String time;
 	private String status;
-	private String dislike;
-	
 
 }
-
-
-

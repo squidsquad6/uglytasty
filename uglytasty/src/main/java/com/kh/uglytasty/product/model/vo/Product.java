@@ -24,6 +24,7 @@ public class Product {
 	private String status;
 	private int count;
 	private String enrollDate;
+
 	
 
 	private int fileNo;
@@ -33,4 +34,5 @@ public class Product {
 	private String fileExp;
 	private int fileLevel;
 	
+
 }
