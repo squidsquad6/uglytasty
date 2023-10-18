@@ -1,9 +1,5 @@
 package com.kh.uglytasty.product.model.service;
 
-
-public interface ProductService {
-
-
 import java.util.ArrayList;
 
 import com.kh.uglytasty.product.model.vo.Attachment;
@@ -63,5 +59,4 @@ public interface ProductService {
 	
 	
 	
-
 }

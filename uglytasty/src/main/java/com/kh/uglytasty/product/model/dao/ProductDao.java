@@ -1,11 +1,5 @@
 package com.kh.uglytasty.product.model.dao;
 
-
-import org.springframework.stereotype.Repository;
-
-@Repository
-public class ProductDao {
-
 import java.util.ArrayList;
 
 import org.mybatis.spring.SqlSessionTemplate;
@@ -49,5 +43,4 @@ public class ProductDao {
 	}
 	
 	
-
 }

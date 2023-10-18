@@ -1,8 +1,5 @@
 package com.kh.uglytasty.product.controller;
 
-
-import org.springframework.stereotype.Controller;
-
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -24,10 +21,8 @@ import com.kh.uglytasty.product.model.service.ProductServiceImpl;
 import com.kh.uglytasty.product.model.vo.Attachment;
 import com.kh.uglytasty.product.model.vo.Product;
 
-
 @Controller
 public class ProductController {
-
 
 	@Autowired
 	private ProductServiceImpl pService;
@@ -211,5 +206,5 @@ public class ProductController {
 	
 	
 	
-
+	
 }

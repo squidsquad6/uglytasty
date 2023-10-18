@@ -10,17 +10,6 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 
-</head>
-<body>
-
-	<jsp:include page="common/header.jsp"/>
-	
-	
-	<div style="height:600px;"></div>
-	
-	
-	<jsp:include page="common/footer.jsp"/>
-
 <style>
     div * {box-sizing: border-box;}
 
@@ -498,7 +487,7 @@
 
     </div>
 	
-	
+	<jsp:include page="common/footer.jsp"/>
 
 
 </body>

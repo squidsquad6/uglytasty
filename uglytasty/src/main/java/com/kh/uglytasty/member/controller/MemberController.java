@@ -21,11 +21,6 @@ public class MemberController {
 	public String loginMember(Member m, Model model, HttpSession session) {
 		
 
-		//System.out.println("전" + m);
-		
-		Member loginMember = mService.loginMember(m);
-		//System.out.println("후" + loginMember);
-
 		System.out.println("전" + m);
 		
 		Member loginMember = mService.loginMember(m);
@@ -89,21 +84,6 @@ public class MemberController {
 		return "redirect:/"; 	// 메인으로.. 자료형:String
 	}
 
-
-	
-	@RequestMapping("loginForm.me")
-    public String loginForm() {
-       return "member/loginMemberForm";
-    }
-	
-	
-	@RequestMapping("logout.me")
-    public String logoutMember(HttpSession session) {
-      
-       session.invalidate();
-      
-       return "redirect:/";   
-    }
 
 	
 	

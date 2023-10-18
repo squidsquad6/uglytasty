@@ -14,10 +14,11 @@
 <title>Insert title here</title>
 
 
-	<!-- Latest compiled and minified CSS -->
+    <!-- Alertify -->
+   <!-- JavaScript -->
+   <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
 
    <!-- Latest compiled and minified CSS -->
-
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
 
     <!-- jQuery library -->
@@ -31,6 +32,10 @@
     
     <!-- 공통 폰트 -->
     <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.8/dist/web/static/pretendard.css" />
+
+    
+    
+    
     
     <style>
 
@@ -150,18 +155,6 @@
 </head>
 <body>
 
-
-	<c:if test="${ not empty alertMsg }">
-		<script>
-			alertify.alert("${ alertMsg }");
-		</script>
-		<c:remove var="alertMsg" scope="session"/>
-	</c:if>
-
-	
-	<div class="YRcontent">
-
-   
    <c:if test="${ not empty alertMsg }">
       <script>
          alertify.alert("${ alertMsg }");
@@ -170,7 +163,6 @@
    </c:if>
    
    <div class="YRcontent">
-
 
         <br>
         <div id="header" class="d-flex p-3">
@@ -181,8 +173,6 @@
 
                     <div id="header_logoimg" class="flex-fill">
                         <!-- 로고이미지 -->
-
-                        <a href="메인으로" style="margin-right: 40px;">
 
                         <a href="/uglytasty" style="margin-right: 40px;">
 
@@ -198,8 +188,7 @@
                             </div>
                             <div class="header_eachmenu flex-fill">
 
-                                <a href="#"><span>못난이 단품</span></a>
-
+                      
                                 <a href="list.pro"><span>못난이 단품</span></a>
 
                             </div>
@@ -210,8 +199,7 @@
 
                                 <a href="list.no"><span>공지사항</span></a>
 
-                                <a href="#"><span>공지사항</span></a>
-
+                              
                             </div>
                             <div class="header_eachmenu flex-fill">
                                 <a href="#"><span>관리자 페이지</span></a>
