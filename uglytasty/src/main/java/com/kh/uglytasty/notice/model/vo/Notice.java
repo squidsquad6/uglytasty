@@ -15,9 +15,10 @@ public class Notice {
 	
 	private int noticeNo;
 	private String userId;
+	private String userName;
 	private String noticeTitle;
 	private String noticeContent;
 	private String status;
-	private String upFix;
+	private String upfix;
 
 }
