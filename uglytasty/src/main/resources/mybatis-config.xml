@@ -40,6 +40,7 @@
 		<mapper resource="/mappers/product-mapper.xml"/>	
 		<mapper resource="/mappers/subscribe-mapper.xml"/>	
 		<mapper resource="/mappers/admin-mapper.xml"/>
+		<mapper resource="/mappers/qa-mapper.xml"/>	
 	</mappers>
 	
 	

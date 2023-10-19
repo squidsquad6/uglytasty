@@ -44,9 +44,7 @@
     }
     .notice-list .noticeTitle-bx{
         padding: 15px 20px;
-        display: flex;
         align-items: center;
-        justify-content: space-between;
         border-bottom: 1px solid #ddd;
     }
     .notice-list .noticeTitle-bx:hover{
@@ -139,33 +137,43 @@
         <h2>공지사항</h2>
         <br><br>
         <ul class="notice-list">
-        	
-        	<c:forEach var="n" items="${ list }">
-        
 	            <li>
-	                <div class="noticeTitle-bx">
-	                    <div class="title">
-	                    
-	                    	<c:choose>
-	                    		<c:when test="${ n.upfix eq 'Y' }">
-	                    			<h5 style="color:gray;">📌&nbsp;${ n.noticeTitle }</h5>
-	                    		</c:when>
-	                    		<c:otherwise>
-	                    			<h5>${ n.noticeTitle }</h5>
-	                    		</c:otherwise>
-	                        </c:choose>
-	                        <span>${ n.userName }</span>
-	                    </div>
-	                    <i class="ri-arrow-up-s-line"></i>
-	                </div>
-	                <div class="noticeContent-bx">
-	                    <p>
-	                        ${ n.noticeContent }
-	                    </p>
-	                </div>
+	            <c:choose>
+	            	<c:when test="${ empty list }">
+	            		<!-- 작성된 게시글이 없을 경우-->
+		                <div class="noticeTitle-bx" align="center">
+		                    <div class="title" align="center">
+		                       작성된 게시글이 없습니다.
+		                    </div>
+		                </div>
+	            	</c:when>
+	            	<c:otherwise>
+        				<c:forEach var="n" items="${ list }">
+	            		<!-- 작성된 게시글이 있을 경우-->
+		                <div class="noticeTitle-bx">
+		                    <div class="title">
+		                    	<c:choose>
+		                    		<c:when test="${ n.upfix eq 'Y' }">
+		                    			<h5 style="color:gray;">📌&nbsp;${ n.noticeTitle }</h5>
+		                    		</c:when>
+		                    		<c:otherwise>
+		                    			<h5>${ n.noticeTitle }</h5>
+		                    		</c:otherwise>
+		                        </c:choose>
+		                        <span>${ n.userName }</span>
+		                    </div>
+		                    <i class="ri-arrow-up-s-line"></i>
+		                </div>
+		                <div class="noticeContent-bx">
+		                    <p>
+		                        ${ n.noticeContent }
+		                    </p>
+		                </div>
+            			</c:forEach>
+	                </c:otherwise>
+	           </c:choose>     
 	            </li>
             
-            </c:forEach>
             
         </ul>
         
