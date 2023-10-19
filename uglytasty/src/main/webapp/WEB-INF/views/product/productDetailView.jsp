@@ -5,6 +5,7 @@
 
 <!-- 
  	loginMember = 회원정보..
+
 	plist = ArrayList<Product> + fileNo + refProductNo + originName + changeName + fileExp + fileLevel
  -->
 
@@ -29,7 +30,7 @@
         width: 1400px;
     }
 
-    /* 관리자 버튼(뒤로가기, 수정하기, 삭제하기) */
+    /* 관리자 버튼(뒤로가기, 수정하기, 상품소진, 삭제하기) */
     .adminBtn a {
         text-decoration: none;
         background-color: gray;
@@ -43,14 +44,37 @@
         text-decoration: none;
         color: white;
     }
+    #btnUpdate, #btnReady, #btnDelete {
+    	color: white;
+    }
     .adminBtn #btnDelete:hover {
         filter: brightness(0.98);
-        background-color: red
+        background-color: red;
+        color: white;
+        cursor: pointer;
     }
     .adminBtn #btnUpdate:hover {
         filter: brightness(0.98);
-        background-color: darkorange;
+        background-color: #2a79ff;
+        color: white;
+        cursor: pointer;
     }
+    .adminBtn #btnReady:hover {
+        filter: brightness(0.98);
+        background-color: darkorange;
+        color: white;
+        cursor: pointer;
+    }
+
+	/* 숨겨질버튼(모달)*/
+	#modalButton {
+		border: none;
+		color: white;
+		background-color: #dadada;
+		/*background-color: white;*/
+		
+	}
+	
 
 
     /* --------------------top주문상세란-------------------- */
@@ -310,7 +334,7 @@
 
 			<!--장바구니 담은 후 '모달' -->
 			<div align="right" class="modalOuter">
-                <button data-toggle="modal" data-target="#loginModal" id="modalButton">모달숨김</button>
+                <button data-toggle="modal" data-target="#loginModal" id="modalButton">숨길버튼(모달)</button>
      	        <div class="modal fade" id="loginModal">
      	            <div class="modal-dialog modal-sm">
      	                <div class="modal-content">
@@ -337,15 +361,39 @@
 
 
 
-            <!-- 관리자만 보이는 버튼 -->
+            <!-- 관리자만 보이는 버튼 (테스트할때 귀찮으니까 맨 나중에걸라우)-->
+			<c:if test="${ loginMember.userId eq 'admin' }">
+			</c:if>
+
             <br><br>
             <div class="adminBtn" align="right">
-                <a href="list.pro" id="btnBack">뒤로가기</a>
-                <a href="" id="btnUpdate">수정하기</a>
-                <a href="" id="btnDelete">삭제하기</a>
+                <a id="btnBack" href="list.pro">뒤로가기</a>
+                <a id="btnUpdate" onclick="postFormSubmit(1);">수정하기</a>
+                <a id="btnReady" onclick="postFormSubmit(2);">상품소진</a>
+                <a id="btnDelete" onclick="postFormSubmit(3);">삭제하기</a>
             </div>
             
+            <form id="postForm" action="" method="post">
+            	<input type="hidden" name="productNo" value="${ plist[0].productNo }">
+            	
+            	<input type="hidden" name="filePath1" value="${ plist[0].changeName }">
+            	<input type="hidden" name="filePath2" value="${ plist[1].changeName }">
+            	<input type="hidden" name="filePath3" value="${ plist[2].changeName }">
+            	<input type="hidden" name="filePath4" value="${ plist[3].changeName }">
+            	<input type="hidden" name="filePath5" value="${ plist[4].changeName }">
+            </form>
             
+            <script>
+            	function postFormSubmit(num) {
+            		if(num == 1){ // '수정하기(1)' 클릭
+            			$("#postForm").attr("action", "updateForm.pro").submit();
+            		}else if(num == 2){ // '상품소진(2)' 클릭
+            			$("#postForm").attr("action", "ready.pro").submit();	            			
+            		}else { // '삭제하기(3)' 클릭
+            			$("#postForm").attr("action", "delete.pro").submit();
+            		}
+            	}
+            </script>
             
             
             

@@ -16,6 +16,10 @@ public class ProductDao {
 		return (ArrayList)sqlSession.selectList("productMapper.selectProductList");
 	}
 	
+	public ArrayList<Product> selectReadyList(SqlSessionTemplate sqlSession) {
+		return (ArrayList)sqlSession.selectList("productMapper.selectReadyList");
+	}
+	
 	public int increaseCount(SqlSessionTemplate sqlSession, int productNo) {
 		return sqlSession.update("productMapper.increaseCount", productNo);
 	}
@@ -29,19 +33,33 @@ public class ProductDao {
 		return sqlSession.selectOne("productMapper.selectSearchProduct", productNo);
 	}
 	
+	
+	
+	/*상품 등록*/
 	public int insertProduct(SqlSessionTemplate sqlSession, Product p) {
 		return sqlSession.insert("productMapper.insertProduct", p);
 	}
 	
-	/*
-	public int selectPno(SqlSessionTemplate sqlSession, String pName) {
-		return sqlSession.selectOne("productMapper.selectPno", pName);
-	}
-	*/
-	
 	public int insertAttachment(SqlSessionTemplate sqlSession, Attachment at){
 		return sqlSession.insert("productMapper.insertAttachment", at);
 	}
+	
+	
+	
+	/*상품 삭제*/
+	public int deleteProduct(SqlSessionTemplate sqlSession, int productNo) {
+		return sqlSession.update("productMapper.deleteProduct", productNo);
+	}
+	
+	public int deleteAttachment(SqlSessionTemplate sqlSession, String filePath) {
+		return sqlSession.delete("productMapper.deleteAttachment", filePath);
+	}
+	
+	/*상품 소진*/
+	public int readyProduct(SqlSessionTemplate sqlSession, int productNo) {
+		return sqlSession.update("productMapper.readyProduct", productNo);
+	}
+	
 	
 	/*장바구니 추가*/
 	public int insertCart(SqlSessionTemplate sqlSession, Cart c) {

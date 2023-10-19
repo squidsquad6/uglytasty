@@ -4,7 +4,13 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <!-- 
+	loginMember = 회원정보..
+
+ 	(status = 'Y')
 	plist = ArrayList<Product> + change_name + file_level
+		
+ 	(status = 'R')
+	xlist = ArrayList<Product> + change_name + file_level
  -->
 
 <!DOCTYPE html>
@@ -205,26 +211,72 @@
                 </div>
             </div>
             
-            
-            
-            <!-- 찐 상품 돌려 그리기 -->
-            <c:forEach var="p" items="${ plist }">
-	            <div class="item">
-	                <div class="itemImg">
-	                    <img src="${ p.changeName }">
-	                	<!-- hidden : 내가클릭한게시글번호 가져오기 위해 -->
-	                    <input type="hidden" value="${ p.productNo }"> 
+	
+			
+			<!-- (status='Y') plist 상품들 촤락 -->
+			<c:forEach var="p" items="${plist}">
+			    <div class="item">
+			        <div class="itemImg">
+			            <img src="${p.changeName}">
+			            <!-- hidden : 내가 클릭한 게시글 번호 가져오기 위해 -->
+			            <input type="hidden" value="${p.productNo}">
+			        </div>
+			        <div class="itemInfo">
+			            <p>${p.productName}</p>
+			            <span class="sale">${p.sale}</span><span class="sale">%</span>
+			            <img src="https://d3cpiew7rze14b.cloudfront.net/assets/ustore/discount-arrow.svg">
+			            <span class="originPrice">${p.price}</span>
+			            <span class="salePrice" id="calculationResult_${p.productNo}"></span>
+			            <span class="salePrice">원</span>
+			        </div>
+			    </div>
+			    <!-- 판매가격-(판매가격/할인율) -->
+			    <script>
+			        const price = ${p.price};
+			        const sale = ${p.sale};
+			        const calculatedValue = Math.round(price - (price / sale));
+					
+			        const salePriceElement = document.getElementById('calculationResult_${p.productNo}');
+			        salePriceElement.textContent = calculatedValue;
+			    </script>
+			</c:forEach>
+			
+			
+			<!-- (status='R') xlist 상품들 촤락 -->
+			<c:forEach var="x" items="${xlist}">
+			
+				<div class="item">
+	                <div class="itemImg soldout">
+	                    <img src="${x.changeName}">
+	                    <!-- hidden : 내가 클릭한 게시글 번호 가져오기 위해 -->
+			            <input type="hidden" value="${x.productNo}">
+	                </div>
+	                <div class="soldout_text">
+	                    <p>다음에 다시 만나요!</p>
 	                </div>
 	                <div class="itemInfo">
-	                    <p>${ p.productName }</p>
-	                    <span class="sale">${ p.sale }</span>
+	                    <p>${x.productName}</p>
+	                    <span class="sale">${x.sale}</span><span class="sale">%</span>
 	                    <img src="https://d3cpiew7rze14b.cloudfront.net/assets/ustore/discount-arrow.svg">
-	                    <span class="originPrice">${ p.price }</span>
-	                    <span class="salePrice">(할인적용가격)</span>
+	                    <span class="originPrice">${x.price}</span>
+	                    <span class="salePrice" id="calculationResult_${x.productNo}"></span>
 	                    <span class="salePrice">원</span>
 	                </div>
 	            </div>
-            </c:forEach>
+			
+			    <!-- 판매가격-(판매가격/할인율) -->
+			    <script>
+			        const price = ${x.price};
+			        const sale = ${x.sale};
+			        const calculatedValue = Math.round(price - (price / sale));
+					
+			        const salePriceElement = document.getElementById('calculationResult_${x.productNo}');
+			        salePriceElement.textContent = calculatedValue;
+			    </script>
+			</c:forEach>
+            
+            
+            
             
             <!-- 해당 게시물 눌루하면 상세페이지로.. -->
             <script>

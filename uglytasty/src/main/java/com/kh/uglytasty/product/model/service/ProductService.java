@@ -13,6 +13,9 @@ public interface ProductService {
 	// 상품 리스트 조회용 서비스
 	ArrayList<Product> selectProductList();
 
+	// '다음에 만나요' 상품 리스트 조회용 서비스
+	ArrayList<Product> selectReadyList();
+
 	// 상품 키워드 검색 리스트 조회용 서비스
 	// 방법2)@RequestParam 어노테이션 이용하는 방법
 	// (input name="searchProductKey")
@@ -38,10 +41,14 @@ public interface ProductService {
 
 	// 상품 삭제용 서비스
 	// (DB : 둘 다  status=N / spring : 첨파 delete )
-	int DeleteProduct(int productNo);
-	int DeleteAttachment(int productNo);
+	int deleteProduct(int productNo, ArrayList<String> filepathList);
+	int deleteAttachment(String filepath);
+	
+	// 상품 소진용 서비스
+	int readyProduct(int productNo);
 
-
+	
+	
 	
 	// 장바구니 추가용 서비스 (ajax)
 	int insertCart(Cart c);
