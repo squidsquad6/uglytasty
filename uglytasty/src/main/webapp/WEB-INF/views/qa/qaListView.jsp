@@ -171,7 +171,7 @@
 	        						value += "<li>"
 	        								+ "<div class='question-bx'>"
 	        								+ "<div class='title'>"
-	        								+ "<h5>🔒비밀글 입니다. <small class='small'>NEW</small></h5>"
+	        								+ "<h5>🔒비밀글 입니다1. <small class='small'>NEW</small></h5>"
 	        								+ "<span>" + data[q].qaCategory + "|" + data[q].userId + "|" + data[q].qaDate +  "</span>"
 	        								+ "</div>"
 	        								+ "</div>"
