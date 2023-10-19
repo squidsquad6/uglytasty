@@ -209,6 +209,7 @@
                             </div>
                             <div class="">
                                 <a href=""><span>마이페이지</span></a>
+                                <a href="list.qa"><span>1:1 문의</span></a>
                             </div>
                             <div class="">
                                 <a href="logout.me"><span>로그아웃</span></a>
