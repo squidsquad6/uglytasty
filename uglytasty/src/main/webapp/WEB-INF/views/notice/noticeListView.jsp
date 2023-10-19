@@ -45,6 +45,7 @@
     .notice-list .noticeTitle-bx{
         padding: 15px 20px;
         align-items: center;
+        display:flex;
         border-bottom: 1px solid #ddd;
     }
     .notice-list .noticeTitle-bx:hover{
@@ -137,7 +138,6 @@
         <h2>공지사항</h2>
         <br><br>
         <ul class="notice-list">
-	            <li>
 	            <c:choose>
 	            	<c:when test="${ empty list }">
 	            		<!-- 작성된 게시글이 없을 경우-->
@@ -149,6 +149,7 @@
 	            	</c:when>
 	            	<c:otherwise>
         				<c:forEach var="n" items="${ list }">
+	            		<li>
 	            		<!-- 작성된 게시글이 있을 경우-->
 		                <div class="noticeTitle-bx">
 		                    <div class="title">
@@ -169,10 +170,10 @@
 		                        ${ n.noticeContent }
 		                    </p>
 		                </div>
+	            	</li>
             			</c:forEach>
 	                </c:otherwise>
 	           </c:choose>     
-	            </li>
             
             
         </ul>
@@ -277,11 +278,6 @@
                 $(this).children(".noticeContent-bx").slideToggle();
             });
             
-        	
-        	
-            
-            
-           
         });
     </script>
 
