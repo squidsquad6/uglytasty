@@ -172,7 +172,7 @@
                                 <a href="subscribe.su"><span>못난이 박스</span></a>
                             </div>
                             <div class="header_eachmenu flex-fill">
-                                <a href="list.bo"><span>못난이 단품</span></a>
+                                <a href="list.pro"><span>못난이 단품</span></a>
                             </div>
                             <div class="header_eachmenu flex-fill">
                                 <a href="#"><span>맛난이 레시피</span></a>
@@ -180,9 +180,14 @@
                             <div class="header_eachmenu flex-fill">
                                 <a href="list.no"><span>공지사항</span></a>                  
                            </div>
-                            <div class="header_eachmenu flex-fill">
-                                <a href="member.ad"><span>관리자 페이지</span></a>
-                            </div>
+                         
+                        	
+	                       		<div class="header_eachmenu flex-fill">
+	                                <a href="member.ad"><span>관리자 페이지</span></a>
+	                            </div>
+                    		
+                           
+                            
                         </div>
 
                     </div>
