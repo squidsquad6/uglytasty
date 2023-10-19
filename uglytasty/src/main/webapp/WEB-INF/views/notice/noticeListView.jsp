@@ -262,7 +262,7 @@
     </div>
     <script>
         $(function(){
-        	$("#searchForm option[value=${condition}]").attr("selected", true);
+        	$("#searchForm option[value='${condition}']").attr("selected", true);
         	
             $(".notice-list li").click(function(){
                 $(this).children(".noticeTitle-bx").toggleClass('active');
