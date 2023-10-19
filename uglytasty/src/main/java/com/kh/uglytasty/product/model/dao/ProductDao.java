@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.kh.uglytasty.order.model.vo.Cart;
 import com.kh.uglytasty.product.model.vo.Attachment;
 import com.kh.uglytasty.product.model.vo.Product;
 
@@ -42,5 +43,9 @@ public class ProductDao {
 		return sqlSession.insert("productMapper.insertAttachment", at);
 	}
 	
+	/*장바구니 추가*/
+	public int insertCart(SqlSessionTemplate sqlSession, Cart c) {
+		return sqlSession.insert("productMapper.insertCart", c);
+	}
 	
 }

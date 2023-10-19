@@ -2,6 +2,7 @@ package com.kh.uglytasty.product.model.service;
 
 import java.util.ArrayList;
 
+import com.kh.uglytasty.order.model.vo.Cart;
 import com.kh.uglytasty.product.model.vo.Attachment;
 import com.kh.uglytasty.product.model.vo.Product;
 import com.kh.uglytasty.product.model.vo.Review;
@@ -41,6 +42,13 @@ public interface ProductService {
 	int DeleteAttachment(int productNo);
 
 
+	
+	// 장바구니 추가용 서비스 (ajax)
+	int insertCart(Cart c);
+	
+	
+	
+	
 
 	// 후기댓글 리스트 조회용 서비스 (ajax)
 	ArrayList<Review> selectReviewList(int productNo);

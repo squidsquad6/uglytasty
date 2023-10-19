@@ -6,6 +6,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.kh.uglytasty.order.model.vo.Cart;
 import com.kh.uglytasty.product.model.dao.ProductDao;
 import com.kh.uglytasty.product.model.vo.Attachment;
 import com.kh.uglytasty.product.model.vo.Product;
@@ -115,6 +116,11 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	public ArrayList<Recipe> selectProRecipeList() {
 		return null;
+	}
+
+	@Override
+	public int insertCart(Cart c) {
+		return pDao.insertCart(sqlSession, c);
 	}
 
 	

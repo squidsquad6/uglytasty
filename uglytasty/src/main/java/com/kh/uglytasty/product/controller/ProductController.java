@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.google.gson.Gson;
+import com.kh.uglytasty.order.model.vo.Cart;
 import com.kh.uglytasty.product.model.service.ProductServiceImpl;
 import com.kh.uglytasty.product.model.vo.Attachment;
 import com.kh.uglytasty.product.model.vo.Product;
@@ -73,7 +74,8 @@ public class ProductController {
 		if(result > 0) {
 			ArrayList<Product> plist = pService.selectDetailProduct(pno);
 			
-			System.out.println("상품의 상세정보 : " + plist);
+			//System.out.println("상품의 상세정보 : " + plist);
+			
 			model.addAttribute("plist", plist);
 			return "product/productDetailView";
 		}else {
@@ -203,8 +205,30 @@ public class ProductController {
 	}
 	
 	
+	/** 장바구니 추가
+	 *
+	 */
+	@ResponseBody
+	@RequestMapping("insert.cart")
+	public String ajaxInsertCart(Cart c) {
+		
+		System.out.println(c);
+		
+		int result = pService.insertCart(c);
+		
+		System.out.println("result : " + result);
+		return result>0 ? "success" : "fail";
+	}
 	
 	
+	/** (단순jsp이동) 장바구니 폼
+	 * 
+	 */
+	@RequestMapping("confirmForm.cart")
+	public String cartConfirmForm() {
+		//return "order/cartTest";
+		return "order/cartConfirmForm";
+	}
 	
 	
 }

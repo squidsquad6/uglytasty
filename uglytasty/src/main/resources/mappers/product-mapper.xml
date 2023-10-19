@@ -24,6 +24,13 @@
 	</resultMap>
 	
 	
+	<resultMap type="Cart" id="cartResult">
+		<result column="user_id" property="userId" />
+		<result column="product_no" property="productNo" />
+		<result column="quantity" property="quantitl" />
+	</resultMap>
+	
+	
 	<!-- 
 	<resultMap type="Attachment" id="attachmentResult">
 		<result column="file_no" property="fileNo" />
@@ -161,6 +168,22 @@
 		  , #{changeName}
 		  , #{fileExp}
 		  , #{fileLevel}
+		  )
+	</insert>
+	
+	<insert id="insertCart">
+		insert
+		  into cart
+		  (
+		  	user_id
+		  , product_no
+		  , quantity
+		  )
+		  values
+		  (
+		  	#{userId}
+		  , #{productNo}
+		  , #{quantity}
 		  )
 	</insert>
 
