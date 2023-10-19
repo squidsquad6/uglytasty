@@ -7,6 +7,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 
+
 @NoArgsConstructor   // 기본 생성자
 @AllArgsConstructor   // 전체 매개변수 생성자
 @Setter            // setter 메소드
@@ -23,6 +24,9 @@ public class Attachment {
    private String status;
    private int fileLevel;
 }
+
+
+
 
 
 

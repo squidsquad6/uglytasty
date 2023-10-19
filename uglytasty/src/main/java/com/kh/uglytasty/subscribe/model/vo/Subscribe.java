@@ -21,9 +21,8 @@ public class Subscribe {
 	private String term;
 	private String status;
 	private String dislike;
+	private String address;
+	private String detailAddress;
 	
 
 }
-
-
-

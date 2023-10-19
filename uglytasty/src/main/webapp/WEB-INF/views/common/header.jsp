@@ -1,12 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
-
-    
-
-  
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -14,11 +8,11 @@
 <title>Insert title here</title>
 
 
+
 	<!-- Alertify -->
 	<!-- JavaScript -->
 	<script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
-
-	<!-- Latest compiled and minified CSS -->
+   <!-- Latest compiled and minified CSS -->
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
 
@@ -33,6 +27,8 @@
     
     <!-- 공통 폰트 -->
     <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.8/dist/web/static/pretendard.css" />
+
+
 
 
     
@@ -62,19 +58,7 @@
             background-color: transparent;
         }
 
-        
-        #header_menulist a:hover {
-            color: #ff6741;
-            padding-bottom: 10px;
-            border-bottom: 3px solid #ff6741;
-        }
 
-        
-        #header_menulist a:hover {
-            color: #ff6741;
-            padding-bottom: 10px;
-            border-bottom: 3px solid #ff6741;
-        }
 
 
 
@@ -107,6 +91,7 @@
         #header_menulist span{ /* 메뉴(글씨) */
             font-size: 15px;
 
+
             margin-right:0px;
         }
 
@@ -116,6 +101,10 @@
             padding-bottom: 10px;
             border-bottom: 3px solid #ff6741;
         }
+        
+
+
+
         
 
 
@@ -154,12 +143,14 @@
 </head>
 <body>
 
+
    <c:if test="${ not empty alertMsg }">
       <script>
          alertify.alert("${ alertMsg }");
       </script>
       <c:remove var="alertMsg" scope="session"/>
    </c:if>
+
    
    <div class="YRcontent">
 
@@ -174,7 +165,6 @@
                         <!-- 로고이미지 -->
 
                         <a href="/uglytasty" style="margin-right: 40px;">
-
                             <img src="http://owzl.github.io/uglytasty_logoimg.png" alt="">
                         </a>
                     </div>
@@ -183,25 +173,19 @@
                         <!-- 메뉴리스트 -->
                         <div id="header_menulist" class="d-flex">
                             <div class="header_eachmenu flex-fill">
-                                <a href="#"><span>못난이 박스</span></a>
+                                <a href="subscribe.su"><span>못난이 박스</span></a>
                             </div>
                             <div class="header_eachmenu flex-fill">
-
-                      
-                                <a href="list.pro"><span>못난이 단품</span></a>
-
+                                <a href="list.bo"><span>못난이 단품</span></a>
                             </div>
                             <div class="header_eachmenu flex-fill">
                                 <a href="#"><span>맛난이 레시피</span></a>
                             </div>
                             <div class="header_eachmenu flex-fill">
-
-                                <a href="list.no"><span>공지사항</span></a>
-
-                              
-                            </div>
+                                <a href="list.no"><span>공지사항</span></a>                  
+                           </div>
                             <div class="header_eachmenu flex-fill">
-                                <a href="#"><span>관리자 페이지</span></a>
+                                <a href="member.ad"><span>관리자 페이지</span></a>
                             </div>
                         </div>
 

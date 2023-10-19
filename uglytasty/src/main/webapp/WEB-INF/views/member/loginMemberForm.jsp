@@ -166,7 +166,6 @@
 
 </head>
 <body>
-
 	<jsp:include page="../common/header.jsp"/>
 
 	<div class="YRcontent">

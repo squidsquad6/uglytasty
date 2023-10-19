@@ -1,5 +1,6 @@
 package com.kh.uglytasty.product.model.service;
 
+
 import java.util.ArrayList;
 
 import com.kh.uglytasty.product.model.vo.Attachment;
@@ -56,7 +57,6 @@ public interface ProductService {
 	// 레시피 리스트 조회용 서비스
 	ArrayList<Recipe> selectProRecipeList();
 
-	
 	
 	
 }
