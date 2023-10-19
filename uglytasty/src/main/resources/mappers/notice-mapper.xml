@@ -37,14 +37,14 @@
 		  from notice 
 		 where status = 'Y'
 		 <choose>
-		 	<when test="condition == title">
+		 	<when test="condition == 'title'">
            		and notice_title like '%' || #{keyword} || '%'
 		 	</when>
-		 	<when test="condition == content">
+		 	<when test="condition == 'content'">
                 and notice_content  like '%' || #{keyword} || '%'
 		 	</when>
 		 	<otherwise>
-           		and notice_title like '%' || #{keyword} || '%' or notice_content  like '%' || #{keyword} || '%'
+           		and (notice_title like '%' || #{keyword} || '%' or notice_content  like '%' || #{keyword} || '%')
 		 	</otherwise>
 		 </choose>
 	</select>
@@ -60,14 +60,14 @@
 			  join member m using (user_id)
 			 where n.status = 'Y' 
 			<choose>
-			 	<when test="condition == title">
+			 	<when test="condition == 'title'">
 	           		and notice_title like '%' || #{keyword} || '%'
 			 	</when>
-			 	<when test="condition == content">
+			 	<when test="condition == 'content'">
 	                and notice_content  like '%' || #{keyword} || '%'
 			 	</when>
 			 	<otherwise>
-	           		and notice_title like '%' || #{keyword} || '%' or notice_content  like '%' || #{keyword} || '%'
+	           		and (notice_title like '%' || #{keyword} || '%' or notice_content  like '%' || #{keyword} || '%')
 			 	</otherwise>
 		 	</choose>
 			 order by upfix desc, notice_no desc
