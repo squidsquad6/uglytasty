@@ -20,4 +20,10 @@ public interface QAService {
 	// 3. 1:1 문의 검색 조회
 	ArrayList<QA> selectSearchQAList(HashMap<String, String> map, PageInfo pi);
 	
+	// 4. 1:1 문의 카테고리별 개수 조회 (페이징, ajax)
+	int ajaxSelectListCount(HashMap<String, String> map);
+	
+	// 4. 1:1 문의 카테고리별 조회 (ajax)
+	ArrayList<QA> ajaxSelctQAList(HashMap<String, String> map, PageInfo pi);
+	
 }

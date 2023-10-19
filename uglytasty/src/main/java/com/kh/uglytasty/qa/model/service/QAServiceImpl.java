@@ -42,14 +42,36 @@ public class QAServiceImpl implements QAService {
 		return qDao.selectQAList(sqlSession, userId, pi);
 	}
 
+	/**
+	 * 1:1 문의 검색 목록 개수 조회 메소드
+	 */
 	@Override
 	public int selectSearchListCount(HashMap<String, String> map) {
 		return qDao.selectSearchListCount(sqlSession, map);
 	}
 
+	/**
+	 * 1:1 문의 검색 목록 조회 메소드
+	 */
 	@Override
 	public ArrayList<QA> selectSearchQAList(HashMap<String, String> map, PageInfo pi) {
 		return qDao.selectSearchQAList(sqlSession, map, pi);
+	}
+
+	/**
+	 * 1:1 문의 카테고리별 목록 개수 조회 메소드
+	 */
+	@Override
+	public int ajaxSelectListCount(HashMap<String, String> map) {
+		return qDao.ajaxSelectListCount(sqlSession, map);
+	}
+
+	/**
+	 * 1: 1 문의 카테고리별 목록 조회 메소드
+	 */
+	@Override
+	public ArrayList<QA> ajaxSelctQAList(HashMap<String, String> map, PageInfo pi) {
+		return qDao.ajaxSelctQAList(sqlSession, map, pi);
 	}
 
 }

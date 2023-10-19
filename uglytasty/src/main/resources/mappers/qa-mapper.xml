@@ -108,7 +108,34 @@
 		 </choose>	
 		 order 
 		    by qa_no desc
-		 
+	</select>
+	
+	<select id="ajaxSelectListCount" resultType="_int">
+		select
+		       count(*)
+		  from qa
+		 where q_status = 'Y'
+		   and user_id = #{userId}
+		   <if test="categoryNo != 0">
+		   and qa_category = #{categoryNo}
+		   </if>
+	</select>
+	
+	<select id="ajaxSelctQAList" resultMap="qaResult">
+		select
+		       qa_no
+		     , category_name
+		     , SUBSTR(user_id, 1,2) || RPAD('*', LENGTH(user_id) - 2, '*') AS user_id
+		     , to_char(q_date, 'YYYY-MM-DD') as "q_date"
+		  from qa
+          join qa_category on (qa_category = category_no)
+		 where a_status = 'Y'
+		   and user_id = #{userId}
+		   <if test="categoryNo != 0">
+		   and qa_category = #{categoryNo}
+		   </if>
+		 order 
+		    by qa_no desc
 	</select>
 
 </mapper>

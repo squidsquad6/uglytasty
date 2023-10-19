@@ -141,7 +141,7 @@
     <div class="qna-wrap" style="max-width: 1020px; margin: 0 auto; padding: 50px 0;">
         <h2>1:1 문의</h2>
         <div class="sort">
-            <select class="select-bx">
+            <select class="select-bx" id="categoryBox" onchange="selectQaList();">
                 <option value="0">전체</option>
                 <option value="1">상품문의</option>
                 <option value="2">배송문의</option>
@@ -155,9 +155,50 @@
             </select>
         </div>
         <br>
+        <div class="sort" style="color:gray;">* 카테고리를 선택하면 카테고리별 게시글을 한꺼번에 확인 할 수 있어요!</div>
+        
+        
+        <script>
+        	function selectQaList(){
+        		$.ajax({
+        			url:"ajaxList.qa",
+        			data:{categoryNo:$("#categoryBox").val()},
+        			success:function(data){
+        					$(".board-list").empty();
+	        				if(data.length != 0){
+	        					let value = "";
+	        					for(let q in data){
+	        						value += "<li>"
+	        								+ "<div class='question-bx'>"
+	        								+ "<div class='title'>"
+	        								+ "<h5>🔒비밀글 입니다. <small class='small'>NEW</small></h5>"
+	        								+ "<span>" + data[q].qaCategory + "|" + data[q].userId + "|" + data[q].qaDate +  "</span>"
+	        								+ "</div>"
+	        								+ "</div>"
+	        								+ "</li>";
+	        					}
+        						$(".board-list").append(value);
+        						$(".pagination").empty();
+        				}else{
+        					let value = "<div class='question-bx'>"
+								+ "<div class='title'>"
+								+ "작성된 게시글이 없습니다."
+								+ "</div>"
+								+ "</div>";
+        					$(".board-list").append(value);
+        					$(".pagination").empty();
+        				}
+        				console.log(data);
+        			}, error:function(){
+        				
+        			}
+        		})
+        	}
+        </script>
+        
+        <br>
         <ul class="board-list">
         
-            <li>
         	<c:choose>
         		<c:when test="${ empty list }">
         			<!-- 작성된 게시글이 없을 경우-->
@@ -169,6 +210,7 @@
         		</c:when>
         		<c:otherwise>
         			<c:forEach var="q" items="${ list }">
+            		<li>
         				<!-- 작성된 게시글이 있을 경우-->
 		                <div class="question-bx">
 		                    <div class="title">
@@ -176,17 +218,11 @@
 		                        <span>${ q.qaCategory } | ${ q.userId } | ${ q.qaDate }</span>
 		                    </div>
 		                </div>
+            		</li>
         			</c:forEach>
         		
         		</c:otherwise>
         	</c:choose>
-        
-               
-               
-                
-              
-               
-            </li>
            
         </ul>
         <div class="pagination">
@@ -284,8 +320,8 @@
                 $(this).children(".answer-bx").slideToggle();
             });
             
-            $("#searchForm option[value=${period}]").attr("selected", true);
-            $("#searchForm option[value=${condition}]").attr("selected", true);
+            $("#searchForm option[value='${period}']").attr("selected", true);
+            $("#searchForm option[value='${condition}']").attr("selected", true);
         });
     </script>
 </body>

@@ -42,10 +42,23 @@ public class QADao {
 		return (ArrayList)sqlSession.selectList("qaMapper.selectQAList", userId, rowBounds);
 	}
 
+	/**
+	 * 1:1 문의 검색 목록 개수 조회 메소드
+	 * @param sqlSession
+	 * @param map
+	 * @return
+	 */
 	public int selectSearchListCount(SqlSessionTemplate sqlSession, HashMap<String, String> map) {
 		return sqlSession.selectOne("qaMapper.selectSearchListCount", map);
 	}
 
+	/** 
+	 * 1:1 문의 검색 목록 조회 메소드
+	 * @param sqlSession
+	 * @param map
+	 * @param pi
+	 * @return
+	 */
 	public ArrayList<QA> selectSearchQAList(SqlSessionTemplate sqlSession, HashMap<String, String> map, PageInfo pi) {
 		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
 		int limit = pi.getBoardLimit();		
@@ -54,5 +67,34 @@ public class QADao {
 		
 		return (ArrayList)sqlSession.selectList("qaMapper.selectSearchQAList", map, rowBounds);
 	}
+
+	/** 
+	 * 1:1 문의 카테고리별 목록 개수 조회 메소드
+	 * @param sqlSession
+	 * @param userId
+	 * @return
+	 */
+	public int ajaxSelectListCount(SqlSessionTemplate sqlSession,  HashMap<String, String> map) {
+		return sqlSession.selectOne("qaMapper.ajaxSelectListCount", map);
+	}
+
+	/** 
+	 * 1:1 문의 카테고리별 목록 조회 메소드
+	 * @param sqlSession
+	 * @param userId
+	 * @param pi
+	 * @return
+	 */
+	public ArrayList<QA> ajaxSelctQAList(SqlSessionTemplate sqlSession,  HashMap<String, String> map, PageInfo pi) {
+		
+		int offset = (pi.getCurrentPage() - 1) * pi.getBoardLimit();
+		int limit = pi.getBoardLimit();		
+		
+		RowBounds rowBounds = new RowBounds(offset, limit);
+		
+		return (ArrayList)sqlSession.selectList("qaMapper.ajaxSelctQAList", map);
+	}
+
+	
 
 }
