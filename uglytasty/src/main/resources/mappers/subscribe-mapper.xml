@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
+<mapper namespace="subscribeMapper">
+
+<resultMap type="Subscribe" id="subscribeResult"> 
+		<result column="user_id" property="userId" />
+		<result column="start_date" property="startDate" />
+		<result column="end_date" property="endDate" />
+		<result column="box_size" property="boxSize" />
+		<result column="term" property="term" />
+		<result column="status" property="status" />
+		<result column="dislike" property="dislike" />
+		<result column="address" property="address"/>
+		<result column="detail_address" property="detailAddress"/>
+		
+			</resultMap>
+
+
+
+<select id="selectSubscribe" resultMap="subscribeResult">
+		select
+		        user_id
+		      , start_date
+		      , end_date
+		      , box_size
+		      , term
+		      , status
+		      , dislike
+		      , address
+		      , detail_address
+		      
+		  from  subscribe
+		 where user_id = #{userId}
+	</select>
+	
+
+
+ <update id="updateSubscribe">
+  update
+  		 subscribe
+  	set  start_date = sysdate
+  		,end_date = sysdate + 30
+  		,box_size = #{boxSize}
+  		,term = #{term}
+  		,status = 'N'
+  		,dislike = #{dislike}
+  		,address = #{address}
+  		,detail_Address = #{detailAddress}
+   where user_id = #{userId}		 
+  </update>
+  
+  <update id="updateSubscribeStatus">
+  update
+  		 subscribe
+  	set  
+  		status = 'Y'
+  	
+   where user_id = #{userId}		 
+  </update>
+  
+  
+  <insert id="insertSubscribe">
+  		insert
+  		  into subscribe
+  		  (
+  		   user_id
+  		  ,start_date
+  		  ,end_date
+  		  ,box_size
+  		  ,term
+  		  ,status
+  		  ,dislke
+  		  ,address
+  		  ,detail_address 
+  		  
+  		  )
+  		  values
+  		  (
+  		   #{userId}
+  		  ,sysdate
+  		  ,sysdate + 30
+  		  ,#{boxSize}
+  		  ,#{term}
+  		  ,'N'
+  		  ,#{dislike}
+  		  ,#{address}
+  		  ,#{detailAddress} 
+  		  
+  		  )
+  		  
+  </insert>
+
+</mapper>

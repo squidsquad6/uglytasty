@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
+<mapper namespace="adminMapper">
+
+<resultMap type="Order" id="orderResult"> 
+		<result column="order_no" property="orderNo" />
+		<result column="user_id" property="userId" />
+		<result column="product_no" property="productNo" />
+		<result column="order_code" property="orderCode" />
+		<result column="order_quantity" property="orderQuantity" />
+		<result column="order_date" property="orderDate" />
+		<result column="total_price" property="totalPrice" />
+	
+		
+</resultMap>
+
+<resultMap type="Member" id="memberResult"> 
+		<result column="user_id" property="userId" />
+		<result column="user_pwd" property="userPwd" />
+		<result column="user_name" property="userName" />
+		<result column="phone" property="phone" />
+		<result column="email" property="email" />
+		<result column="address_base" property="addressBase" />
+		<result column="address_detail" property="addressDetail" />
+		<result column="status" property="status" />
+		<result column="subscribe" property="subscribe" />
+		<result column="provider" property="provider" />
+		<result column="access_token" property="accessToken" />
+		<result column="refresh_token" property="refreshToken" />
+		
+	</resultMap>
+
+<resultMap type="Subscribe" id="subscribeResult"> 
+		<result column="user_id" property="userId" />
+		<result column="start_date" property="startDate" />
+		<result column="end_date" property="endDate" />
+		<result column="box_size" property="boxSize" />
+		<result column="term" property="term" />
+		<result column="status" property="status" />
+		<result column="dislike" property="dislike" />
+		<result column="address" property="address"/>
+		<result column="detail_address" property="detailAddress"/>
+		
+			</resultMap>
+
+<select id="selectOrderList" resultMap="orderResult">
+		select
+		        order_no
+		      , user_id
+		      , product_no
+		      , order_code
+		      , order_quantity
+		      ,to_char(order_date, 'YYYY-MM-DD') AS "order_date"
+		      , total_price
+		      
+		  from  u_order
+	</select>
+	
+<select id="selectMemberList" resultMap="memberResult">
+
+select
+		        user_id
+		      , user_pwd
+		      , user_name
+		      , phone
+		      , email
+		      , address_base
+		      , address_detail
+		      , status
+		      , subscribe
+		      ,provider
+		      ,access_token
+		      ,refresh_token
+		  from  member
+
+
+
+</select>
+
+<select id="selectSubscribeList" resultMap="subscribeResult">
+
+select
+		        user_id
+		      ,to_char(start_date, 'YYYY-MM-DD') AS "start_date"
+		      ,to_char(end_date, 'YYYY-MM-DD') AS "end_date"
+		      , box_size
+		      , term
+		      , status
+		      , dislike
+		      , address
+		      , detail_address
+		      
+		  from  subscribe
+	
+
+</select>
+	
+
+  
+<update id="updateAdminMember">
+update
+		 member
+set		 user_id=#{userId}
+		,user_pwd=#{userPwd}
+		,user_name=#{userName}
+		,email=#{email}
+		,phone=#{phone}
+		,address_base=#{addressBase}
+		,address_detail=#{addressDetail}
+		,status=#{status}
+		,subscribe=#{subscribe}
+		,provider=#{provider}
+		,access_token=#{accessToken}
+		,refresh_token=#{refreshToken}	
+where   user_id = #{userId}			
+</update>
+
+<update id="updateAdminOrder">
+update
+		 u_order
+set		 product_no=#{productNo}
+		,order_code=#{orderCode}
+		,order_quantity=#{orderQuantity}
+		,order_date = #{orderDate}
+		,total_price=#{totalPrice}
+		
+where   order_no = #{orderNo}			
+</update>
+
+
+<update id="updateAdminSubscribe">
+update
+		 subscribe
+set		 
+		start_date = #{startDate}
+		,end_date = #{endDate}
+		,box_size = #{boxSize}
+		,term = #{term}
+		,status = #{status}
+		,dislike = #{dislike}
+		,address = #{address}
+		,detail_address = #{detailAddress}		 
+where user_id = #{userId}
+</update>
+
+  <select id="selectOrderListCount" resultType="_int">
+  
+  	select
+  			count(*)
+  	   from u_order
+  	   	
+  
+  </select>
+
+<select id="selectMemberListCount" resultType="_int">
+  
+  	select
+  			count(*)
+  	   from member
+  	   	
+  
+  </select>
+<select id="selectSubscribeCount" resultType="_int">
+  
+  	select
+  			count(*)
+  	   from subscribe
+  	   	
+  
+  </select>
+</mapper>
