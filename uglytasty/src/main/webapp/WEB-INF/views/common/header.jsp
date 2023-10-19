@@ -183,7 +183,13 @@
                          
                         	
 	                       		<div class="header_eachmenu flex-fill">
-	                                <a href="member.ad"><span>관리자 페이지</span></a>
+		                       		<c:choose>
+								        <c:when test="${loginMember.userId == 'admin'}">
+								            <a href="member.ad"><span>관리자 페이지</span></a>
+								        </c:when>
+		                       		
+		                                
+		                            </c:choose>
 	                            </div>
                     		
                            
