@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
+
 @NoArgsConstructor	// 기본 생성자
 @AllArgsConstructor	// 전체 매개변수 생성자
 @Setter				// setter 메소드
@@ -20,6 +21,8 @@ public class Subscribe {
 	private String term;
 	private String status;
 	private String dislike;
+	private String address;
+	private String detailAddress;
 	
 
 }

@@ -16,14 +16,33 @@ public class MemberController {
 	@Autowired // DI(Dependency Injection) 특징 : 알아서 생성해주고, 필요없으면 소멸시킴 (더이상 new 어쩌구 안씀)
 	private MemberServiceImpl mService;
 	
+
+	@RequestMapping("loginForm.me")
+	   public String loginForm() {
+	      
+	      return "member/loginMemberForm";
+	   }
+	
+	@RequestMapping("logout.me")
+	   public String logoutMember(HttpSession session) {
+	      
+	      session.invalidate();
+	      
+	      return "redirect:/";   }
+	
+
 	
 	@RequestMapping("login.me")
 	public String loginMember(Member m, Model model, HttpSession session) {
 		
-		//System.out.println("전" + m);
+
+
+
+		System.out.println("전" + m);
 		
 		Member loginMember = mService.loginMember(m);
-		//System.out.println("후" + loginMember);
+		System.out.println("후" + loginMember);
+
 			
 		if(loginMember == null) { 
 			// 로그인 실패 => 에러메세지 requestScope에 담아서 에러 페이지(/WEB-INF/views/common/errorPage.jsp)로 포워딩
@@ -46,14 +65,19 @@ public class MemberController {
 			// 매개변수에 HttpSession 필요함, 작성해주기
 			session.setAttribute("loginMember", loginMember);
 			
-			
+
+
 			//model.addAttribute("errorMsg", "로그인 성공!");
 			//return "common/errorPage";
 			// sendRedirect
+
+			model.addAttribute("errorMsg", "로그인 성공!");
+
 			return "redirect:/";
 		}
 	}
 	
+
 	/** 로그인 폼 띄우기
 	 * @return
 	 */
@@ -76,5 +100,12 @@ public class MemberController {
 		
 		return "redirect:/"; 	// 메인으로.. 자료형:String
 	}
+
+
+	
+	
+	
+
+
 
 }

@@ -1,5 +1,6 @@
 package com.kh.uglytasty.notice.model.service;
 
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -19,5 +20,6 @@ public interface NoticeService {
 	
 	// 3. 공지사항 검색
 	ArrayList<Notice> selectSearchList(HashMap<String, String> map, PageInfo pi);
+
 
 }

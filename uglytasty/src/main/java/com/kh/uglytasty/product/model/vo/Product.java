@@ -24,4 +24,16 @@ public class Product {
 	private String status;
 	private int count;
 	private String enrollDate;
+
+
+	
+
+	private int fileNo;
+	private int refProductNo;
+	private String originName;
+	private String changeName;
+	private String fileExp;
+	private int fileLevel;
+	
+
 }

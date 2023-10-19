@@ -8,8 +8,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-
-	인덱스!
 	<jsp:forward page="WEB-INF/views/main.jsp"/>
 
 </body>
