@@ -270,12 +270,14 @@
     </div>
     <script>
         $(function(){
+        	$("#searchForm option[value='${condition}']").attr("selected", true);
+        	
             $(".notice-list li").click(function(){
                 $(this).children(".noticeTitle-bx").toggleClass('active');
                 $(this).children(".noticeContent-bx").slideToggle();
             });
             
-        	$("#searchForm option[value=${condition}]").attr("selected", true);
+        	
         	
             
             
