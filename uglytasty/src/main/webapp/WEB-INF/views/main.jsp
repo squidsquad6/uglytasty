@@ -259,35 +259,35 @@
 </head>
 <body>
 
-	<!-- 헤더 -->
-	<jsp:include page="common/header.jsp"/>
-	
-	
-	<!-- 상단으로 이동하기 버튼 -->
+   <!-- 헤더 -->
+   <jsp:include page="common/header.jsp"/>
+   
+   
+   <!-- 상단으로 이동하기 버튼 -->
     <div class="btn_gotop">
         <img width="50px" src="https://blog.kakaocdn.net/dn/s6jL5/btqHsbU8DSJ/yBeqQLZS4Kg866xEHCvA20/img.png" >
     </div>
     
     <script>
-	 	// 상단으로 이동하기 버튼
-	    $(window).scroll(function(){
-	        if ($(this).scrollTop() > 300){
-	            $('.btn_gotop').show();
-	        } else{
-	            $('.btn_gotop').hide();
-	        }
-	    });
-	    $('.btn_gotop').click(function(){
-	        $('html, body').animate({scrollTop:0},400);
-	        return false;
-	    });
-	</script>
-	    
+       // 상단으로 이동하기 버튼
+       $(window).scroll(function(){
+           if ($(this).scrollTop() > 300){
+               $('.btn_gotop').show();
+           } else{
+               $('.btn_gotop').hide();
+           }
+       });
+       $('.btn_gotop').click(function(){
+           $('html, body').animate({scrollTop:0},400);
+           return false;
+       });
+   </script>
+       
 
-	
-	<div class="all">
+   
+   <div class="all">
 
-		<br><br><br>
+      <br><br><br>
 
         <!-- 사진슬라이드 -->
         <div id="slider-wrap">
@@ -480,11 +480,11 @@
             <a href="https://forms.gle/HmrLFY3DbtQYG9266">못난이 납품 문의하기</a>
         </div>
         
-		<br><br><br>
+      <br><br><br>
 
     </div>
-	
-	<jsp:include page="common/footer.jsp"/>
+   
+   <jsp:include page="common/footer.jsp"/>
 
 </body>
 </html>

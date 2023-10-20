@@ -135,7 +135,6 @@ public class MemberController {
 			
 			// 매개변수에 HttpSession 필요함, 작성해주기
 			session.setAttribute("loginMember", loginMember);
-			
 
 
 			//model.addAttribute("errorMsg", "로그인 성공!");
@@ -148,6 +147,7 @@ public class MemberController {
 		}
 	}
 	
+
 	
 
 	
@@ -222,9 +222,30 @@ public class MemberController {
 
 	}
 
+
+	/** 로그인 폼 띄우기
+	 * @return
+	 */
+	@RequestMapping("loginForm.me")
+		public String loginForm() {
+		
+		return "member/loginMemberForm";
+	}
 	
 	
-	
+	/** 로그아웃
+	 * @param session
+	 * @return
+	 */
+	@RequestMapping("logout.me")
+	public String logoutMember(HttpSession session) {
+		
+		// 세션 무력화(세션에 설정된 모든 것이 다 지워짐)
+		session.invalidate();
+		
+		return "redirect:/"; 	// 메인으로.. 자료형:String
+	}
+
 
 
 

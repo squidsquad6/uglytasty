@@ -16,6 +16,7 @@ public class QA {
 	private int qaNo;
 	private String qaCategory;
 	private String userId;
+
 	private String answerId;
 	private String qaTitle;
 	private String qaContent;
@@ -24,5 +25,15 @@ public class QA {
 	private String answerStatus;
 	private String qaDate;
 	private String answerDate;
+
+	private String aId;
+	private String qTitle;
+	private String qContent;
+	private String aContent;
+	private String qStatus;
+	private String aStatus;
+	private String qDate;
+	private String aDate;
+
 
 }

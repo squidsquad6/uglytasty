@@ -1,4 +1,5 @@
 package com.kh.uglytasty.admin.model.service;
+
 import java.util.ArrayList;
 
 import com.kh.uglytasty.common.model.vo.PageInfo;
@@ -27,3 +28,4 @@ public interface AdminService {
 	
 
 }
+

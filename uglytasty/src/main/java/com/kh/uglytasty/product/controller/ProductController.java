@@ -17,10 +17,15 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.google.gson.Gson;
+import com.kh.uglytasty.order.model.vo.Cart;
 import com.kh.uglytasty.product.model.service.ProductServiceImpl;
 import com.kh.uglytasty.product.model.vo.Attachment;
 import com.kh.uglytasty.product.model.vo.Product;
 
+/**
+ * @author wow59
+ *
+ */
 @Controller
 public class ProductController {
 
@@ -43,19 +48,41 @@ public class ProductController {
 	 */
 	@RequestMapping("list.pro")
 	public String selectProductList(Model model) {
-		ArrayList<Product> plist = pService.selectProductList();
 		
+		ArrayList<Product> plist = pService.selectProductList();
 		/*
 		for(int i=0; i<plist.size(); i++) {
 			System.out.println(plist.get(i));
 		}
 		*/
 		//System.out.println(plist);
-		
 		model.addAttribute("plist", plist);
+		
+		
+		// '다음에 만나요' 상품들 조회
+		ArrayList<Product> xlist = pService.selectReadyList();
+		model.addAttribute("xlist", xlist);
 		
 		return "product/productListView";
 	}
+	
+	
+	/** 상품 '키워드' 검색 상품들 조회
+	 * 
+	 */
+	@RequestMapping("searchKeyword.pro")
+	public String selectSearchKeyword(String keyword, Model model, HttpSession session) {
+		
+		ArrayList<Product> keylist = pService.selectSearchKeyword(keyword);
+		model.addAttribute("keylist", keylist);
+		
+		// '다음에 만나요' 상품들 조회
+		ArrayList<Product> keylistR = pService.selectSearchKeywordReady(keyword);
+		model.addAttribute("keylistR", keylistR);
+		
+		return "product/productListView";
+	}
+	
 	
 	
 	/** 상품 상세페이지 조회
@@ -74,6 +101,7 @@ public class ProductController {
 			ArrayList<Product> plist = pService.selectDetailProduct(pno);
 			
 			System.out.println("상품의 상세정보 : " + plist);
+			
 			model.addAttribute("plist", plist);
 			return "product/productDetailView";
 		}else {
@@ -203,8 +231,113 @@ public class ProductController {
 	}
 	
 	
+	/** 상품 삭제 (정보:N + 첨부파일:delete)
+	 * 
+	 */
+	@RequestMapping("delete.pro")
+	public String deleteProduct(int productNo, Model model, HttpSession session,
+								String filePath1, String filePath2, String filePath3, String filePath4, String filePath5) {
+		
+		
+		
+		ArrayList<String> filePathList = new ArrayList<String>();
+
+		if(!filePath1.equals("")) {
+			filePathList.add(filePath1);
+		}
+		if(!filePath2.equals("")) {
+			filePathList.add(filePath2);				
+		}
+		if(!filePath3.equals("")) {
+			filePathList.add(filePath3);				
+		}
+		if(!filePath4.equals("")) {
+			filePathList.add(filePath4);				
+		}
+		if(!filePath5.equals("")) {
+			filePathList.add(filePath5);				
+		}
+		
+		System.out.println("filePathList" + filePathList);
+		
+		
+		// ----------상품 [정보1 + 첨부파일5] 삭제
+		int result = pService.deleteProduct(productNo, filePathList);
+		
+		
+		if(result > 0) { // 삭제 성공 => '상품(N) + 첨부파일(delete)'
+			// filePath = "resources/uploadFiles/xxxx.jpg" | ""
+			// resources안에 uploadFiles안에 xxxx.jpg 파일을 지워라
+			if(!filePath1.equals("")) {
+				new File(session.getServletContext().getRealPath(filePath1)).delete();
+			}
+			if(!filePath2.equals("")) {
+				new File(session.getServletContext().getRealPath(filePath2)).delete();
+			}
+			if(!filePath3.equals("")) {
+				new File(session.getServletContext().getRealPath(filePath3)).delete();
+			}
+			if(!filePath4.equals("")) {
+				new File(session.getServletContext().getRealPath(filePath4)).delete();
+			}
+			if(!filePath5.equals("")) {
+				new File(session.getServletContext().getRealPath(filePath4)).delete();
+			}
+			
+			// 상품 전체 리스트 페이지 list.pro 재요청
+			session.setAttribute("alertMsg", "성공적으로 상품이 삭제되었습니다.");
+			return "redirect:list.pro";
+		}else {
+			model.addAttribute("errorMsg", "상품 삭제 실패!");
+			return "common/errorPage";
+		}
+		
+	}
 	
 	
+	/** 상품 소진 (정보:R)
+	 * 
+	 */
+	@RequestMapping("ready.pro")
+	public String readyProduct(int productNo, Model model, HttpSession session) {
+		
+		int result = pService.readyProduct(productNo);
+		
+		if(result > 0) { // status = 'R' 성공
+			session.setAttribute("alertMsg", "성공적으로 [상품 소진] 처리가 되었습니다.");
+			return "redirect:list.pro";
+		}else {
+			model.addAttribute("errorMsg", "[상품 소진] 처리 실패!");
+			return "common/errorPage";
+		}
+	}
+	
+	
+	
+	/** 장바구니 추가
+	 *
+	 */
+	@ResponseBody
+	@RequestMapping("insert.cart")
+	public String ajaxInsertCart(Cart c) {
+		
+		System.out.println(c);
+		
+		int result = pService.insertCart(c);
+		
+		System.out.println("result : " + result);
+		return result>0 ? "success" : "fail";
+	}
+	
+	
+	/** (단순jsp이동) 장바구니 폼
+	 * 
+	 */
+	@RequestMapping("confirmForm.cart")
+	public String cartConfirmForm() {
+		//return "order/cartTest";
+		return "order/cartConfirmForm";
+	}
 	
 	
 }

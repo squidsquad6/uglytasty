@@ -20,7 +20,6 @@ public class Notice {
 	private String noticeContent;
 	private String status;
 	private String upfix;
-	private String upFix;
 
 
 }

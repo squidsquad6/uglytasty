@@ -30,5 +30,4 @@ public interface QAService {
 	QA selectDetail(int qaNo);
 	
 	
-	
 }

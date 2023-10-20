@@ -131,127 +131,127 @@
 </head>
 <body style='background-color: #f5f5f5;'>
 
-	<jsp:include page="../common/header.jsp"/>
-	
+   <jsp:include page="../common/header.jsp"/>
+   
     <div class="notice-wrap" style="max-width: 1020px; margin: 0 auto; padding: 50px 0;">
         
         <h2>공지사항</h2>
         <br><br>
         <ul class="notice-list">
-	            <c:choose>
-	            	<c:when test="${ empty list }">
-	            		<!-- 작성된 게시글이 없을 경우-->
-		                <div class="noticeTitle-bx" align="center">
-		                    <div class="title" align="center">
-		                       작성된 게시글이 없습니다.
-		                    </div>
-		                </div>
-	            	</c:when>
-	            	<c:otherwise>
-        				<c:forEach var="n" items="${ list }">
-	            		<li>
-	            		<!-- 작성된 게시글이 있을 경우-->
-		                <div class="noticeTitle-bx">
-		                    <div class="title">
-		                    	<c:choose>
-		                    		<c:when test="${ n.upfix eq 'Y' }">
-		                    			<h5 style="color:gray;">📌&nbsp;${ n.noticeTitle }</h5>
-		                    		</c:when>
-		                    		<c:otherwise>
-		                    			<h5>${ n.noticeTitle }</h5>
-		                    		</c:otherwise>
-		                        </c:choose>
-		                        <span>${ n.userName }</span>
-		                    </div>
-		                    <i class="ri-arrow-up-s-line"></i>
-		                </div>
-		                <div class="noticeContent-bx">
-		                    <p>
-		                        ${ n.noticeContent }
-		                    </p>
-		                </div>
-	            	</li>
-            			</c:forEach>
-	                </c:otherwise>
-	           </c:choose>     
+               <c:choose>
+                  <c:when test="${ empty list }">
+                     <!-- 작성된 게시글이 없을 경우-->
+                      <div class="noticeTitle-bx" align="center">
+                          <div class="title" align="center">
+                             작성된 게시글이 없습니다.
+                          </div>
+                      </div>
+                  </c:when>
+                  <c:otherwise>
+                    <c:forEach var="n" items="${ list }">
+                     <li>
+                     <!-- 작성된 게시글이 있을 경우-->
+                      <div class="noticeTitle-bx">
+                          <div class="title">
+                             <c:choose>
+                                <c:when test="${ n.upfix eq 'Y' }">
+                                   <h5 style="color:gray;">📌&nbsp;${ n.noticeTitle }</h5>
+                                </c:when>
+                                <c:otherwise>
+                                   <h5>${ n.noticeTitle }</h5>
+                                </c:otherwise>
+                              </c:choose>
+                              <span>${ n.userName }</span>
+                          </div>
+                          <i class="ri-arrow-up-s-line"></i>
+                      </div>
+                      <div class="noticeContent-bx">
+                          <p>
+                              ${ n.noticeContent }
+                          </p>
+                      </div>
+                  </li>
+                     </c:forEach>
+                   </c:otherwise>
+              </c:choose>     
             
             
         </ul>
         
         <div class="pagination">
-        	
-	        <c:choose>
-	        	<c:when test="${ empty condition }"> 
-        			<!-- 검색조건 없을 때 페이징 이전버튼 -->
-		      		<c:if test="${ pi.currentPage ne 1 }">
-		         		<a href="list.no?cpage=${ pi.currentPage - 1 }" class="link prev"><i class="ri-arrow-left-s-line"></i></a>
-		         	</c:if>
-         		</c:when>
-         		<c:otherwise>
-         			<!--  검색조건 있을 때 페이징 이전버튼 -->
-         			<c:if test="${ pi.currentPage ne 1 }">
-		         		<a href="search.no?cpage=${ pi.currentPage - 1 }&condition=${ condition }&keyword=${ keyword }" class="link prev"><i class="ri-arrow-left-s-line"></i></a>
-		         	</c:if>
-         		</c:otherwise>
-         	</c:choose> 
-	            
-	            
-	            
-        	<c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
-        	
-        		<c:choose>
-        			<c:when test="${ empty condition }">
-        				<!-- 검색조건 없을 때 페이징 현재바 -->
-	        			<c:choose>
-			            	<c:when test="${ pi.currentPage eq p }">
-			            		<!-- 선택한 페이징 바 (컬러링) -->
-			            		<a href="list.no?cpage=${ p }" class="link on">${ p }</a>
-			            	</c:when>
-			            	<c:otherwise>
-			            		<!-- 선택하지 않은 페이징 바 -->
-			            		<a href="list.no?cpage=${ p }" class="link">${ p }</a>
-			            	</c:otherwise>
-		            	</c:choose>
-        			</c:when>
-        			<c:otherwise>
-        				<!-- 검색조건 있을 때 페이징 현재바 -->
-        				<c:choose>
-			            	<c:when test="${ pi.currentPage eq p }">
-			            		<!-- 선택한 페이징 바 (컬러링) -->
-			            		<a href="search.no?cpage=${ p }&condition=${ condition }&keyword=${ keyword }" class="link on">${ p }</a>
-			            	</c:when>
-			            	<c:otherwise>
-			            		<!-- 선택하지 않은 페이징 바 -->
-			            		<a href="search.no?cpage=${ p }&condition=${ condition }&keyword=${ keyword }" class="link">${ p }</a>
-			            	</c:otherwise>
-		            	</c:choose>
-        			</c:otherwise>
-	            </c:choose>
-	            
+           
+           <c:choose>
+              <c:when test="${ empty condition }"> 
+                 <!-- 검색조건 없을 때 페이징 이전버튼 -->
+                  <c:if test="${ pi.currentPage ne 1 }">
+                     <a href="list.no?cpage=${ pi.currentPage - 1 }" class="link prev"><i class="ri-arrow-left-s-line"></i></a>
+                  </c:if>
+               </c:when>
+               <c:otherwise>
+                  <!--  검색조건 있을 때 페이징 이전버튼 -->
+                  <c:if test="${ pi.currentPage ne 1 }">
+                     <a href="search.no?cpage=${ pi.currentPage - 1 }&condition=${ condition }&keyword=${ keyword }" class="link prev"><i class="ri-arrow-left-s-line"></i></a>
+                  </c:if>
+               </c:otherwise>
+            </c:choose> 
+               
+               
+               
+           <c:forEach var="p" begin="${ pi.startPage }" end="${ pi.endPage }">
+           
+              <c:choose>
+                 <c:when test="${ empty condition }">
+                    <!-- 검색조건 없을 때 페이징 현재바 -->
+                    <c:choose>
+                        <c:when test="${ pi.currentPage eq p }">
+                           <!-- 선택한 페이징 바 (컬러링) -->
+                           <a href="list.no?cpage=${ p }" class="link on">${ p }</a>
+                        </c:when>
+                        <c:otherwise>
+                           <!-- 선택하지 않은 페이징 바 -->
+                           <a href="list.no?cpage=${ p }" class="link">${ p }</a>
+                        </c:otherwise>
+                     </c:choose>
+                 </c:when>
+                 <c:otherwise>
+                    <!-- 검색조건 있을 때 페이징 현재바 -->
+                    <c:choose>
+                        <c:when test="${ pi.currentPage eq p }">
+                           <!-- 선택한 페이징 바 (컬러링) -->
+                           <a href="search.no?cpage=${ p }&condition=${ condition }&keyword=${ keyword }" class="link on">${ p }</a>
+                        </c:when>
+                        <c:otherwise>
+                           <!-- 선택하지 않은 페이징 바 -->
+                           <a href="search.no?cpage=${ p }&condition=${ condition }&keyword=${ keyword }" class="link">${ p }</a>
+                        </c:otherwise>
+                     </c:choose>
+                 </c:otherwise>
+               </c:choose>
+               
             </c:forEach>
-	           
-	           
-	       
-	        <c:choose>
-	        	<c:when test="${ empty condition }">
-	        		<!-- 검색조건 없을 때 페이징 다음버튼 -->
-		         	<c:if test="${ pi.currentPage ne pi.maxPage }">
-		          		<a href="list.no?cpage=${ pi.currentPage + 1 }" class="link next"><i class="ri-arrow-right-s-line"></i></a>
-		          	</c:if>
-          		</c:when>
-          		<c:otherwise>
-          			<!-- 검색조건 있을 때 페이징 다음버튼 -->
-          			<c:if test="${ pi.currentPage ne pi.maxPage }">
-		          		<a href="search.no?cpage=${ pi.currentPage + 1 }&condition=${ condition }&keyword=${ keyword }" class="link next"><i class="ri-arrow-right-s-line"></i></a>
-		          	</c:if>
-          		</c:otherwise>
-	        </c:choose>       
-	            
-	            
+              
+              
+          
+           <c:choose>
+              <c:when test="${ empty condition }">
+                 <!-- 검색조건 없을 때 페이징 다음버튼 -->
+                  <c:if test="${ pi.currentPage ne pi.maxPage }">
+                      <a href="list.no?cpage=${ pi.currentPage + 1 }" class="link next"><i class="ri-arrow-right-s-line"></i></a>
+                   </c:if>
+                </c:when>
+                <c:otherwise>
+                   <!-- 검색조건 있을 때 페이징 다음버튼 -->
+                   <c:if test="${ pi.currentPage ne pi.maxPage }">
+                      <a href="search.no?cpage=${ pi.currentPage + 1 }&condition=${ condition }&keyword=${ keyword }" class="link next"><i class="ri-arrow-right-s-line"></i></a>
+                   </c:if>
+                </c:otherwise>
+           </c:choose>       
+               
+               
 
-	            
-	            
-	            
+               
+               
+               
         </div>
         
         
@@ -271,8 +271,8 @@
     </div>
     <script>
         $(function(){
-        	$("#searchForm option[value='${condition}']").attr("selected", true);
-        	
+           $("#searchForm option[value='${condition}']").attr("selected", true);
+           
             $(".notice-list li").click(function(){
                 $(this).children(".noticeTitle-bx").toggleClass('active');
                 $(this).children(".noticeContent-bx").slideToggle();

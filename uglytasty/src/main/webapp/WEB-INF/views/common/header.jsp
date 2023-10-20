@@ -9,9 +9,9 @@
 
 
 
-	<!-- Alertify -->
-	<!-- JavaScript -->
-	<script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
+   <!-- Alertify -->
+   <!-- JavaScript -->
+   <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
     <!-- Latest compiled and minified CSS -->
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
@@ -181,17 +181,17 @@
                                 <a href="list.no"><span>공지사항</span></a>                  
                            </div>
                          
-                        	
-	                       		<div class="header_eachmenu flex-fill">
-		                       		<c:choose>
-								        <c:when test="${loginMember.userId == 'admin'}">
-								            <a href="member.ad"><span>관리자 페이지</span></a>
-								        </c:when>
-		                       		
-		                                
-		                            </c:choose>
-	                            </div>
-                    		
+                           
+                                <div class="header_eachmenu flex-fill">
+                                   <c:choose>
+                                <c:when test="${loginMember.userId == 'admin'}">
+                                    <a href="member.ad"><span>관리자 페이지</span></a>
+                                </c:when>
+                                   
+                                      
+                                  </c:choose>
+                               </div>
+                          
                            
                             
                         </div>

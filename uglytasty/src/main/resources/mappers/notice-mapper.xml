@@ -1,76 +1,76 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
 <mapper namespace="noticeMapper">
-	
-	<resultMap type="Notice" id="noticeResult">
-		<result column="notice_no" property="noticeNo"/>
-		<result column="user_name" property="userName"/>
-		<result column="notice_title" property="noticeTitle"/>
-		<result column="notice_content" property="noticeContent"/>
-		<result column="upfix" property="upfix"/>
-	</resultMap>
-	
-	<select id="selectListCount" resultType="_int">
-		select 
-		      count(*)
-		  from notice 
-		 where status = 'Y'
-	</select>
+   
+   <resultMap type="Notice" id="noticeResult">
+      <result column="notice_no" property="noticeNo"/>
+      <result column="user_name" property="userName"/>
+      <result column="notice_title" property="noticeTitle"/>
+      <result column="notice_content" property="noticeContent"/>
+      <result column="upfix" property="upfix"/>
+   </resultMap>
+   
+   <select id="selectListCount" resultType="_int">
+      select 
+            count(*)
+        from notice 
+       where status = 'Y'
+   </select>
 
 
-	<select id="selectNoticeList" resultMap="noticeResult">
-		select 
-		       notice_no
-		     , user_name
-		     , notice_title
-		     , notice_content
-		     , upfix
-		  from notice n 
-		  join member m using (user_id)
-		 where n.status = 'Y' 
-		 order by upfix desc, notice_no desc
-	</select>
-	
-	<select id="selectSearchListCount" resultType="_int">
-		select 
-		      count(*)
-		  from notice 
-		 where status = 'Y'
-		 <choose>
-		 	<when test="condition == 'title'">
-           		and notice_title like '%' || #{keyword} || '%'
-		 	</when>
-		 	<when test="condition == 'content'">
+   <select id="selectNoticeList" resultMap="noticeResult">
+      select 
+             notice_no
+           , user_name
+           , notice_title
+           , notice_content
+           , upfix
+        from notice n 
+        join member m using (user_id)
+       where n.status = 'Y' 
+       order by upfix desc, notice_no desc
+   </select>
+   
+   <select id="selectSearchListCount" resultType="_int">
+      select 
+            count(*)
+        from notice 
+       where status = 'Y'
+       <choose>
+          <when test="condition == 'title'">
+                 and notice_title like '%' || #{keyword} || '%'
+          </when>
+          <when test="condition == 'content'">
                 and notice_content  like '%' || #{keyword} || '%'
-		 	</when>
-		 	<otherwise>
-           		and (notice_title like '%' || #{keyword} || '%' or notice_content  like '%' || #{keyword} || '%')
-		 	</otherwise>
-		 </choose>
-	</select>
-	
-	<select id="selectSearchList" resultMap="noticeResult">
-		select 
-			       notice_no
-			     , user_name
-			     , notice_title
-			     , notice_content
-			     , upfix
-			  from notice n 
-			  join member m using (user_id)
-			 where n.status = 'Y' 
-			<choose>
-			 	<when test="condition == 'title'">
-	           		and notice_title like '%' || #{keyword} || '%'
-			 	</when>
-			 	<when test="condition == 'content'">
-	                and notice_content  like '%' || #{keyword} || '%'
-			 	</when>
-			 	<otherwise>
-	           		and (notice_title like '%' || #{keyword} || '%' or notice_content  like '%' || #{keyword} || '%')
-			 	</otherwise>
-		 	</choose>
-			 order by upfix desc, notice_no desc
-	</select>
+          </when>
+          <otherwise>
+                 and (notice_title like '%' || #{keyword} || '%' or notice_content  like '%' || #{keyword} || '%')
+          </otherwise>
+       </choose>
+   </select>
+   
+   <select id="selectSearchList" resultMap="noticeResult">
+      select 
+                notice_no
+              , user_name
+              , notice_title
+              , notice_content
+              , upfix
+           from notice n 
+           join member m using (user_id)
+          where n.status = 'Y' 
+         <choose>
+             <when test="condition == 'title'">
+                    and notice_title like '%' || #{keyword} || '%'
+             </when>
+             <when test="condition == 'content'">
+                   and notice_content  like '%' || #{keyword} || '%'
+             </when>
+             <otherwise>
+                    and (notice_title like '%' || #{keyword} || '%' or notice_content  like '%' || #{keyword} || '%')
+             </otherwise>
+          </choose>
+          order by upfix desc, notice_no desc
+   </select>
   
 </mapper>

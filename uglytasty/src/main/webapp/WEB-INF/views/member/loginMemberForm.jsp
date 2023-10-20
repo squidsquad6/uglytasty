@@ -7,12 +7,12 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 
-	<!-- jQuery 라이브러리 -->
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-	<!-- 부트스트랩에서 제공하고 있는 스타일 -->
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-	<!-- 부트스트랩에서 제공하고 있는 스크립트 -->
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+   <!-- jQuery 라이브러리 -->
+   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+   <!-- 부트스트랩에서 제공하고 있는 스타일 -->
+   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+   <!-- 부트스트랩에서 제공하고 있는 스크립트 -->
+   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <!-- 공통 폰트 -->
     <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.8/dist/web/static/pretendard.css" />
 
@@ -166,10 +166,10 @@
 
 
 </head>
-	<jsp:include page="../common/header.jsp"/>
+   <jsp:include page="../common/header.jsp"/>
 <body>
 
-	<div class="YRcontent">
+   <div class="YRcontent">
         <br><br>
 
         <div class="YRinnercontent">    
@@ -215,7 +215,7 @@
                         <td>
                             <div class="sns-login-link" id="sns_login_google">
                                 <a href="
-                              	 https://accounts.google.com/o/oauth2/v2/auth?scope=https://www.googleapis.com/auth/userinfo.profile&response_type=code&redirect_uri=http://localhost:8008/uglytasty/oauth2&client_id=1043154405366-qnhdnm1nk8h9oka0up0crde72jfffvtq.apps.googleusercontent.com">
+                                  https://accounts.google.com/o/oauth2/v2/auth?scope=https://www.googleapis.com/auth/userinfo.profile&response_type=code&redirect_uri=http://localhost:8008/uglytasty/oauth2&client_id=1043154405366-qnhdnm1nk8h9oka0up0crde72jfffvtq.apps.googleusercontent.com">
                                     <img src="https://owzl.github.io/btn_google.svg" width="22px" height="22px">
                                     &nbsp;
                                     구글로 로그인 하기

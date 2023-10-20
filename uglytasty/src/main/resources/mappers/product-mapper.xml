@@ -21,6 +21,15 @@
 		<result column="change_name" property="changeName" />
 		<result column="file_exp" property="fileExp" />
 		<result column="file_level" property="fileLevel" />
+		
+		<result column="sale_price" property="salePrice" />
+	</resultMap>
+	
+	
+	<resultMap type="Cart" id="cartResult">
+		<result column="user_id" property="userId" />
+		<result column="product_no" property="productNo" />
+		<result column="quantity" property="quantitl" />
 	</resultMap>
 	
 	
@@ -52,13 +61,87 @@
 			  , to_char(enroll_date, 'YYYY-MM-DD') as "enroll_date"
               , change_name
               , file_level
+              , round(price - (price / sale)) as "sale_price"
 		  from product p
           join attachment a on (p.product_no = a.ref_pno)
-		 where (p.status = 'Y' or p.status = 'R')
+		 where p.status = 'Y'
            and a.file_level = 1
 		 order
 		    by product_no desc
 	</select>
+	
+	<select id="selectReadyList" resultMap="productResult">
+		select
+				product_no
+			  , product_name
+			  , price
+			  , sale
+			  , explanation
+			  , location
+			  , to_char(production_date, 'YYYY-MM-DD') as "production_date"
+			  , stock
+			  , count
+			  , to_char(enroll_date, 'YYYY-MM-DD') as "enroll_date"
+              , change_name
+              , file_level
+              , round(price - (price / sale)) as "sale_price"
+		  from product p
+          join attachment a on (p.product_no = a.ref_pno)
+		 where p.status = 'R'
+           and a.file_level = 1
+		 order
+		    by product_no desc
+	</select>
+	
+	<select id="selectSearchKeyword" resultMap="productResult">
+	    select
+				product_no
+			  , product_name
+			  , price
+			  , sale
+			  , explanation
+			  , location
+			  , stock
+			  , count
+              , to_char(production_date, 'YYYY-MM-DD') as "production_date"
+			  , to_char(enroll_date, 'YYYY-MM-DD') as "enroll_date"
+              , round(price - (price / sale)) as "sale_price"
+              , change_name
+              , file_level
+		  from product p
+          left join attachment a on (p.product_no = a.ref_pno)
+		 where product_name like '%' || #{keyword} || '%'
+		   and p.status = 'Y'
+           and a.file_level = 1
+		 order
+		    by product_no desc
+	</select>
+	
+	<select id="selectSearchKeywordReady" resultMap="productResult">
+			    select
+				product_no
+			  , product_name
+			  , price
+			  , sale
+			  , explanation
+			  , location
+			  , stock
+			  , count
+              , to_char(production_date, 'YYYY-MM-DD') as "production_date"
+			  , to_char(enroll_date, 'YYYY-MM-DD') as "enroll_date"
+              , round(price - (price / sale)) as "sale_price"
+              , change_name
+              , file_level
+		  from product p
+          left join attachment a on (p.product_no = a.ref_pno)
+		 where product_name like '%' || #{keyword} || '%'
+		   and p.status = 'R'
+           and a.file_level = 1
+		 order
+		    by product_no desc
+	</select>
+	
+	
 	
 	<update id="increaseCount">
 		update product
@@ -163,6 +246,41 @@
 		  , #{fileLevel}
 		  )
 	</insert>
+	
+	<insert id="insertCart">
+		insert
+		  into cart
+		  (
+		  	user_id
+		  , product_no
+		  , quantity
+		  )
+		  values
+		  (
+		  	#{userId}
+		  , #{productNo}
+		  , #{quantity}
+		  )
+	</insert>
+	
+	<update id="deleteProduct">
+		update product
+		   set status = 'N'
+		 where product_no = #{productNo}
+	</update>
 
+	<delete id="deleteAttachment">
+		delete
+		  from attachment
+		 where change_name = #{filePath}
+	</delete>
+	
+	<update id="readyProduct">
+		update product
+		   set status = 'R'
+		 where product_no = #{productNo}
+	</update>
+	
+	
 
 </mapper>

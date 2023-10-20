@@ -4,7 +4,19 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <!-- 
-	plist = ArrayList<Product> + change_name + file_level
+	loginMember = 회원정보..
+
+ 	(status = 'Y')
+	plist = ArrayList<Product> + changeName + fileLevel + salePrice(판-(판/할))
+		
+ 	(status = 'R')
+	xlist = ArrayList<Product> + changeName + fileLevel + salePrice(판-(판/할))
+	
+	(키워드 검색 후 리스트 / status = 'Y')
+	keylist = ArrayList<Product> + changeName + fileLevel + salePrice(판-(판/할))
+	
+	(키워드 검색 후 리스트 / status = 'R')
+	keylistR = ArrayList<Product> + changeName + fileLevel + salePrice(판-(판/할))
  -->
 
 <!DOCTYPE html>
@@ -152,13 +164,12 @@
 		
 		<br><br>
 		
-        <form action="">
-
+		<!-- 상품(키워드) 검색 -->
+        <form action="searchKeyword.pro">
             <div align="center" class="search">
-                <input type="text" name="" value="" placeholder="검색할 못난이(상품)를 입력해주세요" id="searchInput">
+                <input type="text" name="keyword" value="" placeholder="검색할 못난이(상품)를 입력해주세요" id="searchInput">
                 <button type="submit" id="searchBtn">검색</button>
             </div>
-
         </form>
 
         <br><br>
@@ -207,24 +218,105 @@
             
             
             
-            <!-- 찐 상품 돌려 그리기 -->
-            <c:forEach var="p" items="${ plist }">
-	            <div class="item">
-	                <div class="itemImg">
-	                    <img src="${ p.changeName }">
-	                	<!-- hidden : 내가클릭한게시글번호 가져오기 위해 -->
-	                    <input type="hidden" value="${ p.productNo }"> 
+	
+			
+			<!-- (status='Y') plist 상품들 촤락 -->	
+			<c:forEach var="p" items="${plist}">
+			    <div class="item">
+			        <div class="itemImg">
+			            <img src="${p.changeName}">
+			            <!-- hidden : 내가 클릭한 게시글 번호 가져오기 위해 -->
+			            <input type="hidden" value="${p.productNo}">
+			        </div>
+			        <div class="itemInfo">
+			            <p>${p.productName}</p>
+			            <span class="sale">${p.sale}</span><span class="sale">%</span>
+			            <img src="https://d3cpiew7rze14b.cloudfront.net/assets/ustore/discount-arrow.svg">
+			            <span class="originPrice">${p.price}</span>
+			            <span class="salePrice" id="calculationResult_${p.productNo}">${ p.salePrice }</span>
+			            <span class="salePrice">원</span>
+			        </div>
+			    </div>
+			</c:forEach>
+	
+			
+			<!-- (status='R') xlist 상품들 촤락 -->
+			<c:forEach var="x" items="${xlist}">		
+				<div class="item">
+	                <div class="itemImg soldout">
+	                    <img src="${x.changeName}">
+	                    <!-- hidden : 내가 클릭한 게시글 번호 가져오기 위해 -->
+			            <input type="hidden" value="${x.productNo}">
+	                </div>
+	                <div class="soldout_text">
+	                    <p>다음에 다시 만나요!</p>
 	                </div>
 	                <div class="itemInfo">
-	                    <p>${ p.productName }</p>
-	                    <span class="sale">${ p.sale }</span>
+	                    <p>${x.productName}</p>
+	                    <span class="sale">${x.sale}</span><span class="sale">%</span>
 	                    <img src="https://d3cpiew7rze14b.cloudfront.net/assets/ustore/discount-arrow.svg">
-	                    <span class="originPrice">${ p.price }</span>
-	                    <span class="salePrice">(할인적용가격)</span>
+	                    <span class="originPrice">${x.price}</span>
+	                    <span class="salePrice" id="calculationResult_${x.productNo}">${ x.salePrice }</span>
 	                    <span class="salePrice">원</span>
 	                </div>
 	            </div>
-            </c:forEach>
+			</c:forEach>
+			
+			  
+			  
+			<!-- 키워드 검색 후 리스트 keylist 상품들 촤락 -->
+			<c:choose>
+				<c:when test="${ not empty keylist }">
+					
+					<c:forEach var="k" items="${keylist}">
+					    <div class="item">
+					        <div class="itemImg">
+					            <img src="${k.changeName}">
+					            <!-- hidden : 내가 클릭한 게시글 번호 가져오기 위해 -->
+					            <input type="hidden" value="${k.productNo}">
+					        </div>
+					        <div class="itemInfo">
+					            <p>${k.productName}</p>
+					            <span class="sale">${k.sale}</span><span class="sale">%</span>
+					            <img src="https://d3cpiew7rze14b.cloudfront.net/assets/ustore/discount-arrow.svg">
+					            <span class="originPrice">${k.price}</span>
+					            <span class="salePrice" id="calculationResult_${k.productNo}">${ k.salePrice }</span>
+					            <span class="salePrice">원</span>
+					        </div>
+					    </div>
+					</c:forEach>
+		            
+				</c:when>
+				<c:otherwise>
+					<p></p>
+				</c:otherwise>			
+			</c:choose>
+			
+			<!-- 키워드 검색 후 리스트 keylistR 상품들 촤락 -->
+			<c:forEach var="kr" items="${keylistR}">		
+				<div class="item">
+	                <div class="itemImg soldout">
+	                    <img src="${kr.changeName}">
+	                    <!-- hidden : 내가 클릭한 게시글 번호 가져오기 위해 -->
+			            <input type="hidden" value="${kr.productNo}">
+	                </div>
+	                <div class="soldout_text">
+	                    <p>다음에 다시 만나요!</p>
+	                </div>
+	                <div class="itemInfo">
+	                    <p>${kr.productName}</p>
+	                    <span class="sale">${kr.sale}</span><span class="sale">%</span>
+	                    <img src="https://d3cpiew7rze14b.cloudfront.net/assets/ustore/discount-arrow.svg">
+	                    <span class="originPrice">${x.price}</span>
+	                    <span class="salePrice" id="calculationResult_${kr.productNo}">${ kr.salePrice }</span>
+	                    <span class="salePrice">원</span>
+	                </div>
+	            </div>
+			</c:forEach>
+			
+			
+            
+            
             
             <!-- 해당 게시물 눌루하면 상세페이지로.. -->
             <script>

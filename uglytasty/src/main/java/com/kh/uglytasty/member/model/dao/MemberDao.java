@@ -13,6 +13,7 @@ public class MemberDao {
 		return sqlSession.selectOne("memberMapper.loginMember", m);
 	}
 
+
 	public Member checkMemberByGoogle(SqlSessionTemplate sqlSession, String userId) {
 		
 		return sqlSession.selectOne("memberMapper.checkMemberByGoogle",userId);
@@ -27,6 +28,7 @@ public class MemberDao {
 	public int idCheck(SqlSessionTemplate sqlSession, String checkId) {
 		return sqlSession.selectOne("memberMapper.idCheck", checkId);
 	}
+
 
 
 }

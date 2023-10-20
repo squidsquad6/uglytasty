@@ -7,6 +7,7 @@ public interface MemberService {
 	Member loginMember(Member m);
 
 
+
 	void googleLogin(String code);
 	
 	// 회원가입 서비스 (insert)

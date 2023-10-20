@@ -17,14 +17,19 @@ import org.springframework.web.client.RestTemplate;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+
+import org.mybatis.spring.SqlSessionTemplate;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+
 import com.kh.uglytasty.member.model.dao.MemberDao;
 import com.kh.uglytasty.member.model.vo.Member;
 
 @Service
 public class MemberServiceImpl implements MemberService{
 	
-	
-	
+
 	
 	@Autowired
 	private MemberDao mDao;
@@ -40,9 +45,6 @@ public class MemberServiceImpl implements MemberService{
 
 	@Override
 	public void googleLogin(String code) {
-		
-	
-		
 		
 		
 	}
@@ -104,9 +106,6 @@ public class MemberServiceImpl implements MemberService{
 
 	
 
-	
-		
-	
 	
 
 }
