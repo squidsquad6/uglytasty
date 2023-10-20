@@ -17,11 +17,15 @@
     <link rel="stylesheet" as="style" crossorigin href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.8/dist/web/static/pretendard.css" />
 
     <style>
+
+
+
         /* ===== 세부페이지마다 공통적으로 유지할 style ===== */
         * {
             box-sizing:border-box;
             font-family: 'Pretendard';
         }
+
         .YRcontent {
             width:1400px;
             margin:auto;
@@ -37,15 +41,18 @@
             background-color:white;
             display: block;
         }
+
         .YRinnercontent table{ /* 공통 큰 메뉴 content 영역 테이블 */
             margin: auto;
             width: 70%;
         }
+
         .YRinnercontent h2{ /* 공통 큰 메뉴 content 영역 제목 */
             text-align: center;
             font-weight: 700;
             color: rgb(58, 58, 58);
         }
+
         /* input type=text 공용 스타일 */
         .input-text-style{
             width: 100%;
@@ -68,6 +75,7 @@
             border-color: rgb(229, 231, 235);
             outline: none;
         }
+
         /* 주황 submit 버튼 공통 스타일 */
         /* 로그인 버튼 스타일 */
         .submit-btn{
@@ -83,19 +91,23 @@
             border: 0;
             margin-top: 20px; /* 약관 칸 때문에 이번만 넣음*/
         }
+
         /* --------------------------------sns 간편 가입----------------------------------- */
         .input_label_msg{
             font-size: 0.875rem;
         }
+
         .sns-enroll-link{ /* sns 링크 div 공통 속성 */
             border-radius: 10px;
             text-align: center;
             line-height: 70px;
         }
+
         .sns-enroll-link a{ /* sns 링크들 공통 속성 */
             display: block;
             text-decoration: none;
         }
+
         /* sns로 회원가입 */
         #sns_enroll_all{
             margin: auto;
@@ -104,6 +116,7 @@
             padding: 30px;
             /* border: 1px solid; */
         }
+
         #sns_enroll_all>div{
             display: inline-block;
             width: 70px;
@@ -111,6 +124,7 @@
             box-shadow: 1px 1px 1px 1px rgb(229, 231, 235);
             margin-right: 5px;
         }
+
         #sns_enroll_google{
             border-radius: 10px;
             background-color: white;
@@ -126,6 +140,7 @@
             height: 60px;
             margin: 5px;
         }
+
         #sns_enroll_kakao{
             border-radius: 10px;
             background-color: rgb(246,226,75);
@@ -163,8 +178,14 @@
             height: 58px;
             border: 0;
         }
+
+
+
         /* -------------------------------약관 동의------------------------------------ */
+
         /* label{margin-bottom: 0; margin-top: 20px;} */
+
+
         /* 기본 체크박스 감추기 */
         input[type=checkbox] {
             display:none;
@@ -183,9 +204,13 @@
         input[type=checkbox]:not(:checked) + label {
             background-image: url('https://d3cpiew7rze14b.cloudfront.net/assets/login/Group_4383__2__X6V1UNE92.svg');
         }
+
+
         .member-enroll-terms{margin-bottom: 5px;}
         .member-enroll-terms img{cursor: pointer;}
         .member-enroll-terms span{padding-left: 10px;}
+
+
         
     </style>
 
@@ -523,9 +548,6 @@
    		
         
     </script>
-
-
-
 
 
 </body>

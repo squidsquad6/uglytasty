@@ -161,12 +161,13 @@
         /* .sns-login-logo{display: inline-block;} */
 
 
+        
     </style>
 
 
 </head>
-<body>
 	<jsp:include page="../common/header.jsp"/>
+<body>
 
 	<div class="YRcontent">
         <br><br>
@@ -255,6 +256,8 @@
         </div>
         <br><br>
     </div>
+    
+</body>
 
 </body>
 </html>

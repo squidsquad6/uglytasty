@@ -92,6 +92,7 @@ public class MemberServiceImpl implements MemberService{
 
 
 	@Override
+
 	public int insertMember(Member m) {
 		return mDao.insertMember(sqlSession, m);
 	}
@@ -100,6 +101,7 @@ public class MemberServiceImpl implements MemberService{
 	public int idCheck(String checkId) {
 		return mDao.idCheck(sqlSession, checkId);
 	}
+
 	
 
 	

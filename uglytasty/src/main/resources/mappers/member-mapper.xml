@@ -14,7 +14,9 @@
 		<result column="access_token" property="accessToken"/>
 	</resultMap>
 
-<!--
+
+
+	<!-- 
 	<select id="loginMember" resultMap="memberResult">
 		select
 		        user_id
@@ -34,6 +36,7 @@
 		   and user_id = #{userId}
 		   and user_pwd = #{userPwd}
 	</select>
+
 	-->
 	
 	<!-- 비밀번호 암호화 후 로그인 -->
@@ -121,6 +124,6 @@
 		   and user_id = #{userId}
 	</select>
 
-	
+
 
 </mapper>

@@ -6,6 +6,7 @@ public interface MemberService {
 	
 	Member loginMember(Member m);
 
+
 	void googleLogin(String code);
 	
 	// 회원가입 서비스 (insert)
@@ -14,4 +15,13 @@ public interface MemberService {
 	// 아이디 중복체크 서비스 (select)
 	int idCheck(String userId);
 	
+
+	// 회원가입 서비스 (insert)
+	int insertMember(Member m);
+		
+	// 아이디 중복체크 서비스 (select)
+	int idCheck(String userId);
+	
+	
+
 }
