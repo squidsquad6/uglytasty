@@ -254,38 +254,52 @@
             <hr>
             <br>
 
-            <form action="insert.me" method="post" id="enrollForm">
+            <form action="/uglytasty/insert.me" method="post" id="enrollForm">
 
                 <!-- id, name 설정 까먹지말기!!! -->
                 <table>
                     <tr>
-                        <td>
-                            <!-- name값을 필드부의 변수명과 완벽히 일치하게 적어줘야 함*** -->
-                            <div class="enrollform_input_label d-flex mb-1">
-                                <div class="mr-auto">아이디</div>
-                                <div id="idCheckmsg" class="input_label_msg">
-                                    <!-- 
-                                    <img src="https://d3cpiew7rze14b.cloudfront.net/assets/mypage/Creator/Frame_4747__1__8eHPfbDeF.svg" alt="">
-                                    <span>아이디 형식이 올바르지 않습니다.</span>
-                                     -->
-                                </div>
-                            </div>
-                            <input type="text" class="input-text-style" id="userId" name="userId" placeholder="아이디를 입력해주세요" required>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td>
-                            <div class="enrollform_input_label d-flex mb-1">
-                                <div class="mr-auto">비밀번호</div>
-                                <div id="pwdCheckmsg" class="input_label_msg">
-                                    <!-- <img src="https://d3cpiew7rze14b.cloudfront.net/assets/mypage/Creator/Frame_4747__1__8eHPfbDeF.svg" alt=""> -->
-                                    <!-- <span>비밀번호를 6자리 이상 입력해주세요.</span> -->
-                                </div>
-                            </div>
-                            <input type="password" class="input-text-style" id="userPwd" name="userPwd" placeholder="비밀번호를 입력해주세요" required>
-                        </td>
-                    </tr>
+					    <td>
+					        <tr>
+							    <td>
+							        <c:choose>
+							            <c:when test="${empty userPwd and empty userId}">
+							                <div class="enrollform_input_label d-flex mb-1">
+							                    <div class="mr-auto">아이디</div>
+							                    <div id="idCheckmsg" class="input_label_msg">
+							                        <!-- 
+							                        <img src="https://d3cpiew7rze14b.cloudfront.net/assets/mypage/Creator/Frame_4747__1__8eHPfbDeF.svg" alt="">
+							                        <span>아이디 형식이 올바르지 않습니다.</span>
+							                        -->
+							                    </div>
+							                </div>
+							                <input type="text" class="input-text-style" id="userId" name="userId" placeholder="아이디를 입력해주세요" required>
+							            </c:when>
+							            <c:otherwise>
+							                <input type="hidden" id="userId" name="userId" value="${userId}">
+							            </c:otherwise>
+							        </c:choose>
+							    </td>
+							</tr>
+							<tr>
+							    <td>
+							        <c:choose>
+							            <c:when test="${empty userPwd and empty userId}">
+							                <div class="enrollform_input_label d-flex mb-1">
+							                    <div class="mr-auto">비밀번호</div>
+							                    <div id="pwdCheckmsg" class="input_label_msg">
+							                        <!-- <img src="https://d3cpiew7rze14b.cloudfront.net/assets/mypage/Creator/Frame_4747__1__8eHPfbDeF.svg" alt=""> -->
+							                        <!-- <span>비밀번호를 6자리 이상 입력해주세요.</span> -->
+							                    </div>
+							                </div>
+							                <input type="password" class="input-text-style" id="userPwd" name="userPwd" placeholder="비밀번호를 입력해주세요" required>
+							            </c:when>
+							            <c:otherwise>
+							                <input type="hidden" id="userPwd" name="userPwd" value="${userPwd}">
+							            </c:otherwise>
+							        </c:choose>
+							    </td>
+							</tr>
 
                     <tr>
                         <td>
@@ -296,7 +310,11 @@
                                     <!-- <span>이름은 2자 이상 입력해주세요.</span> -->
                                 </div>
                             </div>
-                            <input type="text" class="input-text-style" id="userName" name="userName" placeholder="이름를 입력해주세요" required>
+                            <input type="text" class="input-text-style" id="userName" name="userName" placeholder="이름을 입력해주세요" required
+							    <c:if test="${not empty userName}">
+							        value="${userName}" readonly
+							    </c:if>
+							>
                         </td>
                     </tr>
 
@@ -311,12 +329,16 @@
                             </div>
                             <div class="d-flex" style="margin-bottom: 10px;">
                                 <div class="flex-fill" style=" width: 80%; margin-right: 2%;">
-                                    <input type="email" class="input-text-style" id="email" name="email" placeholder="이메일 주소를 입력해주세요" required>
-                                </div>
+                                    <input type="email" class="input-text-style" id="email" name="email" placeholder="이메일 주소를 입력해주세요" required
+							            <c:if test="${not empty email}">
+							                value="${email}" readonly
+							            </c:if>
+							        >
                                 <div class="flex-fill">
                                     <input type="button" class="search_confirm_btn" onclick="" value="인증하기">
                                 </div>
                             </div>
+                           </div> 
                         </td>
                     </tr>
 
@@ -329,7 +351,11 @@
                                     <!-- <span>휴대폰 번호 형식이 올바르지 않습니다.</span> -->
                                 </div>
                             </div>
-                            <input type="text" class="input-text-style" id="phone" name="phone" placeholder="휴대폰 번호를 입력해주세요" required>
+                            <input type="text" class="input-text-style" id="phone" name="phone" placeholder="휴대폰 번호를 입력해주세요" required
+							    <c:if test="${not empty phone}">
+							        value="${phone}" readonly
+							    </c:if>
+							>
                         </td>
                     </tr>
 
@@ -395,7 +421,7 @@
 
                     <tr>
                         <td>
-                            <button type="submit" id="enroll_mem_btn" class="submit-btn" disabled>회원가입</button>
+                            <button type="submit" id="enroll_mem_btn" class="submit-btn">회원가입</button>
                         </td>
                     </tr>
 

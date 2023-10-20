@@ -13,6 +13,8 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.util.LinkedMultiValueMap;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
 import com.fasterxml.jackson.databind.JsonNode;
@@ -102,6 +104,56 @@ public class MemberServiceImpl implements MemberService{
 	@Override
 	public int idCheck(String checkId) {
 		return mDao.idCheck(sqlSession, checkId);
+	}
+
+	public Map<String, Object> getNaverAccessToken(String code, String state) {
+		
+		String accessToken = "";
+		
+		
+		HttpHeaders headers = new HttpHeaders();
+	    headers.add("Content-type", "application/x-www-form-urlencoded");
+	    MultiValueMap<String, String> params = new LinkedMultiValueMap<String, String>();
+		RestTemplate restTemplate = new RestTemplate();
+		
+		
+		params.add("code", code);
+		params.add("client_id", "qx5GJFsGBjihBcvVb7EK");
+		params.add("client_secret","Y0Khhew91p");
+		params.add("grant_type", "authorization_code");
+		params.add("redirect_uri", "http://localhost:8008/uglytasty/oauth2/naver");
+		params.add("state", state);
+		HttpEntity<MultiValueMap<String, String>> httpEntity = new HttpEntity<MultiValueMap<String, String>>(params, headers);
+		
+		
+		 ResponseEntity<JsonNode> responseEntity = restTemplate.exchange(
+			        "https://nid.naver.com/oauth2.0/token", HttpMethod.POST, httpEntity, JsonNode.class);
+		 
+		  JsonNode responseBody = responseEntity.getBody();
+	      accessToken = responseBody.get("access_token").asText();
+		
+	      headers = new HttpHeaders();
+	      headers.set("Authorization", "Bearer " + accessToken);
+	      HttpEntity entity = new HttpEntity(headers);
+	      
+	      ResponseEntity<JsonNode> userInfoResponseEntity = restTemplate.exchange(
+	          "https://openapi.naver.com/v1/nid/me", HttpMethod.GET, entity, JsonNode.class);
+	      
+	      JsonNode userInfo = userInfoResponseEntity.getBody();
+	      
+	      Map<String, Object> responseMap = new HashMap();
+	      responseMap.put("accessToken", accessToken);
+	      responseMap.put("userInfo", userInfo);
+
+	      return responseMap;
+	      
+	}
+
+	public Member checkMemberByNaver(String userId) {
+		
+		userId = userId + "nvr";
+		
+		return mDao.checkMemberByGoogle(sqlSession, userId);
 	}
 
 	
