@@ -98,6 +98,13 @@ public class QAController {
 		
 	}
 	
+	/**
+	 * 1:1 문의 카테고리별 목록 조회 (ajax)
+	 * @param currentPage
+	 * @param session
+	 * @param categoryNo
+	 * @return
+	 */
 	@ResponseBody
 	@RequestMapping(value="ajaxList.qa", produces="application/json; charset=UTF-8")
 	public String ajaxSelectList(@RequestParam(value="cpage", defaultValue = "1") int currentPage, 
@@ -116,5 +123,32 @@ public class QAController {
 		
 		return new Gson().toJson(list);
 	}
+	
+	@RequestMapping("detail.qa")
+	public String selectDetail(int qaNo, Model model) {
+		
+		QA qa = qService.selectDetail(qaNo);
+		model.addAttribute("qa", qa);
+		
+		return "qa/qaDetailView";
+		
+	}
+	
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
