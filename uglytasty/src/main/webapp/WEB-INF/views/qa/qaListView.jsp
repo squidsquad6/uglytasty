@@ -132,6 +132,11 @@
        font-size: 0.6rem;
        padding: 2px;
    }
+   .small1 {
+       background-color: #40c463;
+       font-size: 0.6rem;
+       padding: 2px;
+   }
 </style>
 </head>
 <body style="background-color: #f5f5f5;">
@@ -168,15 +173,19 @@
 	        				if(data.length != 0){
 	        					let value = "";
 	        					for(let q in data){
+	        						let isNew = data[q].answerStatus === 'N';
 	        						value += "<li>"
+	        								+ "<input type='hidden' class='qaNo' value='" + data[q].qaNo + "'>"
 	        								+ "<div class='question-bx'>"
 	        								+ "<div class='title'>"
-	        								+ "<h5>🔒비밀글 입니다. <small class='small'>NEW</small></h5>"
+	        								+ "<h5>🔒비밀글 입니다. "
+	        								+ (isNew ? "<small class='small'>NEW" : "<small class='small' style='background: #40c463;'>답변완료") + "</small></h5>" // 조건에 따라 'NEW' 또는 'OLD' 출력
 	        								+ "<span>" + data[q].qaCategory + "|" + data[q].userId + "|" + data[q].qaDate +  "</span>"
 	        								+ "</div>"
 	        								+ "</div>"
 	        								+ "</li>";
 	        					}
+	        					
         						$(".board-list").append(value);
         						$(".pagination").empty();
         				}else{
@@ -188,12 +197,12 @@
         					$(".board-list").append(value);
         					$(".pagination").empty();
         				}
-        				console.log(data);
         			}, error:function(){
         				
         			}
         		})
         	}
+        	
         </script>
         
         <br>
@@ -211,10 +220,21 @@
         		<c:otherwise>
         			<c:forEach var="q" items="${ list }">
             		<li>
+            			<input type="hidden" class="qaNo" value="${q.qaNo}">
         				<!-- 작성된 게시글이 있을 경우-->
 		                <div class="question-bx">
 		                    <div class="title">
-		                        <h5>🔒비밀글 입니다. <small class="small">NEW</small></h5>
+		                        <h5>🔒비밀글 입니다. 
+		                        
+		                        <c:if test="${ q.answerStatus == 'N' }">
+		                        <small class="small">NEW</small>
+		                        </c:if>
+		                        
+		                        <c:if test="${ q.answerStatus == 'Y' }">
+		                        <small class="small" style="background: #40c463;">답변완료</small>
+		                        </c:if>
+		                        
+		                        </h5>
 		                        <span>${ q.qaCategory } | ${ q.userId } | ${ q.qaDate }</span>
 		                    </div>
 		                </div>
@@ -294,7 +314,7 @@
 	        </c:choose>       
         </div>
         
-        
+        <button type="button" class="enrollBtn" style="width:100%; height:50px; background: white; font-weight: bold">글쓰기</button>
         <form action="search.qa" id="searchForm">
             <div class="search-wrap">
                 <select class="select-bx" name="period">
@@ -322,6 +342,14 @@
             
             $("#searchForm option[value='${period}']").attr("selected", true);
             $("#searchForm option[value='${condition}']").attr("selected", true);
+            
+            $(document).on("click", ".board-list li", function(){
+            	console.log($(this).children(".qaNo").val());
+            	let qaNo = $(this).children(".qaNo").val();
+            	location.href = "detail.qa?qaNo=" + qaNo;
+            })
+            
+           
         });
     </script>
 </body>

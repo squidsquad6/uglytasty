@@ -23,7 +23,12 @@ public interface QAService {
 	// 4. 1:1 문의 카테고리별 개수 조회 (페이징, ajax)
 	int ajaxSelectListCount(HashMap<String, String> map);
 	
-	// 4. 1:1 문의 카테고리별 조회 (ajax)
+	// 5. 1:1 문의 카테고리별 조회 (ajax)
 	ArrayList<QA> ajaxSelctQAList(HashMap<String, String> map, PageInfo pi);
+	
+	// 6. 1:1 문의 상세 조회
+	QA selectDetail(int qaNo);
+	
+	
 	
 }

@@ -74,4 +74,9 @@ public class QAServiceImpl implements QAService {
 		return qDao.ajaxSelctQAList(sqlSession, map, pi);
 	}
 
+	@Override
+	public QA selectDetail(int qaNo) {
+		return qDao.selectDetail(sqlSession, qaNo);
+	}
+
 }

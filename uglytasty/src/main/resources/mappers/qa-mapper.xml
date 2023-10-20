@@ -7,6 +7,12 @@
 		<result column="category_name" property="qaCategory"/>
 		<result column="user_id" property="userId"/>
 		<result column="q_date" property="qaDate"/>
+		<result column="a_date" property="answerDate"/>
+		<result column="a_id" property="answerId"/>
+		<result column="q_title" property="qaTitle"/>
+		<result column="q_content" property="qaContent"/>
+		<result column="a_content" property="answerContent"/>
+		<result column="a_status" property="answerStatus"/>
 	</resultMap>
 
 
@@ -24,9 +30,10 @@
 		     , category_name
 		     , SUBSTR(user_id, 1,2) || RPAD('*', LENGTH(user_id) - 2, '*') AS user_id
 		     , to_char(q_date, 'YYYY-MM-DD') as "q_date"
+		     , a_status
 		  from qa
           join qa_category on (qa_category = category_no)
-		 where a_status = 'Y'
+		 where q_status = 'Y'
 		   and user_id = #{userId}
 		 order 
 		    by qa_no desc
@@ -78,7 +85,7 @@
 		     , to_char(q_date, 'YYYY-MM-DD') as "q_date"
 		  from qa
           join qa_category on (qa_category = category_no)
-          where a_status = 'Y'
+          where q_status = 'Y'
 		   and user_id = #{userId}
 		<choose>
 			<when test="period == 'week'">
@@ -127,9 +134,10 @@
 		     , category_name
 		     , SUBSTR(user_id, 1,2) || RPAD('*', LENGTH(user_id) - 2, '*') AS user_id
 		     , to_char(q_date, 'YYYY-MM-DD') as "q_date"
+		     , a_status
 		  from qa
           join qa_category on (qa_category = category_no)
-		 where a_status = 'Y'
+		 where q_status = 'Y'
 		   and user_id = #{userId}
 		   <if test="categoryNo != 0">
 		   and qa_category = #{categoryNo}
@@ -137,5 +145,23 @@
 		 order 
 		    by qa_no desc
 	</select>
+	
+	<select id="selectDetail" resultMap="qaResult">
+		select 
+		       qa_no
+		     , user_id
+		     , a_id
+		     , q_title
+		     , q_content
+		     , a_content
+		     , a_status
+		     , to_char(q_date, 'YYYY-MM-DD') as "q_date"
+		     , to_char(a_date, 'YYYY-MM-DD') as "a_date"
+		  from qa   
+		 where q_status = 'Y'
+		   and qa_no = #{qaNo}
+	</select>
+	
+	
 
 </mapper>

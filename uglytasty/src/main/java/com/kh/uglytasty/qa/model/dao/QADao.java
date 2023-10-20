@@ -95,6 +95,10 @@ public class QADao {
 		return (ArrayList)sqlSession.selectList("qaMapper.ajaxSelctQAList", map);
 	}
 
+	public QA selectDetail(SqlSessionTemplate sqlSession, int qaNo) {
+		return sqlSession.selectOne("qaMapper.selectDetail", qaNo);
+	}
+
 	
 
 }
