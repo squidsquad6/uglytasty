@@ -21,6 +21,8 @@
 		<result column="change_name" property="changeName" />
 		<result column="file_exp" property="fileExp" />
 		<result column="file_level" property="fileLevel" />
+		
+		<result column="sale_price" property="salePrice" />
 	</resultMap>
 	
 	
@@ -59,6 +61,7 @@
 			  , to_char(enroll_date, 'YYYY-MM-DD') as "enroll_date"
               , change_name
               , file_level
+              , round(price - (price / sale)) as "sale_price"
 		  from product p
           join attachment a on (p.product_no = a.ref_pno)
 		 where p.status = 'Y'
@@ -81,6 +84,7 @@
 			  , to_char(enroll_date, 'YYYY-MM-DD') as "enroll_date"
               , change_name
               , file_level
+              , round(price - (price / sale)) as "sale_price"
 		  from product p
           join attachment a on (p.product_no = a.ref_pno)
 		 where p.status = 'R'
@@ -88,6 +92,56 @@
 		 order
 		    by product_no desc
 	</select>
+	
+	<select id="selectSearchKeyword" resultMap="productResult">
+	    select
+				product_no
+			  , product_name
+			  , price
+			  , sale
+			  , explanation
+			  , location
+			  , stock
+			  , count
+              , to_char(production_date, 'YYYY-MM-DD') as "production_date"
+			  , to_char(enroll_date, 'YYYY-MM-DD') as "enroll_date"
+              , round(price - (price / sale)) as "sale_price"
+              , change_name
+              , file_level
+		  from product p
+          left join attachment a on (p.product_no = a.ref_pno)
+		 where product_name like '%' || #{keyword} || '%'
+		   and p.status = 'Y'
+           and a.file_level = 1
+		 order
+		    by product_no desc
+	</select>
+	
+	<select id="selectSearchKeywordReady" resultMap="productResult">
+			    select
+				product_no
+			  , product_name
+			  , price
+			  , sale
+			  , explanation
+			  , location
+			  , stock
+			  , count
+              , to_char(production_date, 'YYYY-MM-DD') as "production_date"
+			  , to_char(enroll_date, 'YYYY-MM-DD') as "enroll_date"
+              , round(price - (price / sale)) as "sale_price"
+              , change_name
+              , file_level
+		  from product p
+          left join attachment a on (p.product_no = a.ref_pno)
+		 where product_name like '%' || #{keyword} || '%'
+		   and p.status = 'R'
+           and a.file_level = 1
+		 order
+		    by product_no desc
+	</select>
+	
+	
 	
 	<update id="increaseCount">
 		update product
@@ -226,5 +280,7 @@
 		   set status = 'R'
 		 where product_no = #{productNo}
 	</update>
+	
+	
 
 </mapper>

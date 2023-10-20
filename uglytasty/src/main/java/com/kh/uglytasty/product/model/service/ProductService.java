@@ -13,15 +13,17 @@ public interface ProductService {
 	// 상품 리스트 조회용 서비스
 	ArrayList<Product> selectProductList();
 
-	// '다음에 만나요' 상품 리스트 조회용 서비스
+	// 상품 리스트 조회용 서비스 (다음에 만나요)
 	ArrayList<Product> selectReadyList();
 
 	// 상품 키워드 검색 리스트 조회용 서비스
-	// 방법2)@RequestParam 어노테이션 이용하는 방법
-	// (input name="searchProductKey")
-	ArrayList<Product> selectProductListKeyword(String searchProductKey);
+	ArrayList<Product> selectSearchKeyword(String keyword);
 
+	// 상품 키워드 검색 리스트 조회용 서비스 (다음에 만나요)
+	ArrayList<Product> selectSearchKeywordReady(String keyword);
 
+	
+	
 	
 	// 상품 상세 조회용 서비스
 	int increaseCount(int productNo);

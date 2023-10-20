@@ -11,7 +11,8 @@ import com.kh.uglytasty.product.model.vo.Product;
 
 @Repository
 public class ProductDao {
-
+	
+	/*상품 리스트 조회 (기본 + 키워드검색)*/
 	public ArrayList<Product> selectProductList(SqlSessionTemplate sqlSession) {
 		return (ArrayList)sqlSession.selectList("productMapper.selectProductList");
 	}
@@ -19,6 +20,17 @@ public class ProductDao {
 	public ArrayList<Product> selectReadyList(SqlSessionTemplate sqlSession) {
 		return (ArrayList)sqlSession.selectList("productMapper.selectReadyList");
 	}
+	
+	public ArrayList<Product> selectSearchKeyword(SqlSessionTemplate sqlSession, String keyword) {
+		return (ArrayList)sqlSession.selectList("productMapper.selectSearchKeyword", keyword);
+	}
+	
+	public ArrayList<Product> selectSearchKeywordReady(SqlSessionTemplate sqlSession, String keyword) {
+		return (ArrayList)sqlSession.selectList("productMapper.selectSearchKeywordReady", keyword);
+	}
+	
+	
+	
 	
 	public int increaseCount(SqlSessionTemplate sqlSession, int productNo) {
 		return sqlSession.update("productMapper.increaseCount", productNo);

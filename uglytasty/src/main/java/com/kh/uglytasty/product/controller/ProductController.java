@@ -67,6 +67,21 @@ public class ProductController {
 	}
 	
 	
+	/** 상품 '키워드' 검색 상품들 조회
+	 * 
+	 */
+	@RequestMapping("searchKeyword.pro")
+	public String selectSearchKeyword(String keyword, Model model, HttpSession session) {
+		
+		ArrayList<Product> keylist = pService.selectSearchKeyword(keyword);
+		model.addAttribute("keylist", keylist);
+		
+		// '다음에 만나요' 상품들 조회
+		ArrayList<Product> keylistR = pService.selectSearchKeywordReady(keyword);
+		model.addAttribute("keylistR", keylistR);
+		
+		return "product/productListView";
+	}
 	
 	
 	

@@ -34,5 +34,8 @@ public class Product {
 	private String fileExp;
 	private int fileLevel;
 	
+	
+	private int salePrice;
+	
 
 }

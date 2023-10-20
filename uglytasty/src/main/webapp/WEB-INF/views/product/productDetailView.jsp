@@ -30,7 +30,7 @@
         width: 1400px;
     }
 
-    /* 관리자 버튼(뒤로가기, 수정하기, 상품소진, 삭제하기) */
+    /* 관리자 버튼(뒤로가기, 수정하기, 일시품절, 삭제하기) */
     .adminBtn a {
         text-decoration: none;
         background-color: gray;
@@ -490,34 +490,40 @@
 
                         
                       	
-                       
+                      			<script>
+		                            function addCart(){ // 장바구니 추가용 ajax
+		                         
+		                            	$.ajax({
+		                            		url:"insert.cart",
+		                            		data:{
+		                            			userId:'${ loginMember.userId }',
+		                            			productNo:${ plist[0].productNo },
+		                            			quantity:$("#amount").val()
+		                            		},
+		                            		success:function(result){
+		                            			
+		                            			if(result == "success"){
+			                            			console.log(result);
+			                            			
+			                            			//모달버튼 눌리게
+			                            	      	$("#modalButton").click();	
+			                            			
+		                            			}
+		                            		
+		                            		},
+		                            		error:function(){
+		                            			console.log("장바구니 추가용 ajax 요청 실패!");
+		                            		}
+		                            	})
+		          
+		                            }
+		                        </script>
+                    
+                      
+							
+					
 
-                        <script>
-                            function addCart(){ // 장바구니 추가용 ajax
-                            	$.ajax({
-                            		url:"insert.cart",
-                            		data:{
-                            			userId:'${ loginMember.userId }',
-                            			productNo:${ plist[0].productNo },
-                            			quantity:$("#amount").val()
-                            		},
-                            		success:function(result){
-                            			
-                            			if(result == "success"){
-	                            			console.log(result);
-	                            			
-	                            			//모달버튼 눌리게
-	                            	      	$("#modalButton").click();	
-	                            			
-                            			}
-                            		
-                            		},
-                            		error:function(){
-                            			console.log("장바구니 추가용 ajax 요청 실패!");
-                            		}
-                            	})
-                            }
-                        </script>
+                        
                         
                         
                             

@@ -23,8 +23,7 @@ public class ProductServiceImpl implements ProductService {
 	private SqlSessionTemplate sqlSession;
 	
 	
-	/**/
-	
+	/*상품 리스트 조회 (기본 + 키워드검색)*/
 	@Override
 	public ArrayList<Product> selectProductList() {
 		return pDao.selectProductList(sqlSession);
@@ -34,11 +33,19 @@ public class ProductServiceImpl implements ProductService {
 	public ArrayList<Product> selectReadyList() {
 		return pDao.selectReadyList(sqlSession);
 	}
-
+	
 	@Override
-	public ArrayList<Product> selectProductListKeyword(String searchProductKey) {
-		return null;
+	public ArrayList<Product> selectSearchKeyword(String keyword) {
+		return pDao.selectSearchKeyword(sqlSession, keyword);
 	}
+	
+	@Override
+	public ArrayList<Product> selectSearchKeywordReady(String keyword) {
+		return pDao.selectSearchKeywordReady(sqlSession, keyword);
+	}
+
+	
+
 
 	@Override
 	public int increaseCount(int productNo) {
@@ -147,6 +154,7 @@ public class ProductServiceImpl implements ProductService {
 	public int insertCart(Cart c) {
 		return pDao.insertCart(sqlSession, c);
 	}
+
 
 
 
