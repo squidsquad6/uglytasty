@@ -13,4 +13,20 @@ public class MemberDao {
 		return sqlSession.selectOne("memberMapper.loginMember", m);
 	}
 
+	public Member checkMemberByGoogle(SqlSessionTemplate sqlSession, String userId) {
+		
+		return sqlSession.selectOne("memberMapper.checkMemberByGoogle",userId);
+	}
+
+	
+	public int insertMember(SqlSessionTemplate sqlSession, Member m) {
+		return sqlSession.insert("memberMapper.insertMember", m);
+	}
+
+
+	public int idCheck(SqlSessionTemplate sqlSession, String checkId) {
+		return sqlSession.selectOne("memberMapper.idCheck", checkId);
+	}
+	
+
 }

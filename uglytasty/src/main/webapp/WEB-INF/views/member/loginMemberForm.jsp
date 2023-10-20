@@ -206,14 +206,15 @@
                     <tr>
                         <td>
                             <div id="link_enrollform">
-                                아직 회원이 아니신가요? &nbsp;<a href="#">회원가입</a>
+                                아직 회원이 아니신가요? &nbsp;<a href="enrollForm.me">회원가입</a>
                             </div>
                         </td>
                     </tr>
                     <tr>
                         <td>
                             <div class="sns-login-link" id="sns_login_google">
-                                <a href="#">
+                                <a href="
+                              	 https://accounts.google.com/o/oauth2/v2/auth?scope=https://www.googleapis.com/auth/userinfo.profile&response_type=code&redirect_uri=http://localhost:8008/uglytasty/oauth2&client_id=1043154405366-qnhdnm1nk8h9oka0up0crde72jfffvtq.apps.googleusercontent.com">
                                     <img src="https://owzl.github.io/btn_google.svg" width="22px" height="22px">
                                     &nbsp;
                                     구글로 로그인 하기
