@@ -8,6 +8,7 @@
 		<param-name>contextConfigLocation</param-name>
 		<param-value>
 			/WEB-INF/spring/root-context.xml
+			/WEB-INF/spring/spring-security.xml <!-- 암호화 관련 파일 -->
 		</param-value>
 	</context-param>
 	
