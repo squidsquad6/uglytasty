@@ -226,7 +226,7 @@
                     <tr>
                         <td>
                             <div class="sns-login-link" id="sns_login_naver">
-                                <a href="#">
+                                 <a href="javascript:void(0);" onclick="loginWithNaver()">
                                     <img src="https://owzl.github.io/btn_naver.svg" width="40px">
                                     네이버로 로그인 하기
                                 </a>
@@ -256,6 +256,32 @@
         </div>
         <br><br>
     </div>
+    
+    <script>
+		function loginWithNaver() {
+		   
+		    $.ajax({
+		        type: "GET",
+		        url: "generateState.me",
+		        success: function(state) {
+		           
+		            var clientId = "qx5GJFsGBjihBcvVb7EK";
+		            var redirectUri = "http://localhost:8008/uglytasty/oauth2/naver"; 
+		
+		           
+		            var naverLoginUrl = "https://nid.naver.com/oauth2.0/authorize"
+		                + "?client_id=" + clientId
+		                + "&response_type=code"
+		                + "&redirect_uri=" + redirectUri
+		                + "&state=" + state;
+		
+		            
+		            window.location.href = naverLoginUrl;
+		        }
+		    });
+		}
+		</script>
+    
     
 </body>
 

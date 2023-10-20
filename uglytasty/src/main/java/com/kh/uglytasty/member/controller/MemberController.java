@@ -1,5 +1,7 @@
 package com.kh.uglytasty.member.controller;
 
+import java.math.BigInteger;
+import java.security.SecureRandom;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -45,6 +47,56 @@ public class MemberController {
 	      return "redirect:/";   }
 	
 
+	@RequestMapping(value="oauth2/naver", produces="application/json")
+	public String naverLogin(@RequestParam String code,String state, Model model,HttpSession session) {
+		
+		
+		Map<String,Object> result = mService.getNaverAccessToken(code, state);
+		
+		JsonNode userInfo = (JsonNode) result.get("userInfo");
+		String userId = userInfo.get("response").get("id").asText();
+		String email = userInfo.get("response").get("email").asText();
+		String phone = userInfo.get("response").get("mobile").asText();
+		String userName = userInfo.get("response").get("name").asText();
+		String accessToken = (String) result.get("accessToken");
+		String userPwd = "naver";
+		    
+		
+		
+		Member loginMember = mService.checkMemberByNaver(userId);
+		     
+		     if(loginMember == null) { 
+					
+					
+					model.addAttribute("userId", userId + "nvr");
+					model.addAttribute("userName", userName);
+					model.addAttribute("phone", phone);
+					model.addAttribute("email", email);
+					model.addAttribute("userPwd", userPwd);
+				
+					
+					return "member/memberEnrollForm";
+					
+				}else { 
+					// 로그인 성공 => loginMember를 sessionScope에 담고 메인페이지 url 재요청
+					
+					// 매개변수에 HttpSession 필요함, 작성해주기
+					session.setAttribute("loginMember", loginMember);
+					
+
+
+					//model.addAttribute("errorMsg", "로그인 성공!");
+					//return "common/errorPage";
+					// sendRedirect
+
+					model.addAttribute("errorMsg", "로그인 성공!");
+
+					return "redirect:/";
+				}
+		
+		
+	}
+	
 	
 	@RequestMapping(value="oauth2", produces = "application/json" )
 	public String googleLogin(@RequestParam String code,Model model, HttpSession session) {
@@ -61,6 +113,7 @@ public class MemberController {
 	     // Extract specific fields from the userInfo JSON
 	     String userId = userInfoNode.get("id").asText();
 	     String userName = userInfoNode.get("name").asText();
+	     String userPwd = "google";
 
 	     // Print accessToken and extracted user information separately
 	     System.out.println("AccessToken: " + accessToken);
@@ -72,7 +125,9 @@ public class MemberController {
 	     if(loginMember == null) { 
 				
 				
-				
+				model.addAttribute("userId", userId + "ggl");
+				model.addAttribute("userName", userName);
+				model.addAttribute("userPwd", userPwd);
 			
 				
 				return "member/memberEnrollForm";
@@ -223,6 +278,21 @@ public class MemberController {
 
 	}
 
+	@ResponseBody
+	@RequestMapping("generateState.me")
+	public String generateState(HttpSession session){
+		
+		
+	    SecureRandom random = new SecureRandom();
+	    String state = new BigInteger(130, random).toString(32);
+	    session.setAttribute("state", state);
+		return state;
+		
+		
+	}
+
+
+	 
 	
 	
 	
