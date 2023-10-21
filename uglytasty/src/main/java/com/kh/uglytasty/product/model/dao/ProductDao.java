@@ -78,4 +78,17 @@ public class ProductDao {
 		return sqlSession.insert("productMapper.insertCart", c);
 	}
 	
+	/*장바구니 리스트 조회*/
+	public ArrayList<Cart> selectCartList(SqlSessionTemplate sqlSession, String userId, int productNo) {
+		return (ArrayList)sqlSession.selectList("productMapper.selectCartList", userId);
+	}
+	
+	/*장바구니 담긴 상품 수*/
+	public int selectCartListCount(SqlSessionTemplate sqlSession, String userId) {
+		return sqlSession.selectOne("productMapper.selectCartListCount", userId);
+	}
+	
+	
+	
+	
 }

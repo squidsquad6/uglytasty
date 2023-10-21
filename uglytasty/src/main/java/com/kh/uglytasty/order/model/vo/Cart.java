@@ -16,5 +16,14 @@ public class Cart {
 	private String userId;
 	private int productNo;
 	private int quantity;
+	
+	private String productName;
+	private int price;
+	private int sale;
+	
+	private int salePrice;
+	
+	private String changeName;
+	private int fileLevel;
 
 }

@@ -56,7 +56,11 @@ public interface ProductService {
 	// 장바구니 추가용 서비스 (ajax)
 	int insertCart(Cart c);
 	
+	// 장바구니 리스트 조회용
+	ArrayList<Cart> selectCartList(String userId, int productNo);
 	
+	// 장바구니 담긴 상품 수
+	int selectCartListCount(String userId);
 	
 	
 
