@@ -98,4 +98,12 @@ public class QAServiceImpl implements QAService {
 		return qDao.deleteQA(sqlSession, qaNo);
 	}
 
+	/**
+	 * 1:1 문의 수정 메소드
+	 */
+	@Override
+	public int updateQA(QA qa) {
+		return qDao.updateQA(sqlSession, qa);
+	}
+
 }
