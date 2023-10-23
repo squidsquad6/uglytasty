@@ -29,6 +29,9 @@ public interface QAService {
 	// 6. 1:1 문의 상세 조회
 	QA selectDetail(int qaNo);
 	
+	// 7. 1:1 문의 등록
+	int insertQA(QA qa);
+	
 	
 	
 }

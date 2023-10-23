@@ -95,8 +95,24 @@ public class QADao {
 		return (ArrayList)sqlSession.selectList("qaMapper.ajaxSelctQAList", map);
 	}
 
+	/**
+	 * 1:1 문의 상세 조회 메소드
+	 * @param sqlSession
+	 * @param qaNo
+	 * @return
+	 */
 	public QA selectDetail(SqlSessionTemplate sqlSession, int qaNo) {
 		return sqlSession.selectOne("qaMapper.selectDetail", qaNo);
+	}
+
+	/**
+	 * 1:1 문의 등록 메소드
+	 * @param sqlSession
+	 * @param qa
+	 * @return
+	 */
+	public int insertQA(SqlSessionTemplate sqlSession, QA qa) {
+		return sqlSession.insert("qaMapper.insertQA", qa);
 	}
 
 	

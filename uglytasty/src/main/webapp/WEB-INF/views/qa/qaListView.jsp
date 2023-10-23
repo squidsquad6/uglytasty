@@ -349,6 +349,10 @@
             	location.href = "detail.qa?qaNo=" + qaNo;
             })
             
+            $(".enrollBtn").click(()=>{
+            	location.href="enrollForm.qa";
+            })
+            
            
         });
     </script>
