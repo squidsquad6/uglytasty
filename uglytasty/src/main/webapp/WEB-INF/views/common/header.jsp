@@ -9,9 +9,16 @@
 
 
 
-   <!-- Alertify -->
-   <!-- JavaScript -->
-   <script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
+	<!-- Alertify -->
+	<!-- JavaScript -->
+	<script src="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/alertify.min.js"></script>
+
+	<!-- CSS -->
+	<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/alertify.min.css"/>
+	<!-- Default theme -->
+	<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/default.min.css"/>
+	<!-- Semantic UI theme -->
+	<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/alertifyjs@1.13.1/build/css/themes/semantic.min.css"/>
     <!-- Latest compiled and minified CSS -->
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
@@ -142,7 +149,7 @@
 
    <c:if test="${ not empty alertMsg }">
       <script>
-         alertify.alert("${ alertMsg }");
+         alertify.alert("🔔알립니다!딸랑!🔔","${ alertMsg }");
       </script>
       <c:remove var="alertMsg" scope="session"/>
    </c:if>

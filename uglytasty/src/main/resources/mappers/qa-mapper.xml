@@ -162,6 +162,25 @@
 		   and qa_no = #{qaNo}
 	</select>
 	
+	<insert id="insertQA">
+	insert
+	  into qa
+	     (
+	        qa_no
+	      , qa_category
+	      , user_id
+	      , q_title
+	      , q_content
+	      )
+	      values
+	      (
+	        seq_qa_no.nextval
+	      , #{qaCategory}
+	      , #{userId}
+	      , #{qaTitle}
+	      , #{qaContent}
+	      )
+	</insert>
 	
 
 </mapper>

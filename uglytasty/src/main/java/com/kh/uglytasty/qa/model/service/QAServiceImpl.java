@@ -67,16 +67,27 @@ public class QAServiceImpl implements QAService {
 	}
 
 	/**
-	 * 1: 1 문의 카테고리별 목록 조회 메소드
+	 * 1:1 문의 카테고리별 목록 조회 메소드
 	 */
 	@Override
 	public ArrayList<QA> ajaxSelctQAList(HashMap<String, String> map, PageInfo pi) {
 		return qDao.ajaxSelctQAList(sqlSession, map, pi);
 	}
 
+	/**
+	 * 1:1 문의 상세 조회 메소드
+	 */
 	@Override
 	public QA selectDetail(int qaNo) {
 		return qDao.selectDetail(sqlSession, qaNo);
+	}
+
+	/**
+	 * 1:1 문의 등록 메소드
+	 */
+	@Override
+	public int insertQA(QA qa) {
+		return qDao.insertQA(sqlSession, qa);
 	}
 
 }

@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.google.gson.Gson;
 import com.kh.uglytasty.common.model.vo.PageInfo;
@@ -124,6 +125,12 @@ public class QAController {
 		return new Gson().toJson(list);
 	}
 	
+	/**
+	 * 1:1 문의 상세 조회 메소드
+	 * @param qaNo
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping("detail.qa")
 	public String selectDetail(int qaNo, Model model) {
 		
@@ -131,6 +138,32 @@ public class QAController {
 		model.addAttribute("qa", qa);
 		
 		return "qa/qaDetailView";
+		
+	}
+	
+	/**
+	 * 1:1 문의 게시글 등록폼 조회 메소드
+	 * @return
+	 */
+	@RequestMapping("enrollForm.qa")
+	public String enrllForm() {
+		return "qa/qaEnrollForm";
+	}
+	
+	@RequestMapping("insert.qa")
+	public String insertQA(QA qa, HttpSession sesion, Model model) {
+		
+		int result = qService.insertQA(qa);
+		if(result > 0) {
+			// 게시글 등록 성공
+			sesion.setAttribute("alertMsg", "1:1 문의가 성공적으로 등록 되었습니다!");
+			return "redirect:list.qa";
+		}else {
+			// 게시글 등록 실패
+			model.addAttribute("errorMsg", "1:1 문의 등록에 실패하였습니다!");
+			return "common/errorPage";
+			
+		}
 		
 	}
 	
