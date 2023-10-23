@@ -407,56 +407,25 @@ public class ProductController {
    
    @ResponseBody
    @RequestMapping("delete.cart")
-   public String ajaxDeleteCart(String userId, String deletePno1, String deletePno2, String deletePno3, String deletePno4, String deletePno5) {
-       /*
-	   System.out.println(userId);     
-       System.out.println(deletePno1);
-       System.out.println(deletePno2);
-       System.out.println(deletePno3);
-       System.out.println(deletePno4);
-       System.out.println(deletePno5);
-       */
-       
-       
-       ArrayList<String> deletePnoList = new ArrayList<String>();
-       
-       if(deletePno1 != null) {
-    	   deletePnoList.add(deletePno1);
-       }
-       if(deletePno2 != null) {
-    	   deletePnoList.add(deletePno2);
-       }
-       if(deletePno3 != null) {
-    	   deletePnoList.add(deletePno3);
-       }
-       if(deletePno4 != null) {
-    	   deletePnoList.add(deletePno4);
-       }
-       if(deletePno5 != null) {
-    	   deletePnoList.add(deletePno5);
-       }
-       
-       System.out.println("deletePnoList : " + deletePnoList);	// [24, 23, 22, ..]
- 
-       
-       // -----------장바구니 상품 삭제위한 delCart : 삭제할 pno담은 new Cart객체 / 그걸 모아둔 clist
+   public String ajaxDeleteCart(String userId, String[] productNo) {
     
+      System.out.println("c : " + productNo.length);
        
+
 	   ArrayList<Cart> clist = new ArrayList<Cart>();
 	
-	   for(int i=0; i<deletePnoList.size(); i++) {
-
+	   for(int i=0; i<productNo.length; i++) {
+		   
 	         Cart delCart = new Cart();
 	         
 	         delCart.setUserId(userId);
-	         int productNo = Integer.parseInt(deletePnoList.get(i)); // productNo 파싱
-	         delCart.setProductNo(productNo);
+	         delCart.setProductNo(Integer.parseInt(productNo[i]));
 
 	         clist.add(delCart);
 	      
 	    }
 	    
-	   //System.out.println("clist" + clist);
+	   System.out.println("clist : " + clist);
         
 	   // 준비 끝........서비스로..
 	   int result = pService.deleteCartProduct(clist);

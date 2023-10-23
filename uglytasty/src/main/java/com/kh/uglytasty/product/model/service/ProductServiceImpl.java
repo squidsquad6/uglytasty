@@ -197,20 +197,22 @@ public class ProductServiceImpl implements ProductService {
 		
 		int result = 0;
 		
-		for(int i=0; i<clist.size(); i++) {
+		for(Cart c : clist) {
 				// *** 여기서 성공하면 밑 deleteCart() 호출 / 매개변수로 Cart객체 하나씩 보내 ***
-			 	result = deleteCart(clist.get(i));
+			 	result += pDao.deleteCart(sqlSession, c);
 			}
-
+		System.out.println("s의 result : " + result);
+		
 		return result;
 	}
 
-	/*장바구니 선택삭제 2) 여러번 호출당할 애*/
+	/*
+
 	@Override
 	public int deleteCart(Cart c) {
 		return pDao.deleteCart(sqlSession, c);
 	}
-
+*/
 
 	
 

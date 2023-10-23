@@ -337,6 +337,7 @@
 		delete
 		  from Cart
 		 where product_No = #{productNo}
+		   and user_id = #{userId}
 	</delete>
 
 

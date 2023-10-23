@@ -142,7 +142,7 @@
 
             <br>
             
-            <input type="button" value="선택삭제" class="btn btn-outline-info" onclick="deleteCheck();">
+            
             <div class="allselect">
                 <input type="checkbox" name="1" onclick='selectAll(this)'><span> 전체 선택</span>
             </div>
@@ -164,7 +164,7 @@
 				<!-- forEach 구문에서 <tr id="1,2,.."> 추가시키기 위해 숫자가 필요할 때 set -->
 				<c:set var="rowCounter" value="1" scope="page"/>
 
-				<c:forEach var="c" items="${cartlist}">
+				<c:forEach var="c" items="${cartlist}">			
 				    <tr id="<c:out value="${rowCounter}" />">
 				        <td><input type="checkbox" name="rowCheck" value="${ c.productNo }"></td>
 	                    <td>
@@ -194,8 +194,11 @@
             </table>
 
 
-            <hr><br><br>
-
+            <hr>
+			<input type="button" value="선택삭제" class="btn btn-outline-danger" onclick="deleteCheck();" style="margin-left:15px;">
+			<br><br><br><br>
+			
+			
             <h2>💳 결제 정보</h2><br>
             <table id="paymentInfo">
                 
@@ -247,13 +250,10 @@
                
                 $.ajax({
                     url: "delete.cart",
+                    traditional: true,
                     data: {
                         userId:'${ loginMember.userId }',
-                        deletePno1: deleteArr[0],
-                        deletePno2: deleteArr[1],
-                        deletePno3: deleteArr[2],
-                        deletePno4: deleteArr[3],
-                        deletePno5: deleteArr[4]
+                        productNo: deleteArr //배열로 넘긴다
                     },
                     success: function(result) {
                         if(result == "success"){
@@ -361,13 +361,17 @@
             let amountVal = parseInt(row.querySelector("input[name='amount']").value);
 
             // 초기값 설정
-            sum.value = priceVal * amountVal;
+            sum.value = (priceVal * amountVal).toLocaleString("ko-KR");
+            
+           
 
             calculatedValue += priceVal * amountVal;
+            
+            
         }
 
         const totalPriceElement = document.getElementById('totalPrice');
-        totalPriceElement.value = calculatedValue; // 값을 input 요소의 value에 설정
+        totalPriceElement.value = calculatedValue.toLocaleString("ko-KR"); 	// 값을 input 요소의 value에 설정
 
         // (+) 또는 (-) 버튼 클릭 시 totalPrice 업데이트
         for (let i = 1; i <= cartlist.length; i++) {
@@ -401,7 +405,7 @@
 	                let max = cartlist[i-1].stock;
                 	if(amountVal < max) {
 	                    amountVal++;
-	                    sum.value = amountVal * priceVal;
+	                    sum.value = (amountVal * priceVal).toLocaleString("ko-KR");
 	                    amount.value = amountVal;
 	                    updateTotalPrice();
                 	}
@@ -421,7 +425,7 @@
                     let priceVal = parseInt(sellPrice.value);
                     if (amountVal > 1) {
                         amountVal--;
-                        sum.value = amountVal * priceVal;
+                        sum.value = (amountVal * priceVal).toLocaleString("ko-KR");
                         amount.value = amountVal;
                         updateTotalPrice();
                     } else {
@@ -431,7 +435,7 @@
                         add.disabled = false; // 수량이 재고 미만이면 "+" 버튼을 다시 활성화
                     }
                     if (amountVal = 1) {
-                    	minus.disabled = true; // 수량이 1일 경우 더이상 "-" 버튼 못누르도록 비활성화
+                    	minus.disabled = false; // 수량이 1일 경우 더이상 "-" 버튼 못누르도록 비활성화
                     }
                 });
             }
@@ -442,7 +446,7 @@
 
             for (let i = 1; i <= cartlist.length; i++) {
                 const priceElement = document.getElementById(i).querySelector("input[name='sum']");
-                const price = parseInt(priceElement.value);
+                const price = parseInt(priceElement.value.replace(/,/g, ''));
                 calculatedValue += price;
             }
 			
@@ -454,9 +458,11 @@
 			*/
 			
             const totalPriceElement = document.getElementById('totalPrice');
-            totalPriceElement.value = calculatedValue;
+			
+            totalPriceElement.value = calculatedValue.toLocaleString("ko-KR");
         }
         
+       
 
         
     </script>

@@ -72,7 +72,7 @@ public interface ProductService {
 	int deleteCartProduct(ArrayList<Cart> clist);
 	
 	// 장바구니 선택삭제 1)
-	int deleteCart(Cart c);
+	//int deleteCart(Cart c);
 	
 	
 	
