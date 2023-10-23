@@ -4,7 +4,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
 
 <!-- 
-	cartlist : 회원아이디, 상품번호, 수량 / 상품명, 가격, 할인율 / sale_price / change_name, file_level
+	cartlist : 회원아이디, 상품번호, 담은수량(quantity) / 상품명, 재고수량(stock), 가격, 할인율 / sale_price / change_name, file_level
 	
 	cartListCount : 장바구니 담긴 상품 수
  -->
@@ -94,8 +94,8 @@
         /* width: 100px; */
         color: #ff6741;
         font-weight: bold;
-        font-size: 18px;
-        padding-left: 185px;
+        font-size: 25px;
+        padding-left: 100px;
         text-align: right;
         border: none;
     }
@@ -126,19 +126,23 @@
 </head>
 <body>
 
+	<!-- 헤더 -->
+    <jsp:include page="../common/header.jsp"/>
+
 	<div class="all">
         
         <form id="order" action="">
-            
-            <h1>🛒 장바구니에 담긴 상품 리스트</h1>
+            <br><br>
+            <h2>🛒 장바구니에 담긴 상품 리스트</h2>
             
             <br><br>
 
-            <span style="font-size: 20px; font-weight: bold; padding-left: 30px;">담긴 상품</span>
+            <span style="font-size: 20px; font-weight: bold; padding-left: 20px;">담긴 상품</span>
             <span style="font-size: 20px; font-weight: bold; color: #ff6741;">${ cartListCount }</span><br><br>
 
             <br>
             
+            <input type="button" value="선택삭제" class="btn btn-outline-info" onclick="deleteCheck();">
             <div class="allselect">
                 <input type="checkbox" name="1" onclick='selectAll(this)'><span> 전체 선택</span>
             </div>
@@ -148,13 +152,13 @@
             <table id="productInfo">
                 <tr>
                     <th></th>
-                    <th>상품 사진</th>
-                    <th width="300px;">상품명</th>
-                    <th>수량</th>
-                    <th>판매가</th>
-                    <th>할인</th>
-                    <th>배송비</th>
-                    <th style="padding-left: 100px;">소계</th>
+                    <th style="padding-left: 30px;">상품 사진</th>
+                    <th style="padding-left: 135px; width:300px;">상품명</th>
+                    <th style="padding-left: 51px;">수량</th>
+                    <th style="padding-left: 15px;">판매가</th>
+                    <th style="padding-left: 15px;">할인</th>
+                    <th style="padding-left: 15px;">배송비</th>
+                    <th style="padding-left: 120px;">소계</th>
                 </tr>
            
 				<!-- forEach 구문에서 <tr id="1,2,.."> 추가시키기 위해 숫자가 필요할 때 set -->
@@ -162,7 +166,7 @@
 
 				<c:forEach var="c" items="${cartlist}">
 				    <tr id="<c:out value="${rowCounter}" />">
-				        <td><input type="checkbox" name="ch"></td>
+				        <td><input type="checkbox" name="rowCheck" value="${ c.productNo }"></td>
 	                    <td>
 	                        <a href="#">
 	                            <img style="width: 100px; height: 100px;" src="${ c.changeName }">
@@ -172,9 +176,9 @@
 	                    <td>             
 	                        <!--(+)(-)버튼 : 재고량에 따른 분기처리하기-->
 	                        <input type="hidden" id="sell_price" name="sell_price" value="${ c.salePrice }">
-	                        <input type="button" id="add" value=" + " name="add">
+	                        <input type="button" id="add" value=" + " name="add" onclick="addQuantity('${c.productNo}')">
 	                        <input type="text" id="amount" name="amount" value="${ c.quantity }" readonly>
-	                        <input type="button" id="minus" value=" - " name="minus"><br>
+	                        <input type="button" id="minus" value=" - " name="minus" onclick="minusQuantity('${c.productNo}')"><br>
 	                    </td>
 	                    <td style="text-decoration: line-through;">${ c.price }</td>
 	                    <td>${ c.sale }%</td>
@@ -190,14 +194,14 @@
             </table>
 
 
-            <hr><br>
+            <hr><br><br>
 
-            <h1>💳 결제 정보</h1><br>
+            <h2>💳 결제 정보</h2><br>
             <table id="paymentInfo">
                 
                 <!-- 넘길 값 -->
                 <tr id="finalPrice">
-                    <td width="500" >총 결제 금액</td><span></span>
+                    <td width="500" style="font-size:20px;">총 결제 금액</td><span></span>
                     <td><input type="text" id="totalPrice" name="" value="" class="comma">원</td>
                 </tr>
                 <tr>
@@ -218,24 +222,123 @@
      <!--checkBox 전체선택 / 전체해제-->
     <script>
         function selectAll(selectAll)  {
-            const checkboxes = document.getElementsByName('ch');
+            const checkboxes = document.getElementsByName('rowCheck');
             
             checkboxes.forEach((cBox) => {
             cBox.checked = selectAll.checked; // <= true false
             })
         }
     </script>
+       <script>
+        function deleteCheck() {
+     
+            var deleteArr = [];
+            $("input[name='rowCheck']:checked").each(function() {
+                //console.log($(this).val());
+                deleteArr.push($(this).val()); // 선택한 체크박스의 productNo
+            });
+            console.log(deleteArr);
+            //console.log(deleteArr[0]);
+            //console.log(deleteArr[1]);
+    
+            if (deleteArr.length == 0) {
+                alert("삭제하실 상품을 선택해주세요.");
+            } else {
+               
+                $.ajax({
+                    url: "delete.cart",
+                    data: {
+                        userId:'${ loginMember.userId }',
+                        deletePno1: deleteArr[0],
+                        deletePno2: deleteArr[1],
+                        deletePno3: deleteArr[2],
+                        deletePno4: deleteArr[3],
+                        deletePno5: deleteArr[4]
+                    },
+                    success: function(result) {
+                        if(result == "success"){
+                            
+                            console.log(result);
+                            // 성공 후 새로고침
+                            document.location.reload();
+                         }
+                    },
+                    error: function() {
+                        console.log("장바구니 상품 삭제 ajax 요청 실패!");
+                    }
+                });
+            
+            }
+
+        }
+    </script>
+    
+    
+    
+    <!-- +/- 변화에 따른 DB update -->
+    <script>
+    	function addQuantity(productNo) {
+    		
+    		$.ajax({
+    			url:"updateAdd.quan",
+    			data:{
+    				userId:'${ loginMember.userId }',
+    				pno: productNo
+    			},
+    			success:function(result){
+    				if(result == "success"){
+    					
+                        console.log(result);
+                        
+                     }
+    			},
+    			error:function(){
+    				console.log("장바구니 수량 추가용 ajax 요청 실패!");
+    			}
+    			
+    		})
+
+    	}	
+    </script>
+    <script>
+    	function minusQuantity(productNo) {
+    		
+    		$.ajax({
+    			url:"updateMinus.quan",
+    			data:{
+    				userId:'${ loginMember.userId }',
+    				pno: productNo
+    			},
+    			success:function(result){
+    				if(result == "success"){
+    					
+                        console.log(result);
+                        
+                     }
+    			},
+    			error:function(){
+    				console.log("장바구니 수량 빼기용 ajax 요청 실패!");
+    			}
+    			
+    		})
+
+    	}	
+    </script>
+    
+    
+    
     
     
     
     <!-- (cartlist.length) 만큼 for문 돌려서 수량 +/- 변화에 따른 sum 값 변화 + 총 반영한 totalPrice 찍힘 -->
     <script>
     
-    	// *** javaScript 에서는 jsp의 를 바로 사용할 수 없어서 'var cartlist = []' 를 선언해두고 사용해야 함 ***
+    	// *** javaScript 에서는 jsp의 '달러중괄호' 를 바로 사용할 수 없어서 'var cartlist = []' 를 선언해두고 사용해야 함 ***
 	    var cartlist = [
-	        <c:forEach items="${cartlist}" var="cartItem" varStatus="status">
+	        <c:forEach var="cartItem" items="${cartlist}" varStatus="status">
 	            {
 	                productName: '<c:out value="${cartItem.productName}"/>',
+	                stock: '<c:out value="${cartItem.stock}"/>',
 	                salePrice: <c:out value="${cartItem.salePrice}"/>,
 	                quantity: <c:out value="${cartItem.quantity}"/>,
 	                price: <c:out value="${cartItem.price}"/>,
@@ -276,6 +379,7 @@
             const sum = row.querySelector("input[name='sum']");
 			
             // (+)
+            /*
             if (add) {
                 add.addEventListener('click', function () {
                     let amountVal = parseInt(amount.value);
@@ -286,6 +390,29 @@
                     updateTotalPrice();
                 });
             }
+            */
+            
+            // *** 재고수량(stack)에 따른 '+' max값 걸기 + 버튼 비활성화
+            if (add) {
+                add.addEventListener('click', function () {
+	                let amountVal = parseInt(amount.value);
+	                let priceVal = parseInt(sellPrice.value);
+                	
+	                let max = cartlist[i-1].stock;
+                	if(amountVal < max) {
+	                    amountVal++;
+	                    sum.value = amountVal * priceVal;
+	                    amount.value = amountVal;
+	                    updateTotalPrice();
+                	}
+                	
+                	if (amountVal >= max) {
+                        add.disabled = true; // 수량이 재고를 초과하면 "+" 버튼 비활성화
+                    }
+                	minus.disabled = false; // "-" 버튼 활성화
+                });
+            }
+
 
 			// (-)
             if (minus) {
@@ -300,6 +427,12 @@
                     } else {
                         amountVal = 1;
                     }
+                    if (amountVal < cartlist[i - 1].stock) {
+                        add.disabled = false; // 수량이 재고 미만이면 "+" 버튼을 다시 활성화
+                    }
+                    if (amountVal = 1) {
+                    	minus.disabled = true; // 수량이 1일 경우 더이상 "-" 버튼 못누르도록 비활성화
+                    }
                 });
             }
         }
@@ -312,11 +445,20 @@
                 const price = parseInt(priceElement.value);
                 calculatedValue += price;
             }
-
+			
+            // 총액에 배송비 추가
+			/*
+            const deleveryElement = document.getElementById('delevery');
+            const delevery = parseInt(deleveryElement.value);
+            calculatedValue += delevery;
+			*/
+			
             const totalPriceElement = document.getElementById('totalPrice');
             totalPriceElement.value = calculatedValue;
-            
         }
+        
+
+        
     </script>
 
    

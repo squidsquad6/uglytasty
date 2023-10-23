@@ -79,7 +79,7 @@ public class ProductDao {
 	}
 	
 	/*장바구니 리스트 조회*/
-	public ArrayList<Cart> selectCartList(SqlSessionTemplate sqlSession, String userId, int productNo) {
+	public ArrayList<Cart> selectCartList(SqlSessionTemplate sqlSession, String userId) {
 		return (ArrayList)sqlSession.selectList("productMapper.selectCartList", userId);
 	}
 	
@@ -88,6 +88,22 @@ public class ProductDao {
 		return sqlSession.selectOne("productMapper.selectCartListCount", userId);
 	}
 	
+	/*장바구니 수량 추가*/
+	public int updateAddQuantity(SqlSessionTemplate sqlSession, Cart c) {
+		return sqlSession.update("productMapper.updateAddQuantity", c);
+	}
+	
+	/*장바구니 수량 빼기*/
+	public int updateMinusQuantity(SqlSessionTemplate sqlSession, Cart c) {
+		return sqlSession.update("productMapper.updateMinusQuantity", c);
+	}
+	
+	/*장바구니 선택삭제*/
+	public int deleteCart(SqlSessionTemplate sqlSession, Cart c) {
+		return sqlSession.delete("productMapper.deleteCart", c);
+	}
+	
+
 	
 	
 	

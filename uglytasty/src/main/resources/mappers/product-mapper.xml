@@ -32,6 +32,7 @@
 		<result column="quantity" property="quantity" />
 	
 		<result column="product_name" property="productName" />
+		<result column="stock" property="stock" />
 		<result column="price" property="price" />
 		<result column="sale" property="sale" />
 
@@ -296,6 +297,7 @@
 		      , product_no
 		      , quantity
 		      , product_name
+              , stock
 		      , price
 		      , sale
 		      , round(price - (price * (sale / 100))) as "sale_price"
@@ -316,5 +318,28 @@
 		  from cart
 		 where user_id = #{userId}
 	</select>
+	
+	<update id="updateAddQuantity">
+		update cart
+		   set quantity = quantity + 1
+		 where user_id = #{userId}
+		   and product_no = #{productNo}
+	</update>
+	
+	<update id="updateMinusQuantity">
+		update cart
+		   set quantity = quantity - 1
+		 where user_id = #{userId}
+		   and product_no = #{productNo}
+	</update>
+
+	<delete id="deleteCart">
+		delete
+		  from Cart
+		 where product_No = #{productNo}
+	</delete>
+
+
+
 
 </mapper>

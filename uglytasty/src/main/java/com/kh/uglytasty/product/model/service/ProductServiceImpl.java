@@ -168,8 +168,8 @@ public class ProductServiceImpl implements ProductService {
 
 	/*장바구니 리스트 조회*/
 	@Override
-	public ArrayList<Cart> selectCartList(String userId, int productNo) {
-		return pDao.selectCartList(sqlSession, userId, productNo);
+	public ArrayList<Cart> selectCartList(String userId) {
+		return pDao.selectCartList(sqlSession, userId);
 	}
 	
 	/*장바구니 담긴 상품 수*/
@@ -177,7 +177,39 @@ public class ProductServiceImpl implements ProductService {
 	public int selectCartListCount(String userId) {
 		return pDao.selectCartListCount(sqlSession, userId);
 	}
+	
+	/*장바구니 수량 추가*/
+	@Override
+	public int updateAddQuantity(Cart c) {
+		return pDao.updateAddQuantity(sqlSession, c);
+	}
 
+	/*장바구니 수량 빼기*/
+	@Override
+	public int updateMinusQuantity(Cart c) {
+		return pDao.updateMinusQuantity(sqlSession, c);
+	}
+
+	
+	/*장바구니 선택삭제 1)*/
+	@Override
+	public int deleteCartProduct(ArrayList<Cart> clist) {	// productNo 각각 담긴 Cart객체들 모음집
+		
+		int result = 0;
+		
+		for(int i=0; i<clist.size(); i++) {
+				// *** 여기서 성공하면 밑 deleteCart() 호출 / 매개변수로 Cart객체 하나씩 보내 ***
+			 	result = deleteCart(clist.get(i));
+			}
+
+		return result;
+	}
+
+	/*장바구니 선택삭제 2) 여러번 호출당할 애*/
+	@Override
+	public int deleteCart(Cart c) {
+		return pDao.deleteCart(sqlSession, c);
+	}
 
 
 	

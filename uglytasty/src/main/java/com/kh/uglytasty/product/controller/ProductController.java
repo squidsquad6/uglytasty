@@ -12,7 +12,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -100,7 +102,7 @@ public class ProductController {
       if(result > 0) {
          ArrayList<Product> plist = pService.selectDetailProduct(pno);
          
-         System.out.println("상품의 상세정보 : " + plist);
+         System.out.println("상품의 상세정보(plist) : " + plist);
          
          model.addAttribute("plist", plist);
          return "product/productDetailView";
@@ -341,23 +343,129 @@ public class ProductController {
    }
    */
    
+   
    /** 장바구니 리스트 조회 ( + 장바구니 담긴 상품 수)
 	* 
     */
    @RequestMapping("list.cart")
-   public String selectCartList(String userId, int productNo, Model model) {
+   public String selectCartList(String userId, Model model) {
 	   //System.out.println(userId);
 	   //System.out.println(productNo);
 	   
 	   int cartListCount = pService.selectCartListCount(userId);
 	   model.addAttribute("cartListCount", cartListCount);
 	   
-	   ArrayList<Cart> cartlist = pService.selectCartList(userId, productNo);
+	   ArrayList<Cart> cartlist = pService.selectCartList(userId);
 	   model.addAttribute("cartlist", cartlist);
+	   System.out.println("장바구니 상품(cartlist) : " + cartlist);
 	   
 	   return "order/cartListForm";
 	   
    }
+   
+   
+   /** 장바구니 수량 추가
+	*
+	*/
+   @ResponseBody
+   @RequestMapping("updateAdd.quan")
+   public String ajaxUpdateAddQuantity(String userId, int pno) {
+	   
+	   //System.out.println("add : " + userId);
+	   //System.out.println("add : " + pno);
+	   Cart c = new Cart();
+	   c.setUserId(userId);
+	   c.setProductNo(pno);
+  
+	   int result = pService.updateAddQuantity(c);
+	   System.out.println("추가 결과 : " + result);
+	   
+	   return result>0 ? "success" : "fail";
+	   
+   }
+   
+   /** 장바구니 수량 빼기
+    *
+    */
+   @ResponseBody
+   @RequestMapping("updateMinus.quan")
+   public String ajaxUpdateMinusQuantity(String userId, int pno) {
+	   
+	   //System.out.println("add : " + userId);
+	   //System.out.println("add : " + pno);
+	   Cart c = new Cart();
+	   c.setUserId(userId);
+	   c.setProductNo(pno);
+	   
+	   int result = pService.updateMinusQuantity(c);
+	   System.out.println("빼기 결과 : " + result);
+	   
+	   return result>0 ? "success" : "fail";
+	   
+   }
+   
+   
+   @ResponseBody
+   @RequestMapping("delete.cart")
+   public String ajaxDeleteCart(String userId, String deletePno1, String deletePno2, String deletePno3, String deletePno4, String deletePno5) {
+       /*
+	   System.out.println(userId);     
+       System.out.println(deletePno1);
+       System.out.println(deletePno2);
+       System.out.println(deletePno3);
+       System.out.println(deletePno4);
+       System.out.println(deletePno5);
+       */
+       
+       
+       ArrayList<String> deletePnoList = new ArrayList<String>();
+       
+       if(deletePno1 != null) {
+    	   deletePnoList.add(deletePno1);
+       }
+       if(deletePno2 != null) {
+    	   deletePnoList.add(deletePno2);
+       }
+       if(deletePno3 != null) {
+    	   deletePnoList.add(deletePno3);
+       }
+       if(deletePno4 != null) {
+    	   deletePnoList.add(deletePno4);
+       }
+       if(deletePno5 != null) {
+    	   deletePnoList.add(deletePno5);
+       }
+       
+       System.out.println("deletePnoList : " + deletePnoList);	// [24, 23, 22, ..]
+ 
+       
+       // -----------장바구니 상품 삭제위한 delCart : 삭제할 pno담은 new Cart객체 / 그걸 모아둔 clist
+    
+       
+	   ArrayList<Cart> clist = new ArrayList<Cart>();
+	
+	   for(int i=0; i<deletePnoList.size(); i++) {
+
+	         Cart delCart = new Cart();
+	         
+	         delCart.setUserId(userId);
+	         int productNo = Integer.parseInt(deletePnoList.get(i)); // productNo 파싱
+	         delCart.setProductNo(productNo);
+
+	         clist.add(delCart);
+	      
+	    }
+	    
+	   //System.out.println("clist" + clist);
+        
+	   // 준비 끝........서비스로..
+	   int result = pService.deleteCartProduct(clist);
+    
+	   return result>0 ? "success" : "fail";
+ 
+   }
+
+   
    
    
 }

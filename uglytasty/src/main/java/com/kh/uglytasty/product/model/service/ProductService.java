@@ -57,13 +57,25 @@ public interface ProductService {
 	int insertCart(Cart c);
 	
 	// 장바구니 리스트 조회용
-	ArrayList<Cart> selectCartList(String userId, int productNo);
+	ArrayList<Cart> selectCartList(String userId);
 	
 	// 장바구니 담긴 상품 수
 	int selectCartListCount(String userId);
 	
+	// 장바구나 수량 추가
+	int updateAddQuantity(Cart c);
 	
-
+	// 장바구니 수량 빼기
+	int updateMinusQuantity(Cart c);
+	
+	// 장바구니 선택삭제 1)
+	int deleteCartProduct(ArrayList<Cart> clist);
+	
+	// 장바구니 선택삭제 1)
+	int deleteCart(Cart c);
+	
+	
+	
 	// 후기댓글 리스트 조회용 서비스 (ajax)
 	ArrayList<Review> selectReviewList(int productNo);
 

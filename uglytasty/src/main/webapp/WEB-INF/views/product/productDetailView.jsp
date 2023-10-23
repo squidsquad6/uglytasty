@@ -356,7 +356,6 @@
 	                                <a href="confirmForm.cart" class="btn btn-warning">장바구니 가기</a>
 	                                 -->
 	                                <input type="hidden" name="userId" value="${ loginMember.userId }">
-	                                <input type="hidden" name="productNo" value="${ plist[0].productNo }">
                             		<input class="btn btn-secondary" data-dismiss="modal" value="쇼핑 계속하기" style="width:130px;">
                             		<input type="submit" class="btn btn-warning" value="장바구니 가기" style="width:130px; color:white;">
                             	</form>
@@ -736,15 +735,15 @@
         
         // *** 재고수량(stock)에 따른 '+' max값 걸기
         if (add) {
-          add.addEventListener('click', function () {
-              let max = ${ plist[0].stock }; // stock
-              if (amountval < max) {
-                  amountval++;
-                  sum.value = amountval * priceval;
-                  amount.value = amountval;
-              }
-          });
-      }
+	        add.addEventListener('click', function () {
+	            let max = ${ plist[0].stock }; // stock
+	            if (amountval < max) {
+	                amountval++;
+	                sum.value = amountval * priceval;
+	                amount.value = amountval;
+	            }
+	        });
+        }
      
      
 
