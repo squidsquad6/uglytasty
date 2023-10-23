@@ -173,7 +173,7 @@ public class MemberServiceImpl implements MemberService{
 		
 		
 		 ResponseEntity<JsonNode> responseEntity = restTemplate.exchange(
-			        "https://kapi.kakao.com/v1/user/access_token_info", HttpMethod.POST, httpEntity, JsonNode.class);
+			        "https://kauth.kakao.com/oauth/token", HttpMethod.POST, httpEntity, JsonNode.class);
 		 
 		  JsonNode responseBody = responseEntity.getBody();
 	      accessToken = responseBody.get("access_token").asText();
@@ -195,8 +195,9 @@ public class MemberServiceImpl implements MemberService{
 	}
 
 	public Member checkMemberByKakao(String userId) {
+		userId = userId + "kko";
 		
-		return null;
+		return mDao.checkMemberByGoogle(sqlSession, userId);
 	}
 
 	

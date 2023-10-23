@@ -159,15 +159,19 @@ public class MemberController {
 	     Map<String, Object> result = mService.getKakaoAccessToken(code);
 	     
 	   
+	     
 	  // Extract accessToken from the result map
 	     String accessToken = (String) result.get("accessToken");
 	     
+	  
+	     
 	     // Extract userInfo from the result map
 	     JsonNode userInfoNode = (JsonNode) result.get("userInfo");
-	     
+	     System.out.println("유저: " + userInfoNode);
 	     // Extract specific fields from the userInfo JSON
 	     String userId = userInfoNode.get("id").asText();
-	     String userName = userInfoNode.get("name").asText();
+	     String userName = userInfoNode.get("properties").get("nickname").asText();
+	     String email = userInfoNode.get("kakao_account").get("email").asText();
 	     String userPwd = "kakao";
 
 	     // Print accessToken and extracted user information separately
@@ -183,6 +187,7 @@ public class MemberController {
 				model.addAttribute("userId", userId + "kko");
 				model.addAttribute("userName", userName);
 				model.addAttribute("userPwd", userPwd);
+				model.addAttribute("email", email);
 			
 				
 				return "member/memberEnrollForm";

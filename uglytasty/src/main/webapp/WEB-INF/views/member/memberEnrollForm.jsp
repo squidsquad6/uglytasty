@@ -244,7 +244,7 @@
                 </div>
 
                 <div id="sns_enroll_kakao" class="sns-enroll-link">
-                    <a href="#">
+                    <a href="https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=e1fdaf851d387ba402c8d1d3a1f2b21d&redirect_uri=http://localhost:8008/uglytasty/oauth2/kakao">
                         <img src="https://d3cpiew7rze14b.cloudfront.net/assets/app/kakao_icon.svg" style="width: 30px;">
                     </a>
                 </div>
@@ -326,42 +326,48 @@
 
                     <tr>
                         <td>
-                            <div class="enrollform_input_label d-flex mb-1">
-                                <div class="mr-auto">이름</div>
-                                <div  id="nameCheckmsg" class="input_label_msg">
-                                    <!-- <img src="https://d3cpiew7rze14b.cloudfront.net/assets/mypage/Creator/Frame_4747__1__8eHPfbDeF.svg" alt=""> -->
-                                    <!-- <span>이름은 2자 이상 입력해주세요.</span> -->
-                                </div>
-                            </div>
-                            <input type="text" class="input-text-style" id="userName" name="userName" placeholder="이름을 입력해주세요" required
-							    <c:if test="${not empty userName}">
-							        value="${userName}" readonly
-							    </c:if>
-							>
+							<c:choose>
+							    <c:when test="${empty userName}">
+							        <div class="enrollform_input_label d-flex mb-1">
+							            <div class="mr-auto">이름</div>
+							            <div  id="nameCheckmsg" class="input_label_msg">
+							                <!-- <img src="https://d3cpiew7rze14b.cloudfront.net/assets/mypage/Creator/Frame_4747__1__8eHPfbDeF.svg" alt=""> -->
+							                <!-- <span>이름은 2자 이상 입력해주세요.</span> -->
+							            </div>
+							        </div>
+							        <input type="text" class="input-text-style" id="userName" name="userName" placeholder="이름을 입력해주세요" required>
+							    </c:when>
+							    <c:otherwise>
+							        <input type="hidden" id="userName" name="userName" value="${userName}">
+							    </c:otherwise>
+							</c:choose>
                         </td>
                     </tr>
 
                     <tr>
                         <td>
-                            <div class="enrollform_input_label d-flex mb-1">
-                                <div class="mr-auto">이메일</div>
-                                <div id="emailCheckmsg" class="input_label_msg">
-                                    <!-- <img src="https://d3cpiew7rze14b.cloudfront.net/assets/mypage/Creator/Frame_4747__1__8eHPfbDeF.svg" alt=""> -->
-                                    <!-- <span>이메일 형식이 올바르지 않습니다.</span> -->
-                                </div>
-                            </div>
-                            <div class="d-flex" style="margin-bottom: 10px;">
-                                <div class="flex-fill" style=" width: 80%; margin-right: 2%;">
-                                    <input type="email" class="input-text-style" id="email" name="email" placeholder="이메일 주소를 입력해주세요" required
-							            <c:if test="${not empty email}">
-							                value="${email}" readonly
-							            </c:if>
-							        >
-                                <div class="flex-fill">
-                                    <input type="button" class="search_confirm_btn" onclick="" value="인증하기">
-                                </div>
-                            </div>
-                           </div> 
+                          <c:choose>
+						    <c:when test="${empty email}">
+						        <div class="enrollform_input_label d-flex mb-1">
+						            <div class="mr-auto">이메일</div>
+						            <div id="emailCheckmsg" class="input_label_msg">
+						                <!-- <img src="https://d3cpiew7rze14b.cloudfront.net/assets/mypage/Creator/Frame_4747__1__8eHPfbDeF.svg" alt=""> -->
+						                <!-- <span>이메일 형식이 올바르지 않습니다.</span> -->
+						            </div>
+						        </div>
+						        <div class="d-flex" style="margin-bottom: 10px;">
+						            <div class="flex-fill" style="width: 80%; margin-right: 2%;">
+						                <input type="email" class="input-text-style" id="email" name="email" placeholder="이메일 주소를 입력해주세요" required>
+						            </div>
+						            <div class="flex-fill">
+						                <input type="button" class="search_confirm_btn" onclick="" value="인증하기">
+						            </div>
+						        </div>
+						    </c:when>
+						    <c:otherwise>
+						        <input type="hidden" id="email" name="email" value="${email}">
+						    </c:otherwise>
+						</c:choose>
                         </td>
                     </tr>
 
@@ -457,6 +463,8 @@
 
 
     </div>
+    
+
 
     <!-- 카카오 주소 조회 API -->
     <!--
