@@ -13,6 +13,7 @@
 		<result column="q_content" property="qaContent"/>
 		<result column="a_content" property="answerContent"/>
 		<result column="a_status" property="answerStatus"/>
+		<result column="qa_category" property="qaCategory"/>
 	</resultMap>
 
 
@@ -152,6 +153,7 @@
 		     , user_id
 		     , a_id
 		     , q_title
+		     , qa_category
 		     , q_content
 		     , a_content
 		     , a_status
@@ -186,6 +188,14 @@
 		update qa
 		   set q_status = 'N'
 		 where qa_no = #{qaNo}  
+	</update>
+	
+	<update id="udpateQA">
+		update qa
+		   set q_title = #{qaTitle}
+		     , qa_category = #{qaCategory}
+		     , q_content = #{qaContent}
+		 where qa_no = #{qaNo}    
 	</update>
 	
 

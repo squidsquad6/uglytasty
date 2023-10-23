@@ -159,7 +159,7 @@
     <jsp:include page="../common/header.jsp"/>
     <div class="qna-wrap" style="max-width: 1020px; margin: 0 auto; padding: 50px 0;">
         <h2>1:1 문의</h2>
-   
+   		<input type="hidden" id="answerContent" value="${qa.answerContent }">
         <ul class="board-list">
             <li>
                 <div class="question-bx">
@@ -222,7 +222,7 @@
             <div class="search-wrap">
                 <a type="button" class="btn1" href="list.qa">목록</a>
                 <a type="button" class="btn1" onclick="deleteQA();">삭제</a>
-                <a type="button" class="btn">수정</a>
+                <a type="button" class="btn"  onclick="updateQA();">수정</a>
             </div>
         </form>
     </div>
@@ -244,6 +244,16 @@
 		    	location.href="delete.qa?qaNo=" + $("#qaNo").val()
 		    }
 	    }
+    	
+    	function updateQA(){
+    		let answerStatus = $("#answerContent").val();
+    		console.log(answerStatus);
+    		if(answerStatus == ''){
+    			location.href= "updateForm.qa?qaNo=" + $("#qaNo").val();
+    		}else{
+    			alertify.alert("🔔알립니다!딸랑!🔔","답변이 등록된 게시글은 수정할 수 없습니다!");
+    		}
+    	}
     </script>
 </body>
 </html>

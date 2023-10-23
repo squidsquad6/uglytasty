@@ -8,6 +8,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -174,6 +175,13 @@ public class QAController {
 		
 	}
 	
+	/**
+	 * 1:1 문의 게시글 삭제
+	 * @param qaNo
+	 * @param session
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping("delete.qa")
 	public String deleteQA(int qaNo, HttpSession session, Model model) {
 		
@@ -184,6 +192,33 @@ public class QAController {
 			return "redirect:list.qa";
 		}else {
 			model.addAttribute("errorMsg", "1:1 문의 삭제에 실패하였습니다!");
+			return "common/errorPage";
+		}
+	}
+	
+	/**
+	 * 1:1 문의 수정폼 조회 메소드
+	 * @param qaNo
+	 * @param model
+	 * @return
+	 */
+	@RequestMapping("updateForm.qa")
+	public String updateForm(int qaNo, Model model) {
+		QA qa = qService.selectDetail(qaNo);
+		model.addAttribute("qa", qa);
+		return "qa/qaUpdateForm";
+	}
+	
+	@RequestMapping("update.qa")
+	public String updateQA(QA qa, Model model) {
+		int result = qService.updateQA(qa);
+		System.out.println(result);
+		if(result > 0) {
+			QA newQA = qService.selectDetail(qa.getQaNo());
+			model.addAttribute("qa", newQA);
+			return "redirect:/detail.qa?qaNo=" + qa.getQaNo();
+		}else {
+			model.addAttribute("errorMsg", "1:1 문의 수정에 실패하였습니다!");
 			return "common/errorPage";
 		}
 	}

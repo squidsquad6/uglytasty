@@ -35,5 +35,8 @@ public interface QAService {
 	// 8. 1:1 문의 삭제
 	int deleteQA(int qaNo);
 	
+	// 9. 1:1 문의 수정
+	int updateQA(QA qa);
+	
 	
 }

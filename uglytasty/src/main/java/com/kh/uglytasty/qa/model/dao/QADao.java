@@ -125,6 +125,17 @@ public class QADao {
 		return sqlSession.update("qaMapper.deleteQA", qaNo);
 	}
 
+	/**
+	 * 1:1 문의 수정 메소드
+	 * @param sqlSession
+	 * @param qaNo
+	 * @return
+	 */
+	public int updateQA(SqlSessionTemplate sqlSession, QA qa) {
+		System.out.println(qa);
+		return sqlSession.update("qaMapper.udpateQA", qa);
+	}
+
 	
 
 }
