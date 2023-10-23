@@ -150,6 +150,13 @@ public class QAController {
 		return "qa/qaEnrollForm";
 	}
 	
+	/**
+	 * 1:1 문의 게시글 등록 메소드
+	 * @param qa
+	 * @param sesion
+	 * @param model
+	 * @return
+	 */
 	@RequestMapping("insert.qa")
 	public String insertQA(QA qa, HttpSession sesion, Model model) {
 		
@@ -165,6 +172,20 @@ public class QAController {
 			
 		}
 		
+	}
+	
+	@RequestMapping("delete.qa")
+	public String deleteQA(int qaNo, HttpSession session, Model model) {
+		
+		int result = qService.deleteQA(qaNo);
+		
+		if(result > 0) {
+			session.setAttribute("alertMsg", "1:1 문의가 성공적으로 삭제됐습니다!");
+			return "redirect:list.qa";
+		}else {
+			model.addAttribute("errorMsg", "1:1 문의 삭제에 실패하였습니다!");
+			return "common/errorPage";
+		}
 	}
 	
 

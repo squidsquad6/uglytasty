@@ -163,24 +163,30 @@
 	</select>
 	
 	<insert id="insertQA">
-	insert
-	  into qa
-	     (
-	        qa_no
-	      , qa_category
-	      , user_id
-	      , q_title
-	      , q_content
-	      )
-	      values
-	      (
-	        seq_qa_no.nextval
-	      , #{qaCategory}
-	      , #{userId}
-	      , #{qaTitle}
-	      , #{qaContent}
-	      )
+		insert
+		  into qa
+		     (
+		        qa_no
+		      , qa_category
+		      , user_id
+		      , q_title
+		      , q_content
+		      )
+		      values
+		      (
+		        seq_qa_no.nextval
+		      , #{qaCategory}
+		      , #{userId}
+		      , #{qaTitle}
+		      , #{qaContent}
+		      )
 	</insert>
+	
+	<update id="deleteQA">
+		update qa
+		   set q_status = 'N'
+		 where qa_no = #{qaNo}  
+	</update>
 	
 
 </mapper>

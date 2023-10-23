@@ -32,5 +32,8 @@ public interface QAService {
 	// 7. 1:1 문의 등록
 	int insertQA(QA qa);
 	
+	// 8. 1:1 문의 삭제
+	int deleteQA(int qaNo);
+	
 	
 }

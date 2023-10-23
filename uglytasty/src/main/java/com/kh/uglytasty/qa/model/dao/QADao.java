@@ -115,6 +115,16 @@ public class QADao {
 		return sqlSession.insert("qaMapper.insertQA", qa);
 	}
 
+	/**
+	 * 1:1 문의 삭제 메소드
+	 * @param sqlSession
+	 * @param qaNo
+	 * @return
+	 */
+	public int deleteQA(SqlSessionTemplate sqlSession, int qaNo) {
+		return sqlSession.update("qaMapper.deleteQA", qaNo);
+	}
+
 	
 
 }

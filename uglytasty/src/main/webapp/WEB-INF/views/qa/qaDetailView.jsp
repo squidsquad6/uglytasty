@@ -164,6 +164,7 @@
             <li>
                 <div class="question-bx">
                     <div class="title">
+                    	<input type="hidden" id="qaNo" value="${qa.qaNo }">
                         <h5>🔒${ qa.qaTitle }</h5>
                         <span>${ qa.userId } | ${ qa.qaDate } </span>
                     </div>
@@ -220,7 +221,7 @@
         <form action="">
             <div class="search-wrap">
                 <a type="button" class="btn1" href="list.qa">목록</a>
-                <a type="button" class="btn1">삭제</a>
+                <a type="button" class="btn1" onclick="deleteQA();">삭제</a>
                 <a type="button" class="btn">수정</a>
             </div>
         </form>
@@ -234,6 +235,15 @@
                 $(this).children(".answer-bx1").slideToggle();
             });
         });
+        
+    </script>
+    <script>
+    	function deleteQA(){
+		    let delConfirm = confirm("삭제할까요?");
+		    if(delConfirm){
+		    	location.href="delete.qa?qaNo=" + $("#qaNo").val()
+		    }
+	    }
     </script>
 </body>
 </html>
