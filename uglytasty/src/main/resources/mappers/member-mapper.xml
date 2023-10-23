@@ -15,29 +15,6 @@
 	</resultMap>
 
 
-
-	<!-- 
-	<select id="loginMember" resultMap="memberResult">
-		select
-		        user_id
-		      , user_pwd
-		      , user_name
-		      , phone
-		      , email
-		      , address_base
-		      , address_detail
-		      , status
-		      , subscribe
-		      , provider
-		      , access_token
-		      , refresh_token
-		  from  member
-		 where status = 'Y'
-		   and user_id = #{userId}
-		   and user_pwd = #{userPwd}
-	</select>
-
-	-->
 	
 	<!-- 비밀번호 암호화 후 로그인 -->
 	<!-- (user_pwd 조건 삭제 / 비교는 Controller에서 .matches 메소드로 할것) -->
