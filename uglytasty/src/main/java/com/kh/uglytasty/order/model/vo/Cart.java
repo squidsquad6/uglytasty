@@ -12,9 +12,19 @@ import lombok.ToString;
 @Getter				// getter 메소드
 @ToString			// toString 메소드
 public class Cart {
-	
+
 	private String userId;
 	private int productNo;
 	private int quantity;
-
+	
+	private String productName;
+	private int stock;
+	private int price;
+	private int sale;
+	
+	private int salePrice;
+	
+	private String changeName;
+	private int fileLevel;
+	
 }

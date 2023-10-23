@@ -4,9 +4,9 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <!-- 
- 	loginMember = 회원정보..
+    loginMember = 회원정보..
 
-	plist = ArrayList<Product> + fileNo + refProductNo + originName + changeName + fileExp + fileLevel
+   plist = ArrayList<Product> + fileNo + refProductNo + originName + changeName + fileExp + fileLevel
  -->
 
 <!DOCTYPE html>
@@ -23,7 +23,7 @@
 
 
 <style>
-	div * {box-sizing: border-box;}
+   div * {box-sizing: border-box;}
 
     .all {
         margin: auto;
@@ -45,36 +45,36 @@
         color: white;
     }
     #btnUpdate, #btnReady, #btnDelete {
-    	color: white;
-    }
-    .adminBtn #btnDelete:hover {
-        filter: brightness(0.98);
-        background-color: red;
-        color: white;
-        cursor: pointer;
+       color: white;
     }
     .adminBtn #btnUpdate:hover {
-        filter: brightness(0.98);
-        background-color: #2a79ff;
-        color: white;
-        cursor: pointer;
-    }
-    .adminBtn #btnReady:hover {
         filter: brightness(0.98);
         background-color: darkorange;
         color: white;
         cursor: pointer;
     }
+    .adminBtn #btnReady:hover {
+        filter: brightness(0.98);
+        background-color: #ff6741;
+        color: white;
+        cursor: pointer;
+    }
+     .adminBtn #btnDelete:hover {
+        filter: brightness(0.98);
+        background-color: red;
+        color: white;
+        cursor: pointer;
+    }
 
-	/* 숨겨질버튼(모달)*/
-	#modalButton {
-		border: none;
-		color: white;
-		background-color: #dadada;
-		/*background-color: white;*/
-		
-	}
-	
+   /* 숨겨질버튼(모달)*/
+   #modalButton {
+      border: none;
+      color: white;
+      background-color: #dadada;
+      /*background-color: white;*/
+      
+   }
+   
 
 
     /* --------------------top주문상세란-------------------- */
@@ -301,105 +301,114 @@
 
 </head>
 <body>
-	
-	 <!-- 헤더 -->
-	 <jsp:include page="../common/header.jsp"/>
+   
+    <!-- 헤더 -->
+    <jsp:include page="../common/header.jsp"/>
 
-	 <!-- 상단으로 이동하기 버튼 -->
+    <!-- 상단으로 이동하기 버튼 -->
     <div class="btn_gotop">
         <img width="50px" src="https://blog.kakaocdn.net/dn/s6jL5/btqHsbU8DSJ/yBeqQLZS4Kg866xEHCvA20/img.png" >
     </div>
     
     <script>
-	 	// 상단으로 이동하기 버튼
-	    $(window).scroll(function(){
-	        if ($(this).scrollTop() > 300){
-	            $('.btn_gotop').show();
-	        } else{
-	            $('.btn_gotop').hide();
-	        }
-	    });
-	    $('.btn_gotop').click(function(){
-	        $('html, body').animate({scrollTop:0},400);
-	        return false;
-	    });
-	</script>
+       // 상단으로 이동하기 버튼
+       $(window).scroll(function(){
+           if ($(this).scrollTop() > 300){
+               $('.btn_gotop').show();
+           } else{
+               $('.btn_gotop').hide();
+           }
+       });
+       $('.btn_gotop').click(function(){
+           $('html, body').animate({scrollTop:0},400);
+           return false;
+       });
+   </script>
 
-	
+   
 
-	 <div class="all" align="center">
+    <div class="all" align="center">
 
         <div class="container" style="width: 80%">
 
 
-			<!--장바구니 담은 후 '모달' -->
-			<div align="right" class="modalOuter">
+         <!--장바구니 담은 후 '모달' -->
+         <div align="right" class="modalOuter">
                 <button data-toggle="modal" data-target="#loginModal" id="modalButton">숨길버튼(모달)</button>
-     	        <div class="modal fade" id="loginModal">
-     	            <div class="modal-dialog modal-sm">
-     	                <div class="modal-content">
-     	                    <!-- Modal Header -->
-     	                    <div class="modal-header">
-     	                        <h4 class="modal-title">🛒장바구니 담기 완료</h4>
-     	                        <button type="button" class="close" data-dismiss="modal">&times;</button>
-     	                    </div>
-     	              
-     	                    <div class="modal-body">
-     	                        <p>선택하신 상품이 장바구니에 담겼습니다.</p>
-     	                    </div>
-     	                    
-     	                    <div align="center" class="modal-footer">
-     	                        <a href="#" class="btn btn-secondary" data-dismiss="modal">쇼핑 계속하기</a>
-     	                        <a href="confirmForm.cart" class="btn btn-warning">장바구니 가기</a>
-     	                    </div>
+                <div class="modal fade" id="loginModal">
+                    <div class="modal-dialog modal-sm">
+                        <div class="modal-content">
+                            <!-- Modal Header -->
+                            <div class="modal-header">
+                                <h4 class="modal-title">🛒장바구니 담기 완료</h4>
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                            </div>
+                      
+                            <div class="modal-body">
+                                <p>선택하신 상품이 장바구니에 담겼습니다.</p>
+                            </div>
+                            
+                            <div align="center" class="modal-footer">
+                            
+                            	<form action="list.cart">
+	                                <!-- 
+	                                <a href="#" class="btn btn-secondary" data-dismiss="modal">쇼핑 계속하기</a>
+	                                <a href="confirmForm.cart" class="btn btn-warning">장바구니 가기</a>
+	                                 -->
+	                                <input type="hidden" name="userId" value="${ loginMember.userId }">
+                            		<input class="btn btn-secondary" data-dismiss="modal" value="쇼핑 계속하기" style="width:130px;">
+                            		<input type="submit" class="btn btn-warning" value="장바구니 가기" style="width:130px; color:white;">
+                            	</form>
+                            	
+                            </div>
 
-     	                </div>
-     	            </div>
-     	        </div>
-     	        <br clear="both">
-			</div>
+                        </div>
+                    </div>
+                </div>
+                <br clear="both">
+         </div>
 
 
 
             <!-- 관리자만 보이는 버튼 (테스트할때 귀찮으니까 맨 나중에걸라우)-->
-			<c:if test="${ loginMember.userId eq 'admin' }">
-			</c:if>
+         <c:if test="${ loginMember.userId eq 'admin' }">
+         </c:if>
 
             <br><br>
             <div class="adminBtn" align="right">
                 <a id="btnBack" href="list.pro">뒤로가기</a>
                 <a id="btnUpdate" onclick="postFormSubmit(1);">수정하기</a>
-                <a id="btnReady" onclick="postFormSubmit(2);">상품소진</a>
-                <a id="btnDelete" onclick="postFormSubmit(3);">삭제하기</a>
+                <a id="btnReady" onclick="postFormSubmit(2);">일시품절</a>
+                <a id="btnDelete" onclick="postFormSubmit(3);">판매종료</a>
             </div>
             
             <form id="postForm" action="" method="post">
-            	<input type="hidden" name="productNo" value="${ plist[0].productNo }">
-            	
-            	<input type="hidden" name="filePath1" value="${ plist[0].changeName }">
-            	<input type="hidden" name="filePath2" value="${ plist[1].changeName }">
-            	<input type="hidden" name="filePath3" value="${ plist[2].changeName }">
-            	<input type="hidden" name="filePath4" value="${ plist[3].changeName }">
-            	<input type="hidden" name="filePath5" value="${ plist[4].changeName }">
+               <input type="hidden" name="productNo" value="${ plist[0].productNo }">
+               
+               <input type="hidden" name="filePath1" value="${ plist[0].changeName }">
+               <input type="hidden" name="filePath2" value="${ plist[1].changeName }">
+               <input type="hidden" name="filePath3" value="${ plist[2].changeName }">
+               <input type="hidden" name="filePath4" value="${ plist[3].changeName }">
+               <input type="hidden" name="filePath5" value="${ plist[4].changeName }">
             </form>
             
             <script>
-            	function postFormSubmit(num) {
-            		if(num == 1){ // '수정하기(1)' 클릭
-            			$("#postForm").attr("action", "updateForm.pro").submit();
-            		}else if(num == 2){ // '상품소진(2)' 클릭
-            			$("#postForm").attr("action", "ready.pro").submit();	            			
-            		}else { // '삭제하기(3)' 클릭
-            			$("#postForm").attr("action", "delete.pro").submit();
-            		}
-            	}
+               function postFormSubmit(num) {
+                  if(num == 1){ // '수정하기(1)' 클릭
+                     $("#postForm").attr("action", "updateForm.pro").submit();
+                  }else if(num == 2){ // '일시품절(2)' 클릭
+                     $("#postForm").attr("action", "ready.pro").submit();                        
+                  }else { // '판매종료(3)' 클릭
+                     $("#postForm").attr("action", "delete.pro").submit();
+                  }
+               }
             </script>
             
             
             
 
             <br><br><br>
-			
+         
             <div class="top">
 
                 <div style="float: left; text-align: center;">
@@ -423,7 +432,7 @@
                    
                     
                     
-					
+               
                     <br><hr>
                     
                     <form action="enrollForm.order" id="orderForm">
@@ -466,17 +475,17 @@
                         </div>
                         
                         
-		                        <script>
-								    // 요소와 값 가져오기
-								    const salePriceElement = document.getElementById('calculationResult');
-								    const price = ${ plist[0].price };
-								    const sale = ${ plist[0].sale };
-								    const sellPriceElement = document.getElementById('sell_price');
-								    // 식을 계산하고 그 값을 요소의 내용으로 설정
-								    const calculatedValue = Math.round(price - (price / sale));
-								    salePriceElement.textContent = calculatedValue;
-								    sellPriceElement.value = calculatedValue;
-								</script>
+                         <script>
+                            // 요소와 값 가져오기
+                            const salePriceElement = document.getElementById('calculationResult');
+                            const price = ${ plist[0].price };
+                            const sale = ${ plist[0].sale };
+                            const sellPriceElement = document.getElementById('sell_price');
+                            // 식을 계산하고 그 값을 요소의 내용으로 설정
+                            const calculatedValue = Math.round(price - (price / sale));
+                            salePriceElement.textContent = calculatedValue;
+                            sellPriceElement.value = calculatedValue;
+                        </script>
                         
                         
                         <br><hr>
@@ -489,39 +498,39 @@
                         </div>
 
                         
-                      	
-                      			<script>
-		                            function addCart(){ // 장바구니 추가용 ajax
-		                         
-		                            	$.ajax({
-		                            		url:"insert.cart",
-		                            		data:{
-		                            			userId:'${ loginMember.userId }',
-		                            			productNo:${ plist[0].productNo },
-		                            			quantity:$("#amount").val()
-		                            		},
-		                            		success:function(result){
-		                            			
-		                            			if(result == "success"){
-			                            			console.log(result);
-			                            			
-			                            			//모달버튼 눌리게
-			                            	      	$("#modalButton").click();	
-			                            			
-		                            			}
-		                            		
-		                            		},
-		                            		error:function(){
-		                            			console.log("장바구니 추가용 ajax 요청 실패!");
-		                            		}
-		                            	})
-		          
-		                            }
-		                        </script>
+                         
+                               <script>
+                                  function addCart(){ // 장바구니 추가용 ajax
+                               
+                                     $.ajax({
+                                        url:"insert.cart",
+                                        data:{
+                                           userId:'${ loginMember.userId }',
+                                           productNo:${ plist[0].productNo },
+                                           quantity:$("#amount").val()
+                                        },
+                                        success:function(result){
+                                           
+                                           if(result == "success"){
+                                              console.log(result);
+                                              
+                                              //모달버튼 눌리게
+                                                 $("#modalButton").click();   
+                                              
+                                           }
+                                        
+                                        },
+                                        error:function(){
+                                           console.log("장바구니 추가용 ajax 요청 실패!");
+                                        }
+                                     })
+                
+                                  }
+                              </script>
                     
                       
-							
-					
+                     
+               
 
                         
                         
@@ -566,13 +575,13 @@
                 <div class="productItem">
                     <img src="${ plist[2].changeName }">    
                     <p>
-                    	${ plist[2].fileExp }
+                       ${ plist[2].fileExp }
                     </p>
                 </div>
                 <div class="productItem">
                     <img src="${ plist[3].changeName }">    
                     <p>
-                    	${ plist[3].fileExp }
+                       ${ plist[3].fileExp }
                     </p>
                 </div>
                 <br><br>
@@ -724,17 +733,17 @@
         }
         */
         
-     	// *** 재고수량(stock)에 따른 '+' max값 걸기
+        // *** 재고수량(stock)에 따른 '+' max값 걸기
         if (add) {
-		    add.addEventListener('click', function () {
-		        let max = ${ plist[0].stock }; // stock
-		        if (amountval < max) {
-		            amountval++;
-		            sum.value = amountval * priceval;
-		            amount.value = amountval;
-		        }
-		    });
-		}
+	        add.addEventListener('click', function () {
+	            let max = ${ plist[0].stock }; // stock
+	            if (amountval < max) {
+	                amountval++;
+	                sum.value = amountval * priceval;
+	                amount.value = amountval;
+	            }
+	        });
+        }
      
      
 
