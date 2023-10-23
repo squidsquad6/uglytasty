@@ -20,6 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.google.gson.Gson;
 import com.kh.uglytasty.order.model.vo.Cart;
+import com.kh.uglytasty.order.model.vo.Orders;
 import com.kh.uglytasty.product.model.service.ProductServiceImpl;
 import com.kh.uglytasty.product.model.vo.Attachment;
 import com.kh.uglytasty.product.model.vo.Product;
@@ -306,10 +307,10 @@ public class ProductController {
       int result = pService.readyProduct(productNo);
       
       if(result > 0) { // status = 'R' 성공
-         session.setAttribute("alertMsg", "성공적으로 [상품 소진] 처리가 되었습니다.");
+         session.setAttribute("alertMsg", "성공적으로 [일시품절] 처리가 되었습니다.");
          return "redirect:list.pro";
       }else {
-         model.addAttribute("errorMsg", "[상품 소진] 처리 실패!");
+         model.addAttribute("errorMsg", "[일시품절] 처리 실패!");
          return "common/errorPage";
       }
    }
@@ -378,7 +379,7 @@ public class ProductController {
 	   c.setProductNo(pno);
   
 	   int result = pService.updateAddQuantity(c);
-	   System.out.println("추가 결과 : " + result);
+	   //System.out.println("추가 결과 : " + result);
 	   
 	   return result>0 ? "success" : "fail";
 	   
@@ -398,18 +399,21 @@ public class ProductController {
 	   c.setProductNo(pno);
 	   
 	   int result = pService.updateMinusQuantity(c);
-	   System.out.println("빼기 결과 : " + result);
+	   //System.out.println("빼기 결과 : " + result);
 	   
 	   return result>0 ? "success" : "fail";
 	   
    }
    
    
+   /** 장바구니 선택삭제
+	 * 
+	 */
    @ResponseBody
    @RequestMapping("delete.cart")
    public String ajaxDeleteCart(String userId, String[] productNo) {
     
-      System.out.println("c : " + productNo.length);
+       System.out.println("장바구니 선택삭제 : " + productNo.length);
        
 
 	   ArrayList<Cart> clist = new ArrayList<Cart>();
@@ -434,6 +438,35 @@ public class ProductController {
  
    }
 
+   
+   @RequestMapping("enrollForm.order")
+   public String selectOrderProductInfo(String userId, int productNo, int quantity, Model model) {
+	   
+	   Cart c = new Cart();
+	   c.setUserId(userId);
+	   c.setProductNo(productNo);
+	   c.setQuantity(quantity);
+	   //System.out.println("메모용 장바구니 : " + c);
+
+	   
+	   // 1) 먼저 Cart 에 quantity 먼저 저장해두고,
+	   int result = pService.insertQuantity(c);
+	   
+	   if(result > 0) {
+		   
+		   // 2) product 조회하면서 조인해서 수량 같이 뽑아올 것
+		   Product p = pService.selectOrderProductInfo(productNo);
+		   
+		   model.addAttribute("p", p);
+		   return "order/orderForm";
+	   }else {
+	       model.addAttribute("errorMsg", "주문확인 실패!");
+	       return "common/errorPage";
+	   }
+	      	   
+	   
+	   
+   }
    
    
    

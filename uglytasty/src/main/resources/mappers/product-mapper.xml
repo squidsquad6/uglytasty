@@ -22,7 +22,11 @@
 		<result column="file_exp" property="fileExp" />
 		<result column="file_level" property="fileLevel" />
 		
+		<result column="quantity" property="quantity" />
+		
 		<result column="sale_price" property="salePrice" />
+		<result column="total_price" property="totalPrice" />
+		<result column="deliveryInclude_price" property="deliveryIncludePrice" />
 	</resultMap>
 	
 	
@@ -177,6 +181,7 @@
 			  , change_name
 			  , file_exp
 			  , file_level
+			  , round(price - (price * (sale / 100))) as "sale_price"
 		 from product p
 		 join attachment a on (p.product_no = a.ref_pno)
 		where product_no = #{productNo}
@@ -335,12 +340,46 @@
 
 	<delete id="deleteCart">
 		delete
-		  from Cart
+		  from cart
 		 where product_No = #{productNo}
 		   and user_id = #{userId}
 	</delete>
 
+	<insert id="insertQuantity">
+		insert
+		  into cart
+		   (
+		  	user_id
+		  , product_no
+		  , quantity
+		  )
+		  values
+		  (
+		  	#{userId}
+		  , #{productNo}
+		  , #{quantity}
+		  )
+	</insert>
 
+	<select id="selectOrderProductInfo" resultMap="productResult">
+		select
+				product_no
+			  , product_name
+			  , explanation
+			  , price
+			  , sale
+			  , round(price - (price * (sale / 100))) as "sale_price"
+			  , change_name
+              , file_level
+              , quantity
+              , round((price - (price * (sale / 100))) * quantity) as "total_price"
+              , round((price - (price * (sale / 100))) * quantity + 2500) as "deliveryInclude_price"
+          from product p
+          join attachment a on (p.product_no = a.ref_pno)
+          join cart c using (product_no)
+		 where product_no = #{productNo}
+           and a.file_level = 1
+	</select>
 
 
 </mapper>

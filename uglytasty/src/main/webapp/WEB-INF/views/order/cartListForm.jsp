@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
     
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>    
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <!-- 
 	cartlist : 회원아이디, 상품번호, 담은수량(quantity) / 상품명, 재고수량(stock), 가격, 할인율 / sale_price / change_name, file_level
@@ -180,9 +181,9 @@
 	                        <input type="text" id="amount" name="amount" value="${ c.quantity }" readonly>
 	                        <input type="button" id="minus" value=" - " name="minus" onclick="minusQuantity('${c.productNo}')"><br>
 	                    </td>
-	                    <td style="text-decoration: line-through;">${ c.price }</td>
+	                    <td style="text-decoration: line-through;"><fmt:formatNumber value="${ c.price }" pattern="#,###"/></td>
 	                    <td>${ c.sale }%</td>
-	                    <td>2500</td>
+	                    <td class="delivery"><fmt:formatNumber value="2500" pattern="#,###"/></td>
 	                    <td>
 	                        <!--소계 여기로 value -->
 	                        <input type="text" id="sum" name="sum" style="width: 120px;" readonly>원 <br>
@@ -450,12 +451,28 @@
                 calculatedValue += price;
             }
 			
-            // 총액에 배송비 추가
-			/*
-            const deleveryElement = document.getElementById('delevery');
-            const delevery = parseInt(deleveryElement.value);
-            calculatedValue += delevery;
-			*/
+            // 총액에 배송비 추가(아.. 일단 보류)
+            /* 
+            const deliveryValue = $(".delivery").text();
+		
+            const delivery = parseInt(deliveryValue);
+            calculatedValue += delivery;
+            
+            
+            $(".delivery").each(function() {
+                var del = parseInt($(this).text().replace(/,/g, ''));
+                $(this).text(del.toLocaleString('ko-KR'));
+                
+                calculatedValue += del;
+            });
+            */
+
+            
+        
+
+            
+            
+			
 			
             const totalPriceElement = document.getElementById('totalPrice');
 			

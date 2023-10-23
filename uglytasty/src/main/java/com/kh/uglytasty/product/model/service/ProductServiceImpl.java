@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kh.uglytasty.order.model.vo.Cart;
+import com.kh.uglytasty.order.model.vo.Orders;
 import com.kh.uglytasty.product.model.dao.ProductDao;
 import com.kh.uglytasty.product.model.vo.Attachment;
 import com.kh.uglytasty.product.model.vo.Product;
@@ -189,9 +190,8 @@ public class ProductServiceImpl implements ProductService {
 	public int updateMinusQuantity(Cart c) {
 		return pDao.updateMinusQuantity(sqlSession, c);
 	}
-
 	
-	/*장바구니 선택삭제 1)*/
+	/*장바구니 선택삭제*/
 	@Override
 	public int deleteCartProduct(ArrayList<Cart> clist) {	// productNo 각각 담긴 Cart객체들 모음집
 		
@@ -205,14 +205,25 @@ public class ProductServiceImpl implements ProductService {
 		
 		return result;
 	}
-
-	/*
-
+	
+	
+	/*상세페이지에서 주문하기용_수량 저장*/
 	@Override
-	public int deleteCart(Cart c) {
-		return pDao.deleteCart(sqlSession, c);
+	public int insertQuantity(Cart c) {
+		return pDao.insertQuantity(sqlSession, c);
 	}
-*/
+	
+	/*상세페이지에서 주문하기용_상품 조회*/
+	@Override
+	public Product selectOrderProductInfo(int productNo) {
+		return pDao.selectOrderProductInfo(sqlSession, productNo);
+	}
+
+
+
+	
+	
+
 
 	
 

@@ -25,7 +25,6 @@ public class Product {
 	private int count;
 	private String enrollDate;
 
-
 	private int fileNo;
 	private int refProductNo;
 	private String originName;
@@ -33,8 +32,11 @@ public class Product {
 	private String fileExp;
 	private int fileLevel;
 	
+	private int quantity;
 
 	private int salePrice;
+	private int totalPrice;
+	private int deliveryIncludePrice;
 	
 
 

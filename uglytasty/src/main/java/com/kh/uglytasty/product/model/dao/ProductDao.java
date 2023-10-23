@@ -103,8 +103,17 @@ public class ProductDao {
 		return sqlSession.delete("productMapper.deleteCart", c);
 	}
 	
-
 	
+	
+	/*상세페이지에서 주문하기용_수량 저장*/
+	public int insertQuantity(SqlSessionTemplate sqlSession, Cart c) {
+		return sqlSession.insert("productMapper.insertQuantity", c);
+	}
+
+	/*상세페이지에서 주문하기용_상품 조회*/
+	public Product selectOrderProductInfo(SqlSessionTemplate sqlSession, int productNo) {
+		return sqlSession.selectOne("productMapper.selectOrderProductInfo", productNo);
+	}
 	
 	
 }

@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
     
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <!-- 
 	loginMember = 회원정보..
@@ -232,8 +233,8 @@
 			            <p>${p.productName}</p>
 			            <span class="sale">${p.sale}</span><span class="sale">%</span>
 			            <img src="https://d3cpiew7rze14b.cloudfront.net/assets/ustore/discount-arrow.svg">
-			            <span class="originPrice">${p.price}</span>
-			            <span class="salePrice" id="calculationResult_${p.productNo}">${ p.salePrice }</span>
+			            <span class="originPrice"><fmt:formatNumber value="${p.price}" pattern="#,###"/></span>
+			            <span class="salePrice" id="calculationResult_${p.productNo}"><fmt:formatNumber value="${ p.salePrice }" pattern="#,###"/></span>
 			            <span class="salePrice">원</span>
 			        </div>
 			    </div>

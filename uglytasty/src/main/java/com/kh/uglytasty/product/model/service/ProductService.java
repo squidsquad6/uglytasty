@@ -4,6 +4,7 @@ package com.kh.uglytasty.product.model.service;
 import java.util.ArrayList;
 
 import com.kh.uglytasty.order.model.vo.Cart;
+import com.kh.uglytasty.order.model.vo.Orders;
 import com.kh.uglytasty.product.model.vo.Attachment;
 import com.kh.uglytasty.product.model.vo.Product;
 import com.kh.uglytasty.product.model.vo.Review;
@@ -68,11 +69,17 @@ public interface ProductService {
 	// 장바구니 수량 빼기
 	int updateMinusQuantity(Cart c);
 	
-	// 장바구니 선택삭제 1)
+	// 장바구니 선택삭제
 	int deleteCartProduct(ArrayList<Cart> clist);
 	
-	// 장바구니 선택삭제 1)
-	//int deleteCart(Cart c);
+	
+	// 상세페이지에서 주문하기용_수량 저장
+	int insertQuantity(Cart c);
+
+	// 상세페이지에서 주문하기용_상품 조회
+	Product selectOrderProductInfo(int productNo);
+	
+	
 	
 	
 	
