@@ -8,13 +8,13 @@ import org.springframework.stereotype.Repository;
 
 import com.kh.uglytasty.common.model.vo.PageInfo;
 import com.kh.uglytasty.member.model.vo.Member;
-import com.kh.uglytasty.order.model.vo.Order;
+import com.kh.uglytasty.order.model.vo.Orders;
 import com.kh.uglytasty.subscribe.model.vo.Subscribe;
 
 @Repository
 public class AdminDao {
 
-	public ArrayList<Order> selectOrderList(SqlSessionTemplate sqlSession, PageInfo pi) {
+	public ArrayList<Orders> selectOrderList(SqlSessionTemplate sqlSession, PageInfo pi) {
 		
 		int offset= (pi.getCurrentPage()-1)*pi.getBoardLimit();
 		int limit= pi.getBoardLimit();
@@ -45,7 +45,7 @@ public class AdminDao {
 		
 	}
 
-	public int updateAdminOrder(SqlSessionTemplate sqlSession, Order b) {
+	public int updateAdminOrder(SqlSessionTemplate sqlSession, Orders b) {
 		
 		return sqlSession.update("adminMapper.updateAdminOrder", b);
 	}

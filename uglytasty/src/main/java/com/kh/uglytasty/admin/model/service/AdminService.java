@@ -3,13 +3,13 @@ import java.util.ArrayList;
 
 import com.kh.uglytasty.common.model.vo.PageInfo;
 import com.kh.uglytasty.member.model.vo.Member;
-import com.kh.uglytasty.order.model.vo.Order;
+import com.kh.uglytasty.order.model.vo.Orders;
 import com.kh.uglytasty.subscribe.model.vo.Subscribe;
 
 public interface AdminService {
 
 	
-	ArrayList<Order> selectOrderList(PageInfo pi);
+	ArrayList<Orders> selectOrderList(PageInfo pi);
 	int selectOrderListCount();
 	
 	ArrayList<Member> selectMemberList(PageInfo pi);
@@ -19,7 +19,7 @@ public interface AdminService {
 	int selectSubscribeCount();
 	
 	
-	int updateAdminOrder(Order b);
+	int updateAdminOrder(Orders b);
 	int updateAdminSubscribe(Subscribe b);
 	int updateAdminMember(Member b);
 	

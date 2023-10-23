@@ -232,13 +232,13 @@
                 <p>SNS 간편 가입</p>
 
                 <div id="sns_enroll_google" class="sns-enroll-link">
-                    <a href="#">
+                    <a href="https://accounts.google.com/o/oauth2/v2/auth?scope=https://www.googleapis.com/auth/userinfo.profile&response_type=code&redirect_uri=http://localhost:8008/uglytasty/oauth2&client_id=1043154405366-qnhdnm1nk8h9oka0up0crde72jfffvtq.apps.googleusercontent.com">
                         <img src="https://owzl.github.io/btn_google.svg">
                     </a>
                 </div>    
 
                 <div id="sns_enroll_naver" class="sns-enroll-link">
-                    <a href="#">
+                    <a href="javascript:void(0);" onclick="loginWithNaver()">
                         <img src="http://owzl.github.io/enroll-btn-naver.png">
                     </a>
                 </div>
@@ -249,7 +249,30 @@
                     </a>
                 </div>
             </div>
-
+		<script>
+				function loginWithNaver() {
+				   
+				    $.ajax({
+				        type: "GET",
+				        url: "generateState.me",
+				        success: function(state) {
+				           
+				            var clientId = "qx5GJFsGBjihBcvVb7EK";
+				            var redirectUri = "http://localhost:8008/uglytasty/oauth2/naver"; 
+				
+				           
+				            var naverLoginUrl = "https://nid.naver.com/oauth2.0/authorize"
+				                + "?client_id=" + clientId
+				                + "&response_type=code"
+				                + "&redirect_uri=" + redirectUri
+				                + "&state=" + state;
+				
+				            
+				            window.location.href = naverLoginUrl;
+				        }
+				    });
+				}
+		</script>
             <br>
             <hr>
             <br>

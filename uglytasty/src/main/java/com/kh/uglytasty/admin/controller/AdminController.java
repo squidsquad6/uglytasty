@@ -14,7 +14,7 @@ import com.kh.uglytasty.admin.model.service.AdminServiceImpl;
 import com.kh.uglytasty.common.model.vo.PageInfo;
 import com.kh.uglytasty.common.template.Pagination;
 import com.kh.uglytasty.member.model.vo.Member;
-import com.kh.uglytasty.order.model.vo.Order;
+import com.kh.uglytasty.order.model.vo.Orders;
 import com.kh.uglytasty.subscribe.model.vo.Subscribe;
 
 @Controller
@@ -31,9 +31,9 @@ public class AdminController {
 		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 5);
 		
 		
-		ArrayList<Order> list =   aService.selectOrderList(pi);
+		ArrayList<Orders> list =   aService.selectOrderList(pi);
 		
-		
+		System.out.println(list);
 		
 		model.addAttribute("list", list).addAttribute("pi",pi);
 		
@@ -92,10 +92,11 @@ public class AdminController {
 	
 	@ResponseBody
 	@RequestMapping(value= "updateOrder.ad", produces="application/json; charset=UTF-8")
-	public String updateAdminOrder(int orderNo,String userId, int productNo, int orderCode, int orderQuantity, String orderDate, int totalPrice) {
+	public String updateAdminOrder(int orderNo,String userId, int productNo, int orderCode, String orderDate, String trackingNo, String addressMain, String addressDetail, String receiver, String receiverPhone, String deliveryMemo, int deliveryFee, int totalPrice) {
 		
-		Order b = new Order(orderNo, userId, productNo, orderCode, orderQuantity, orderDate, totalPrice);
+		Orders b = new Orders(orderNo, userId, productNo, orderDate, orderCode, trackingNo, addressMain, addressDetail, receiver, receiverPhone, deliveryMemo, deliveryFee, totalPrice);
 		
+		System.out.println(b);
 		
 		int result = aService.updateAdminOrder(b);
 		

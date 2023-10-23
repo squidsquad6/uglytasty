@@ -236,7 +236,7 @@
                     <tr>
                         <td>
                             <div class="sns-login-link" id="sns_login_kakao">
-                                <a href="#">
+                                <a href="https://kauth.kakao.com/oauth/authorize?response_type=code&client_id=e1fdaf851d387ba402c8d1d3a1f2b21d&redirect_uri=http://localhost:8008/uglytasty/oauth2/kakao">
                                     &nbsp;
                                     <img src="https://d3cpiew7rze14b.cloudfront.net/assets/app/kakao_icon.svg">
                                     &nbsp;

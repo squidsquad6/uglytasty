@@ -55,8 +55,14 @@
               <th>아이디</th>
               <th>상품번호</th>
                 <th>주문상태코드</th>
-                <th>주문수량</th>
                 <th>주문일자</th>
+                <th>송장번호</th>
+                <th>주소</th>
+                <th>상세주소</th>
+                <th>받는사람</th>
+                <th>받는사람연락처</th>
+                <th>요청사항</th>
+                <th>배송비</th>
                 <th>총 주문 금액</th>
                 <th>수정</th>
                
@@ -69,8 +75,14 @@
               <td><input id="userId${loop.index }" class="input" type="text" style="border:none" value="${b.userId }" readonly></td>
               <td><input id="productNo${loop.index }" class="input" type="text" style="border:none" value="${b.productNo }"></td>
                 <td><input id="orderCode${loop.index }" class="input" type="text" style="border:none" value="${b.orderCode }"></td>
-                <td><input id="orderQuantity${loop.index }" class="input" type="text" style="border:none" value="${b.orderQuantity }"></td>
-                <td><input id="orderDate${loop.index }" class="input" type="text" style="border:none" value="${b.orderDate }" readonly></td>
+                <td><input id="orderDate${loop.index }" class="input" type="text" style="border:none" value="${b.orderDate }"></td>
+                <td><input id="trackingNo${loop.index }" class="input" type="text" style="border:none" value="${b.trackingNo }"></td>
+                <td><input id="addressMain${loop.index }" class="input" type="text" style="border:none" value="${b.addressMain }"></td>
+                <td><input id="addressDetail${loop.index }" class="input" type="text" style="border:none" value="${b.addressDetail }"></td>
+                <td><input id="receiver${loop.index }" class="input" type="text" style="border:none" value="${b.receiver }"></td>
+                <td><input id="receiverPhone${loop.index }" class="input" type="text" style="border:none" value="${b.receiverPhone }"></td>
+                <td><input id="deliveryMemo${loop.index }" class="input" type="text" style="border:none" value="${b.deliveryMemo }"></td>
+                <td><input id="deliveryFee${loop.index }" class="input" type="text" style="border:none" value="${b.deliveryFee }"></td>
                 <td><input id="totalPrice${loop.index }" class="input" type="text" style="border:none" value="${b.totalPrice }"></td>
                 <td><button class="button is-success is-hovered is-small is-light"  onclick="updateOrder(${loop.index })">수정</button></td>
     
@@ -82,36 +94,48 @@
           </tbody>
         </table>
 		<script>
-		function updateOrder(index) {
-		    var orderNo = $('#orderNo' + index).val();
-		    var productNo = $('#productNo' + index).val();
-		    var userId = $('#userId'+index).val();
-		    var orderCode = $('#orderCode' + index).val();
-		    var orderQuantity = $('#orderQuantity' + index).val();
-		    var orderDate = $('#orderDate' + index).val();
-		    var totalPrice = $('#totalPrice' + index).val();
-
-		    $.ajax({
-		      url: 'updateOrder.ad',
-		      type: 'POST',
-		      data: {
-		        orderNo: orderNo,
-		        productNo: productNo,
-		        orderCode: orderCode,
-		        orderQuantity: orderQuantity,
-		        orderDate: orderDate,
-		        totalPrice: totalPrice,
-		        userId: userId
-		      },
-		      success: function(response) {
-		        console.log('성공');
-		        alert('주문 정보가 성공적으로 수정되었습니다.');
-		      },
-		      error: function() {
-		        console.log('실패');
-		      }
-		    });
-		  }
+			function updateOrder(index) {
+			    var orderNo = $('#orderNo' + index).val();
+			    var userId = $('#userId' + index).val();
+			    var productNo = $('#productNo' + index).val();
+			    var orderCode = $('#orderCode' + index).val();
+			    var orderDate = $('#orderDate' + index).val();
+			    var trackingNo = $('#trackingNo' + index).val();
+			    var addressMain = $('#addressMain' + index).val();
+			    var addressDetail = $('#addressDetail' + index).val();
+			    var receiver = $('#receiver' + index).val();
+			    var receiverPhone = $('#receiverPhone' + index).val();
+			    var deliveryMemo = $('#deliveryMemo' + index).val();
+			    var deliveryFee = $('#deliveryFee' + index).val();
+			    var totalPrice = $('#totalPrice' + index).val();
+			
+			    $.ajax({
+			      url: 'updateOrder.ad',
+			      type: 'POST',
+			      data: {
+			        orderNo: orderNo,
+			        userId: userId,
+			        productNo: productNo,
+			        orderCode: orderCode,
+			        orderDate: orderDate,
+			        trackingNo: trackingNo,
+			        addressMain: addressMain,
+			        addressDetail: addressDetail,
+			        receiver: receiver,
+			        receiverPhone: receiverPhone,
+			        deliveryMemo: deliveryMemo,
+			        deliveryFee: deliveryFee,
+			        totalPrice: totalPrice,
+			      },
+			      success: function(response) {
+			        console.log('성공');
+			        alert('주문 정보가 성공적으로 수정되었습니다.');
+			      },
+			      error: function() {
+			        console.log('실패');
+			      }
+			    });
+			  }
 		</script>
 
 
