@@ -153,7 +153,63 @@ public class MemberController {
 	
 	
 	
-	
+	@RequestMapping(value="oauth2/kakao", produces = "application/json" )
+	public String kakaoLogin(@RequestParam String code,Model model, HttpSession session) {
+	      
+	     Map<String, Object> result = mService.getKakaoAccessToken(code);
+	     
+	   
+	     
+	  // Extract accessToken from the result map
+	     String accessToken = (String) result.get("accessToken");
+	     
+	  
+	     
+	     // Extract userInfo from the result map
+	     JsonNode userInfoNode = (JsonNode) result.get("userInfo");
+	     System.out.println("유저: " + userInfoNode);
+	     // Extract specific fields from the userInfo JSON
+	     String userId = userInfoNode.get("id").asText();
+	     String userName = userInfoNode.get("properties").get("nickname").asText();
+	     String email = userInfoNode.get("kakao_account").get("email").asText();
+	     String userPwd = "kakao";
+
+	     // Print accessToken and extracted user information separately
+	     System.out.println("AccessToken: " + accessToken);
+	     System.out.println("User ID: " + userId);
+	     System.out.println("User Name: " + userName);
+	   
+	     Member loginMember = mService.checkMemberByKakao(userId);
+	     
+	     if(loginMember == null) { 
+				
+				
+				model.addAttribute("userId", userId + "kko");
+				model.addAttribute("userName", userName);
+				model.addAttribute("userPwd", userPwd);
+				model.addAttribute("email", email);
+			
+				
+				return "member/memberEnrollForm";
+				
+			}else { 
+				// 로그인 성공 => loginMember를 sessionScope에 담고 메인페이지 url 재요청
+				
+				// 매개변수에 HttpSession 필요함, 작성해주기
+				session.setAttribute("loginMember", loginMember);
+				
+
+
+				//model.addAttribute("errorMsg", "로그인 성공!");
+				//return "common/errorPage";
+				// sendRedirect
+
+				model.addAttribute("errorMsg", "로그인 성공!");
+
+				return "redirect:/";
+			}
+	    
+	         }
 	
 	
 	

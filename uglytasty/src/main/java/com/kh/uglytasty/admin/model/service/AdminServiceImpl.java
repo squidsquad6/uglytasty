@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import com.kh.uglytasty.admin.model.dao.AdminDao;
 import com.kh.uglytasty.common.model.vo.PageInfo;
 import com.kh.uglytasty.member.model.vo.Member;
-import com.kh.uglytasty.order.model.vo.Order;
+import com.kh.uglytasty.order.model.vo.Orders;
 import com.kh.uglytasty.subscribe.model.vo.Subscribe;
 
 @Service
@@ -25,7 +25,7 @@ public class AdminServiceImpl implements AdminService{
 
 
 	@Override
-	public ArrayList<Order> selectOrderList(PageInfo pi) {
+	public ArrayList<Orders> selectOrderList(PageInfo pi) {
 		
 		return aDao.selectOrderList(sqlSession,pi);
 	}
@@ -46,7 +46,7 @@ public class AdminServiceImpl implements AdminService{
 
 
 	@Override
-	public int updateAdminOrder(Order b) {
+	public int updateAdminOrder(Orders b) {
 		
 		return aDao.updateAdminOrder(sqlSession, b);
 	}

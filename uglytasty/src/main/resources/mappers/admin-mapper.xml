@@ -2,14 +2,21 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
 <mapper namespace="adminMapper">
 
-<resultMap type="Order" id="orderResult"> 
+<resultMap type="Orders" id="orderResult"> 
 		<result column="order_no" property="orderNo" />
 		<result column="user_id" property="userId" />
 		<result column="product_no" property="productNo" />
 		<result column="order_code" property="orderCode" />
-		<result column="order_quantity" property="orderQuantity" />
 		<result column="order_date" property="orderDate" />
+		<result column="tracking_no" property="trackingNo" />
+		<result column="address_main" property="addressMain" />
+		<result column="address_detail" property="addressDetail" />
+		<result column="receiver" property="receiver" />
+		<result column="receiver_phone" property="receiverPhone" />
+		<result column="delivery_memo" property="deliveryMemo" />
+		<result column="delivery_fee" property="deliveryFee" />
 		<result column="total_price" property="totalPrice" />
+		
 	
 		
 </resultMap>
@@ -45,15 +52,23 @@
 
 <select id="selectOrderList" resultMap="orderResult">
 		select
-		        order_no
-		      , user_id
-		      , product_no
-		      , order_code
-		      , order_quantity
-		      ,to_char(order_date, 'YYYY-MM-DD') AS "order_date"
-		      , total_price
+		         ORDER_NO
+				,USER_ID
+				,PRODUCT_NO
+				,to_char(order_date, 'YYYY-MM-DD') AS "order_date"
+				,ORDER_CODE
+				,TRACKING_NO
+				,ADDRESS_MAIN
+				,ADDRESS_DETAIL
+				,RECEIVER
+				,RECEIVER_PHONE
+				,DELIVERY_MEMO
+				,DELIVERY_FEE
+				,TOTAL_PRICE
 		      
-		  from  u_order
+		      
+		      
+		  from  orders
 	</select>
 	
 <select id="selectMemberList" resultMap="memberResult">
@@ -117,12 +132,18 @@ where   user_id = #{userId}
 
 <update id="updateAdminOrder">
 update
-		 u_order
-set		 product_no=#{productNo}
-		,order_code=#{orderCode}
-		,order_quantity=#{orderQuantity}
-		,order_date = #{orderDate}
-		,total_price=#{totalPrice}
+		 orders
+set		     PRODUCT_NO =#{productNo}
+			,ORDER_DATE =#{orderDate}
+			,ORDER_CODE =#{orderCode}
+			,TRACKING_NO =#{trackingNo}
+			,ADDRESS_MAIN =#{addressMain}
+			,ADDRESS_DETAIL =#{addressDetail}
+			,RECEIVER =#{receiver}
+			,RECEIVER_PHONE =#{receiverPhone}
+			,DELIVERY_MEMO =#{deliveryMemo}
+			,DELIVERY_FEE =#{deliveryFee}
+			,TOTAL_PRICE =#{totalPrice}
 		
 where   order_no = #{orderNo}			
 </update>
@@ -147,7 +168,7 @@ where user_id = #{userId}
   
   	select
   			count(*)
-  	   from u_order
+  	   from orders
   	   	
   
   </select>

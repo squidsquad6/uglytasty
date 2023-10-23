@@ -156,6 +156,52 @@ public class MemberServiceImpl implements MemberService{
 		return mDao.checkMemberByGoogle(sqlSession, userId);
 	}
 
+	public Map<String, Object> getKakaoAccessToken(String code) {
+		String accessToken = "";
+		
+		
+		HttpHeaders headers = new HttpHeaders();
+	    headers.add("Content-type", "application/x-www-form-urlencoded");
+	    MultiValueMap<String, String> params = new LinkedMultiValueMap<String, String>();
+		RestTemplate restTemplate = new RestTemplate();
+		
+		
+		params.add("code", code);
+		params.add("client_id", "e1fdaf851d387ba402c8d1d3a1f2b21d");
+		params.add("client_secret","hREtnoiub6OnW3sZonDU6qfVo7bpZygh");
+		params.add("grant_type", "authorization_code");
+		params.add("redirect_uri", "http://localhost:8008/uglytasty/oauth2/kakao");
+		HttpEntity<MultiValueMap<String, String>> httpEntity = new HttpEntity<MultiValueMap<String, String>>(params, headers);
+		
+		
+		 ResponseEntity<JsonNode> responseEntity = restTemplate.exchange(
+			        "https://kauth.kakao.com/oauth/token", HttpMethod.POST, httpEntity, JsonNode.class);
+		 
+		  JsonNode responseBody = responseEntity.getBody();
+	      accessToken = responseBody.get("access_token").asText();
+		
+	      headers = new HttpHeaders();
+	      headers.set("Authorization", "Bearer " + accessToken);
+	      HttpEntity entity = new HttpEntity(headers);
+	      
+	      ResponseEntity<JsonNode> userInfoResponseEntity = restTemplate.exchange(
+	          "https://kapi.kakao.com/v2/user/me", HttpMethod.GET, entity, JsonNode.class);
+	      
+	      JsonNode userInfo = userInfoResponseEntity.getBody();
+	      
+	      Map<String, Object> responseMap = new HashMap();
+	      responseMap.put("accessToken", accessToken);
+	      responseMap.put("userInfo", userInfo);
+
+	      return responseMap;
+	}
+
+	public Member checkMemberByKakao(String userId) {
+		userId = userId + "kko";
+		
+		return mDao.checkMemberByGoogle(sqlSession, userId);
+	}
+
 	
 
 	
