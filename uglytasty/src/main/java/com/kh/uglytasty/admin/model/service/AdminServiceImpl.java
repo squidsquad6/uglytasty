@@ -10,6 +10,7 @@ import com.kh.uglytasty.admin.model.dao.AdminDao;
 import com.kh.uglytasty.common.model.vo.PageInfo;
 import com.kh.uglytasty.member.model.vo.Member;
 import com.kh.uglytasty.order.model.vo.Orders;
+import com.kh.uglytasty.qa.model.vo.QA;
 import com.kh.uglytasty.subscribe.model.vo.Subscribe;
 
 @Service
@@ -90,6 +91,24 @@ public class AdminServiceImpl implements AdminService{
 	public int selectSubscribeCount() {
 		
 		return aDao.selectSubscribeCount(sqlSession);
+	}
+
+
+	public int selectQAListCount() {
+		
+		return aDao.selectQAListCount(sqlSession);
+	}
+
+
+	public ArrayList<QA> selectQAList(PageInfo pi) {
+		
+		return aDao.selectQAList(sqlSession,pi);
+	}
+
+
+	public int updateAdminQA(QA b) {
+		
+		return aDao.updateAdminQA(sqlSession, b);
 	}
 	
 	

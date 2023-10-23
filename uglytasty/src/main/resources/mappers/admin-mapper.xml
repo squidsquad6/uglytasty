@@ -21,6 +21,22 @@
 		
 </resultMap>
 
+<resultMap type="QA" id="QAResult">
+	<result column="qa_no" property="qaNo"/>
+	<result column="qa_category" property="qaCategory"/>
+	<result column="user_id" property="userId"/>
+	<result column="a_id" property="answerId"/>
+	<result column="q_title" property="qaTitle"/>
+	<result column="q_content" property="qaContent"/>
+	<result column="a_content" property="answerContent"/>
+	<result column="q_status" property="qaStatus"/>
+	<result column="a_status" property="answerStatus"/>
+	<result column="q_date" property="qaDate"/>
+	<result column="a_date" property="answerDate"/>
+	
+
+</resultMap>
+
 <resultMap type="Member" id="memberResult"> 
 		<result column="user_id" property="userId" />
 		<result column="user_pwd" property="userPwd" />
@@ -109,6 +125,24 @@ select
 	
 
 </select>
+
+<select id="selectQAList" resultMap="QAResult">
+select
+		 qa_no
+		,category_name as"qa_category"
+		,user_id
+		,a_id
+		,q_title
+		,q_content
+		,a_content
+		,q_status
+		,a_status
+		,q_date
+		,a_date
+from qa, qa_category
+where qa_category=category_no
+
+</select>
 	
 
   
@@ -128,6 +162,16 @@ set		 user_id=#{userId}
 		,access_token=#{accessToken}
 		,refresh_token=#{refreshToken}	
 where   user_id = #{userId}			
+</update>
+
+<update id="updateAdminQA">
+update
+		 QA
+set		 a_content=#{answerContent}
+		,q_status=#{qaStatus}
+		,a_status=#{answerStatus}
+		,a_date=sysdate
+where	 qa_no = #{qaNo}		
 </update>
 
 <update id="updateAdminOrder">
@@ -171,6 +215,11 @@ where user_id = #{userId}
   	   from orders
   	   	
   
+  </select>
+  <select id="selectQAListCount" resultType="_int">
+  select
+  			count(*)
+  	from	QA
   </select>
 
 <select id="selectMemberListCount" resultType="_int">

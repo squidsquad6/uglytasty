@@ -67,11 +67,9 @@
             <!-- 누르면 각각 card2.png account2.png로 바뀌도록-->
             <div class="row justify-content-center">
                 <div id="card-pay" class="col-sm" style=" text-align: center;">
-                   <img src="resources/images/card1.PNG">
+                   <img src="resources/images/toss.PNG">
                 </div>
-                <div id="account-pay" class="col-sm" style=" text-align: center;">
-                    <img src="resources/images/account1.PNG">
-                </div>
+           
                
             </div>
         </div>
@@ -116,18 +114,7 @@
         </script>
     
     
-    <script>
-    $(document).ready(function () {
-        $("#card-pay").click(function () {
-            $("#card-pay img").attr("src", "resources/images/card2.PNG");
-            $("#account-pay img").attr("src", "resources/images/account1.PNG");
-        });
-        $("#account-pay").click(function () {
-            $("#card-pay img").attr("src", "resources/images/card1.PNG");
-            $("#account-pay img").attr("src", "resources/images/account2.PNG");
-        });
-    });
-</script>
+
  <script>
         // Get the current date
         var currentDate = new Date();
