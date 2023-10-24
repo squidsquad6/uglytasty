@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>회원 관리</title>
 
  
 
@@ -25,15 +25,42 @@
     text-align: center;
     padding-left: 10px;
   }
+  /* --------------------상단으로 이동하기 버튼-------------------- */
+    .btn_gotop {
+        display:none;
+        position:fixed;
+        bottom:30px;
+        right:50px;
+        z-index:999;
+        cursor:pointer;
+    }
 </style>
 
 
 </head>
 <body>
 <jsp:include page="../common/header.jsp"/>
-
+<!-- 상단으로 이동하기 버튼 -->
+    <div class="btn_gotop">
+        <img width="50px" src="https://blog.kakaocdn.net/dn/s6jL5/btqHsbU8DSJ/yBeqQLZS4Kg866xEHCvA20/img.png" >
+    </div>
+    
+    <script>
+       // 상단으로 이동하기 버튼
+       $(window).scroll(function(){
+           if ($(this).scrollTop() > 300){
+               $('.btn_gotop').show();
+           } else{
+               $('.btn_gotop').hide();
+           }
+       });
+       $('.btn_gotop').click(function(){
+           $('html, body').animate({scrollTop:0},400);
+           return false;
+       });
+   </script>
  <div>
-        <div style="padding-left:750px">
+        <div style="padding-left:650px">
             <nav class="breadcrumb is-centered is-large has-background-white" aria-label="breadcrumbs">
                 <ul>
                 
@@ -59,9 +86,11 @@
                 <th>상세주소</th>
                 <th>상태</th>
                 <th>구독여부</th>
+                <!--  
                 <th>소셜로그인</th>
                 <th>엑세스토큰</th>
                 <th>리프레쉬토큰</th>
+                -->
                 <th>수정</th>
             </tr>
           </thead>
@@ -77,10 +106,12 @@
 		        <td><input id="addressDetail${loop.index}" class="input" type="text" style="border:none" value="${b.addressDetail}"></td>
 		        <td><input id="status${loop.index}" class="input" type="text" style="border:none" value="${b.status}"></td>
 		        <td><input id="subscribe${loop.index}" class="input" type="text" style="border:none" value="${b.subscribe}"></td>
+		        
+		        <!--  
 		        <td><input id="provider${loop.index}" class="input" type="text" style="border:none" value="${b.provider}"></td>
 		        <td><input id="accessToken${loop.index}" class="input" type="text" style="border:none" value="${b.accessToken}"></td>
 		        <td><input id="refreshToken${loop.index}" class="input" type="text" style="border:none" value="${b.refreshToken}"></td>
-		        
+		        -->
                 
                 <td>
                 <button class="button is-success is-hovered is-small is-light"

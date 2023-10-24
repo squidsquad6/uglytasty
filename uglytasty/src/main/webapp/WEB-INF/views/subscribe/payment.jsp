@@ -30,10 +30,38 @@
         height: 2000px;
         margin: 0 auto;
     }
+    /* --------------------상단으로 이동하기 버튼-------------------- */
+    .btn_gotop {
+        display:none;
+        position:fixed;
+        bottom:30px;
+        right:50px;
+        z-index:999;
+        cursor:pointer;
+    }
 </style>
 </head>
 <body>
  <jsp:include page="../common/header.jsp"/>
+ <!-- 상단으로 이동하기 버튼 -->
+    <div class="btn_gotop">
+        <img width="50px" src="https://blog.kakaocdn.net/dn/s6jL5/btqHsbU8DSJ/yBeqQLZS4Kg866xEHCvA20/img.png" >
+    </div>
+    
+    <script>
+       // 상단으로 이동하기 버튼
+       $(window).scroll(function(){
+           if ($(this).scrollTop() > 300){
+               $('.btn_gotop').show();
+           } else{
+               $('.btn_gotop').hide();
+           }
+       });
+       $('.btn_gotop').click(function(){
+           $('html, body').animate({scrollTop:0},400);
+           return false;
+       });
+   </script>
 <div class="wrap">
 
         <div style="padding-top: 50px;">
