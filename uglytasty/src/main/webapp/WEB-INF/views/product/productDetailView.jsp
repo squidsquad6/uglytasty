@@ -458,7 +458,7 @@
                                     <th>구매수량</th>
                                     <td>
                                         <input type="button" id="add" value=" + ">
-                                        <input type="text" id="amount" value="1" name="quantity" readonly>
+                                        <input type="text" id="amount" value="1" name="quantity" readonly>	<!-- 주문하기 가져갈 것 -->
                                         <input type="button" id="minus" value=" - "><br>
                                     </td>
                                 </tr>

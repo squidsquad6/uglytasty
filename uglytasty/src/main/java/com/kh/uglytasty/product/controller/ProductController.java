@@ -440,32 +440,18 @@ public class ProductController {
 
    
    @RequestMapping("enrollForm.order")
-   public String selectOrderProductInfo(String userId, int productNo, int quantity, Model model) {
+   public String selectOrderProductInfo(int quantity, int productNo, Model model) {
 	   
-	   Cart c = new Cart();
-	   c.setUserId(userId);
-	   c.setProductNo(productNo);
-	   c.setQuantity(quantity);
-	   //System.out.println("메모용 장바구니 : " + c);
-
-	   
-	   // 1) 먼저 Cart 에 quantity 먼저 저장해두고,
-	   int result = pService.insertQuantity(c);
-	   
-	   if(result > 0) {
+	    
+	   // 1) 먼저 quantity 박아!
+	   model.addAttribute("quantity", quantity);
 		   
-		   // 2) product 조회하면서 조인해서 수량 같이 뽑아올 것
-		   Product p = pService.selectOrderProductInfo(productNo);
-		   
-		   model.addAttribute("p", p);
-		   return "order/orderForm";
-	   }else {
-	       model.addAttribute("errorMsg", "주문확인 실패!");
-	       return "common/errorPage";
-	   }
-	      	   
+	   // 2) 해당 product 정보 조회(+attachment조인)
+	   Product p = pService.selectOrderProductInfo(productNo);
+	   model.addAttribute("p", p);
 	   
-	   
+	   return "order/orderForm";
+	  
    }
    
    

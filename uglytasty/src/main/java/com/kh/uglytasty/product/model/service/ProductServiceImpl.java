@@ -201,7 +201,6 @@ public class ProductServiceImpl implements ProductService {
 				// *** 여기서 성공하면 밑 deleteCart() 호출 / 매개변수로 Cart객체 하나씩 보내 ***
 			 	result += pDao.deleteCart(sqlSession, c);
 			}
-		System.out.println("s의 result : " + result);
 		
 		return result;
 	}
