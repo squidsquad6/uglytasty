@@ -15,6 +15,7 @@ import com.kh.uglytasty.common.model.vo.PageInfo;
 import com.kh.uglytasty.common.template.Pagination;
 import com.kh.uglytasty.member.model.vo.Member;
 import com.kh.uglytasty.order.model.vo.Orders;
+import com.kh.uglytasty.qa.model.vo.QA;
 import com.kh.uglytasty.subscribe.model.vo.Subscribe;
 
 @Controller
@@ -22,6 +23,22 @@ public class AdminController {
 
 	@Autowired
 	private AdminServiceImpl aService;
+	
+	@RequestMapping("qa.ad")
+	public String selectQAList(@RequestParam(value="cpage", defaultValue = "1") int currentPage, Model model) {
+		
+		int listCount = aService.selectQAListCount();
+		
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 5);
+		
+		ArrayList<QA> list = aService.selectQAList(pi);
+		
+		model.addAttribute("list", list).addAttribute("pi",pi);
+		
+		
+		
+		return "admin/adminQA";
+	}
 	
 	@RequestMapping("order.ad")
 	public String selectOrderList(@RequestParam(value="cpage", defaultValue = "1") int currentPage,Model model) {
@@ -33,7 +50,7 @@ public class AdminController {
 		
 		ArrayList<Orders> list =   aService.selectOrderList(pi);
 		
-		System.out.println(list);
+		
 		
 		model.addAttribute("list", list).addAttribute("pi",pi);
 		
@@ -79,7 +96,7 @@ public class AdminController {
 		
 		Member b = new Member(userId, userPwd, userName, email, phone, addressBase, addressDetail, status, subscribe, provider, accessToken, refreshToken);
 		
-		System.out.println(b);
+		
 		
 		int result = aService.updateAdminMember(b);
 		
@@ -96,7 +113,7 @@ public class AdminController {
 		
 		Orders b = new Orders(orderNo, userId, productNo, orderDate, orderCode, trackingNo, addressMain, addressDetail, receiver, receiverPhone, deliveryMemo, deliveryFee, totalPrice);
 		
-		System.out.println(b);
+		
 		
 		int result = aService.updateAdminOrder(b);
 		
@@ -115,6 +132,21 @@ public class AdminController {
 		return new Gson().toJson(b);
 		
 	}
+	
+	@ResponseBody
+	@RequestMapping(value="updateQA.ad", produces="application/json; charset=UTF-8")
+	public String updateAdminQA(int qaNo, String qaCategory, String userId, String answerId, String qaTitle, String qaContent, String answerContent, String qaStatus, String answerStatus, String qaDate, String answerDate) {
+		
+		QA b = new QA(qaNo, qaCategory, userId, answerId, qaTitle, qaContent, answerContent, qaStatus, answerStatus, qaDate, answerDate);
+		
+		int result = aService.updateAdminQA(b);
+		
+		
+		return new Gson().toJson(b);
+	}
+	
+	
+	
 	
 	
 	

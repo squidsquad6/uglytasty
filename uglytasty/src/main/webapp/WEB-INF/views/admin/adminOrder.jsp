@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>주문 관리</title>
 
 
 
@@ -27,6 +27,15 @@
     text-align: center;
     padding-left: 10px;
   }
+  /* --------------------상단으로 이동하기 버튼-------------------- */
+    .btn_gotop {
+        display:none;
+        position:fixed;
+        bottom:30px;
+        right:50px;
+        z-index:999;
+        cursor:pointer;
+    }
 </style>
 
 
@@ -34,14 +43,34 @@
 <body>
 
 <jsp:include page="../common/header.jsp"/>
+<!-- 상단으로 이동하기 버튼 -->
+    <div class="btn_gotop">
+        <img width="50px" src="https://blog.kakaocdn.net/dn/s6jL5/btqHsbU8DSJ/yBeqQLZS4Kg866xEHCvA20/img.png" >
+    </div>
+    
+    <script>
+       // 상단으로 이동하기 버튼
+       $(window).scroll(function(){
+           if ($(this).scrollTop() > 300){
+               $('.btn_gotop').show();
+           } else{
+               $('.btn_gotop').hide();
+           }
+       });
+       $('.btn_gotop').click(function(){
+           $('html, body').animate({scrollTop:0},400);
+           return false;
+       });
+   </script>
  <div>
-        <div style="padding-left:750px">
+        <div style="padding-left:650px">
             <nav class="breadcrumb is-centered is-large has-background-white" aria-label="breadcrumbs">
                 <ul>
                 
                 <li><a href="member.ad">회원 관리</a></li>
                 <li><a href="order.ad">주문 관리</a></li>
                 <li><a href="subscribe.ad">구독 관리</a></li>
+                <li><a href="qa.ad">1:1문의 관리</a></li>
                 </ul>
             </nav>
          </div>
@@ -60,7 +89,7 @@
                 <th>주소</th>
                 <th>상세주소</th>
                 <th>받는사람</th>
-                <th>받는사람연락처</th>
+                <th>연락처</th>
                 <th>요청사항</th>
                 <th>배송비</th>
                 <th>총 주문 금액</th>

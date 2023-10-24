@@ -329,6 +329,8 @@
                 </select>
                 <input type="text" class="input" name="keyword" value="${ keyword }">
                 <button type="submit" class="btn">검색</button>
+                
+                
             </div>
         </form>
     </div>

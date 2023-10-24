@@ -126,6 +126,7 @@ public class QAController {
 		return new Gson().toJson(list);
 	}
 	
+
 	/**
 	 * 1:1 문의 상세 조회 메소드
 	 * @param qaNo
@@ -223,6 +224,7 @@ public class QAController {
 		}
 	}
 	
+
 
 }
 

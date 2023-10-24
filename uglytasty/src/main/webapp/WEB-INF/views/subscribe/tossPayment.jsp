@@ -19,9 +19,39 @@
   
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.4/css/bulma.min.css">
   <script src="https://js.tosspayments.com/v1/payment-widget"></script>
+  <style>
+  /* --------------------상단으로 이동하기 버튼-------------------- */
+    .btn_gotop {
+        display:none;
+        position:fixed;
+        bottom:30px;
+        right:50px;
+        z-index:999;
+        cursor:pointer;
+    }
+  </style>
 </head>
 <body>
 <jsp:include page="../common/header.jsp"/>
+<!-- 상단으로 이동하기 버튼 -->
+    <div class="btn_gotop">
+        <img width="50px" src="https://blog.kakaocdn.net/dn/s6jL5/btqHsbU8DSJ/yBeqQLZS4Kg866xEHCvA20/img.png" >
+    </div>
+    
+    <script>
+       // 상단으로 이동하기 버튼
+       $(window).scroll(function(){
+           if ($(this).scrollTop() > 300){
+               $('.btn_gotop').show();
+           } else{
+               $('.btn_gotop').hide();
+           }
+       });
+       $('.btn_gotop').click(function(){
+           $('html, body').animate({scrollTop:0},400);
+           return false;
+       });
+   </script>
 	<!-- 결제위젯, 이용약관 영역 -->
   <div id="payment-method"></div>
   <div id="agreement"></div>
