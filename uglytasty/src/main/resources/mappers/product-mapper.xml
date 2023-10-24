@@ -36,11 +36,13 @@
 		<result column="quantity" property="quantity" />
 	
 		<result column="product_name" property="productName" />
+		<result column="explanation" property="explanation" />
 		<result column="stock" property="stock" />
 		<result column="price" property="price" />
 		<result column="sale" property="sale" />
 
 		<result column="sale_price" property="salePrice" />
+		<result column="total_price" property="totalPrice" />
 
 		<result column="change_name" property="changeName" />
 		<result column="file_level" property="fileLevel" />
@@ -345,22 +347,26 @@
 		   and user_id = #{userId}
 	</delete>
 
-	<insert id="insertQuantity">
-		insert
-		  into cart
-		   (
-		  	user_id
-		  , product_no
-		  , quantity
-		  )
-		  values
-		  (
-		  	#{userId}
-		  , #{productNo}
-		  , #{quantity}
-		  )
-	</insert>
-
+	<select id="orderCart" resultMap="cartResult">
+		select
+		        c.product_no
+		      , quantity
+		      , product_name
+		      , explanation 
+		      , price
+		      , sale
+              , round(price - (price * (sale / 100))) as "sale_price"
+              , round((price - (price * (sale / 100))) * quantity) as "total_price"
+              , change_name
+              , file_level
+		  from cart c
+		  join product p on (c.product_no = p.product_no)
+          join attachment a on (p.product_no = a.ref_pno)
+		 where user_id = #{ userId }
+           and c.product_no = #{ productNo }
+           and file_level = 1
+	</select>
+	
 	<select id="selectOrderProductInfo" resultMap="productResult">
 		select
 				product_no
@@ -376,6 +382,8 @@
 		 where product_no = #{productNo}
            and a.file_level = 1
 	</select>
+
+	
 
 
 </mapper>

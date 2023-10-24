@@ -191,6 +191,9 @@ public class ProductServiceImpl implements ProductService {
 		return pDao.updateMinusQuantity(sqlSession, c);
 	}
 	
+	
+	
+	
 	/*장바구니 선택삭제*/
 	@Override
 	public int deleteCartProduct(ArrayList<Cart> clist) {	// productNo 각각 담긴 Cart객체들 모음집
@@ -205,18 +208,36 @@ public class ProductServiceImpl implements ProductService {
 		return result;
 	}
 	
-	
-	/*상세페이지에서 주문하기용_수량 저장*/
+	/*장바구니에서 주문하기용_상품 조회*/
 	@Override
-	public int insertQuantity(Cart c) {
-		return pDao.insertQuantity(sqlSession, c);
+	public ArrayList<Cart> orderCartProduct(ArrayList<Cart> clist) {
+		
+		ArrayList<Cart> clistOrder = new ArrayList<Cart>();
+		
+		for(Cart c : clist) {
+			// *** 여기서 성공하면 orderCart() 호출 / 매개변수로 Cart객체 하나씩 보내 ***
+			
+			//ArrayList<Cart> resultCart = pDao.orderCart(sqlSession, c);
+			//clistOrder.addAll(resultCart);
+			
+			Cart cartItem = pDao.orderCart(sqlSession, c);
+			clistOrder.add(cartItem);
+			
+		}
+	
+		return clistOrder;
 	}
+	
+	
+	
 	
 	/*상세페이지에서 주문하기용_상품 조회*/
 	@Override
 	public Product selectOrderProductInfo(int productNo) {
 		return pDao.selectOrderProductInfo(sqlSession, productNo);
 	}
+
+	
 
 
 

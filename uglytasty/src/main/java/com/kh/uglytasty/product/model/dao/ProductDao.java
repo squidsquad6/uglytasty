@@ -98,18 +98,29 @@ public class ProductDao {
 		return sqlSession.update("productMapper.updateMinusQuantity", c);
 	}
 	
+	
+	
+	
+	
 	/*장바구니 선택삭제*/
 	public int deleteCart(SqlSessionTemplate sqlSession, Cart c) {
 		return sqlSession.delete("productMapper.deleteCart", c);
 	}
 	
 	
-	
-	/*상세페이지에서 주문하기용_수량 저장*/
-	public int insertQuantity(SqlSessionTemplate sqlSession, Cart c) {
-		return sqlSession.insert("productMapper.insertQuantity", c);
+	/*장바구니에서 주문하기용_상품 조회 (근데 왜 selectList? => file_level=1 로 조건걸어주니 selectOne 가넝!!)*/
+	/*
+	public ArrayList<Cart> orderCart(SqlSessionTemplate sqlSession, Cart c) {
+		return (ArrayList)sqlSession.selectList("productMapper.orderCart", c);
 	}
-
+	*/
+	public Cart orderCart(SqlSessionTemplate sqlSession, Cart c) {
+		return sqlSession.selectOne("productMapper.orderCart", c);
+	}
+	
+	
+	
+	
 	/*상세페이지에서 주문하기용_상품 조회*/
 	public Product selectOrderProductInfo(SqlSessionTemplate sqlSession, int productNo) {
 		return sqlSession.selectOne("productMapper.selectOrderProductInfo", productNo);

@@ -101,7 +101,7 @@
         border: none;
     }
    
-    #accountBtn {
+    #orderButton {
         width: 1000px;
         height: 70px;
         border: 1px solid #ff6741;
@@ -114,7 +114,7 @@
         font-size: 18px;
         cursor: pointer;
     }
-    #accountBtn:hover {
+    #orderButton:hover {
         filter: brightness(0.9);
     }
 
@@ -210,16 +210,16 @@
                 </tr>
                 <tr>
                     <td></td>
-                    <td align="right" style="font-size: 10px; color: #ff6741;">(각 상품금액 + 배송비 가 포함되어 있습니다.)</td>
+                    <td align="right" style="font-size: 10px; color: #ff6741;">(총 상품금액 + 배송비 가 포함되어 있습니다.)</td>
                 </tr>
             </table>
     
-      
-            <!-- 버튼 누르면 결제API 뜨도록 -->
             <br><br>
-            <button type="submit" id="accountBtn">주문하기</button>
+            
+            <!--  <button type="submit" id="orderButton" class="btn btn-outline-danger" >주문하기</button>-->
+            <input type="button" id="orderButton" value="주문하기" class="btn btn-outline-danger" onclick="submitOrderForm();">
+        
         </form>
-
     </div>
     
     
@@ -233,7 +233,8 @@
             })
         }
     </script>
-       <script>
+    
+    <script>
         function deleteCheck() {
      
             var deleteArr = [];
@@ -273,6 +274,40 @@
 
         }
     </script>
+    
+    
+   
+	
+    <!-- (위) '주문하기 submitOrderForm()' 클릭 시, 폼을 서버로 제출하는 함수 호출 -->
+    
+    <form action="order.cart" id="orderForm" method="post">
+        <!-- 선택된 상품의 productNo를 전달할 hidden input 추가 -->
+        <input type="hidden" name="userId" value="${loginMember.userId}">
+        <input type="hidden" name="productNo" id="selectedProductNos" value="">
+    </form>
+
+    <!-- 망했어요.... -->
+    <script>
+        function submitOrderForm() {
+            var ArrProductNo = [];
+
+            // 선택된 체크박스에서 productNo를 추출하여 배열에 추가
+            $("input[name='rowCheck']:checked").each(function() {
+            	ArrProductNo.push($(this).val());
+            });
+
+            if (ArrProductNo.length === 0) {
+                alert("주문하실 상품을 선택해주세요.");
+            } else {
+                // 선택된 상품의 productNo를 hidden input에 설정
+                document.getElementById("selectedProductNos").value = ArrProductNo.join(",");
+
+                // 폼을 제출하여 "order.cart" 컨트롤러로 이동
+                document.getElementById("orderForm").submit();
+            }
+        }       
+    </script>
+    
     
     
     
@@ -351,7 +386,7 @@
     
     
         // 초기 totalPrice 계산
-        let calculatedValue = 0;
+        let calculatedValue = 2500; // 애초에 배송비 넣고 시작
 
         for (let i = 1; i <= cartlist.length; i++) {
             const row = document.getElementById(i);
@@ -360,14 +395,12 @@
 
             let priceVal = parseInt(sellPrice.value);
             let amountVal = parseInt(row.querySelector("input[name='amount']").value);
+           
 
             // 초기값 설정
             sum.value = (priceVal * amountVal).toLocaleString("ko-KR");
-            
-           
-
+ 
             calculatedValue += priceVal * amountVal;
-            
             
         }
 
@@ -448,6 +481,7 @@
             for (let i = 1; i <= cartlist.length; i++) {
                 const priceElement = document.getElementById(i).querySelector("input[name='sum']");
                 const price = parseInt(priceElement.value.replace(/,/g, ''));
+
                 calculatedValue += price;
             }
 			

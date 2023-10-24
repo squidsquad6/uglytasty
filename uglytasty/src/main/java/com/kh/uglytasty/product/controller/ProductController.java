@@ -358,7 +358,7 @@ public class ProductController {
 	   
 	   ArrayList<Cart> cartlist = pService.selectCartList(userId);
 	   model.addAttribute("cartlist", cartlist);
-	   System.out.println("장바구니 상품(cartlist) : " + cartlist);
+	   //System.out.println("장바구니 상품(cartlist) : " + cartlist);
 	   
 	   return "order/cartListForm";
 	   
@@ -413,7 +413,7 @@ public class ProductController {
    @RequestMapping("delete.cart")
    public String ajaxDeleteCart(String userId, String[] productNo) {
     
-       System.out.println("장바구니 선택삭제 : " + productNo.length);
+       //System.out.println("장바구니 선택삭제 : " + productNo.length);
        
 
 	   ArrayList<Cart> clist = new ArrayList<Cart>();
@@ -429,13 +429,51 @@ public class ProductController {
 	      
 	    }
 	    
-	   System.out.println("clist : " + clist);
+	   //System.out.println("삭제할 clist : " + clist);
         
 	   // 준비 끝........서비스로..
 	   int result = pService.deleteCartProduct(clist);
     
 	   return result>0 ? "success" : "fail";
  
+   }
+   
+   
+   @RequestMapping("order.cart")
+   public String ajaxOrderCart(String userId, String[] productNo, Model model) {
+	   
+	   /*
+	   for(String p: productNo) {
+		   System.out.println("p" + p);
+	   }
+	   */
+	   
+	   ArrayList<Cart> clist = new ArrayList<Cart>();
+		
+	   for(int i=0; i<productNo.length; i++) {
+		   
+	         Cart orderCart = new Cart();
+	         
+	         orderCart.setUserId(userId);
+	         orderCart.setProductNo(Integer.parseInt(productNo[i]));
+
+	         clist.add(orderCart);
+	      
+	    }
+    
+	   // 준비 끝........서비스로..
+	   ArrayList<Cart> clistOrder = pService.orderCartProduct(clist);
+	   
+	   /*
+	   for(int i=0; i<clistOrder.size(); i++) {
+		   System.out.println("주문할clist : " + clistOrder.get(i));
+	   }
+	   */
+	   
+	   model.addAttribute("clistOrder", clistOrder);
+	      
+	   return "order/orderForm";
+	   
    }
 
    

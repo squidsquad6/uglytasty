@@ -6,9 +6,14 @@
 
 <!-- 
 	loginMember = 회원정보..
+	
+	
 	quantity : quantity
-	p : productNo, productName, explanation, price, sale / changeName, fileLevel / quantity / 
-		salePrice
+	p : productNo, productName, explanation, price, sale / salePrice / changeName, fileLevel / 
+		
+		
+    clistOrder : productNo, quantity, productName, explanation, price, sale  / changeName, fileLevel /
+    			 salePrice, totalPrice(salePrice*quantity)
  -->
     
 <!DOCTYPE html>
@@ -211,7 +216,142 @@
             </select> <br><br>
 
             <br><hr><br>
-
+            
+            
+    
+    
+     		<!-- p / clistORder -->
+            <c:choose>
+            	<c:when test="${ not empty clistOrder }">
+            		
+            		<h3>🥕주문 상품</h3><br>
+		            <c:forEach var="c" items="${ clistOrder }">
+			            <div class="orderProduct">
+			                <div class="orderProductImg">
+			                    <img style="width: 150px; height: 150px;" src="${ c.changeName }">
+			                </div>
+			                <div class="orderProductInfo">
+			                	
+			                    <h3>${ c.productName }</h3>
+			                    <p style="color: gray; font-weight:400;">${ c.explanation }</p>
+			                    <div class="item" style="text-align: left;">
+			                        <span class="sale">${ c.sale }%</span>
+			                        <span class="originPrice">﻿<fmt:formatNumber value="${ c.price }" pattern="#,###"/></span>
+			                        <span class="salePrice" id="salePrice"><fmt:formatNumber value="${ c.salePrice }" pattern="#,###"/></span>
+			                        <span class="salePrice" >원</span>
+			                    </div>
+			                 	<div>
+				                    <p style="color: black; font-weight:500; margin-top:10px;">구매수량&nbsp;&nbsp;:&nbsp;&nbsp;
+				                    <span style="font-weight:bold; color:black;">${ c.quantity }</span>개</p>
+			                 	</div>
+			                    <div align="right" style="margin-right:740px;">
+				                    <p style="color: black; font-weight:500; margin-top:10px;">총&nbsp;:&nbsp;&nbsp;
+				                    <span style="font-weight:bold; color:black;"><fmt:formatNumber value="${ c.totalPrice }" pattern="#,###"/></span>&nbsp;원</p>
+			                    </div>
+			                </div>
+			            </div>
+		            </c:forEach>
+		            
+		            <br><hr><br>
+		
+		            <h3>📄 결제 정보</h3><br>
+		            <table id="paymentInfo">
+		                <tr>
+		                    <td>내가 담은 금액</td>
+		                     <td align="right" id="total">
+						        <c:set var="totalOrderPrice" value="0" />
+						        <c:forEach var="c" items="${clistOrder}">
+						            <c:set var="totalOrderPrice" value="${totalOrderPrice + c.totalPrice}" />
+						        </c:forEach>
+						        <fmt:formatNumber value="${totalOrderPrice}" pattern="#,###"/>&nbsp;원
+						    </td>
+		                </tr>
+		                <tr>
+		                    <td>배송비</td>
+		                    <td align="right" id="fee"><fmt:formatNumber value="2500" pattern="#,###"/>&nbsp;원</td>
+		                </tr>
+		                <tr id="totalPrice">
+		                    <td style="padding-top:40px; width:500px;">총 결제 금액</td>
+		                    <td style="padding-top:40px;">
+		                    
+		                    	<fmt:formatNumber var="totalPriceFormat" value="${ totalOrderPrice + 2500 }" pattern="#,###" />	
+								<input type="text" id="totalPrice" name="" value="<c:out value='${totalPriceFormat}' />" />원
+		                    	
+		                    	<p align="right" style="font-size: 10px; color: #ff6741; font-weight:400;">(+ 배송비 가 포함되어 있습니다.)</p>
+		                    	
+		                    </td>
+		                </tr>
+		            </table>
+            	
+            	</c:when>
+            	<c:otherwise>
+            	
+            		<h3>🥕주문 상품</h3><br>
+		            <div class="orderProduct">
+		                <div class="orderProductImg">
+		                    <img style="width: 150px; height: 150px;" src="${ p.changeName }">
+		                </div>
+		                <div class="orderProductInfo">
+		                	
+		                    <h3>${ p.productName }</h3>
+		                    <p style="color: gray; font-weight:400;">${ p.explanation }</p>
+		                    <div class="item" style="text-align: left;">
+		                        <span class="sale">${p.sale }%</span>
+		                        <span class="originPrice">﻿<fmt:formatNumber value="${ p.price }" pattern="#,###"/></span>
+		                        <span class="salePrice" id="salePrice"><fmt:formatNumber value="${ p.salePrice }" pattern="#,###"/></span>
+		                        <span class="salePrice" >원</span>
+		                    </div>
+		                    
+		                    <div>
+			                    <p style="color: black; font-weight:500; margin-top:10px;">구매수량&nbsp;&nbsp;:&nbsp;&nbsp;
+			                    <span style="font-weight:bold; color:black;">${ quantity }</span>개</p>
+		                 	</div>
+		                    <div align="right" style="margin-right:740px;">
+			                    <p style="color: black; font-weight:500; margin-top:10px;">총&nbsp;:&nbsp;&nbsp;
+			                    <span style="font-weight:bold; color:black;"><fmt:formatNumber value="${ p.salePrice * quantity }" pattern="#,###"/></span>&nbsp;원</p>
+		                    </div>
+		                 
+		               
+		                </div>
+		            </div>
+		
+		
+		            <br><hr><br>
+		
+		
+		            <h3>📄 결제 정보</h3><br>
+		            <table id="paymentInfo">
+		                <tr>
+		                    <td>내가 담은 금액</td>
+		                    <td align="right" id="total"><fmt:formatNumber value="${ p.salePrice * quantity }" pattern="#,###"/>&nbsp;원</td>	
+		                </tr>
+		                <tr>
+		                    <td>배송비</td>
+		                    <td align="right" id="fee"><fmt:formatNumber value="2500" pattern="#,###"/>&nbsp;원</td>
+		                </tr>
+		                <tr id="totalPrice">
+		                    <td style="padding-top:40px; width:500px;">총 결제 금액</td>
+		                    <td style="padding-top:40px;">
+		                    
+		                    	<fmt:formatNumber var="totalPriceFormat" value="${ (p.salePrice * quantity) + 2500 }" pattern="#,###" />	 
+								<input type="text" id="totalPrice" name="" value="<c:out value='${totalPriceFormat}' />" />원
+		                    	
+		                    	<p align="right" style="font-size: 10px; color: #ff6741; font-weight:400;">(+ 배송비 가 포함되어 있습니다.)</p>
+		                    </td>
+		                </tr>
+		            </table>
+            	
+            	</c:otherwise>
+            </c:choose>
+            
+            
+            
+            
+            
+            
+            
+			<!-- *** p (단품)
+			
             <h3>🥕주문 상품</h3><br>
             <div class="orderProduct">
                 <div class="orderProductImg">
@@ -233,34 +373,106 @@
                 </div>
             </div>
 
+
             <br><hr><br>
+
 
             <h3>📄 결제 정보</h3><br>
             <table id="paymentInfo">
-                <!-- 불러올 값 -->
                 <tr>
                     <td>내가 담은 금액</td>
-                    <td align="right" id="total"><fmt:formatNumber value="${ p.salePrice * quantity }" pattern="#,###"/>&nbsp;원</td>	<!-- 계산할부분 -->
+                    <td align="right" id="total"><fmt:formatNumber value="${ p.salePrice * quantity }" pattern="#,###"/>&nbsp;원</td>	
                 </tr>
                 <tr>
                     <td>배송비</td>
                     <td align="right" id="fee"><fmt:formatNumber value="2500" pattern="#,###"/>&nbsp;원</td>
                 </tr>
-                <!-- 넘길 값 -->
                 <tr id="totalPrice">
                     <td style="padding-top:40px; width:500px;">총 결제 금액</td>
                     <td style="padding-top:40px;">
                     
-                    	<fmt:formatNumber var="totalPriceFormat" value="${ (p.salePrice * quantity) + 2500 }" pattern="#,###" />	 <!-- 계산할부분 -->
+                    	<fmt:formatNumber var="totalPriceFormat" value="${ (p.salePrice * quantity) + 2500 }" pattern="#,###" />	 
 						<input type="text" id="totalPrice" name="" value="<c:out value='${totalPriceFormat}' />" />원
                     	
                     	<p align="right" style="font-size: 10px; color: #ff6741; font-weight:400;">(+ 배송비 가 포함되어 있습니다.)</p>
-                    	<!-- 
-                    	<input type="text" id="totalPrice" name="" value="20500" >원
-                    	 -->
                     </td>
                 </tr>
             </table>
+             
+			-->
+
+
+
+
+
+			
+			<!-- *** clistOrder 장바구니 여러개 상품 
+            
+            <h3>🥕주문 상품</h3><br>
+            <c:forEach var="c" items="${ clistOrder }">
+	            <div class="orderProduct">
+	                <div class="orderProductImg">
+	                    <img style="width: 150px; height: 150px;" src="${ c.changeName }">
+	                </div>
+	                <div class="orderProductInfo">
+	                	
+	                    <h3>${ c.productName }</h3>
+	                    <p style="color: gray; font-weight:400;">${ c.explanation }</p>
+	                    <div class="item" style="text-align: left;">
+	                        <span class="sale">${ c.sale }%</span>
+	                        <span class="originPrice">﻿<fmt:formatNumber value="${ c.price }" pattern="#,###"/></span>
+	                        <span class="salePrice" id="salePrice"><fmt:formatNumber value="${ c.salePrice }" pattern="#,###"/></span>
+	                        <span class="salePrice" >원</span>
+	                    </div>
+	                 	<div>
+		                    <p style="color: black; font-weight:500; margin-top:10px;">구매수량&nbsp;&nbsp;:&nbsp;&nbsp;
+		                    <span style="font-weight:bold; color:black;">${ c.quantity }</span>개</p>
+	                 	</div>
+	                    <div align="right" style="margin-right:740px;">
+		                    <p style="color: black; font-weight:500; margin-top:10px;">총&nbsp;:&nbsp;&nbsp;
+		                    <span style="font-weight:bold; color:black;"><fmt:formatNumber value="${ c.totalPrice }" pattern="#,###"/></span>&nbsp;원</p>
+	                    </div>
+	                </div>
+	            </div>
+            </c:forEach>
+            
+            <br><hr><br>
+
+            <h3>📄 결제 정보</h3><br>
+            <table id="paymentInfo">
+                <tr>
+                    <td>내가 담은 금액</td>
+                     <td align="right" id="total">
+				        <c:set var="totalOrderPrice" value="0" />
+				        <c:forEach var="c" items="${clistOrder}">
+				            <c:set var="totalOrderPrice" value="${totalOrderPrice + c.totalPrice}" />
+				        </c:forEach>
+				        <fmt:formatNumber value="${totalOrderPrice}" pattern="#,###"/>&nbsp;원
+				    </td>
+                </tr>
+                <tr>
+                    <td>배송비</td>
+                    <td align="right" id="fee"><fmt:formatNumber value="2500" pattern="#,###"/>&nbsp;원</td>
+                </tr>
+                <tr id="totalPrice">
+                    <td style="padding-top:40px; width:500px;">총 결제 금액</td>
+                    <td style="padding-top:40px;">
+                    
+                    	<fmt:formatNumber var="totalPriceFormat" value="${ totalOrderPrice + 2500 }" pattern="#,###" />	
+						<input type="text" id="totalPrice" name="" value="<c:out value='${totalPriceFormat}' />" />원
+                    	
+                    	<p align="right" style="font-size: 10px; color: #ff6741; font-weight:400;">(+ 배송비 가 포함되어 있습니다.)</p>
+                    	
+                    </td>
+                </tr>
+            </table>
+			
+			-->
+			
+			
+			
+			
+			
 
 			<br><hr><br>
             <h3>💳 결제 수단</h3><br>

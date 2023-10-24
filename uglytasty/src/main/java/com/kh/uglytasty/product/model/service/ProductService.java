@@ -73,9 +73,10 @@ public interface ProductService {
 	int deleteCartProduct(ArrayList<Cart> clist);
 	
 	
-	// 상세페이지에서 주문하기용_수량 저장
-	int insertQuantity(Cart c);
-
+	
+	// 장바구니에서 주문하기용_상품 조회
+	ArrayList<Cart> orderCartProduct(ArrayList<Cart> clist);
+	
 	// 상세페이지에서 주문하기용_상품 조회
 	Product selectOrderProductInfo(int productNo);
 	
