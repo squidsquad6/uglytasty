@@ -123,10 +123,12 @@
            
         </table>
         <button class="button is-success is-normal" type="submit"><i class="fa-solid fa-download"></i>&nbsp;&nbsp;Excel 다운로드</button>
+        
+        </form>
+        
          <button class="button is-info is-normal" id="uploadButton">
   		  <i class="fa-solid fa-arrow-up-from-bracket"></i>&nbsp;&nbsp;Excel 업로드
 		</button>
-        </form>
         
        
         
