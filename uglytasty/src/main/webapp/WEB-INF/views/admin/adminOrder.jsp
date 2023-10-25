@@ -71,6 +71,7 @@
                 <li><a href="order.ad">주문 관리</a></li>
                 <li><a href="subscribe.ad">구독 관리</a></li>
                 <li><a href="qa.ad">1:1문의 관리</a></li>
+                 <li><a href="product.ad">단품 관리</a></li>
                 </ul>
             </nav>
          </div>

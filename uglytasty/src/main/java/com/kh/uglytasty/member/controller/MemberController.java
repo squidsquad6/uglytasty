@@ -145,24 +145,21 @@ public class MemberController {
 	@RequestMapping(value="oauth2/kakao", produces = "application/json" )
 	public String kakaoLogin(@RequestParam String code,Model model, HttpSession session) {
 	      
+		
+		
 	     Map<String, Object> result = mService.getKakaoAccessToken(code);
 	     
-	     
-	  // Extract accessToken from the result map
 	     String accessToken = (String) result.get("accessToken");
 	     
 	  
 	     
-	     // Extract userInfo from the result map
+	     
 	     JsonNode userInfoNode = (JsonNode) result.get("userInfo");
 	     System.out.println("유저: " + userInfoNode);
-	     // Extract specific fields from the userInfo JSON
 	     String userId = userInfoNode.get("id").asText();
 	     String userName = userInfoNode.get("properties").get("nickname").asText();
 	     String email = userInfoNode.get("kakao_account").get("email").asText();
 	     String userPwd = "kakao";
-
-	     // Print accessToken and extracted user information separately
 	     System.out.println("AccessToken: " + accessToken);
 	     System.out.println("User ID: " + userId);
 	     System.out.println("User Name: " + userName);

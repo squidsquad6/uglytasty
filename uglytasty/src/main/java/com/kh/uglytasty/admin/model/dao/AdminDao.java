@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 import com.kh.uglytasty.common.model.vo.PageInfo;
 import com.kh.uglytasty.member.model.vo.Member;
 import com.kh.uglytasty.order.model.vo.Orders;
+import com.kh.uglytasty.product.model.vo.Product;
 import com.kh.uglytasty.qa.model.vo.QA;
 import com.kh.uglytasty.subscribe.model.vo.Subscribe;
 
@@ -100,6 +101,21 @@ public class AdminDao {
 	public int updateAdminQA(SqlSessionTemplate sqlSession, QA b) {
 		
 		return sqlSession.update("adminMapper.updateAdminQA", b);
+	}
+
+	public int updateAdminProduct(SqlSessionTemplate sqlSession, Product b) {
+		
+		return sqlSession.update("adminMapper.updateAdminProduct", b);
+	}
+
+	public int selectProductListCount(SqlSessionTemplate sqlSession) {
+		
+		return sqlSession.selectOne("adminMapper.selectProductListCount");
+	}
+
+	public ArrayList<Product> selectProductList(SqlSessionTemplate sqlSession) {
+		
+		return (ArrayList)sqlSession.selectList("adminMapper.selectProductList");
 	}
 
 	
