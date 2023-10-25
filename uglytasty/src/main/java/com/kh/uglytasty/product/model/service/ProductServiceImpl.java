@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.kh.uglytasty.order.model.vo.Cart;
 import com.kh.uglytasty.order.model.vo.Orders;
+import com.kh.uglytasty.order.model.vo.OrdersDetail;
 import com.kh.uglytasty.product.model.dao.ProductDao;
 import com.kh.uglytasty.product.model.vo.Attachment;
 import com.kh.uglytasty.product.model.vo.Product;
@@ -203,7 +204,7 @@ public class ProductServiceImpl implements ProductService {
 		for(Cart c : clist) {
 				// *** 여기서 성공하면 밑 deleteCart() 호출 / 매개변수로 Cart객체 하나씩 보내 ***
 			 	result += pDao.deleteCart(sqlSession, c);
-			}
+		}
 		
 		return result;
 	}
@@ -228,9 +229,6 @@ public class ProductServiceImpl implements ProductService {
 		return clistOrder;
 	}
 	
-	
-	
-	
 	/*상세페이지에서 주문하기용_상품 조회*/
 	@Override
 	public Product selectOrderProductInfo(int productNo) {
@@ -238,8 +236,50 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	
+	
+	
+	/*단품 '주문 insert' | oPro에 (1)(2)에 필요한거 다 들어있음  */
+	@Override
+	public int insertOrderProduct(Orders oPro) {
+		
+		int result1 = pDao.insertOrderProduct(sqlSession, oPro);
+		
+		int result2 = 0;
+		
+		if(result1 > 0) { // (주문)넣고, (주문상세)넣기
+			result2 = pDao.insertOrderDetailProduct(sqlSession, oPro);
+		}
+		
+		int result = result1 * result2;
+		
+		return result; 
 
+	}
 
+	/*장바구니상품 '주문 insert' | oPro는 (1)에 필요, odList는 (2)에 필요*/
+	@Override
+	public int insertOrderCart(Orders oCart, ArrayList<OrdersDetail> odList) {
+		
+		int result1 = pDao.insertOrderCart(sqlSession, oCart);
+		
+		int result2 = 0;
+
+		if(result1 > 0) {
+		
+			for(OrdersDetail odCart : odList) {
+				// *** 여기서 성공하면 밑 insertOrderDetailCart() 호출 / 매개변수로 OrdersDetail 객체 하나씩 보내 ***
+			 	result2 += pDao.insertOrderDetailCart(sqlSession, odCart);
+			}
+			
+		}
+		
+		int result = result1 * result2;
+
+		return result;
+	}
+
+	
+	
 
 	
 	

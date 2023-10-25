@@ -5,6 +5,7 @@ import java.util.ArrayList;
 
 import com.kh.uglytasty.order.model.vo.Cart;
 import com.kh.uglytasty.order.model.vo.Orders;
+import com.kh.uglytasty.order.model.vo.OrdersDetail;
 import com.kh.uglytasty.product.model.vo.Attachment;
 import com.kh.uglytasty.product.model.vo.Product;
 import com.kh.uglytasty.product.model.vo.Review;
@@ -79,6 +80,16 @@ public interface ProductService {
 	
 	// 상세페이지에서 주문하기용_상품 조회
 	Product selectOrderProductInfo(int productNo);
+	
+	
+	
+	// 단품 '주문 insert'
+	int insertOrderProduct(Orders oPro);
+	
+	// 장바구니상품 '주문 insert'
+	int insertOrderCart(Orders oCart, ArrayList<OrdersDetail> odList);
+	
+	
 	
 	
 	

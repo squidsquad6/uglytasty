@@ -126,7 +126,7 @@
               , file_level
 		  from product p
           left join attachment a on (p.product_no = a.ref_pno)
-		 where product_name like '%' || #{keyword} || '%'
+		 where upper(product_name) like upper('%' || #{keyword} || '%')
 		   and p.status = 'Y'
            and a.file_level = 1
 		 order
@@ -150,7 +150,7 @@
               , file_level
 		  from product p
           left join attachment a on (p.product_no = a.ref_pno)
-		 where product_name like '%' || #{keyword} || '%'
+		 where upper(product_name) like upper('%' || #{keyword} || '%')
 		   and p.status = 'R'
            and a.file_level = 1
 		 order
@@ -383,7 +383,98 @@
            and a.file_level = 1
 	</select>
 
+
+
+
+	<insert id="insertOrderProduct">
+		insert
+		  into orders
+		  (
+		  	order_no
+		  , user_id
+		  , address_main
+		  , address_detail
+		  , receiver
+		  , receiver_phone
+		  , delivery_memo
+		  , total_price
+		  )
+		  values
+		  (
+		  	seq_orders_no.nextval
+		  , #{userId}
+		  , #{addressMain}
+		  , #{addressDetail}
+		  , #{receiver}
+		  , #{receiverPhone}
+		  , #{deliveryMemo}
+		  , #{totalPrice}
+		  )
+	</insert>
 	
+	<insert id="insertOrderDetailProduct">
+		insert
+		  into orders_detail
+		  (
+		  	order_no
+		  , product_no
+		  , quantity
+		  )
+		  values
+		  (
+		  	seq_orders_no.currval
+		  , #{productNo}
+		  , #{quantity}
+		  )
+	</insert>
+	
+	<insert id="insertOrderCart">
+		insert
+		  into orders
+		  (
+		  	order_no
+		  , user_id
+		  , address_main
+		  , address_detail
+		  , receiver
+		  , receiver_phone
+		  , delivery_memo
+		  , total_price
+		  )
+		  values
+		  (
+		  	seq_orders_no.nextval
+		  , #{userId}
+		  , #{addressMain}
+		  , #{addressDetail}
+		  , #{receiver}
+		  , #{receiverPhone}
+		  , #{deliveryMemo}
+		  , #{totalPrice}
+		  )
+	</insert>
+	
+	<insert id="insertOrderDetailCart">
+		insert
+		  into orders_detail
+		  (
+		  	order_no
+		  , product_no
+		  , quantity
+		  )
+		  values
+		  (
+		  	seq_orders_no.currval
+		  , #{productNo}
+		  , #{quantity}
+		  )
+	</insert>
+	
+	
+	
+	
+	
+
 
 
 </mapper>

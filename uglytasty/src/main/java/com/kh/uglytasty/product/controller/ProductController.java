@@ -21,6 +21,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.google.gson.Gson;
 import com.kh.uglytasty.order.model.vo.Cart;
 import com.kh.uglytasty.order.model.vo.Orders;
+import com.kh.uglytasty.order.model.vo.OrdersDetail;
 import com.kh.uglytasty.product.model.service.ProductServiceImpl;
 import com.kh.uglytasty.product.model.vo.Attachment;
 import com.kh.uglytasty.product.model.vo.Product;
@@ -103,7 +104,7 @@ public class ProductController {
       if(result > 0) {
          ArrayList<Product> plist = pService.selectDetailProduct(pno);
          
-         System.out.println("상품의 상세정보(plist) : " + plist);
+         //System.out.println("상품의 상세정보(plist) : " + plist);
          
          model.addAttribute("plist", plist);
          return "product/productDetailView";
@@ -439,6 +440,9 @@ public class ProductController {
    }
    
    
+   /** 장바구니에서 주문하기용_상품 조회
+	 * 
+	 */
    @RequestMapping("order.cart")
    public String ajaxOrderCart(String userId, String[] productNo, Model model) {
 	   
@@ -477,6 +481,9 @@ public class ProductController {
    }
 
    
+   /** 상세페이지에서 주문하기용_상품 조회
+	 * 
+	 */
    @RequestMapping("enrollForm.order")
    public String selectOrderProductInfo(int quantity, int productNo, Model model) {
 	   
@@ -491,6 +498,76 @@ public class ProductController {
 	   return "order/orderForm";
 	  
    }
+   
+
+   
+   
+   /** 단품 '주문 insert' => toss.jsp 로 이동
+	 * 
+	 */
+   @RequestMapping("insertOrder.pro")
+   public String insertOrderProduct(Orders oPro, Model model) {
+	   
+	   //System.out.println("단품 왔니?");
+	   //System.out.println(oPro);
+	   
+	   int result = pService.insertOrderProduct(oPro);
+	   
+	   if(result > 0) { 
+		   return "order/toss";
+	   }else { 
+		   model.addAttribute("errorMsg", "주문하기 실패!");
+		   return "common/errorPage";
+	   }
+   }
+   
+   
+   /** 장바구니상품 '주문 insert' => toss.jsp 로 이동
+	 * 
+	 */
+   @RequestMapping("insertOrder.cart")
+   public String insertOrderCart(Orders oCart, String[] productNo, String[] quantity, Model model) {
+	   
+	   //System.out.println("장바구니상품 왔니?");
+	   //System.out.println(oCart);
+	   /*
+	   for(String p: productNo) {
+		   System.out.println("pno : " + p);
+	   }
+	   for(String q: quantity) {
+		   System.out.println("quan : " + q);
+	   }
+	   */
+	   
+	   ArrayList<OrdersDetail> odList = new ArrayList<OrdersDetail>();
+	   
+	   for(int i=0; i<productNo.length; i++) {
+		   
+		   OrdersDetail od = new OrdersDetail();
+		   
+		   od.setProductNo(Integer.parseInt(productNo[i]));
+		   od.setQuantity(Integer.parseInt(quantity[i]));
+		   
+		   odList.add(od);
+		   
+	   }
+	   
+	   // 준비 끝.. 주문(1),상품(여러개) 들고 서비스로..
+	   int result = pService.insertOrderCart(oCart, odList);
+	   
+	   if(result > 0) { 
+		   return "order/toss";
+	   }else { 
+		   model.addAttribute("errorMsg", "주문하기 실패!");
+		   return "common/errorPage";
+	   }
+	   
+   }
+   
+   
+   
+   
+   
    
    
    

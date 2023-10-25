@@ -130,7 +130,10 @@
         padding-left: 75px;
     }
    
-    #accountBtn {
+    .accountBtn {
+    	
+    	padding: 15px 300px;
+    
         width: 700px;
         height: 70px;
         border: 1px solid #ff6741;
@@ -143,8 +146,10 @@
         font-size: 18px;
         cursor: pointer;
     }
-    #accountBtn:hover {
+    .accountBtn:hover {
         filter: brightness(0.9);
+        color: white;
+        text-decoration: none;
     }
 
     /*결제수단*/
@@ -195,25 +200,25 @@
 
             <p>받는 사람</p>
             <p style="font-size:10px;"></p><p style="font-weight: 400; font-size:10px;">* 기본적으로 회원의 정보를 넣어두었습니다. 받는사람 변경 시 다시 입력해주세요.</p>
-            <input type="text" id="receiverName" name="" placeholder="성함을 입력해주세요." value="${ loginMember.userName }"> <br><br>
+            <input type="text" id="receiverName" name="receiver" placeholder="성함을 입력해주세요." value="${ loginMember.userName }"> <br><br>
             
             <p>휴대폰 번호</p>
-            <input type="text" id="receiverPhone" name="" placeholder="(-) 포함하여 입력해주세요." value="${ loginMember.phone }"> <br><br>
+            <input type="text" id="receiverPhone" name="receiverPhone" placeholder="(-) 포함하여 입력해주세요." value="${ loginMember.phone }"> <br><br>
            
             <p>주소</p>
-            <input type="text" id="sample6_address" name="" placeholder="주소를 검색하세요." style="width: 595px; margin-bottom: 5px;">
+            <input type="text" id="sample6_address" name="addressMain" placeholder="주소를 검색하세요." style="width: 595px; margin-bottom: 5px;">
             <input type="button" id="address_btn" onclick="sample6_execDaumPostcode()" value="검색"><br>
-            <input type="text" id="sample6_detailAddress" name="" placeholder="상세주소를 입력해주세요."> <br><br>
+            <input type="text" id="sample6_detailAddress" name="addressDetail" placeholder="상세주소를 입력해주세요."> <br><br>
 
             <p>배송 요청사항</p>
-            <select id="select_request">
-                    <option value="">선택 안함</option>
-                    <option value="">부재 시 전화 또는 문자 주세요.</option>
-                    <option value="">부재 시 문 앞에 놓아주세요.</option>
-                    <option value="">부재 시 경비실에 맡겨주세요.</option>
-                    <option value="">배송 전 연락 바랍니다.</option>
-                    <option value="">배송 시 파손에 주의해 주세요.</option>
-            </select> <br><br>
+            <select id="select_request" name="deliveryMemo">
+                    <option>선택 안함</option>
+                    <option>부재 시 전화 또는 문자 주세요.</option>
+                    <option>부재 시 문 앞에 놓아주세요.</option>
+                    <option>부재 시 경비실에 맡겨주세요.</option>
+                    <option>배송 전 연락 바랍니다.</option>
+                    <option>배송 시 파손에 주의해 주세요.</option>
+            </select> <br><br><br>
 
             <br><hr><br>
             
@@ -224,7 +229,10 @@
             <c:choose>
             	<c:when test="${ not empty clistOrder }">
             		
-            		<h3>🥕주문 상품</h3><br>
+            		<!-- hidden -->
+			        <input type="hidden" name="userId" value="${ loginMember.userId }">
+            		
+            		<h3>🥕 주문 상품</h3><br>
 		            <c:forEach var="c" items="${ clistOrder }">
 			            <div class="orderProduct">
 			                <div class="orderProductImg">
@@ -232,7 +240,7 @@
 			                </div>
 			                <div class="orderProductInfo">
 			                	
-			                    <h3>${ c.productName }</h3>
+			                    <h4>${ c.productName }</h4>
 			                    <p style="color: gray; font-weight:400;">${ c.explanation }</p>
 			                    <div class="item" style="text-align: left;">
 			                        <span class="sale">${ c.sale }%</span>
@@ -242,12 +250,16 @@
 			                    </div>
 			                 	<div>
 				                    <p style="color: black; font-weight:500; margin-top:10px;">구매수량&nbsp;&nbsp;:&nbsp;&nbsp;
-				                    <span style="font-weight:bold; color:black;">${ c.quantity }</span>개</p>
+				                    <span style="font-weight:bold; color:black;"><input style="width:15px; border:none; font-weight:bold; font-size:18px;" name="quantity" value="${ c.quantity }"></span>개</p>
 			                 	</div>
 			                    <div align="right" style="margin-right:740px;">
 				                    <p style="color: black; font-weight:500; margin-top:10px;">총&nbsp;:&nbsp;&nbsp;
-				                    <span style="font-weight:bold; color:black;"><fmt:formatNumber value="${ c.totalPrice }" pattern="#,###"/></span>&nbsp;원</p>
+				                    <span style="font-weight:bold; color:black;"><fmt:formatNumber value="${ c.totalPrice }" pattern="#,###"/></span>&nbsp;원</p>				                    
 			                    </div>
+			                    
+			                    <!-- hidden -->
+			               		<input type="hidden" name="productNo" value="${ c.productNo }">
+			                    
 			                </div>
 			            </div>
 		            </c:forEach>
@@ -277,23 +289,35 @@
 		                    	<fmt:formatNumber var="totalPriceFormat" value="${ totalOrderPrice + 2500 }" pattern="#,###" />	
 								<input type="text" id="totalPrice" name="" value="<c:out value='${totalPriceFormat}' />" />원
 		                    	
+		                    	<!-- hidden / 위는 문자열이라 int형은 숨겨서 가져갈란다 -->
+		                    	<input type="hidden" name="totalPrice" value="${ totalOrderPrice + 2500 }">
+		                    	
 		                    	<p align="right" style="font-size: 10px; color: #ff6741; font-weight:400;">(+ 배송비 가 포함되어 있습니다.)</p>
 		                    	
 		                    </td>
 		                </tr>
 		            </table>
+		            
+		            <br><hr><br>
+		            <h3>💳 결제 수단</h3><br>
+		            <div class="paymentOuter">
+		                <input type="radio" name="payment" value="" id="card"><label for="card" class="insertCardImg"></label></input>
+		            </div>
+		            <br>
+		            <!-- <button type="submit" class="accountBtn">바로 구매하기</button> -->
+		            <a class="accountBtn" onclick="insertOrderCartBtn();">바로 구매하기</a>
             	
             	</c:when>
             	<c:otherwise>
             	
-            		<h3>🥕주문 상품</h3><br>
+            		<h3>🥕 주문 상품</h3><br>
 		            <div class="orderProduct">
 		                <div class="orderProductImg">
 		                    <img style="width: 150px; height: 150px;" src="${ p.changeName }">
 		                </div>
 		                <div class="orderProductInfo">
 		                	
-		                    <h3>${ p.productName }</h3>
+		                    <h4>${ p.productName }</h4>
 		                    <p style="color: gray; font-weight:400;">${ p.explanation }</p>
 		                    <div class="item" style="text-align: left;">
 		                        <span class="sale">${p.sale }%</span>
@@ -304,20 +328,21 @@
 		                    
 		                    <div>
 			                    <p style="color: black; font-weight:500; margin-top:10px;">구매수량&nbsp;&nbsp;:&nbsp;&nbsp;
-			                    <span style="font-weight:bold; color:black;">${ quantity }</span>개</p>
+			                    <span style="font-weight:bold; color:black;"><input style="width:15px; border:none; font-weight:bold; font-size:18px;" name="quantity" value="${ quantity }"></span>개</p>
 		                 	</div>
 		                    <div align="right" style="margin-right:740px;">
 			                    <p style="color: black; font-weight:500; margin-top:10px;">총&nbsp;:&nbsp;&nbsp;
 			                    <span style="font-weight:bold; color:black;"><fmt:formatNumber value="${ p.salePrice * quantity }" pattern="#,###"/></span>&nbsp;원</p>
 		                    </div>
-		                 
+		                 	
+		                 	<!-- hidden -->
+		               		<input type="hidden" name="userId" value="${ loginMember.userId }">
+		               		<input type="hidden" name="productNo" value="${ p.productNo }">
 		               
 		                </div>
 		            </div>
 		
-		
 		            <br><hr><br>
-		
 		
 		            <h3>📄 결제 정보</h3><br>
 		            <table id="paymentInfo">
@@ -334,18 +359,43 @@
 		                    <td style="padding-top:40px;">
 		                    
 		                    	<fmt:formatNumber var="totalPriceFormat" value="${ (p.salePrice * quantity) + 2500 }" pattern="#,###" />	 
-								<input type="text" id="totalPrice" name="" value="<c:out value='${totalPriceFormat}' />" />원
+								<input type="text" id="totalPrice" value="<c:out value='${totalPriceFormat}' />" />원
+		                    	
+		                    	<!-- hidden / 위는 문자열이라 int형은 숨겨서 가져갈란다 -->
+		                    	<input type="hidden" name="totalPrice" value="${ (p.salePrice * quantity) + 2500 }">
 		                    	
 		                    	<p align="right" style="font-size: 10px; color: #ff6741; font-weight:400;">(+ 배송비 가 포함되어 있습니다.)</p>
 		                    </td>
 		                </tr>
 		            </table>
+		            
+		            <br><hr><br>
+		            <h3>💳 결제 수단</h3><br>
+		            <div class="paymentOuter">
+		                <input type="radio" name="payment" value="" id="card"><label for="card" class="insertCardImg"></label></input>
+		            </div>
+		            <br>
+		            
+		            <!-- <button type="submit" class="accountBtn">바로 구매하기</button> -->
+		            <a class="accountBtn" onclick="insertOrderProductBtn();">바로 구매하기</a>
             	
             	</c:otherwise>
             </c:choose>
             
             
             
+            <!-- p / clist 구매하기 버튼별 다른 submit 가도록 -->
+            <script>
+            	function insertOrderProductBtn() {
+            		$("#order").attr("action", "insertOrder.pro").submit();
+            	}
+            </script>
+            
+            <script>
+            	function insertOrderCartBtn() {
+            		$("#order").attr("action", "insertOrder.cart").submit();
+            	}
+            </script>
             
             
             
@@ -472,18 +522,25 @@
 			
 			
 			
-			
-
+			<!--  
 			<br><hr><br>
             <h3>💳 결제 수단</h3><br>
             <div class="paymentOuter">
                 <input type="radio" name="payment" value="" id="card"><label for="card" class="insertCardImg"></label></input>
             </div>
             <br>
-            <!-- 버튼 누르면 결제API 뜨도록 -->
-            <button type="submit" id="accountBtn">바로 구매하기</button>
+            
+            <button type="submit" ="accountBtn">바로 구매하기</button>
+        	-->
+        
+        
         </form>
+        
+        <br><br><br><br><br><br><br>
+        
     </div>
+
+
 
 
 

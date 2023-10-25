@@ -6,6 +6,8 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.kh.uglytasty.order.model.vo.Cart;
+import com.kh.uglytasty.order.model.vo.Orders;
+import com.kh.uglytasty.order.model.vo.OrdersDetail;
 import com.kh.uglytasty.product.model.vo.Attachment;
 import com.kh.uglytasty.product.model.vo.Product;
 
@@ -119,12 +121,41 @@ public class ProductDao {
 	}
 	
 	
-	
-	
 	/*상세페이지에서 주문하기용_상품 조회*/
 	public Product selectOrderProductInfo(SqlSessionTemplate sqlSession, int productNo) {
 		return sqlSession.selectOne("productMapper.selectOrderProductInfo", productNo);
 	}
+	
+	
+	
+	
+	/*단품 '주문 insert' (1. 주문)*/
+	public int insertOrderProduct(SqlSessionTemplate sqlSession, Orders oPro) {
+		return sqlSession.insert("productMapper.insertOrderProduct", oPro);
+	}
+	
+	/*단품 '주문 insert' (2. 주문상세)*/
+	public int insertOrderDetailProduct(SqlSessionTemplate sqlSession, Orders oPro) {
+		return sqlSession.insert("productMapper.insertOrderDetailProduct", oPro);
+	}
+	
+	
+	/*장바구니상품 '주문 insert' (1. 주문)*/
+	public int insertOrderCart(SqlSessionTemplate sqlSession, Orders oCart) {
+		return sqlSession.insert("productMapper.insertOrderCart", oCart);
+	}
+	
+	/*장바구니상품 '주문 insert' (2. 주문상세) - 객체 여러번 반복*/
+	public int insertOrderDetailCart(SqlSessionTemplate sqlSession, OrdersDetail odCart) {
+		return sqlSession.insert("productMapper.insertOrderDetailCart", odCart);
+	}
+	
+	
+	
+	
+	
+	
+	
 	
 	
 }
