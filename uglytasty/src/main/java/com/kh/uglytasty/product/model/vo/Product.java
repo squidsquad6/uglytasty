@@ -13,6 +13,7 @@ import lombok.ToString;
 @ToString			// toString 메소드
 public class Product {
 	
+	
 	private int productNo;
 	private String productName;
 	private int price;
@@ -34,6 +35,29 @@ public class Product {
 	private String changeName;
 	private String fileExp;
 	private int fileLevel;
+	
+	
+	
+	public Product(int productNo, String productName, int price, int sale, String explanation, String location,
+			String productionDate, int stock, String status, int count, String enrollDate) {
+		super();
+		this.productNo = productNo;
+		this.productName = productName;
+		this.price = price;
+		this.sale = sale;
+		this.explanation = explanation;
+		this.location = location;
+		this.productionDate = productionDate;
+		this.stock = stock;
+		this.status = status;
+		this.count = count;
+		this.enrollDate = enrollDate;
+	}
+	
+	
+	
+	
+	
 	
 
 }

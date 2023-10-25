@@ -21,6 +21,27 @@
 		
 </resultMap>
 
+	<resultMap type="Product" id="productResult">
+		<result column="product_no" property="productNo" />
+		<result column="product_name" property="productName" />
+		<result column="price" property="price" />
+		<result column="sale" property="sale" />
+		<result column="explanation" property="explanation" />
+		<result column="location" property="location" />
+		<result column="production_date" property="productionDate" />
+		<result column="stock" property="stock" />
+		<result column="status" property="status" />
+		<result column="count" property="count" />
+		<result column="enroll_date" property="enrollDate" />
+				
+		<result column="file_no" property="fileNo" />
+		<result column="ref_pno" property="refProductNo" />
+		<result column="origin_name" property="originName" />
+		<result column="change_name" property="changeName" />
+		<result column="file_exp" property="fileExp" />
+		<result column="file_level" property="fileLevel" />
+	</resultMap>
+
 <resultMap type="QA" id="QAResult">
 	<result column="qa_no" property="qaNo"/>
 	<result column="qa_category" property="qaCategory"/>
@@ -143,6 +164,23 @@ from qa, qa_category
 where qa_category=category_no
 
 </select>
+
+<select id="selectProductList" resultMap="productResult">
+select
+		 product_no
+		,product_name
+		,price
+		,sale
+		,explanation
+		,location
+		,production_date
+		,stock
+		,status
+		,count
+		,enroll_date
+from product		 
+
+</select>
 	
 
   
@@ -172,6 +210,22 @@ set		 a_content=#{answerContent}
 		,a_status=#{answerStatus}
 		,a_date=sysdate
 where	 qa_no = #{qaNo}		
+</update>
+
+<update id="updateAdminProduct">
+update
+		 product
+set		 product_name = #{productName}
+		,price = #{price}
+		,sale = #{sale}
+		,explanation = #{explanation}
+		,location = #{location}
+		,stock = #{stock}
+		,status = #{status}
+		,count = #{count}
+		,enroll_date = sysdate
+where product_no = #{productNo}		
+
 </update>
 
 <update id="updateAdminOrder">
@@ -230,6 +284,12 @@ where user_id = #{userId}
   	   	
   
   </select>
+<select id="selectProductListCount"  resultType="_int">
+	select
+			count(*)
+		from product	
+</select> 
+  
 <select id="selectSubscribeCount" resultType="_int">
   
   	select
