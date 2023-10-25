@@ -120,7 +120,7 @@
         </div>
         <div>
         	<c:if test="${not empty loginMember }">
-           	 <a href="buynow.su" class="btn text-white" style="background-color: #ff6742; width: 200px; height: 50px; font-size: large; font-weight: bold; padding-top: 11px;" >시작하기</a>
+           	 <a href="buynow.su?userId=${loginMember.userId}" class="btn text-white" style="background-color: #ff6742; width: 200px; height: 50px; font-size: large; font-weight: bold; padding-top: 11px;" >시작하기</a>
             </c:if>
             <c:if test="${empty loginMember }">
            	 <a href="loginForm.me" class="btn text-white" style="background-color: #ff6742; width: 200px; height: 50px; font-size: large; font-weight: bold; padding-top: 11px;" >시작하기</a>
@@ -258,7 +258,7 @@
         <br><br>
         <div>
         	<c:if test="${not empty loginMember }">
-           	 <a href="buynow.su" class="btn text-white"   style="background-color: #ff6742; color: white; font-weight: bold; width: 50%;">구독 하기</a>
+           	 <a href="buynow.su?userId=${loginMember.userId}" class="btn text-white"   style="background-color: #ff6742; color: white; font-weight: bold; width: 50%;">구독 하기</a>
 			</c:if>
 			<c:if test="${empty loginMember }">
 				<a href="loginForm.me" class="btn text-white"   style="background-color: #ff6742; color: white; font-weight: bold; width: 50%;">구독 하기</a>

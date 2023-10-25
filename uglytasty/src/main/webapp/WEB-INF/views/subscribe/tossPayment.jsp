@@ -77,7 +77,7 @@
     // https://docs.tosspayments.com/reference/widget-sdk#renderpaymentmethods선택자-결제-금액-옵션
     paymentWidget.renderPaymentMethods(
       "#payment-method", 
-      { value: 28000 },
+      { value: ${price} },
       // 렌더링하고 싶은 멀티 결제 UI의 variantKey
       // https://docs.tosspayments.com/guides/payment-widget/admin#멀티-결제-ui
       { variantKey: "DEFAULT" } 

@@ -73,7 +73,7 @@
         <br>
         <div style="display: flex; justify-content: space-between;">
             <p style="text-align: left; font-size: 16px;">상품 금액</p>
-            <p style="text-align: right; font-size: 16px;">25000원</p>
+            <p style="text-align: right; font-size: 16px;">${price }원</p>
         </div>
         <div style="height: 16px;"></div>
         <div style="display: flex; justify-content: space-between;">
@@ -84,18 +84,28 @@
         <div style="height: 16px;"></div>
         <div style="display: flex; justify-content: space-between; border-top: 1px solid #000;">
             <p style="text-align: left;  font-size: 18px; font-weight: bold;  ">결제 예정 금액</p>
-            <p style="text-align: right; font-size: 18px; font-weight: bold; color: #ff6742;">매 회 28000원</p>
+            <% 
+			    double price = Double.parseDouble(request.getAttribute("price").toString());
+			    int totalPayment = (int) price + 3000;
+			%>
+
+            <p style="text-align: right; font-size: 18px; font-weight: bold; color: #ff6742;">매 회 <%= totalPayment %>원</p>
         </div>
         <div style="padding-top: 50px;">
           
             <span style="font-size: 26px; font-weight: bold;">결제 수단</span>
         </div>
         <div style="height: 24px;"></div>
+        
+        
+        
+        
+        
         <div class="container">
             <!-- 누르면 각각 card2.png account2.png로 바뀌도록-->
             <div class="row justify-content-center">
                 <div id="card-pay" class="col-sm" style=" text-align: center;">
-                   <img src="resources/images/toss.PNG">
+                   <img src="resources/images/toss.png">
                 </div>
            
                
@@ -115,10 +125,16 @@
     	<input type="hidden" id="phone" name="phone" value="${phone }">
     	<input type="hidden" id="hateVegi" name="hateVegi" value="${hateVegi }">
     	<input type="hidden" id="userId" name="userId" value="${loginMember.userId }">
+    	<input type="hidden" id="price" name="price" value="${price }">
     	
     	
     
     </form>
+    
+    <script>
+    
+    		document.getElementById("price").value = <%= totalPayment %>;
+		</script>
     
     
     <script>

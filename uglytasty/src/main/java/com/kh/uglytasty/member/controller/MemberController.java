@@ -169,14 +169,11 @@ public class MemberController {
 	     
 	     
 	     JsonNode userInfoNode = (JsonNode) result.get("userInfo");
-	     System.out.println("유저: " + userInfoNode);
 	     String userId = userInfoNode.get("id").asText();
 	     String userName = userInfoNode.get("properties").get("nickname").asText();
 	     String email = userInfoNode.get("kakao_account").get("email").asText();
 	     String userPwd = "kakao";
-	     System.out.println("AccessToken: " + accessToken);
-	     System.out.println("User ID: " + userId);
-	     System.out.println("User Name: " + userName);
+	     
 	   
 	     Member loginMember = mService.checkMemberByKakao(userId);
 	     
@@ -219,10 +216,10 @@ public class MemberController {
 
 
 
-		System.out.println("전" + m);
+	
 		
 		Member loginMember = mService.loginMember(m);
-		System.out.println("후" + loginMember);
+		
 
 			
 		if(loginMember == null) { 
