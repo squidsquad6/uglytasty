@@ -28,4 +28,9 @@ public class SubscribeDao {
 		return sqlSession.update("subscribeMapper.updateSubscribeStatus", userId);
 	}
 
+	public Subscribe checkEndDate(SqlSessionTemplate sqlSession, String userId) {
+		
+		return sqlSession.selectOne("subscribeMapper.checkEndDate", userId);
+	}
+
 }

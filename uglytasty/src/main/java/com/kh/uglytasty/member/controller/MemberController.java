@@ -155,14 +155,11 @@ public class MemberController {
 	     
 	     
 	     JsonNode userInfoNode = (JsonNode) result.get("userInfo");
-	     System.out.println("유저: " + userInfoNode);
 	     String userId = userInfoNode.get("id").asText();
 	     String userName = userInfoNode.get("properties").get("nickname").asText();
 	     String email = userInfoNode.get("kakao_account").get("email").asText();
 	     String userPwd = "kakao";
-	     System.out.println("AccessToken: " + accessToken);
-	     System.out.println("User ID: " + userId);
-	     System.out.println("User Name: " + userName);
+	     
 	   
 	     Member loginMember = mService.checkMemberByKakao(userId);
 	     
@@ -197,6 +194,7 @@ public class MemberController {
 	@RequestMapping("login.me")
 	public String loginMember(Member m, Model model, HttpSession session) {
 		
+
 		
 		Member loginMember = mService.loginMember(m);
 

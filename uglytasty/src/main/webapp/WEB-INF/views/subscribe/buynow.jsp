@@ -79,6 +79,7 @@
         <input type="hidden" id="phone" name="phone" value ="">
         <input type="hidden" id="address" name="address" value ="">
         <input type="hidden" id="detailAddress" name="detailAddress" value="">
+        <input type="hidden" id="price" name="price" value="0">
         </form>
         
         <script>
@@ -93,6 +94,7 @@
         	 const detailAddressInput = document.getElementById('detailAddress');
         	 const hateVegiInput = document.getElementById('hateVegi')
              const sample6AddressInput = document.getElementById('sample6_address');
+        	 
              
         	 addressInput.value = sample6AddressInput.value;
              
@@ -162,9 +164,10 @@
 			    otherImageDiv.style.border = 'none'; // 
 			    if (clickedImageId == 'standard-image') {
 			        document.getElementById('boxSize').value = 1; // 스탠다드 박스 선택
-			        
+			        document.getElementById('price').value = 15000; // 스탠다드 박스의 가격
 			    } else if (clickedImageId == 'jumbo-image') {
 			        document.getElementById('boxSize').value = 2; // 점보 박스 선택
+			        document.getElementById('price').value = 25000; // 점보 박스의 가격
 			       
 			    }
 			}

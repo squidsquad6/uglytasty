@@ -5,6 +5,9 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.servlet.http.HttpSession;
 
@@ -13,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.kh.uglytasty.subscribe.model.service.SubscribeServiceImpl;
 import com.kh.uglytasty.subscribe.model.vo.Subscribe;
@@ -30,12 +34,47 @@ public class SubscribeController {
 	
 	
 	@RequestMapping("buynow.su")
-	public String goToBuynow() {
-		return "subscribe/buynow";
+	public String goToBuynow(@RequestParam String userId, Model model) {
+		
+		Subscribe sub = sService.checkEndDate(userId);
+		
+	    if (sub == null) {
+	        return "subscribe/buynow";
+	    }
+		
+	    String endDateString = sub.getEndDate();
+
+	    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+	    Date endDate = null;
+	    
+	    try {
+	        endDate = dateFormat.parse(endDateString);
+	    } catch (ParseException e) {
+	        // 날짜 변환 중 오류 발생 시 처리
+	        e.printStackTrace();
+	    }
+
+	    // 현재 날짜 가져오기
+	    Date currentDate = new Date();
+
+	    // endDate가 null이 아니면서 status가 'N'이고,
+	    // endDate가 현재 날짜 (sysdate)보다 미래에 있다면
+	    if (endDate != null && "Y".equals(sub.getStatus()) && endDate.after(currentDate)) {
+	    
+	    	model.addAttribute("alertMsg", "이미 구독중입니다.");
+	    	
+	    	return "subscribe/subscribe";
+	    }else {
+	    	
+	    	
+	    	return "subscribe/buynow";
+	    }
+	    
+		
 	}
 	
 	@RequestMapping("payment.su")
-	public String goToPayment( Model model, String boxSize, String cycle, String address, String detailAddress, String recipient, String phone, String hateVegi) {
+	public String goToPayment( Model model, String boxSize, String cycle, String address, String detailAddress, String recipient, String phone, String hateVegi, String price) {
 		
 		   model.addAttribute("boxSize", boxSize);
 		   model.addAttribute("cycle", cycle);
@@ -44,6 +83,7 @@ public class SubscribeController {
 		   model.addAttribute("recipient", recipient);
 		   model.addAttribute("phone", phone);
 		   model.addAttribute("hateVegi", hateVegi);
+		   model.addAttribute("price",price);
 		   
 		  
 		
@@ -63,12 +103,12 @@ public class SubscribeController {
 	
 	
 	@RequestMapping("tossPayment.su")
-	public String goToTossPayment(Model model,String userId, String boxSize, String cycle, String address, String detailAddress, String recipient, String phone, String hateVegi) {
+	public String goToTossPayment(Model model,String userId, String boxSize, String cycle, String address, String detailAddress, String recipient, String phone, String hateVegi, int price) {
 		
 		
 		String id = userId;
 		
-	
+		
 		
 		
 		Subscribe s = sService.selectSubscribe(id);
@@ -98,7 +138,7 @@ public class SubscribeController {
 		
 		   
 	
-		   
+		   model.addAttribute("price", price);
 		   
 		
 		

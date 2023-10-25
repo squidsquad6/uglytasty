@@ -43,5 +43,10 @@ public class SubscribeServiceImpl implements SubscribeService{
 		
 		return sDao.updateSubscribeStatus(sqlSession, userId);
 	}
+
+	public Subscribe checkEndDate(String userId) {
+		
+		return sDao.checkEndDate(sqlSession, userId);
+	}
 	
 }

@@ -63,7 +63,7 @@
        });
    </script>
  <div>
-        <div style="padding-left:650px">
+        <div style="padding-left:550px">
             <nav class="breadcrumb is-centered is-large has-background-white" aria-label="breadcrumbs">
                 <ul>
                 
@@ -126,9 +126,14 @@
         
         </form>
         
-         <button class="button is-info is-normal" id="uploadButton">
-  		  <i class="fa-solid fa-arrow-up-from-bracket"></i>&nbsp;&nbsp;Excel 업로드
-		</button>
+          <div class="field is-grouped">
+            <p class="control">
+                <button class="button is-info is-normal" id="uploadButton">
+                    <i class="fa-solid fa-arrow-up-from-bracket"></i>&nbsp;&nbsp;Excel&nbsp;&nbsp; 업로드&nbsp;&nbsp;
+                </button>
+            </p>
+        </div>
+       
         
        
         
@@ -167,6 +172,7 @@
 		            success: function(response) {
 		                console.log('Upload successful');
 		                alert('Excel 파일 업로드 완료');
+		                location.reload();
 		            },
 		            error: function() {
 		                console.log('Upload failed');

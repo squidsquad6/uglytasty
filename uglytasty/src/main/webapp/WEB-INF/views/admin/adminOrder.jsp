@@ -63,7 +63,7 @@
        });
    </script>
  <div>
-        <div style="padding-left:650px">
+        <div style="padding-left:550px">
             <nav class="breadcrumb is-centered is-large has-background-white" aria-label="breadcrumbs">
                 <ul>
                 

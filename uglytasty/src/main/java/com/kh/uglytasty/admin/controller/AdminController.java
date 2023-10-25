@@ -269,7 +269,7 @@ public class AdminController {
 			redirectAttributes.addFlashAttribute("errorMsg", "에러");
 		}
 		
-		return "redirect:/product.ad";
+		return "admin/adminProduct";
 		
 		
 		
