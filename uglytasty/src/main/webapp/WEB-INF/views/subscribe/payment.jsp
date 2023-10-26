@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>결제하기</title>
  <!-- Latest compiled and minified CSS -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css">
 
@@ -114,8 +114,9 @@
         <div style="padding-top: 50px;">
             <a href="#" class="button is-rounded is-large is-fullwidth"  style="background-color: rgb(65, 75, 90); color: white; font-weight: bold;" onclick="postFormSubmit()">결제 진행하기</a>
         </div>
+       
     </div>
-    
+     <jsp:include page="../common/footer.jsp"/>
      <form id="postForm" action="" method="post">
     	<input type="hidden" id="boxSize" name="boxSize" value="${boxSize }">
     	<input type="hidden" id="cycle" name="cycle" value="${cycle }">

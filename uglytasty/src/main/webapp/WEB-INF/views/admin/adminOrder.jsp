@@ -195,14 +195,23 @@
             <ul class="pagination-list">
             <c:forEach var="p" begin="${pi.startPage }" end="${pi.endPage }">
             <li>
-                <a class="pagination-link" href="order.ad?cpage=${p }">${p }</a>
-              </li>
+            <c:choose>
+                <c:when test="${p eq pi.currentPage}">
+                    <a class="pagination-link is-current" href="order.ad?cpage=${p}">${p}</a>
+                </c:when>
+                <c:otherwise>
+                    <a class="pagination-link" href="order.ad?cpage=${p}">${p}</a>
+                </c:otherwise>
+            </c:choose>
+        	</li>
             </c:forEach>
               
              
             </ul>
           </nav>
+          <br><br><br><br><br><br> 
     </div>
+    <jsp:include page="../common/footer.jsp"/>
 </div>
 </body>
 </html>

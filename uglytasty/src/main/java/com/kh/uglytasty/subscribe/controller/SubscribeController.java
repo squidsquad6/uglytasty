@@ -7,6 +7,7 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 import javax.servlet.http.HttpSession;
@@ -17,8 +18,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.google.gson.Gson;
 import com.kh.uglytasty.subscribe.model.service.SubscribeServiceImpl;
+import com.kh.uglytasty.subscribe.model.vo.SubComp;
 import com.kh.uglytasty.subscribe.model.vo.Subscribe;
 
 @Controller
@@ -29,6 +33,11 @@ public class SubscribeController {
 	
 	@RequestMapping("subscribe.su")
 	public String goToSubscribe() {
+		
+		
+	
+		
+		
 		return "subscribe/subscribe";
 	}
 	
@@ -38,7 +47,15 @@ public class SubscribeController {
 		
 		Subscribe sub = sService.checkEndDate(userId);
 		
+		   
+				ArrayList<SubComp> list =  sService.selectSubCompList(); 
+			
+		
+		
 	    if (sub == null) {
+	    	
+	    	
+	    	model.addAttribute("list", list);
 	        return "subscribe/buynow";
 	    }
 		
@@ -59,12 +76,17 @@ public class SubscribeController {
 
 	    // endDate가 null이 아니면서 status가 'N'이고,
 	    // endDate가 현재 날짜 (sysdate)보다 미래에 있다면
+	    
+	 
+	    
 	    if (endDate != null && "Y".equals(sub.getStatus()) && endDate.after(currentDate)) {
 	    
 	    	model.addAttribute("alertMsg", "이미 구독중입니다.");
 	    	
 	    	return "subscribe/subscribe";
 	    }else {
+	    	
+	    	model.addAttribute("list", list);
 	    	
 	    	
 	    	return "subscribe/buynow";
@@ -91,15 +113,22 @@ public class SubscribeController {
 		return "subscribe/payment";
 	}
 	
-	@RequestMapping("statusY.su")
-	public void updateSubscribeStatus(String userId) {
+	@ResponseBody
+	@RequestMapping(value="statusY.su" , produces="application/json; charset=UTF-8")
+	public String updateSubscribeStatus(String userId) {
 		
 		
 		
 		int result = sService.updateSubscribeStatus(userId);
+		sService.updateMemberStatus(userId);
 		
+		String id = userId;
+		Subscribe b = sService.selectSubscribe(id);
 		
+		return new Gson().toJson(b);
 	}
+	
+	
 	
 	
 	@RequestMapping("tossPayment.su")

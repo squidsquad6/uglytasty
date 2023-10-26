@@ -1,8 +1,11 @@
 package com.kh.uglytasty.subscribe.model.dao;
 
+import java.util.ArrayList;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.kh.uglytasty.subscribe.model.vo.SubComp;
 import com.kh.uglytasty.subscribe.model.vo.Subscribe;
 
 @Repository
@@ -31,6 +34,16 @@ public class SubscribeDao {
 	public Subscribe checkEndDate(SqlSessionTemplate sqlSession, String userId) {
 		
 		return sqlSession.selectOne("subscribeMapper.checkEndDate", userId);
+	}
+
+	public void updateMemberStatus(SqlSessionTemplate sqlSession, String userId) {
+		
+		 sqlSession.update("subscribeMapper.updateMemberStatus", userId);
+	}
+
+	public ArrayList<SubComp> selectSubCompList(SqlSessionTemplate sqlSession) {
+		
+		return (ArrayList)sqlSession.selectList("subscribeMapper.selectSubCompList");
 	}
 
 }
