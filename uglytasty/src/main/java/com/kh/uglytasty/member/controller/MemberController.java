@@ -104,21 +104,18 @@ public class MemberController {
 	     Map<String, Object> result = mService.getGoogleAccessToken(code);
 	     
 	   
-	  // Extract accessToken from the result map
+	
 	     String accessToken = (String) result.get("accessToken");
 	     
-	     // Extract userInfo from the result map
+	
 	     JsonNode userInfoNode = (JsonNode) result.get("userInfo");
 	     
-	     // Extract specific fields from the userInfo JSON
+	   
 	     String userId = userInfoNode.get("id").asText();
 	     String userName = userInfoNode.get("name").asText();
 	     String userPwd = "google";
 
-	     // Print accessToken and extracted user information separately
-	     System.out.println("AccessToken: " + accessToken);
-	     System.out.println("User ID: " + userId);
-	     System.out.println("User Name: " + userName);
+	   
 	   
 	     Member loginMember = mService.checkMemberByGoogle(userId);
 	     
@@ -162,7 +159,7 @@ public class MemberController {
 	     
 	    
 	     
-	  // Extract accessToken from the result map
+	
 	     String accessToken = (String) result.get("accessToken");
 	     
 	  

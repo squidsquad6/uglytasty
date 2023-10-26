@@ -5,13 +5,15 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>결제 성공</title>
 <style>
 .outer{
             width: 1300px;height: 2000px; margin: 0 auto;
              display: flex;
     flex-direction: column;
-    align-items: center; /* Center horizontally */
+    align-items: center; 
+    margin:auto;
+    text-align:center;
             
         }
         /* --------------------상단으로 이동하기 버튼-------------------- */
@@ -23,6 +25,82 @@
         z-index:999;
         cursor:pointer;
     }
+    
+     .orderDetail {
+            width: 70%;
+        }
+        .orderDetail span {
+            font-size: 15px;
+        }
+        .orderDetail #orderId {
+            color: #ff6741;
+            font-weight: bold;
+            font-size: 15px;
+            text-align:left;
+            
+        }
+        
+                .orderDetail #paymentKey {
+            color: #ff6741;
+            font-weight: bold;
+            font-size: 15px;
+            cursor: pointer;
+        }
+        
+        .orderDetail img {
+            margin: 50px 0 20px 0;
+        }
+
+
+        .orderDetail #continueBtn1 {
+            text-decoration: none;
+            background-color: white;
+            border: 1px solid #ff6741;
+            padding: 20px 120px;
+            color: #ff6741;
+            font-size: 15px;
+            font-weight: bold;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+        .orderDetail #continueBtn1:hover {
+            border: 2px solid #ff6741;
+        }
+        .orderDetail #continueBtn2 {
+            text-decoration: none;
+            background-color: #ff6741;
+            padding: 20px 100px;
+            color: white;
+            font-size: 15px;
+            font-weight: bold;
+            border-radius: 10px;
+            cursor: pointer;
+        }
+        .orderDetail #continueBtn2:hover {
+            filter: brightness(0.9);
+        }
+
+
+        hr {
+            width: 100%;
+            border: 1px solid #f2f2f2;
+        }
+        .nemo {
+            background-color: #f2f2f2;
+            width: 100%;
+            height: 15px;
+        }
+        #orderTable th {
+            height: 30px;
+            text-align: left;
+            color: gray;
+        }
+        .orderDetail .totalPrice {
+            color: #ff6741;
+            font-size: 20px;
+            font-weight: bold;
+        }
+    
 
 </style>
 </head>
@@ -49,24 +127,86 @@
    </script>
 <div class="outer">
 <br><br>
- <section>
-      <h1>구매 완료</h1>
-      <br>
-      <hr>
-      <h3>못난이맛난이 박스 구독</h3>
-      <h5 id="paymentKey"></h5>
-      <h5 id="orderId"></h5>
-      <h5 id="amount"></h5>
-      <hr>
-    </section>
-    <br>
-    <div>
-    	<a href="loginForm.me" class="btn text-white"   style="background-color: #ff6742; color: white; font-weight: bold; width: 200%;">메인화면으로</a>
+
+ <div class="orderDetail">
+            <h1>주문완료</h1>
+            <hr>
+            <img src="resources/images/paprika.png">
+            <h2>주문이 완료되었습니다.</h2>
+            <span>주문번호 : </span>
+            <span id="orderId"></span><br>
+            <span>결제번호 : </span>
+            <span id="paymentKey"></span>
+            
+            
+           
+            
+            <br><br><br><br><br><div class="nemo"></div><br>
+
+            <h2 align="left" style="padding-left: 23%;">구독정보</h2>
+            <hr><br>
+            <div style="padding-left: 23%;">
+            <table id="orderTable" width="520px" style="text-align:left;">
+            
+                <tr>
+                    <th width="150px">종료 날짜</th>
+                    <td id="endDateCell"></td>
+                </tr>
+                <tr>
+                    <th>제외품목</th>
+                    <td id="dislikeCell"></td>
+                </tr>
+                <tr>
+                    <th>주소</th>
+                     <td id="addressCell"></td>
+                </tr>
+            </table>
+            </div>
+
+            <br><br><div class="nemo"></div>
+			<br>
+            <table id="accountTable">
+                <tr>
+                    <td width="85%">
+                        <h2>결제수단</h2>
+                    </td>
+                    <td>
+                        <h4 align="right">토스</h4>
+                        <!-- <img src="./card2.png"> -->
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <h2>결제금액</h2>
+                    </td>
+                    <td>
+                        <span id="amount" class="totalPrice"></span>
+                    </td>
+                </tr>
+            </table>
+
+            <br><br><br>
+    <div style="margin:auto; text-align:center;">
+    	<a href="/uglytasty" class="btn text-white"   style="background-color: #ff6742; color: white; font-weight: bold; width: 50%;">메인화면으로</a>
     </div>
+
+        </div>
+
+
+
+
+
+
+
+
+
+ 
+    <br>
+
     <script>
     function sendAjaxRequest() {
         const loginMemberId = "${loginMember.userId}";
-        console.log(loginMemberId);
+        
         const queryParams = new URLSearchParams();
         queryParams.append('userId', loginMemberId);
 
@@ -74,15 +214,33 @@
         xhr.open('GET', 'statusY.su?' + queryParams.toString(), true);
 
         xhr.onreadystatechange = function () {
-          if (xhr.readyState === 4 && xhr.status === 200) {
-            // Handle the response if needed
-          }
-        };
+  	      if (xhr.readyState === 4 && xhr.status === 200) {
+  	        const response = xhr.responseText;
+  	        
+  	        
+  	      const responseData = JSON.parse(response);
+
+          
+          const endDate = responseData.endDate;
+          const dislike = responseData.dislike;
+          const address = responseData.address;
+          const detailAddress = responseData.detailAddress;
+
+         
+          document.getElementById("endDateCell").textContent = endDate;
+          document.getElementById("dislikeCell").textContent = dislike;
+          document.getElementById("addressCell").textContent = address + " " + detailAddress;
+  	        
+  	        
+  	      }else{
+  	    	  console.log("에러");
+  	      }
+  	    };
 
         xhr.send();
       }
 
-      // Call the function when the page loads
+     
       document.addEventListener('DOMContentLoaded', function () {
         sendAjaxRequest();
       });
@@ -94,15 +252,17 @@
 
       
       
-      console.log("paymentKey", queryParams.get("paymentKey"));
-      console.log("orderId", queryParams.get("orderId"));
-      console.log("amount:", queryParams.get("amount"));
+     
       
-      document.getElementById("paymentKey").textContent = "결제번호 : "+queryParams.get("paymentKey");
-      document.getElementById("orderId").textContent = "주문번호 : "+queryParams.get("orderId");
-      document.getElementById("amount").textContent = "결제금액 : "+queryParams.get("amount")+"원";
+      document.getElementById("paymentKey").textContent = queryParams.get("paymentKey");
+      document.getElementById("orderId").textContent = queryParams.get("orderId");
+      document.getElementById("amount").textContent = queryParams.get("amount")+"원";
     </script>
     
+   
+    
+    
+    <jsp:include page="../common/footer.jsp"/>
     </div>
 </body>
 </html>

@@ -29,6 +29,7 @@
         z-index:999;
         cursor:pointer;
     }
+    
   </style>
 </head>
 <body>
@@ -38,6 +39,9 @@
         <img width="50px" src="https://blog.kakaocdn.net/dn/s6jL5/btqHsbU8DSJ/yBeqQLZS4Kg866xEHCvA20/img.png" >
     </div>
     
+    
+    <div style="width:1000px; margin: auto;"> 
+   
     <script>
        // 상단으로 이동하기 버튼
        $(window).scroll(function(){
@@ -83,22 +87,18 @@
       { variantKey: "DEFAULT" } 
     )
 
-    // ------  이용약관 렌더링 ------
-    // 이용약관 UI를 렌더링할 위치를 지정합니다. `#agreement`와 같은 CSS 선택자를 추가하세요.
-    // https://docs.tosspayments.com/reference/widget-sdk#renderagreement선택자-옵션
+  
     paymentWidget.renderAgreement(
       '#agreement',
       { variantKey: "AGREEMENT" } // 기본 이용약관 렌더링
     )
-    // ------ '결제하기' 버튼 누르면 결제창 띄우기 ------
-    // 더 많은 결제 정보 파라미터는 결제위젯 SDK에서 확인하세요.
-    // https://docs.tosspayments.com/reference/widget-sdk#requestpayment결제-정보
+   
     button.addEventListener("click", function () {
       paymentWidget.requestPayment({
         orderId: "RYjy-8v6DtoS2BS44FSlh",            // 주문 ID(직접 만들어주세요)
         orderName: "못난이맛난이 박스 구독",                 // 주문명
-        successUrl: "http://localhost:8008/uglytasty/success.su",  // 결제에 성공하면 이동하는 페이지(직접 만들어주세요)
-        failUrl: "http://localhost:8008/uglytasty/fail.su",        // 결제에 실패하면 이동하는 페이지(직접 만들어주세요)
+        successUrl: "http://localhost:8008/uglytasty/success.su",  
+        failUrl: "http://localhost:8008/uglytasty/fail.su",        
         
         
       })
@@ -106,7 +106,8 @@
     
     
   </script>
-	
-
+<br><br><br>
+	 </div>
+  <jsp:include page="../common/footer.jsp"/>
 </body>
 </html>

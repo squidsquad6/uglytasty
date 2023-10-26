@@ -110,6 +110,7 @@
            return false;
        });
    </script>
+  <br><br>
     <div class="intro">
         <div style="font-size: 20px; color:#ff6742;"><b>못나지만 맛난 친구!</b></div>
         <div style="font-size: 35px; font-weight: bolder;">
@@ -265,7 +266,8 @@
 			</c:if>
         </div>
     </div>
-
+ <jsp:include page="../common/footer.jsp"/>
+ <br>
 </div>
  
 
@@ -282,6 +284,7 @@
   </div>
 
   <button class="modal-close is-large" aria-label="close"></button>
+ 
 </div>
 
 

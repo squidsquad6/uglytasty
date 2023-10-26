@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+      <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -38,6 +39,12 @@
         z-index:999;
         cursor:pointer;
     }
+    
+    #modal-js-example .modal-card {
+    width: 400px; /* 원하는 너비 설정 */
+    max-height: 70vh; /* 원하는 최대 높이 설정 (뷰포트 높이의 70%) */
+    overflow-y: auto; /* 내용이 모달을 벗어날 경우 스크롤 표시 */
+}
 </style>
 
 
@@ -462,18 +469,12 @@ document.addEventListener('DOMContentLoaded', () => {
     </header>
    <section class="modal-card-body">
   
-		  <label class="checkbox">
-		    <input type="checkbox" value="감자" onclick="updateHateVegi()">
-		    감자
-		  </label>
-		  <label class="checkbox">
-		    <input type="checkbox" value="당근" onclick="updateHateVegi()">
-		    당근
-		  </label>
-		  <label class="checkbox" >
-		    <input type="checkbox" value="고구마" onclick="updateHateVegi()">
-		    고구마
-		  </label>
+		 <c:forEach var="vegetable" items="${list}">
+		    <label class="checkbox">
+		        <input type="checkbox" value="${vegetable.compName}" onclick="updateHateVegi()">
+		        ${vegetable.compName}
+		    </label>
+		</c:forEach>
 		  
 		 
 </section>
@@ -486,7 +487,7 @@ document.addEventListener('DOMContentLoaded', () => {
 </div>
 
     </div>
-    
+   <jsp:include page="../common/footer.jsp"/> 
  
   <script>
     document.addEventListener('DOMContentLoaded', function () {

@@ -1,11 +1,14 @@
 package com.kh.uglytasty.subscribe.model.service;
 
+import java.util.ArrayList;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
 import com.kh.uglytasty.subscribe.model.dao.SubscribeDao;
+import com.kh.uglytasty.subscribe.model.vo.SubComp;
 import com.kh.uglytasty.subscribe.model.vo.Subscribe;
 
 @Service
@@ -47,6 +50,17 @@ public class SubscribeServiceImpl implements SubscribeService{
 	public Subscribe checkEndDate(String userId) {
 		
 		return sDao.checkEndDate(sqlSession, userId);
+	}
+
+	public void updateMemberStatus(String userId) {
+		
+		
+		 sDao.updateMemberStatus(sqlSession, userId);
+	}
+
+	public ArrayList<SubComp> selectSubCompList() {
+		
+		return sDao.selectSubCompList(sqlSession);
 	}
 	
 }
