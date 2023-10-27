@@ -29,5 +29,29 @@ public class Orders {
    
    
    private int quantity;
+
+
+public Orders(int orderNo, String userId, int productNo, String orderDate, int orderCode, String trackingNo,
+		String addressMain, String addressDetail, String receiver, String receiverPhone, String deliveryMemo,
+		int deliveryFee, int totalPrice) {
+	super();
+	this.orderNo = orderNo;
+	this.userId = userId;
+	this.productNo = productNo;
+	this.orderDate = orderDate;
+	this.orderCode = orderCode;
+	this.trackingNo = trackingNo;
+	this.addressMain = addressMain;
+	this.addressDetail = addressDetail;
+	this.receiver = receiver;
+	this.receiverPhone = receiverPhone;
+	this.deliveryMemo = deliveryMemo;
+	this.deliveryFee = deliveryFee;
+	this.totalPrice = totalPrice;
+}
+   
+   
+   
+   
    
 }

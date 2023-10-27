@@ -30,6 +30,9 @@ public class Product {
 	private String originName;
 	private String changeName;
 	private String fileExp;
+	
+	
+
 	private int fileLevel;
 	
 	private int quantity;
@@ -37,6 +40,23 @@ public class Product {
 	private int salePrice;
 	private int totalPrice;
 	private int deliveryIncludePrice;
+	
+	
+	public Product(int productNo, String productName, int price, int sale, String explanation, String location,
+			String productionDate, int stock, String status, int count, String enrollDate) {
+		super();
+		this.productNo = productNo;
+		this.productName = productName;
+		this.price = price;
+		this.sale = sale;
+		this.explanation = explanation;
+		this.location = location;
+		this.productionDate = productionDate;
+		this.stock = stock;
+		this.status = status;
+		this.count = count;
+		this.enrollDate = enrollDate;
+	}
 	
 
 
