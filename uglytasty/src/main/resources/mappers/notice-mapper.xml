@@ -17,6 +17,19 @@
 		 where status = 'Y'
 	</select>
 
+	<select id="selectNotice" resultMap="noticeResult">
+	
+	select
+			 notice_no
+			,user_id
+			,notice_title
+			,notice_content
+			,upfix
+		from notice n
+		where notice_no = #{noticeNo}	
+	
+	</select>
+
 
 	<select id="selectNoticeList" resultMap="noticeResult">
 		select 
