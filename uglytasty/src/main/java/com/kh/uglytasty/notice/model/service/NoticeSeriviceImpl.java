@@ -65,6 +65,27 @@ public class NoticeSeriviceImpl implements NoticeService {
 
 
 
+	public int insertNotice(String title, String content, String upfix) {
+		
+		return nDao.insertNotice(sqlSession, title, content, upfix);
+	}
+
+
+
+	public int deleteNotice(int noticeNo) {
+		
+		return nDao.deleteNotice(sqlSession, noticeNo);
+	}
+
+
+
+	public int noticeUpdate(Notice n) {
+		
+		return nDao.noticeUpdate(sqlSession, n);
+	}
+
+
+
 	
 
 

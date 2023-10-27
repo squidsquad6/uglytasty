@@ -72,5 +72,85 @@
           </choose>
           order by upfix desc, notice_no desc
    </select>
+
+		 	</when>
+		 	<otherwise>
+           		and (notice_title like '%' || #{keyword} || '%' or notice_content  like '%' || #{keyword} || '%')
+		 	</otherwise>
+		 </choose>
+	</select>
+	
+	<select id="selectSearchList" resultMap="noticeResult">
+		select 
+			       notice_no
+			     , user_name
+			     , notice_title
+			     , notice_content
+			     , upfix
+			  from notice n 
+			  join member m using (user_id)
+			 where n.status = 'Y' 
+			<choose>
+			 	<when test="condition == 'title'">
+	           		and notice_title like '%' || #{keyword} || '%'
+			 	</when>
+			 	<when test="condition == 'content'">
+	                and notice_content  like '%' || #{keyword} || '%'
+			 	</when>
+			 	<otherwise>
+	           		and (notice_title like '%' || #{keyword} || '%' or notice_content  like '%' || #{keyword} || '%')
+			 	</otherwise>
+		 	</choose>
+			 order by upfix desc, notice_no desc
+	</select>
+	
+	<insert id="insertNotice">
+	insert
+		into notice
+		(
+		notice_no
+		,user_id
+		,notice_title
+		,notice_content
+		,status
+		,upfix
+		
+		
+		)
+		values
+		(
+		seq_not_no.nextval
+		,'admin'
+		,#{noticeTitle}
+		,#{noticeContent}
+		,'Y'
+		,#{upfix}
+		
+		
+		)
+		
+		
+	
+	</insert>
+	
+	<update id="deleteNotice">
+	update
+				 notice
+		set		 status = 'N'
+		where	 notice_no = #{noticeNo}
+		
+	
+	</update>
+	
+	<update id="noticeUpdate">
+	update
+			 notice
+		set	 notice_title = #{noticeTitle}
+			,notice_content = #{noticeContent}
+			,upfix = #{upfix}
+		where notice_no = #{noticeNo}	 
+			
+	</update>
+
   
 </mapper>

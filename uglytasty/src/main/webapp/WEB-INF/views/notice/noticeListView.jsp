@@ -136,8 +136,24 @@
     <div class="notice-wrap" style="max-width: 1020px; margin: 0 auto; padding: 50px 0;">
         
         <h2>공지사항</h2>
+        <br>
+        
+        
+    
+        
+        <c:choose>
+		    <c:when test="${loginMember.userId eq 'admin'}">
+		        <!-- 사용자가 "admin"일 경우 버튼을 보여줍니다 -->
+		        <a type="button" class="btn btn-dark" href="enroll.no">글쓰기</a><br><br>
+		    </c:when>
+		    <c:otherwise>
+		        <!-- 사용자가 "admin"이 아닐 경우 버튼을 숨깁니다 -->
+		    </c:otherwise>
+		</c:choose>
+        
         <br><br>
         <ul class="notice-list">
+
                <c:choose>
                   <c:when test="${ empty list }">
                      <!-- 작성된 게시글이 없을 경우-->
@@ -174,6 +190,60 @@
                      </c:forEach>
                    </c:otherwise>
               </c:choose>     
+
+	            <c:choose>
+	            	<c:when test="${ empty list }">
+	            		<!-- 작성된 게시글이 없을 경우-->
+		                <div class="noticeTitle-bx" align="center">
+		                    <div class="title" align="center">
+		                       작성된 게시글이 없습니다.
+		                    </div>
+		                </div>
+	            	</c:when>
+	            	<c:otherwise>
+        				<c:forEach var="n" items="${ list }">
+	            		<li>
+	            		<!-- 작성된 게시글이 있을 경우-->
+		                <div class="noticeTitle-bx">
+		                    <div class="title">
+		                    	<c:choose>
+		                    		<c:when test="${ n.upfix eq 'Y' }">
+		                    			<h5 style="color:gray;">📌&nbsp;${ n.noticeTitle }</h5>
+		                    		</c:when>
+		                    		<c:otherwise>
+		                    			<h5>${ n.noticeTitle }</h5>
+		                    		</c:otherwise>
+		                        </c:choose>
+		                        <span>${ n.userName }</span>
+		                    </div>
+		                    <i class="ri-arrow-up-s-line"></i>
+		                </div>
+		                <div class="noticeContent-bx">
+		                    <p>
+		                        ${ n.noticeContent }
+		                        
+		                    </p>
+		                    
+		                    
+		                    <c:choose>
+					            <c:when test="${loginMember.userId eq 'admin'}">
+					                <!-- 사용자가 "admin"일 경우 수정 및 삭제 버튼을 보여줍니다 -->
+					                <a type="button" class="btn btn-dark btn-sm" href="updateForm.no?noticeNo=${n.noticeNo}&noticeTitle=${n.noticeTitle}&noticeContent=${n.noticeContent}&upfix=${n.upfix}">수정</a>
+					                <a type="button" class="btn btn-dark btn-sm" href="delete.no?noticeNo=${n.noticeNo}">삭제</a>
+					            </c:when>
+					            <c:otherwise>
+					                <!-- 사용자가 "admin"이 아닐 경우 버튼을 숨깁니다 -->
+					            </c:otherwise>
+					        </c:choose>
+		                    
+		                    
+		                    
+		                </div>
+	            	</li>
+            			</c:forEach>
+	                </c:otherwise>
+	           </c:choose>     
+
             
             
         </ul>
@@ -269,6 +339,7 @@
         
         
     </div>
+    <jsp:include page="../common/footer.jsp"/>
     <script>
         $(function(){
            $("#searchForm option[value='${condition}']").attr("selected", true);
