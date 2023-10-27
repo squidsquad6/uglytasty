@@ -299,7 +299,7 @@ public class ProductController {
    }
    
    
-   /** 상품 소진 (정보:R)
+   /** 상품 일시품절 (정보:R)
     * 
     */
    @RequestMapping("ready.pro")
@@ -316,6 +316,24 @@ public class ProductController {
       }
    }
    
+   
+   /** 상품 재입고 (정보:Y)
+	 * 
+	 */
+   @RequestMapping("yes.pro")
+   public String yesProduct(int productNo, Model model, HttpSession session) {
+	   
+	   int result = pService.yesProduct(productNo);
+	   
+	   if(result > 0) {
+		   session.setAttribute("alertMsg", "성공적으로 [재입고] 처리가 되었습니다.");
+		   return "redirect:list.pro";
+	   }else {
+		   model.addAttribute("errorMsg", "[재입고] 처리 실패!");
+		   return "common/errorPage";
+	   }
+	   
+   }
    
    
    /** 장바구니 추가

@@ -26,14 +26,7 @@ public class QA {
 	private String qaDate;
 	private String answerDate;
 
-	private String aId;
-	private String qTitle;
-	private String qContent;
-	private String aContent;
-	private String qStatus;
-	private String aStatus;
-	private String qDate;
-	private String aDate;
+
 
 
 }

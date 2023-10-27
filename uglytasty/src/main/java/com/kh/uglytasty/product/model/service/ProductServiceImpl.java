@@ -25,6 +25,10 @@ public class ProductServiceImpl implements ProductService {
 	private SqlSessionTemplate sqlSession;
 	
 	
+	
+	
+	
+	
 	/*상품 리스트 조회 (기본 + 키워드검색)*/
 	@Override
 	public ArrayList<Product> selectProductList() {
@@ -119,14 +123,17 @@ public class ProductServiceImpl implements ProductService {
 		return pDao.deleteAttachment(sqlSession, filePath);
 	}
 
-	/*일시품절*/
+	/*상품 일시품절*/
 	@Override
 	public int readyProduct(int productNo) {
 		return pDao.readyProduct(sqlSession, productNo);
 	}
 
-	
-	
+	/*상품 재입고*/
+	@Override
+	public int yesProduct(int productNo) {
+		return pDao.yesProduct(sqlSession, productNo);
+	}
 	
 	
 	@Override
@@ -351,6 +358,8 @@ public class ProductServiceImpl implements ProductService {
 		
 		return result;
 	}
+
+	
 
 	
 	

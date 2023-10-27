@@ -44,7 +44,7 @@
         text-decoration: none;
         color: white;
     }
-    #btnUpdate, #btnReady, #btnDelete {
+    #btnUpdate, #btnReady, #btnDelete, #btnYes {
        color: white;
     }
     .adminBtn #btnUpdate:hover {
@@ -59,9 +59,15 @@
         color: white;
         cursor: pointer;
     }
-     .adminBtn #btnDelete:hover {
+    .adminBtn #btnDelete:hover {
         filter: brightness(0.98);
         background-color: red;
+        color: white;
+        cursor: pointer;
+    }
+    .adminBtn #btnYes:hover {
+        filter: brightness(0.98);
+        background-color: #00c853;
         color: white;
         cursor: pointer;
     }
@@ -71,7 +77,7 @@
       border: none;
       color: white;
       background-color: #dadada;
-      /*background-color: white;*/
+      background-color: white;
       
    }
    
@@ -87,26 +93,39 @@
         color: #ff6741;
         font-size: 18px;
         font-weight: bold;
+        margin: 0px;
     }
     .item .originPrice {
         text-decoration: line-through;
         color: gray;
         font-size: 18px;
         font-weight: bold;
-        padding-right: 10px;
+        padding-left: 10px;
     }
     .item .salePrice {
         color: black;
         font-size: 18px;
         font-weight: bold;
+        margin: 0px;
     }
     table tr {
         height: 30px;
     }
+    
+    .one1 {
+    	font-size: 15px;
+    	margin-left: 5px;
+    }
+    .one2 {
+    	color: #ff6741;
+    	font-weight: bold;
+    	margin: 0px;
+    	font-size: 18px;
+    }
 
     .order_btn .cart{
         width: 260px;
-        height: 45px;
+        height: 50px;
         border: 1px solid #ff6741;
         border-radius: 5px;
         background-color: white;
@@ -121,7 +140,7 @@
     }
     .order_btn .order{
         width: 260px;
-        height: 45px;
+        height: 50px;
         border: 1px solid #ff6741;
         border-radius: 5px;
         background-color: #ff6741;
@@ -134,6 +153,74 @@
     .order_btn .order:hover {
         filter: brightness(0.9);
     }
+    
+    /*일시품절 때 버튼 비활성화 스타일*/
+    .order_btn .cart1{
+        width: 260px;
+        height: 50px;
+        border: 1px solid gray;
+        border-radius: 5px;
+        background-color: white;
+        color: gray;
+        margin-top: 15px;
+        margin-right: 5px;
+        font-weight: bold;
+    }
+
+    .order_btn .order1{
+        width: 260px;
+        height: 50px;
+        border: 1px solid gray;
+        border-radius: 5px;
+        background-color: gray;
+        color: white;
+        margin-top: 15px;
+        margin-left: 5px;
+        font-weight: bold;
+    }
+    
+    .soldoutP {
+    	font-size: 10px;
+    	color: gray;
+    	margin: 0px;
+    }
+
+	.soldout {
+        position: relative;
+    }
+    
+    .soldout::before{
+        content: "";
+        opacity: 0.5;
+        position: absolute;
+        top: 0px;
+        left: 0px;
+        right: 0px;
+        bottom: 0px;
+        background-color: #000;
+    }
+
+    .item {
+        position: relative;
+    }
+    .soldout_text {
+        position: absolute;
+        color: white;
+        top: 44%;
+        left: 13%;
+        transition: translate(-50%, -50%);
+        font-size: 20px;
+        text-align: center;
+        border: 1px solid white;
+        border-radius: 10px;
+        width: 200px;
+        height: 45px;
+        line-height: 2.5;
+    }
+    
+    /*여기까지 일시품절 스타일*/
+	
+   
 
     #amount {
         border: none;
@@ -157,10 +244,10 @@
         border: none;
         width: 370px;
         text-align: right;
-        padding-right: 5px;
         font-size: 18px;
         color: #ff6741;
         font-weight: bold;
+		margin-right: 5px;
     }
 
     /* --------------------상품상세글-------------------- */
@@ -378,19 +465,24 @@
                 <br clear="both">
          </div>
 
-
-
-            <!-- 관리자만 보이는 버튼 (테스트할때 귀찮으니까 맨 나중에걸라우)-->
-         <c:if test="${ loginMember.userId eq 'admin' }">
-         </c:if>
-
             <br><br>
+
+
+         <!-- 관리자만 보이는 버튼 (테스트할때 귀찮으니까 맨 나중에걸라우)-->
+         <c:if test="${ loginMember.userId eq 'admin' }">
             <div class="adminBtn" align="right">
                 <a id="btnBack" href="list.pro">뒤로가기</a>
                 <a id="btnUpdate" onclick="postFormSubmit(1);">수정하기</a>
-                <a id="btnReady" onclick="postFormSubmit(2);">일시품절</a>
+	                <c:if test="${ plist[0].status eq 'Y' }">
+		                <a id="btnReady" onclick="postFormSubmit(2);">일시품절</a>
+	                </c:if>
+	                <c:if test="${ plist[0].status eq 'R' }">
+		                <a id="btnYes" onclick="postFormSubmit(4);">재입고</a>
+	                </c:if>
                 <a id="btnDelete" onclick="postFormSubmit(3);">판매종료</a>
             </div>
+         </c:if>
+
             
             <form id="postForm" action="" method="post">
                <input type="hidden" name="productNo" value="${ plist[0].productNo }">
@@ -408,8 +500,10 @@
                      $("#postForm").attr("action", "updateForm.pro").submit();
                   }else if(num == 2){ // '일시품절(2)' 클릭
                      $("#postForm").attr("action", "ready.pro").submit();                        
-                  }else { // '판매종료(3)' 클릭
+                  }else if(num == 3) { // '판매종료(3)' 클릭
                      $("#postForm").attr("action", "delete.pro").submit();
+                  }else if(num == 4){ // '재입고(4)' 클릭
+                     $("#postForm").attr("action", "yes.pro").submit();
                   }
                }
             </script>
@@ -419,12 +513,21 @@
 
             <br><br><br>
          
-            <div class="top clearfix">
+            <div class="top clearfix item">
 
-                <div style="float: left; text-align: center;">
-                    <img style="width: 480px; height: 480px;" src="${ plist[0].changeName }">
-                </div>
-    
+                <c:if test="${ plist[0].status eq 'Y' }">
+	                <div style="float: left; text-align: center;">
+	                    <img style="width: 480px; height: 480px;" src="${ plist[0].changeName }">
+	                </div>
+                </c:if>
+                <c:if test="${ plist[0].status eq 'R' }">
+	                <div class="itemImg soldout" style="float: left; text-align: center;">
+	                    <img style="width: 480px; height: 480px;" src="${ plist[0].changeName }">
+	                </div>
+	                <div class="soldout_text">
+	                    <p>다음에 다시 만나요!</p>
+	                </div>
+                </c:if>
 
                 <div style="width: 50%; float: right;" >
 
@@ -435,7 +538,7 @@
 
                     <div class="item" style="text-align: left;">
                         <span class="sale">${ plist[0].sale }%</span>
-                        <!-- <span class="originPrice">${ plist[0].price }</span> -->
+                        <img src="https://d3cpiew7rze14b.cloudfront.net/assets/ustore/discount-arrow.svg">
                         <span class="originPrice">﻿<fmt:formatNumber value="${ plist[0].price }" pattern="#,###"/></span>
                         <span class="salePrice" id="salePrice"><fmt:formatNumber value="${ plist[0].salePrice }" pattern="#,###"/></span>
                         <span class="salePrice" >원</span>
@@ -458,11 +561,7 @@
                                 </tr>
                                 <tr>
                                     <th>배송비</th>
-                                    <td><fmt:formatNumber value="2500" pattern="#,###"/><span>원</span></td>
-                                </tr>
-                                <tr>
-                                    <th></th>
-                                    <td style="color: gray; font-size: 12px;">도서 or 산간 지역 추가 3,000원 부과</td>
+                                    <td><fmt:formatNumber value="2500" pattern="#,###"/><span class="one1">원</span></td>
                                 </tr>
                                 <tr>
                                     <th>구매수량</th>
@@ -475,7 +574,7 @@
                                 <tr>
                                     <th style="padding-top: 25px; color:#ff6741;">총 결제 금액</th>
                                     <td style="padding-top: 25px; width:380px;" align="right">
-                                        <span id="sum" readonly><fmt:formatNumber value="${ plist[0].salePrice }" pattern="#,###"/></span><span style="color:#ff6741; font-weight:bold;">원</span>
+                                        <span id="sum" readonly><fmt:formatNumber value="${ plist[0].salePrice }" pattern="#,###"/></span><span class="one2">원</span>
                                     </td>
                                 </tr>
                             </table>
@@ -488,8 +587,15 @@
                         
                         <div class="order_btn">
                             <div style="text-align: center;">
-                                <button class="cart" type="button" id="cartButton" onclick="addCart();">장바구니</button>
-                                <button class="order" type="submit">주문하기</button>
+                            	<c:if test="${ plist[0].status eq 'Y' }">
+	                                <button class="cart" type="button" id="cartButton" onclick="addCart();">장바구니</button>
+	                                <button class="order" type="submit">주문하기</button>
+				                </c:if>
+                            	<c:if test="${ plist[0].status eq 'R' }">
+                            		<p class="soldoutP" style="font-size: 12px;">[ 일시품절 ] 상품입니다. 재입고 후 주문 가능합니다.</p>
+	                                <button class="cart1" type="button" id="cartButton" onclick="addCart();"  disabled="disabled">장바구니</button>
+	                                <button class="order1" type="submit" disabled="disabled">주문하기</button>
+				                </c:if>
                             </div>
                         </div>
   

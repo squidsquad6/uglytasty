@@ -19,16 +19,17 @@
         font-size: 13px;
     }
     
+ 
     .selectProductInfo {
     	margin-left : 400px;
     }
     
     #productSearch {
-    	margin-top: 100px;
+    	margin-top: 50px;
     }
 
     #productSearch #searchInput {
-        width: 405px;
+        width: 415px;
         height: 35px;
         border: 1px solid #dadada;
         border-radius: 5px;
@@ -52,8 +53,8 @@
         text-align: left;
     }
     #productSearch input {
-        width: 480px;
-        height: 30px;
+        width: 500px;
+        height: 35px;
         color: gray;
         border: 1px solid #dadada;
         border-radius: 5px;
@@ -105,8 +106,16 @@
         color: white;
     }
 
-
-
+	
+	/*입력란 왼쪽에 딱 붙지 않도록*/
+	input {
+		padding-left: 10px;
+		font-size:14px;
+	}
+	.upfile {
+		padding-left: 0px;
+		line-height: 27px;
+	}
     
 </style>
 
@@ -243,7 +252,7 @@
 	                <tr>
 	                    <th>내용</th>
 	                    <th>
-	                        <textarea class="explanation" name="fileExp${num}" rows="5" cols="69" style="resize:none;"></textarea>
+	                        <textarea class="explanation" name="fileExp${num}" rows="5" cols="72" style="resize:none;"></textarea>
 	                    </th>
 	                </tr>
 	                <tr><th colspan="2" class="blank">[빈칸]</th></tr>
@@ -251,14 +260,16 @@
 
             </table>
 
-            <br><br>
-
+            
+			<br>
 
             <div align="center">
                 <button type="submit" class="productEnrollBtn">등록하기</button>
             </div>
-
+	
         </form>
+        
+        <br>
     </div>
 		
 	<!-- 푸터 -->

@@ -69,9 +69,14 @@ public class ProductDao {
 		return sqlSession.delete("productMapper.deleteAttachment", filePath);
 	}
 	
-	/*상품 소진*/
+	/*상품 일시품절*/
 	public int readyProduct(SqlSessionTemplate sqlSession, int productNo) {
 		return sqlSession.update("productMapper.readyProduct", productNo);
+	}
+	
+	/*상품 재입고*/
+	public int yesProduct(SqlSessionTemplate sqlSession, int productNo) {
+		return sqlSession.update("productMapper.yesProduct", productNo);
 	}
 	
 	

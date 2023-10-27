@@ -21,7 +21,7 @@
     .all {
         margin: auto;
         width: 1400px;
-        margin-left: 20%;
+        margin-left: 18%;
     }
     hr{
         width: 1000px;
@@ -103,7 +103,7 @@
    
     #orderButton {
         width: 1000px;
-        height: 70px;
+        height: 60px;
         border: 1px solid #ff6741;
         border-radius: 5px;
         background-color: #ff6741;
@@ -221,6 +221,8 @@
             <input type="button" id="orderButton" value="주문하기" class="btn btn-outline-danger" onclick="submitOrderForm();">
         
         </form>
+        
+        <br><br><br><br>
     </div>
     
     

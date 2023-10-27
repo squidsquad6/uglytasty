@@ -107,18 +107,20 @@
         color: #ff6741;
         font-size: 18px;
         font-weight: bold;
+        margin: 0px;
     }
     .item .originPrice {
         text-decoration: line-through;
         color: gray;
         font-size: 18px;
         font-weight: bold;
-        padding-right: 10px;
+        padding-left: 10px;
     }
     .item .salePrice {
         color: black;
         font-size: 18px;
         font-weight: bold;
+        margin: 0px;
     }
 
     .soldout {
@@ -131,7 +133,7 @@
         top: 0px;
         left: 0px;
         right: 15px;
-        bottom: 3px;
+        bottom: 0px;
         background-color: #000;
     }
 
@@ -141,8 +143,8 @@
     .soldout_text {
         position: absolute;
         color: white;
-        top: 37%;
-        left: 20%;
+        top: 33%;
+        left: 22%;
         transition: translate(-50%, -50%);
         font-size: 20px;
         text-align: center;

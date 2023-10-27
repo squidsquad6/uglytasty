@@ -40,19 +40,20 @@ public interface ProductService {
 	int insertProduct(Product p, ArrayList<Attachment> alist);
 	int insertAttachment(Attachment at);
 
-	// 상품 수정용 서비스
+	// 상품 수정 서비스
 	int updateProduct(Product p);
 	ArrayList<Attachment> updateAttachment(int productNo);
 
-	// 상품 삭제용 서비스
+	// 상품 삭제 서비스
 	// (DB : 둘 다  status=N / spring : 첨파 delete )
 	int deleteProduct(int productNo, ArrayList<String> filepathList);
 	int deleteAttachment(String filepath);
 	
-	// 상품 소진용 서비스
+	// 상품 일시품절 서비스
 	int readyProduct(int productNo);
 
-	
+	// 상품 재입고 서비스
+	int yesProduct(int productNo);
 	
 	
 	// 장바구니 추가용 서비스 (ajax)
