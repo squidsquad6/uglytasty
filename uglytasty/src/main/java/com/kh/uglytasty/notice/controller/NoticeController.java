@@ -72,6 +72,90 @@ public class NoticeController {
 		
 		
 	}
+	
+	@RequestMapping("enroll.no")
+	public String goToEnrollForm() {
+		
+		return "notice/noticeEnrollForm";
+	}
+	
+	@RequestMapping("delete.no")
+	public String deleteNotice(@RequestParam("noticeNo") int noticeNo, Model model) {
+		
+		int result = nService.deleteNotice(noticeNo);
+		if(result>0) {//성공 =>게시글 리스트페이지(list.bo url재요청)
+			
+			model.addAttribute("alertMsg", "성공적으로 삭제되었습니다.");
+			return "redirect:list.no";
+		}else {//실패=>에러 페이지 포워딩
+			model.addAttribute("errorMsg", "게시글 삭제 실패!");
+			
+			return "common/errorPage";
+		}
+		
+		
+	}
+	
+	@RequestMapping("updateForm.no")
+	public String updateNotice(@RequestParam("noticeNo") int noticeNo, @RequestParam("noticeTitle") String noticeTitle, @RequestParam("noticeContent") String noticeContent, @RequestParam("upfix") String upfix, Model model) {
+		
+		Notice n = new Notice();
+		
+		n.setNoticeNo(noticeNo);
+		n.setNoticeContent(noticeContent);
+		n.setNoticeTitle(noticeTitle);
+		n.setUpfix(upfix);
+		
+		model.addAttribute("n" , n);
+		
+		return "notice/noticeUpdateForm";
+		
+		
+	}
+	
+	@RequestMapping("update.no")
+	public String noticeUpdate(String title, String content, String upfix, int noticeNo, Model model) {
+		
+		Notice n = new Notice();
+		
+		n.setNoticeNo(noticeNo);
+		n.setNoticeContent(content);
+		n.setNoticeTitle(title);
+		n.setUpfix(upfix);
+		
+		int result = nService.noticeUpdate(n);
+		
+		if(result>0) {//성공 =>게시글 리스트페이지(list.bo url재요청)
+			
+			model.addAttribute("alertMsg", "성공적으로 수정되었습니다.");
+			return "redirect:list.no";
+		}else {//실패=>에러 페이지 포워딩
+			model.addAttribute("errorMsg", "게시글 수정 실패!");
+			
+			return "common/errorPage";
+		}
+	}
+	
+	@RequestMapping("insert.no")
+	public String insertNotice(String title, String content,String upfix, Model model) {
+		
+	
+		
+		int result = nService.insertNotice(title, content, upfix);
+		
+		
+		if(result>0) {//성공 =>게시글 리스트페이지(list.bo url재요청)
+			
+			model.addAttribute("alertMsg", "성공적으로 등록되었습니다.");
+			return "redirect:list.no";
+		}else {//실패=>에러 페이지 포워딩
+			model.addAttribute("errorMsg", "게시글 등록 실패!");
+			
+			return "common/errorPage";
+		}
+		
+		
+	}
 
 }
 

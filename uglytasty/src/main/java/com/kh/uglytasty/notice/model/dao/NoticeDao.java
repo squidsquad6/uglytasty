@@ -64,4 +64,29 @@ public class NoticeDao {
 		return (ArrayList)sqlSession.selectList("noticeMapper.selectSearchList", map, rowBounds);
 	}
 
+	public int insertNotice(SqlSessionTemplate sqlSession, String title, String content, String upfix) {
+		
+		Notice n  = new Notice();
+		
+		n.setNoticeContent(content);
+		n.setNoticeTitle(title);
+		
+		
+		n.setUpfix(upfix);
+		
+		
+		
+		return sqlSession.insert("noticeMapper.insertNotice", n);
+	}
+
+	public int deleteNotice(SqlSessionTemplate sqlSession, int noticeNo) {
+		
+		return sqlSession.update("noticeMapper.deleteNotice", noticeNo);
+	}
+
+	public int noticeUpdate(SqlSessionTemplate sqlSession, Notice n) {
+		
+		return sqlSession.update("noticeMapper.noticeUpdate", n);
+	}
+
 }

@@ -136,6 +136,21 @@
     <div class="notice-wrap" style="max-width: 1020px; margin: 0 auto; padding: 50px 0;">
         
         <h2>공지사항</h2>
+        <br>
+        
+        
+    
+        
+        <c:choose>
+		    <c:when test="${loginMember.userId eq 'admin'}">
+		        <!-- 사용자가 "admin"일 경우 버튼을 보여줍니다 -->
+		        <a type="button" class="btn btn-dark" href="enroll.no">글쓰기</a><br><br>
+		    </c:when>
+		    <c:otherwise>
+		        <!-- 사용자가 "admin"이 아닐 경우 버튼을 숨깁니다 -->
+		    </c:otherwise>
+		</c:choose>
+        
         <br><br>
         <ul class="notice-list">
 	            <c:choose>
@@ -168,7 +183,23 @@
 		                <div class="noticeContent-bx">
 		                    <p>
 		                        ${ n.noticeContent }
+		                        
 		                    </p>
+		                    
+		                    
+		                    <c:choose>
+					            <c:when test="${loginMember.userId eq 'admin'}">
+					                <!-- 사용자가 "admin"일 경우 수정 및 삭제 버튼을 보여줍니다 -->
+					                <a type="button" class="btn btn-dark btn-sm" href="updateForm.no?noticeNo=${n.noticeNo}&noticeTitle=${n.noticeTitle}&noticeContent=${n.noticeContent}&upfix=${n.upfix}">수정</a>
+					                <a type="button" class="btn btn-dark btn-sm" href="delete.no?noticeNo=${n.noticeNo}">삭제</a>
+					            </c:when>
+					            <c:otherwise>
+					                <!-- 사용자가 "admin"이 아닐 경우 버튼을 숨깁니다 -->
+					            </c:otherwise>
+					        </c:choose>
+		                    
+		                    
+		                    
 		                </div>
 	            	</li>
             			</c:forEach>
@@ -269,6 +300,7 @@
         
         
     </div>
+    <jsp:include page="../common/footer.jsp"/>
     <script>
         $(function(){
         	$("#searchForm option[value='${condition}']").attr("selected", true);

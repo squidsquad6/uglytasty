@@ -72,5 +72,53 @@
 		 	</choose>
 			 order by upfix desc, notice_no desc
 	</select>
+	
+	<insert id="insertNotice">
+	insert
+		into notice
+		(
+		notice_no
+		,user_id
+		,notice_title
+		,notice_content
+		,status
+		,upfix
+		
+		
+		)
+		values
+		(
+		seq_not_no.nextval
+		,'admin'
+		,#{noticeTitle}
+		,#{noticeContent}
+		,'Y'
+		,#{upfix}
+		
+		
+		)
+		
+		
+	
+	</insert>
+	
+	<update id="deleteNotice">
+	update
+				 notice
+		set		 status = 'N'
+		where	 notice_no = #{noticeNo}
+		
+	
+	</update>
+	
+	<update id="noticeUpdate">
+	update
+			 notice
+		set	 notice_title = #{noticeTitle}
+			,notice_content = #{noticeContent}
+			,upfix = #{upfix}
+		where notice_no = #{noticeNo}	 
+			
+	</update>
   
 </mapper>
