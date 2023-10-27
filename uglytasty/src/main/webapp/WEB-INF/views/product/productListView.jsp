@@ -152,7 +152,15 @@
         height: 45px;
         line-height: 2.5;
     }
-
+    
+    /* 푸터 영향받지 않도록 itemAll 에 넣은 스타일 */
+    .clearfix::after {	
+	    content: "";
+	    display: table;
+	    clear: both;
+	}
+    
+    
 </style>
 
 </head>
@@ -184,7 +192,7 @@
         </div>
         <br><br>
 
-        <div class="listAll">
+        <div class="listAll clearfix">
         
         	<!-- 상품 더미 (나중에 지울거) -->
             <div class="item">
@@ -328,9 +336,18 @@
             	})
             </script>
             
-            
+        
         </div>
+        
+        
     </div>
+
+	<br><br><br><br><br><br><br><br>
+
+	<!-- 푸터 -->
+    <jsp:include page="../common/footer.jsp"/>
+
+
 
 </body>
 </html>

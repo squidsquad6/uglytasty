@@ -128,6 +128,9 @@ public class ProductDao {
 	
 	
 	
+	//----------------------------------------- 결제 API 관련 서비스-----------------------------------------
+	//----------------------------------------- (단품)
+	
 	
 	/*단품 '주문 insert' (1. 주문)*/
 	public int insertOrderProduct(SqlSessionTemplate sqlSession, Orders oPro) {
@@ -138,6 +141,26 @@ public class ProductDao {
 	public int insertOrderDetailProduct(SqlSessionTemplate sqlSession, Orders oPro) {
 		return sqlSession.insert("productMapper.insertOrderDetailProduct", oPro);
 	}
+	
+
+	
+	/*단품 => 최종 주문서용 orders 객체 조회(order_no 등)*/
+	public Orders selectOrdersInfoFinal(SqlSessionTemplate sqlSession, String addressMain) {
+		return sqlSession.selectOne("productMapper.selectOrdersInfoFinal", addressMain);
+	}
+	
+	/*단품 => 1) 주문코드번호 2:결제완료 업데이트*/
+	public int updateOrderCode(SqlSessionTemplate sqlSession, int orderNo) {
+		return sqlSession.update("productMapper.updateOrderCode", orderNo);
+	}
+	
+	/*단품 => 2) 최종 주문 완료 화면에 줄 배송정보 조회*/
+	public Orders selectOrdersDelivery(SqlSessionTemplate sqlSession, int orderNo) {
+		return sqlSession.selectOne("productMapper.selectOrdersDelivery", orderNo);
+	}
+	
+	
+	//----------------------------------------- (장바구니 상품)
 	
 	
 	/*장바구니상품 '주문 insert' (1. 주문)*/
@@ -152,8 +175,35 @@ public class ProductDao {
 	
 	
 	
+	/*장바구니상품 => 최종 주문서용 orders 객체 조회(order_no 등)*/
+	public Orders selectOrdersDetailInfoFinal(SqlSessionTemplate sqlSession, String addressMain) {
+		return sqlSession.selectOne("productMapper.selectOrdersDetailInfoFinal", addressMain);
+	}
+	
+	/*장바구니상품 => 1) 주문코드번호 2:결제완료 업데이트		------------단품꺼 같이써 (updateOrderCode)*/
+	/*장바구니상품 => 2) 최종 주문 완료 화면에 줄 배송정보 조회	------------단품꺼 같이써 (selectOrdersDelivery)*/
+	
+	/*장바구니상품 => 3)주문상세에서 주문한 상품번호 '조회' 후 장바구니 내역가서 삭제 */
+	public ArrayList<OrdersDetail> selectOrdersDetailPnoList(SqlSessionTemplate sqlSession, int orderNo) {
+		return (ArrayList)sqlSession.selectList("productMapper.selectOrdersDetailPnoList", orderNo);
+	}
+	
+	// userId 조회
+	public String selectUserId(SqlSessionTemplate sqlSession, int orderNo) {
+		return sqlSession.selectOne("productMapper.selectUserId", orderNo);
+	}
 	
 	
+	
+	
+	
+	
+	
+	
+	/*장바구니상품 => 3)주문상세에서 주문한 상품번호 조회 후 장바구니 내역가서 '삭제' - 객체 여러번 반복 */
+	public int deleteCartAfterOrder(SqlSessionTemplate sqlSession, OrdersDetail newOD) {
+		return sqlSession.delete("productMapper.deleteCartAfterOrder", newOD);
+	}
 	
 	
 	

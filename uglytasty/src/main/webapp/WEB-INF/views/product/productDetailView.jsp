@@ -275,6 +275,9 @@
     .recipeImg:hover {
       filter: brightness(0.9);
     }
+    .recipeInfo span {
+    	margin: 0px 4px;
+    }
     .recipe h4 {
         margin: 5px 0;
         font-size: 14px;
@@ -287,6 +290,13 @@
         color: #ff6741;
         font-weight: bold;
     }
+    
+    /* 푸터 영향받지 않도록 itemAll 에 넣은 스타일 */
+    .clearfix::after {	
+	    content: "";
+	    display: table;
+	    clear: both;
+	}
     
     /* --------------------상단으로 이동하기 버튼-------------------- */
     .btn_gotop {
@@ -409,7 +419,7 @@
 
             <br><br><br>
          
-            <div class="top">
+            <div class="top clearfix">
 
                 <div style="float: left; text-align: center;">
                     <img style="width: 480px; height: 480px;" src="${ plist[0].changeName }">
@@ -488,9 +498,7 @@
                 </div>
             </div>
 
-            <div>
-               <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-            </div>
+            <br><br><br><br>
             
             <div class="move" align="left">
                 <button id="btn1">상세정보</button>
@@ -593,20 +601,22 @@
 
 
         <!-- 관련 레시피 -->
-        <div id="recipeAll">
+        <div id="recipeAll" class="clearfix">
+        
             <h1>해당 상품 관련 레시피</h1>
+        
             <div class="recipe" align="left">
                 <div class="recipeImg">
                     <img width="255px" src="https://all-to-delicious.s3.ap-northeast-2.amazonaws.com/atd/a2dcorp.co.kr/earth/recipe/thumbnail/pc/20220123/b9742c9305db4cbcbfee12b8e1699937.jpg">
                 </div>
                 <div class="recipeInfo">
-                    <span class="recipeStyle">난이도 : </span> 
+                	<span class="recipeStyle">난이도 : </span> 
                     <span>누구나</span>
                     <span>&nbsp; | &nbsp;</span>
                     <span class="recipeStyle">소요시간 : </span>
                     <span>15</span>
                     <span>분이내</span>
-                    <h4>간만 잘 맞추면 맛은 보장! 감자양파국</h4>
+                    <h4 width="100%">간만 잘 맞추면 맛은 보장! 감자양파국</h4>
                 </div>
             </div>
             <div class="recipe" align="left">
@@ -653,9 +663,10 @@
             </div>
         </div>
         
+     
             
     </div>
-
+	
 
 
 		     <script>
@@ -743,6 +754,13 @@
             window.scrollBy({top: recipeAll.getBoundingClientRect().top, behavior: 'smooth'});
         });
     </script>
-
+    
+    
+    
+    
+    <!-- 푸터 -->
+    <jsp:include page="../common/footer.jsp"/>
+    
+   
 </body>
 </html>

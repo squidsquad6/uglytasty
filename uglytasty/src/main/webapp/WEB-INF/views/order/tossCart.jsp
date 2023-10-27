@@ -5,14 +5,15 @@
 
 <!-- 
 	
-	(단품)
+	(장바구니상품)
 	
 	userId
 	totalPrice : toss에 결제할 총액 알려줌
 	
 	oFinal : orderNo, userId, orderDate, trackingNo, addressMain, addressDetail, receiver, receiverPhone, deliveryMemo, totalPrice
-			(맵퍼 : id="selectOrdersInfoFinal")
+			(맵퍼 : id="selectOrdersDetailInfoFinal")
  -->
+
     
 <!DOCTYPE html>
 <html>
@@ -25,17 +26,17 @@
 
 </head>
 <body>
-	
+
 	<!-- 헤더자리 -->
 	<jsp:include page="../common/header.jsp"/>
 	
 	
 	
 	
-	<!-- 주문 insert 후 => 주문내역 select 후 model에 박고 => toss.jsp로 옴-->
+	<!-- 주문 insert 후 => 주문내역 select 후 model에 박고 => tossCart.jsp로 옴-->
 	<!-- select : userId, totalPrice -->
-	
 
+	
 	<script>
 	    // ------ 클라이언트 키로 객체 초기화 ------
 	    var clientKey = 'test_ck_D5GePWvyJnrK0W0k6q8gLzN97Eoq'
@@ -50,8 +51,8 @@
 	      orderId: '9a6hV9B4kXJ8QtWS9RCqa'+'${oFinal.orderNo}', // (사실, 주문번호) 주문 ID(주문 ID는 상점에서 직접 만들어주세요.) // '9a6hV9B4kXJ8QtWS9RCqa'
 	      orderName: '못난이맛난이 상품 결제 완료', // 주문명
 	      customerName: '김토스', // 구매자 이름
-	      successUrl: "http://localhost:8008/uglytasty/success.pro?",  // 결제에 성공하면 이동하는 페이지(직접 만들어주세요)
-	      failUrl: "http://localhost:8008/uglytasty/fail.pro",        // 결제에 실패하면 이동하는 페이지(직접 만들어주세요)
+	      successUrl: "http://localhost:8008/uglytasty/success.cart?",  // 결제에 성공하면 이동하는 페이지(직접 만들어주세요)
+	      failUrl: "http://localhost:8008/uglytasty/fail.cart",        // 결제에 실패하면 이동하는 페이지(직접 만들어주세요)
 	       
 	    })
 	    // ------결제창을 띄울 수 없는 에러 처리 ------
@@ -66,9 +67,6 @@
 	      }
 	    });
   	</script>
-
-	
-
 
 
 </body>

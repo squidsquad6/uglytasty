@@ -21,7 +21,7 @@
     .all {
         margin: auto;
         width: 1400px;
-        margin-left: 15%;
+        margin-left: 20%;
     }
     hr{
         width: 1000px;
@@ -131,6 +131,7 @@
     <jsp:include page="../common/header.jsp"/>
 
 	<div class="all">
+        <br><br><br>
         
         <form id="order" action="">
             <br><br>
@@ -284,9 +285,10 @@
         <!-- 선택된 상품의 productNo를 전달할 hidden input 추가 -->
         <input type="hidden" name="userId" value="${loginMember.userId}">
         <input type="hidden" name="productNo" id="selectedProductNos" value="">
+        <!-- 여기에 체크된 productNo 모두 담겨있음 -->
     </form>
 
-    <!-- 망했어요.... -->
+ 
     <script>
         function submitOrderForm() {
             var ArrProductNo = [];
@@ -502,25 +504,17 @@
             */
 
             
-        
-
-            
-            
-			
 			
             const totalPriceElement = document.getElementById('totalPrice');
 			
             totalPriceElement.value = calculatedValue.toLocaleString("ko-KR");
         }
-        
-       
-
-        
     </script>
 
    
 
-
+	<!-- 푸더 -->
+    <jsp:include page="../common/footer.jsp"/>
 
  
 

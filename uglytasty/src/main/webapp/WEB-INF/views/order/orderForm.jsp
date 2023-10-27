@@ -254,7 +254,7 @@
 			                 	</div>
 			                    <div align="right" style="margin-right:740px;">
 				                    <p style="color: black; font-weight:500; margin-top:10px;">총&nbsp;:&nbsp;&nbsp;
-				                    <span style="font-weight:bold; color:black;"><fmt:formatNumber value="${ c.totalPrice }" pattern="#,###"/></span>&nbsp;원</p>				                    
+				                    <span style="font-weight:bold; color:black; font-size:25px;"><fmt:formatNumber value="${ c.totalPrice }" pattern="#,###"/></span>&nbsp;원</p>				                    
 			                    </div>
 			                    
 			                    <!-- hidden -->
@@ -587,6 +587,9 @@
 	    }
     </script>
 
+
+	<!-- 푸더 -->
+    <jsp:include page="../common/footer.jsp"/>
 
 
 </body>

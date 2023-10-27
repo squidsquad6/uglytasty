@@ -184,7 +184,7 @@ public class ProductController {
 
          }
          
-       }
+      }
       
       System.out.println("alist" + alist);
       
@@ -499,34 +499,85 @@ public class ProductController {
 	  
    }
    
-
    
+   //----------------------------------------- 결제 API 관련 깐뜨롤라-----------------------------------------
+   //----------------------------------------- (단품)
    
    /** 단품 '주문 insert' => toss.jsp 로 이동
 	 * 
 	 */
    @RequestMapping("insertOrder.pro")
-   public String insertOrderProduct(Orders oPro, Model model) {
+   public String insertOrderProduct(Orders oPro, Model model, String userId, int totalPrice, String addressMain) {
 	   
 	   //System.out.println("단품 왔니?");
 	   //System.out.println(oPro);
+	   //System.out.println(userId);
+	   //System.out.println(totalPrice);
 	   
 	   int result = pService.insertOrderProduct(oPro);
 	   
 	   if(result > 0) { 
+		   // DB에 단품 insert하고 토스 결제API 화면으로 (준비물:userId, totalPrice)
+		   // 단품 => 긴주문번호 뒤에 붙여 담아갈 orders 객체 조회(order_no 등)
+		   Orders oFinal = pService.selectOrdersInfoFinal(addressMain);
+		   //System.out.println("oFinal : " + oFinal);
+		   model.addAttribute("oFinal", oFinal);
+		   
+		   model.addAttribute("userId", userId);
+		   model.addAttribute("totalPrice", totalPrice);
 		   return "order/toss";
 	   }else { 
 		   model.addAttribute("errorMsg", "주문하기 실패!");
 		   return "common/errorPage";
 	   }
-   }
+    }
    
    
-   /** 장바구니상품 '주문 insert' => toss.jsp 로 이동
+   	/** 단품 결제API 후 '성공화면'으로..
+	 *
+	 */
+   	@RequestMapping("success.pro")
+	public String goSuccess(@RequestParam(name = "orderId") String orderId, Model model) {
+
+	   //System.out.println("토스에서 받아 온 orderId: " + orderId);
+
+	   // 1)주문코드번호 '2:결제완료'로 update
+	   // 2)최종 주문 완료 화면에 줄 배송정보 select
+	   
+	   // "9a6hV9B4kXJ8QtWS9RCqa" 부분 이후의 숫자 부분을 추출 == *** 주문번호(orderNo) ***
+	   String numberPart = orderId.substring(orderId.lastIndexOf("9a6hV9B4kXJ8QtWS9RCqa") + "9a6hV9B4kXJ8QtWS9RCqa".length());
+	   int orderNo = Integer.parseInt(numberPart);
+	  
+	   // 1)
+	   int result = pService.updateOrderCode(orderNo);
+	   
+	   if(result > 0) { // 2)
+		   
+		   Orders oDelivery = pService.selectOrdersDelivery(orderNo);
+		   model.addAttribute("oDelivery", oDelivery);
+	   }
+	   
+	   return "order/tossSuccess";
+	}
+   	
+
+	/** 단품 결제API 후 '실패화면'으로..
+	 *
+	 */
+	@RequestMapping("fail.pro")
+	public String goFail() {
+		return "order/tossFail";
+	}
+	
+	
+   
+	//----------------------------------------- (장바구니 상품)
+   
+    /** 장바구니상품 '주문 insert' => toss.jsp 로 이동
 	 * 
 	 */
-   @RequestMapping("insertOrder.cart")
-   public String insertOrderCart(Orders oCart, String[] productNo, String[] quantity, Model model) {
+    @RequestMapping("insertOrder.cart")
+    public String insertOrderCart(Orders oCart, String[] productNo, String[] quantity, Model model, String userId, int totalPrice, String addressMain) {
 	   
 	   //System.out.println("장바구니상품 왔니?");
 	   //System.out.println(oCart);
@@ -556,17 +607,102 @@ public class ProductController {
 	   int result = pService.insertOrderCart(oCart, odList);
 	   
 	   if(result > 0) { 
-		   return "order/toss";
+		   // DB에 단품 insert하고 토스 결제API 화면으로 (준비물:userId, totalPrice)
+		   // 단품 => 긴주문번호 뒤에 붙여 담아갈 orders 객체 조회(order_no 등)
+		   Orders oFinal = pService.selectOrdersDetailInfoFinal(addressMain);
+		   model.addAttribute("oFinal", oFinal);
+		   
+		   model.addAttribute("userId", userId);
+		   model.addAttribute("totalPrice", totalPrice);
+		   return "order/tossCart";
 	   }else { 
 		   model.addAttribute("errorMsg", "주문하기 실패!");
 		   return "common/errorPage";
 	   }
 	   
-   }
+    }
+    
+    
+    
+    
+    
+    /** 장바구니상품 결제API 후 '성공화면'으로..
+	 *
+	 */
+  	@RequestMapping("success.cart")
+	public String goSuccessCart(@RequestParam(name = "orderId") String orderId, Model model) {
+
+	   //System.out.println("토스에서 받아 온 orderId: " + orderId);
+
+	   // 1)주문코드번호 '2:결제완료'로 update			----------------단품꺼 같이써 (updateOrderCode)
+	   // 2)최종 주문 완료 화면에 줄 배송정보 select	----------------단품꺼 같이써 (selectOrdersDelivery)
+  	   // 3_1)주문상세에서 주문번호 들고 주문한 productNo들 '조회'  
+  	   // 3_2)주문에서 	주문번호 들고 주문한 userId '조회'
+  	   // 3_3)빈배열 ArrayList<OrdersDetail> [] 만들고
+  	   // 3_4)객체 OrdersDetail (vo userId추가한)에 userId, productNo, orderNo 들 set하고**********************
+  	   // 3_5)빈배열에 add객체들
+  	   // 3)준비 끝.. list들고 장바구니 내역가서 '삭제'
+	   
+	   // "9a6hV9B4kXJ8QtWS9RCqa" 부분 이후의 숫자 부분을 추출 == *** 주문번호(orderNo) ***
+	   String numberPart = orderId.substring(orderId.lastIndexOf("9a6hV9B4kXJ8QtWS9RCqa") + "9a6hV9B4kXJ8QtWS9RCqa".length());
+	   int orderNo = Integer.parseInt(numberPart);
+	  
+	   // 1)
+	   int result1 = pService.updateOrderCode(orderNo);
+	   
+	   // 3_1)'조회' : 이 리스트 속 객체마다 order_no, product_no 있음
+	   ArrayList<OrdersDetail> ordersDetailPnoList = pService.selectOrdersDetailPnoList(orderNo);
+	   // 3_2)'조회' : userId 
+	   String userId = pService.selectUserId(orderNo);
+	   
+	   // 3_3,4,5)
+	   ArrayList<OrdersDetail> delList = new ArrayList<OrdersDetail>();	
+	   
+	   for(int i=0; i<ordersDetailPnoList.size(); i++) {
+		   
+		   // 새로운 OrdersDetail 객체 생성
+		   OrdersDetail delOD = new OrdersDetail();
+		   delOD.setOrderNo(orderNo);
+		   delOD.setProductNo(ordersDetailPnoList.get(i).getProductNo());
+		   delOD.setUserId(userId);
+		   
+		   delList.add(delOD);
+		   
+	   }
+	   
+	   System.out.println("주문 후 삭제할 장바구니 리스트 : " + delList);
+	   
+	   // 3) '삭제'
+	   int result3 = pService.deleteCartAfterOrder(delList);
+
+	   
+	   int result = result1 * result3;
+	   
+	   if(result > 0) { // 2)
+		   
+		   Orders oDelivery = pService.selectOrdersDelivery(orderNo);
+		   model.addAttribute("oDelivery", oDelivery);
+	   }
+	   
+	   return "order/tossSuccess";
+	}
+  	
+
+	/** 장바구니상품 결제API 후 '실패화면'으로..
+	 *
+	 */
+	@RequestMapping("fail.cart")
+	public String goFailCart() {
+		return "order/tossFail";
+	}
    
    
    
+	
    
+	
+	
+	
    
    
    

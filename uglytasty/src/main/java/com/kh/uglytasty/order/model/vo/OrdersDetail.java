@@ -16,5 +16,7 @@ public class OrdersDetail {
     private int orderNo;
     private int productNo;
     private int quantity;
+    
+    private String userId;
    
 }

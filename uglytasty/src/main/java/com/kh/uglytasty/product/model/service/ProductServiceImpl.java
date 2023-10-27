@@ -238,6 +238,10 @@ public class ProductServiceImpl implements ProductService {
 	
 	
 	
+	//----------------------------------------- 결제 API 관련 서비스-----------------------------------------
+	//----------------------------------------- (단품)
+	
+	
 	/*단품 '주문 insert' | oPro에 (1)(2)에 필요한거 다 들어있음  */
 	@Override
 	public int insertOrderProduct(Orders oPro) {
@@ -255,7 +259,31 @@ public class ProductServiceImpl implements ProductService {
 		return result; 
 
 	}
+	
+	
+	/*단품 => 긴주문번호 뒤에 붙여 담아갈 orders 객체 조회(order_no 등)*/
+	@Override
+	public Orders selectOrdersInfoFinal(String addressMain) {
+		return pDao.selectOrdersInfoFinal(sqlSession, addressMain);
+	}
 
+	/*단품 => 1) 주문코드번호 2:결제완료 업데이트*/
+	@Override
+	public int updateOrderCode(int orderNo) {
+		return pDao.updateOrderCode(sqlSession, orderNo);
+	}
+
+	/*단품 => 2) 최종 주문 완료 화면에 줄 배송정보 조회*/
+	@Override
+	public Orders selectOrdersDelivery(int orderNo) {
+		return pDao.selectOrdersDelivery(sqlSession, orderNo);
+	}
+
+	
+	
+	//----------------------------------------- (장바구니 상품)
+	
+	
 	/*장바구니상품 '주문 insert' | oPro는 (1)에 필요, odList는 (2)에 필요*/
 	@Override
 	public int insertOrderCart(Orders oCart, ArrayList<OrdersDetail> odList) {
@@ -279,13 +307,50 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	
+	/*장바구니상품 => 긴주문번호 뒤에 붙여 담아갈 orders 객체 조회(order_no 등)*/
+	@Override
+	public Orders selectOrdersDetailInfoFinal(String addressMain) {
+		return pDao.selectOrdersDetailInfoFinal(sqlSession, addressMain);
+	}
+
 	
+	/*장바구니상품 => 1) 주문코드번호 2:결제완료 업데이트		------------단품꺼 같이써 (updateOrderCode)*/
+	/*장바구니상품 => 2) 최종 주문 완료 화면에 줄 배송정보 조회	------------단품꺼 같이써 (selectOrdersDelivery)*/
+
+	/*장바구니상품 => 3)주문상세에서 주문한 상품번호 '조회' 후 장바구니 내역가서 삭제 */
+	@Override
+	public ArrayList<OrdersDetail> selectOrdersDetailPnoList(int orderNo) {
+		return pDao.selectOrdersDetailPnoList(sqlSession, orderNo);
+	}
+	
+	// userId 조회
+	@Override
+	public String selectUserId(int orderNo) {
+		return pDao.selectUserId(sqlSession, orderNo);
+	}
 
 	
 	
-
-
 	
+	
+	
+	
+	
+	
+	
+	/*장바구니상품 => 3)주문상세에서 주문한 상품번호 조회 후 장바구니 내역가서 '삭제' */
+	@Override
+	public int deleteCartAfterOrder(ArrayList<OrdersDetail> delList) {
+		
+		int result = 0;
+		
+		for(OrdersDetail newOD : delList) {
+			// 객체 하나씩 계속 보내
+		 	result += pDao.deleteCartAfterOrder(sqlSession, newOD);
+		}
+		
+		return result;
+	}
 
 	
 	

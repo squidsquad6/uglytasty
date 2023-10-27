@@ -49,6 +49,35 @@
 	</resultMap>
 	
 	
+	<resultMap type="Orders" id="ordersResult">
+		<result column="order_no" property="orderNo" />
+		<result column="user_id" property="userId" />
+		<result column="product_no" property="productNo" />
+		<result column="order_date" property="orderDate" />
+		<result column="order_code" property="orderCode" />
+		<result column="tracking_no" property="trackingNo" />
+		<result column="address_main" property="addressMain" />
+		<result column="address_detail" property="addressDetail" />
+		<result column="receiver" property="receiver" />
+		<result column="receiver_phone" property="receiverPhone" />
+		<result column="delivery_memo" property="deliveryMemo" />
+		<result column="delivery_fee" property="deliveryFee" />
+		<result column="total_price" property="totalPrice" />
+		
+		<result column="quantity" property="quantity" />
+	</resultMap>
+	
+	
+	<resultMap type="OrdersDetail" id="ordersDetailResult">
+		<result column="order_no" property="orderNo" />
+		<result column="product_no" property="productNo" />	
+		<result column="quantity" property="quantity" />
+		
+		<result column="user_id" property="userId" />
+	</resultMap>
+	
+	
+	
 	<!-- 
 	<resultMap type="Attachment" id="attachmentResult">
 		<result column="file_no" property="fileNo" />
@@ -471,9 +500,110 @@
 	</insert>
 	
 	
+	<select id="selectOrdersInfoFinal" resultMap="ordersResult">
+		select
+	            order_no
+	          , user_id
+	          , order_date
+	          , to_char(order_date, 'YYYY-MM-DD') as "order_date"
+	          , tracking_no
+	          , address_main
+	          , address_detail
+	          , receiver
+	          , receiver_phone
+	          , delivery_memo
+	          , total_price
+		  from orders
+	     where address_main = #{addressMain}
+	       and order_code = 1
+	</select>
+
+	<update id="updateOrderCode">
+		update orders
+		   set order_code = 2
+		 where order_no = #{orderNo}
+	</update>
+	
+	<select id="selectOrdersDelivery" resultMap="ordersResult">
+		select
+			 	order_no
+	          , user_id
+	          , to_char(order_date, 'YYYY-MM-DD') as "order_date"
+	          , order_code
+	          , tracking_no
+	          , address_main
+	          , address_detail
+	          , receiver
+	          , receiver_phone
+	          , delivery_memo
+	          , total_price
+	      from orders
+	     where order_no = #{orderNo}
+	       and order_code = 2
+	</select>
+	
+	
+	<select id="selectOrdersDetailInfoFinal" resultMap="ordersResult">
+		select
+	            order_no
+	          , user_id
+	          , order_date
+	          , to_char(order_date, 'YYYY-MM-DD') as "order_date"
+	          , tracking_no
+	          , address_main
+	          , address_detail
+	          , receiver
+	          , receiver_phone
+	          , delivery_memo
+	          , total_price
+		  from orders
+	     where address_main = #{addressMain}
+	       and order_code = 1
+	</select>
+
+	<select id="selectOrdersDetailPnoList" resultMap="ordersDetailResult">
+		select
+			    order_no
+		      , product_no
+		  from orders_detail o
+		  join cart c using (product_no)
+		 where order_no = #{orderNo}
+	</select>
+	
+	<select id="selectUserId" resultType="string">
+		select
+				user_id
+		  from orders
+		 where order_no = #{orderNo}
+	</select>
 	
 	
 	
+	
+	
+	<delete id="deleteCartAfterOrder">
+		delete
+		  from cart
+		 where user_id = #{userId}
+		   and product_no in (select product_no
+		                        from orders_detail
+		                       where order_no = #{orderNo})
+	</delete>
+	
+	
+	
+	<!-- 전체 삭제됨..
+	<delete id="deleteCartAfterOrder">
+		delete
+		  from cart
+	 	 where product_no = #{productNo}
+	</delete>
+	 -->
+	 
+	 
+	
+
+
 
 
 
