@@ -639,7 +639,7 @@ public class ProductController {
   	   // 3_1)주문상세에서 주문번호 들고 주문한 productNo들 '조회'  
   	   // 3_2)주문에서 	주문번호 들고 주문한 userId '조회'
   	   // 3_3)빈배열 ArrayList<OrdersDetail> [] 만들고
-  	   // 3_4)객체 OrdersDetail (vo userId추가한)에 userId, productNo, orderNo 들 set하고**********************
+  	   // 3_4)객체 OrdersDetail (vo userId추가한)에 userId, productNo, orderNo 들 set하고
   	   // 3_5)빈배열에 add객체들
   	   // 3)준비 끝.. list들고 장바구니 내역가서 '삭제'
 	   

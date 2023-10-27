@@ -13,7 +13,6 @@ import lombok.ToString;
 @ToString			// toString 메소드
 public class Product {
 	
-	
 	private int productNo;
 	private String productName;
 	private int price;
@@ -33,5 +32,12 @@ public class Product {
 	private String fileExp;
 	private int fileLevel;
 	
+	private int quantity;
+
+	private int salePrice;
+	private int totalPrice;
+	private int deliveryIncludePrice;
+	
+
 
 }
