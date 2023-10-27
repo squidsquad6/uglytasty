@@ -127,6 +127,21 @@
     .notice-wrap .search-wrap .btn:hover{
         cursor: pointer;
     }
+    
+    .noticeContent-bx>pre {
+          margin: 0;
+          padding: 0;
+          border: none;
+          background: none;
+          font-size: inherit;
+          font-family: inherit;
+          line-height: inherit;
+          color: inherit;
+          text-align: inherit;
+          white-space: pre;
+      }
+    
+    
 </style>
 </head>
 <body style='background-color: #f5f5f5;'>
@@ -184,10 +199,10 @@
 		                    <i class="ri-arrow-up-s-line"></i>
 		                </div>
 		                <div class="noticeContent-bx">
-		                    <p>
-		                        ${ n.noticeContent }
+		                    <pre>
+${ n.noticeContent }
 		                        
-		                    </p>
+		                    </pre>
 		                    
 		                    
 		                    <c:choose>

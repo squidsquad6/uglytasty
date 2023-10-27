@@ -154,6 +154,20 @@
  .btn-wrap .btn-submit{
      background: #fbf728;
  }
+ .textarea-wrap>pre {
+          margin: 0;
+          padding: 0;
+          border: none;
+          background: none;
+          font-size: inherit;
+          font-family: inherit;
+          line-height: inherit;
+          color: inherit;
+          text-align: inherit;
+          white-space: pre;
+      }
+ 
+ 
 </style>
 </head>
 <body style="background-color: #f5f5f5;" style="box-sizing:content-box;">
@@ -236,5 +250,6 @@
             }
         });
     </script>
+    <jsp:include page="../common/footer.jsp"/>
 </body>
 </html>

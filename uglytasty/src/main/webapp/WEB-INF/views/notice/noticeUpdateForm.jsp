@@ -181,7 +181,7 @@
                             <th>내용 *</th>
                             <td>
                                 <div class="textarea-wrap">
-                                    <textarea name="content" id="content" cols="30" rows="10" class="textarea">${n.noticeContent }</textarea>
+                                    <textarea name="content" id="content" cols="30" rows="10" class="textarea" style="white-space: pre-wrap;">${n.noticeContent }</textarea>
                                     <span id="counter" class="textarea-counter">0/2,000</span>
                                 </div>
                             </td>

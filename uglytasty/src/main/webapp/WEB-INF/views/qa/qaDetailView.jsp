@@ -153,6 +153,19 @@
     .qna-wrap .search-wrap .btn1:hover{
         cursor: pointer;
     }
+    
+        .ri-question-answer-line>pre {
+          margin: 0;
+          padding: 0;
+          border: none;
+          background: none;
+          font-size: inherit;
+          font-family: inherit;
+          line-height: inherit;
+          color: inherit;
+          text-align: inherit;
+          white-space: pre;
+      }
 </style>
 </head>
 <body style="background-color: #f5f5f5;">
@@ -176,7 +189,9 @@
 
                             <br>
                             <br>
-                            ${ qa.qaContent }
+                            <pre>
+${ qa.qaContent }
+                            </pre>
                             <br>
                             <br>
 
@@ -255,5 +270,6 @@
     		}
     	}
     </script>
+    <jsp:include page="../common/footer.jsp"/>
 </body>
 </html>

@@ -173,6 +173,7 @@
 		      , user_id
 		      , q_title
 		      , q_content
+		      , a_id
 		      )
 		      values
 		      (
@@ -181,6 +182,7 @@
 		      , #{userId}
 		      , #{qaTitle}
 		      , #{qaContent}
+		      , 'admin'
 		      )
 	</insert>
 	

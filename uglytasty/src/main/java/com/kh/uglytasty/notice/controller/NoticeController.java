@@ -99,12 +99,9 @@ public class NoticeController {
 	@RequestMapping("updateForm.no")
 	public String updateNotice(@RequestParam("noticeNo") int noticeNo, @RequestParam("noticeTitle") String noticeTitle, @RequestParam("noticeContent") String noticeContent, @RequestParam("upfix") String upfix, Model model) {
 		
-		Notice n = new Notice();
+		Notice n = nService.selectNotice(noticeNo);
 		
-		n.setNoticeNo(noticeNo);
-		n.setNoticeContent(noticeContent);
-		n.setNoticeTitle(noticeTitle);
-		n.setUpfix(upfix);
+		
 		
 		model.addAttribute("n" , n);
 		
@@ -116,12 +113,10 @@ public class NoticeController {
 	@RequestMapping("update.no")
 	public String noticeUpdate(String title, String content, String upfix, int noticeNo, Model model) {
 		
-		Notice n = new Notice();
+		Notice n = nService.selectNotice(noticeNo);
 		
-		n.setNoticeNo(noticeNo);
-		n.setNoticeContent(content);
-		n.setNoticeTitle(title);
-		n.setUpfix(upfix);
+		
+		
 		
 		int result = nService.noticeUpdate(n);
 		
