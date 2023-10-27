@@ -248,7 +248,7 @@
                         <!-- 로그인 후 -->
                         <div id="after_login" class="d-inline-flex">  
                             <div class="">
-                                <a href="#"><span>장바구니</span></a>
+                                <a href="list.cart?userId=${ loginMember.userId }"><span>장바구니</span></a>
                             </div>
                             <div class="">
                                 <a href=""><span>마이페이지</span></a>

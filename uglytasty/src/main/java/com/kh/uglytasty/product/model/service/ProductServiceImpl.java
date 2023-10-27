@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.kh.uglytasty.order.model.vo.Cart;
+import com.kh.uglytasty.order.model.vo.Orders;
+import com.kh.uglytasty.order.model.vo.OrdersDetail;
 import com.kh.uglytasty.product.model.dao.ProductDao;
 import com.kh.uglytasty.product.model.vo.Attachment;
 import com.kh.uglytasty.product.model.vo.Product;
@@ -189,9 +191,11 @@ public class ProductServiceImpl implements ProductService {
 	public int updateMinusQuantity(Cart c) {
 		return pDao.updateMinusQuantity(sqlSession, c);
 	}
-
 	
-	/*장바구니 선택삭제 1)*/
+	
+	
+	
+	/*장바구니 선택삭제*/
 	@Override
 	public int deleteCartProduct(ArrayList<Cart> clist) {	// productNo 각각 담긴 Cart객체들 모음집
 		
@@ -200,21 +204,153 @@ public class ProductServiceImpl implements ProductService {
 		for(Cart c : clist) {
 				// *** 여기서 성공하면 밑 deleteCart() 호출 / 매개변수로 Cart객체 하나씩 보내 ***
 			 	result += pDao.deleteCart(sqlSession, c);
-			}
-		System.out.println("s의 result : " + result);
+		}
 		
 		return result;
 	}
-
-	/*
-
+	
+	/*장바구니에서 주문하기용_상품 조회*/
 	@Override
-	public int deleteCart(Cart c) {
-		return pDao.deleteCart(sqlSession, c);
+	public ArrayList<Cart> orderCartProduct(ArrayList<Cart> clist) {
+		
+		ArrayList<Cart> clistOrder = new ArrayList<Cart>();
+		
+		for(Cart c : clist) {
+			// *** 여기서 성공하면 orderCart() 호출 / 매개변수로 Cart객체 하나씩 보내 ***
+			
+			//ArrayList<Cart> resultCart = pDao.orderCart(sqlSession, c);
+			//clistOrder.addAll(resultCart);
+			
+			Cart cartItem = pDao.orderCart(sqlSession, c);
+			clistOrder.add(cartItem);
+			
+		}
+	
+		return clistOrder;
 	}
-*/
+	
+	/*상세페이지에서 주문하기용_상품 조회*/
+	@Override
+	public Product selectOrderProductInfo(int productNo) {
+		return pDao.selectOrderProductInfo(sqlSession, productNo);
+	}
 
 	
+	
+	
+	//----------------------------------------- 결제 API 관련 서비스-----------------------------------------
+	//----------------------------------------- (단품)
+	
+	
+	/*단품 '주문 insert' | oPro에 (1)(2)에 필요한거 다 들어있음  */
+	@Override
+	public int insertOrderProduct(Orders oPro) {
+		
+		int result1 = pDao.insertOrderProduct(sqlSession, oPro);
+		
+		int result2 = 0;
+		
+		if(result1 > 0) { // (주문)넣고, (주문상세)넣기
+			result2 = pDao.insertOrderDetailProduct(sqlSession, oPro);
+		}
+		
+		int result = result1 * result2;
+		
+		return result; 
+
+	}
+	
+	
+	/*단품 => 긴주문번호 뒤에 붙여 담아갈 orders 객체 조회(order_no 등)*/
+	@Override
+	public Orders selectOrdersInfoFinal(String addressMain) {
+		return pDao.selectOrdersInfoFinal(sqlSession, addressMain);
+	}
+
+	/*단품 => 1) 주문코드번호 2:결제완료 업데이트*/
+	@Override
+	public int updateOrderCode(int orderNo) {
+		return pDao.updateOrderCode(sqlSession, orderNo);
+	}
+
+	/*단품 => 2) 최종 주문 완료 화면에 줄 배송정보 조회*/
+	@Override
+	public Orders selectOrdersDelivery(int orderNo) {
+		return pDao.selectOrdersDelivery(sqlSession, orderNo);
+	}
+
+	
+	
+	//----------------------------------------- (장바구니 상품)
+	
+	
+	/*장바구니상품 '주문 insert' | oPro는 (1)에 필요, odList는 (2)에 필요*/
+	@Override
+	public int insertOrderCart(Orders oCart, ArrayList<OrdersDetail> odList) {
+		
+		int result1 = pDao.insertOrderCart(sqlSession, oCart);
+		
+		int result2 = 0;
+
+		if(result1 > 0) {
+		
+			for(OrdersDetail odCart : odList) {
+				// *** 여기서 성공하면 밑 insertOrderDetailCart() 호출 / 매개변수로 OrdersDetail 객체 하나씩 보내 ***
+			 	result2 += pDao.insertOrderDetailCart(sqlSession, odCart);
+			}
+			
+		}
+		
+		int result = result1 * result2;
+
+		return result;
+	}
+
+	
+	/*장바구니상품 => 긴주문번호 뒤에 붙여 담아갈 orders 객체 조회(order_no 등)*/
+	@Override
+	public Orders selectOrdersDetailInfoFinal(String addressMain) {
+		return pDao.selectOrdersDetailInfoFinal(sqlSession, addressMain);
+	}
+
+	
+	/*장바구니상품 => 1) 주문코드번호 2:결제완료 업데이트		------------단품꺼 같이써 (updateOrderCode)*/
+	/*장바구니상품 => 2) 최종 주문 완료 화면에 줄 배송정보 조회	------------단품꺼 같이써 (selectOrdersDelivery)*/
+
+	/*장바구니상품 => 3)주문상세에서 주문한 상품번호 '조회' 후 장바구니 내역가서 삭제 */
+	@Override
+	public ArrayList<OrdersDetail> selectOrdersDetailPnoList(int orderNo) {
+		return pDao.selectOrdersDetailPnoList(sqlSession, orderNo);
+	}
+	
+	// userId 조회
+	@Override
+	public String selectUserId(int orderNo) {
+		return pDao.selectUserId(sqlSession, orderNo);
+	}
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	/*장바구니상품 => 3)주문상세에서 주문한 상품번호 조회 후 장바구니 내역가서 '삭제' */
+	@Override
+	public int deleteCartAfterOrder(ArrayList<OrdersDetail> delList) {
+		
+		int result = 0;
+		
+		for(OrdersDetail newOD : delList) {
+			// 객체 하나씩 계속 보내
+		 	result += pDao.deleteCartAfterOrder(sqlSession, newOD);
+		}
+		
+		return result;
+	}
 
 	
 	

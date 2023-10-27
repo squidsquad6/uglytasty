@@ -18,11 +18,13 @@ public class Cart {
 	private int quantity;
 	
 	private String productName;
+	private String explanation;
 	private int stock;
 	private int price;
 	private int sale;
 	
 	private int salePrice;
+	private int totalPrice;
 	
 	private String changeName;
 	private int fileLevel;

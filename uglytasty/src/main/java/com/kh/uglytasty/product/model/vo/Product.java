@@ -26,7 +26,6 @@ public class Product {
 	private int count;
 	private String enrollDate;
 
-
 	private int fileNo;
 	private int refProductNo;
 	private String originName;
@@ -34,32 +33,5 @@ public class Product {
 	private String fileExp;
 	private int fileLevel;
 	
-	
-	
-	public Product(int productNo, String productName, int price, int sale, String explanation, String location,
-			String productionDate, int stock, String status, int count, String enrollDate) {
-		super();
-		this.productNo = productNo;
-		this.productName = productName;
-		this.price = price;
-		this.sale = sale;
-		this.explanation = explanation;
-		this.location = location;
-		this.productionDate = productionDate;
-		this.stock = stock;
-		this.status = status;
-		this.count = count;
-		this.enrollDate = enrollDate;
-	}
-	
-	
-	
-	
-	
-	
-
-	private int salePrice;
-	
-
 
 }

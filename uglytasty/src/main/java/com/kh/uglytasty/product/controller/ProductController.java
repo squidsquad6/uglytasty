@@ -20,6 +20,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.google.gson.Gson;
 import com.kh.uglytasty.order.model.vo.Cart;
+import com.kh.uglytasty.order.model.vo.Orders;
+import com.kh.uglytasty.order.model.vo.OrdersDetail;
 import com.kh.uglytasty.product.model.service.ProductServiceImpl;
 import com.kh.uglytasty.product.model.vo.Attachment;
 import com.kh.uglytasty.product.model.vo.Product;
@@ -102,7 +104,7 @@ public class ProductController {
       if(result > 0) {
          ArrayList<Product> plist = pService.selectDetailProduct(pno);
          
-         System.out.println("상품의 상세정보(plist) : " + plist);
+         //System.out.println("상품의 상세정보(plist) : " + plist);
          
          model.addAttribute("plist", plist);
          return "product/productDetailView";
@@ -182,7 +184,7 @@ public class ProductController {
 
          }
          
-       }
+      }
       
       System.out.println("alist" + alist);
       
@@ -306,10 +308,10 @@ public class ProductController {
       int result = pService.readyProduct(productNo);
       
       if(result > 0) { // status = 'R' 성공
-         session.setAttribute("alertMsg", "성공적으로 [상품 소진] 처리가 되었습니다.");
+         session.setAttribute("alertMsg", "성공적으로 [일시품절] 처리가 되었습니다.");
          return "redirect:list.pro";
       }else {
-         model.addAttribute("errorMsg", "[상품 소진] 처리 실패!");
+         model.addAttribute("errorMsg", "[일시품절] 처리 실패!");
          return "common/errorPage";
       }
    }
@@ -357,7 +359,7 @@ public class ProductController {
 	   
 	   ArrayList<Cart> cartlist = pService.selectCartList(userId);
 	   model.addAttribute("cartlist", cartlist);
-	   System.out.println("장바구니 상품(cartlist) : " + cartlist);
+	   //System.out.println("장바구니 상품(cartlist) : " + cartlist);
 	   
 	   return "order/cartListForm";
 	   
@@ -378,7 +380,7 @@ public class ProductController {
 	   c.setProductNo(pno);
   
 	   int result = pService.updateAddQuantity(c);
-	   System.out.println("추가 결과 : " + result);
+	   //System.out.println("추가 결과 : " + result);
 	   
 	   return result>0 ? "success" : "fail";
 	   
@@ -398,18 +400,21 @@ public class ProductController {
 	   c.setProductNo(pno);
 	   
 	   int result = pService.updateMinusQuantity(c);
-	   System.out.println("빼기 결과 : " + result);
+	   //System.out.println("빼기 결과 : " + result);
 	   
 	   return result>0 ? "success" : "fail";
 	   
    }
    
    
+   /** 장바구니 선택삭제
+	 * 
+	 */
    @ResponseBody
    @RequestMapping("delete.cart")
    public String ajaxDeleteCart(String userId, String[] productNo) {
     
-      System.out.println("c : " + productNo.length);
+       //System.out.println("장바구니 선택삭제 : " + productNo.length);
        
 
 	   ArrayList<Cart> clist = new ArrayList<Cart>();
@@ -425,7 +430,7 @@ public class ProductController {
 	      
 	    }
 	    
-	   System.out.println("clist : " + clist);
+	   //System.out.println("삭제할 clist : " + clist);
         
 	   // 준비 끝........서비스로..
 	   int result = pService.deleteCartProduct(clist);
@@ -433,7 +438,272 @@ public class ProductController {
 	   return result>0 ? "success" : "fail";
  
    }
+   
+   
+   /** 장바구니에서 주문하기용_상품 조회
+	 * 
+	 */
+   @RequestMapping("order.cart")
+   public String ajaxOrderCart(String userId, String[] productNo, Model model) {
+	   
+	   /*
+	   for(String p: productNo) {
+		   System.out.println("p" + p);
+	   }
+	   */
+	   
+	   ArrayList<Cart> clist = new ArrayList<Cart>();
+		
+	   for(int i=0; i<productNo.length; i++) {
+		   
+	         Cart orderCart = new Cart();
+	         
+	         orderCart.setUserId(userId);
+	         orderCart.setProductNo(Integer.parseInt(productNo[i]));
 
+	         clist.add(orderCart);
+	      
+	    }
+    
+	   // 준비 끝........서비스로..
+	   ArrayList<Cart> clistOrder = pService.orderCartProduct(clist);
+	   
+	   /*
+	   for(int i=0; i<clistOrder.size(); i++) {
+		   System.out.println("주문할clist : " + clistOrder.get(i));
+	   }
+	   */
+	   
+	   model.addAttribute("clistOrder", clistOrder);
+	      
+	   return "order/orderForm";
+	   
+   }
+
+   
+   /** 상세페이지에서 주문하기용_상품 조회
+	 * 
+	 */
+   @RequestMapping("enrollForm.order")
+   public String selectOrderProductInfo(int quantity, int productNo, Model model) {
+	   
+	    
+	   // 1) 먼저 quantity 박아!
+	   model.addAttribute("quantity", quantity);
+		   
+	   // 2) 해당 product 정보 조회(+attachment조인)
+	   Product p = pService.selectOrderProductInfo(productNo);
+	   model.addAttribute("p", p);
+	   
+	   return "order/orderForm";
+	  
+   }
+   
+   
+   //----------------------------------------- 결제 API 관련 깐뜨롤라-----------------------------------------
+   //----------------------------------------- (단품)
+   
+   /** 단품 '주문 insert' => toss.jsp 로 이동
+	 * 
+	 */
+   @RequestMapping("insertOrder.pro")
+   public String insertOrderProduct(Orders oPro, Model model, String userId, int totalPrice, String addressMain) {
+	   
+	   //System.out.println("단품 왔니?");
+	   //System.out.println(oPro);
+	   //System.out.println(userId);
+	   //System.out.println(totalPrice);
+	   
+	   int result = pService.insertOrderProduct(oPro);
+	   
+	   if(result > 0) { 
+		   // DB에 단품 insert하고 토스 결제API 화면으로 (준비물:userId, totalPrice)
+		   // 단품 => 긴주문번호 뒤에 붙여 담아갈 orders 객체 조회(order_no 등)
+		   Orders oFinal = pService.selectOrdersInfoFinal(addressMain);
+		   //System.out.println("oFinal : " + oFinal);
+		   model.addAttribute("oFinal", oFinal);
+		   
+		   model.addAttribute("userId", userId);
+		   model.addAttribute("totalPrice", totalPrice);
+		   return "order/toss";
+	   }else { 
+		   model.addAttribute("errorMsg", "주문하기 실패!");
+		   return "common/errorPage";
+	   }
+    }
+   
+   
+   	/** 단품 결제API 후 '성공화면'으로..
+	 *
+	 */
+   	@RequestMapping("success.pro")
+	public String goSuccess(@RequestParam(name = "orderId") String orderId, Model model) {
+
+	   //System.out.println("토스에서 받아 온 orderId: " + orderId);
+
+	   // 1)주문코드번호 '2:결제완료'로 update
+	   // 2)최종 주문 완료 화면에 줄 배송정보 select
+	   
+	   // "9a6hV9B4kXJ8QtWS9RCqa" 부분 이후의 숫자 부분을 추출 == *** 주문번호(orderNo) ***
+	   String numberPart = orderId.substring(orderId.lastIndexOf("9a6hV9B4kXJ8QtWS9RCqa") + "9a6hV9B4kXJ8QtWS9RCqa".length());
+	   int orderNo = Integer.parseInt(numberPart);
+	  
+	   // 1)
+	   int result = pService.updateOrderCode(orderNo);
+	   
+	   if(result > 0) { // 2)
+		   
+		   Orders oDelivery = pService.selectOrdersDelivery(orderNo);
+		   model.addAttribute("oDelivery", oDelivery);
+	   }
+	   
+	   return "order/tossSuccess";
+	}
+   	
+
+	/** 단품 결제API 후 '실패화면'으로..
+	 *
+	 */
+	@RequestMapping("fail.pro")
+	public String goFail() {
+		return "order/tossFail";
+	}
+	
+	
+   
+	//----------------------------------------- (장바구니 상품)
+   
+    /** 장바구니상품 '주문 insert' => toss.jsp 로 이동
+	 * 
+	 */
+    @RequestMapping("insertOrder.cart")
+    public String insertOrderCart(Orders oCart, String[] productNo, String[] quantity, Model model, String userId, int totalPrice, String addressMain) {
+	   
+	   //System.out.println("장바구니상품 왔니?");
+	   //System.out.println(oCart);
+	   /*
+	   for(String p: productNo) {
+		   System.out.println("pno : " + p);
+	   }
+	   for(String q: quantity) {
+		   System.out.println("quan : " + q);
+	   }
+	   */
+	   
+	   ArrayList<OrdersDetail> odList = new ArrayList<OrdersDetail>();
+	   
+	   for(int i=0; i<productNo.length; i++) {
+		   
+		   OrdersDetail od = new OrdersDetail();
+		   
+		   od.setProductNo(Integer.parseInt(productNo[i]));
+		   od.setQuantity(Integer.parseInt(quantity[i]));
+		   
+		   odList.add(od);
+		   
+	   }
+	   
+	   // 준비 끝.. 주문(1),상품(여러개) 들고 서비스로..
+	   int result = pService.insertOrderCart(oCart, odList);
+	   
+	   if(result > 0) { 
+		   // DB에 단품 insert하고 토스 결제API 화면으로 (준비물:userId, totalPrice)
+		   // 단품 => 긴주문번호 뒤에 붙여 담아갈 orders 객체 조회(order_no 등)
+		   Orders oFinal = pService.selectOrdersDetailInfoFinal(addressMain);
+		   model.addAttribute("oFinal", oFinal);
+		   
+		   model.addAttribute("userId", userId);
+		   model.addAttribute("totalPrice", totalPrice);
+		   return "order/tossCart";
+	   }else { 
+		   model.addAttribute("errorMsg", "주문하기 실패!");
+		   return "common/errorPage";
+	   }
+	   
+    }
+    
+    
+    
+    
+    
+    /** 장바구니상품 결제API 후 '성공화면'으로..
+	 *
+	 */
+  	@RequestMapping("success.cart")
+	public String goSuccessCart(@RequestParam(name = "orderId") String orderId, Model model) {
+
+	   //System.out.println("토스에서 받아 온 orderId: " + orderId);
+
+	   // 1)주문코드번호 '2:결제완료'로 update			----------------단품꺼 같이써 (updateOrderCode)
+	   // 2)최종 주문 완료 화면에 줄 배송정보 select	----------------단품꺼 같이써 (selectOrdersDelivery)
+  	   // 3_1)주문상세에서 주문번호 들고 주문한 productNo들 '조회'  
+  	   // 3_2)주문에서 	주문번호 들고 주문한 userId '조회'
+  	   // 3_3)빈배열 ArrayList<OrdersDetail> [] 만들고
+  	   // 3_4)객체 OrdersDetail (vo userId추가한)에 userId, productNo, orderNo 들 set하고**********************
+  	   // 3_5)빈배열에 add객체들
+  	   // 3)준비 끝.. list들고 장바구니 내역가서 '삭제'
+	   
+	   // "9a6hV9B4kXJ8QtWS9RCqa" 부분 이후의 숫자 부분을 추출 == *** 주문번호(orderNo) ***
+	   String numberPart = orderId.substring(orderId.lastIndexOf("9a6hV9B4kXJ8QtWS9RCqa") + "9a6hV9B4kXJ8QtWS9RCqa".length());
+	   int orderNo = Integer.parseInt(numberPart);
+	  
+	   // 1)
+	   int result1 = pService.updateOrderCode(orderNo);
+	   
+	   // 3_1)'조회' : 이 리스트 속 객체마다 order_no, product_no 있음
+	   ArrayList<OrdersDetail> ordersDetailPnoList = pService.selectOrdersDetailPnoList(orderNo);
+	   // 3_2)'조회' : userId 
+	   String userId = pService.selectUserId(orderNo);
+	   
+	   // 3_3,4,5)
+	   ArrayList<OrdersDetail> delList = new ArrayList<OrdersDetail>();	
+	   
+	   for(int i=0; i<ordersDetailPnoList.size(); i++) {
+		   
+		   // 새로운 OrdersDetail 객체 생성
+		   OrdersDetail delOD = new OrdersDetail();
+		   delOD.setOrderNo(orderNo);
+		   delOD.setProductNo(ordersDetailPnoList.get(i).getProductNo());
+		   delOD.setUserId(userId);
+		   
+		   delList.add(delOD);
+		   
+	   }
+	   
+	   System.out.println("주문 후 삭제할 장바구니 리스트 : " + delList);
+	   
+	   // 3) '삭제'
+	   int result3 = pService.deleteCartAfterOrder(delList);
+
+	   
+	   int result = result1 * result3;
+	   
+	   if(result > 0) { // 2)
+		   
+		   Orders oDelivery = pService.selectOrdersDelivery(orderNo);
+		   model.addAttribute("oDelivery", oDelivery);
+	   }
+	   
+	   return "order/tossSuccess";
+	}
+  	
+
+	/** 장바구니상품 결제API 후 '실패화면'으로..
+	 *
+	 */
+	@RequestMapping("fail.cart")
+	public String goFailCart() {
+		return "order/tossFail";
+	}
+   
+   
+   
+	
+   
+	
+	
+	
+   
    
    
    

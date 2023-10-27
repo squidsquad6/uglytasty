@@ -28,4 +28,6 @@ public class Orders {
    private int totalPrice;
    
    
+   private int quantity;
+   
 }

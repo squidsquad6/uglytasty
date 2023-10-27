@@ -2,6 +2,7 @@
     pageEncoding="UTF-8"%>
     
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <!-- 
 	loginMember = 회원정보..
@@ -151,7 +152,15 @@
         height: 45px;
         line-height: 2.5;
     }
-
+    
+    /* 푸터 영향받지 않도록 itemAll 에 넣은 스타일 */
+    .clearfix::after {	
+	    content: "";
+	    display: table;
+	    clear: both;
+	}
+    
+    
 </style>
 
 </head>
@@ -183,7 +192,7 @@
         </div>
         <br><br>
 
-        <div class="listAll">
+        <div class="listAll clearfix">
         
         	<!-- 상품 더미 (나중에 지울거) -->
             <div class="item">
@@ -232,8 +241,8 @@
 			            <p>${p.productName}</p>
 			            <span class="sale">${p.sale}</span><span class="sale">%</span>
 			            <img src="https://d3cpiew7rze14b.cloudfront.net/assets/ustore/discount-arrow.svg">
-			            <span class="originPrice">${p.price}</span>
-			            <span class="salePrice" id="calculationResult_${p.productNo}">${ p.salePrice }</span>
+			            <span class="originPrice"><fmt:formatNumber value="${p.price}" pattern="#,###"/></span>
+			            <span class="salePrice" id="calculationResult_${p.productNo}"><fmt:formatNumber value="${ p.salePrice }" pattern="#,###"/></span>
 			            <span class="salePrice">원</span>
 			        </div>
 			    </div>
@@ -327,9 +336,18 @@
             	})
             </script>
             
-            
+        
         </div>
+        
+        
     </div>
+
+	<br><br><br><br><br><br><br><br>
+
+	<!-- 푸터 -->
+    <jsp:include page="../common/footer.jsp"/>
+
+
 
 </body>
 </html>

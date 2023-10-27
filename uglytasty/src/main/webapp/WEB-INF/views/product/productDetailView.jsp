@@ -2,11 +2,11 @@
     pageEncoding="UTF-8"%>
     
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <!-- 
     loginMember = 회원정보..
-
-   plist = ArrayList<Product> + fileNo + refProductNo + originName + changeName + fileExp + fileLevel
+   	plist = ArrayList<Product> + fileNo + refProductNo + originName + changeName + fileExp + fileLevel
  -->
 
 <!DOCTYPE html>
@@ -275,6 +275,9 @@
     .recipeImg:hover {
       filter: brightness(0.9);
     }
+    .recipeInfo span {
+    	margin: 0px 4px;
+    }
     .recipe h4 {
         margin: 5px 0;
         font-size: 14px;
@@ -287,6 +290,13 @@
         color: #ff6741;
         font-weight: bold;
     }
+    
+    /* 푸터 영향받지 않도록 itemAll 에 넣은 스타일 */
+    .clearfix::after {	
+	    content: "";
+	    display: table;
+	    clear: both;
+	}
     
     /* --------------------상단으로 이동하기 버튼-------------------- */
     .btn_gotop {
@@ -409,7 +419,7 @@
 
             <br><br><br>
          
-            <div class="top">
+            <div class="top clearfix">
 
                 <div style="float: left; text-align: center;">
                     <img style="width: 480px; height: 480px;" src="${ plist[0].changeName }">
@@ -425,13 +435,13 @@
 
                     <div class="item" style="text-align: left;">
                         <span class="sale">${ plist[0].sale }%</span>
-                        <span class="originPrice">${ plist[0].price }</span>
-                        <span class="salePrice" id="calculationResult"></span>
-                        <span class="salePrice">원</span>
+                        <!-- <span class="originPrice">${ plist[0].price }</span> -->
+                        <span class="originPrice">﻿<fmt:formatNumber value="${ plist[0].price }" pattern="#,###"/></span>
+                        <span class="salePrice" id="salePrice"><fmt:formatNumber value="${ plist[0].salePrice }" pattern="#,###"/></span>
+                        <span class="salePrice" >원</span>
                     </div>
                    
-                    
-                    
+
                
                     <br><hr>
                     
@@ -448,7 +458,7 @@
                                 </tr>
                                 <tr>
                                     <th>배송비</th>
-                                    <td>2500<span>원</span></td>
+                                    <td><fmt:formatNumber value="2500" pattern="#,###"/><span>원</span></td>
                                 </tr>
                                 <tr>
                                     <th></th>
@@ -457,36 +467,22 @@
                                 <tr>
                                     <th>구매수량</th>
                                     <td>
-                                        <!--(+)(-)버튼 : 재고량에 따른 분기처리하기-->
-                                        <input type="hidden" id="sell_price" name="sell_price" value="500">
-                                        <input type="button" id="add" value=" + " name="add">
-                                        <input type="text" id="amount" name="amount" value="1" readonly>
-                                        <input type="button" id="minus" value=" - " name="minus"><br>
+                                        <input type="button" id="add" value=" + ">
+                                        <input type="text" id="amount" value="1" name="quantity" readonly>	<!-- 주문하기 가져갈 것 -->
+                                        <input type="button" id="minus" value=" - "><br>
                                     </td>
                                 </tr>
                                 <tr>
                                     <th style="padding-top: 25px; color:#ff6741;">총 결제 금액</th>
-                                    <td style="padding-top: 25px;">
-                                        <!--총액 여기로-->
-                                        <input type="text" id="sum" name="sum" readonly>원
+                                    <td style="padding-top: 25px; width:380px;" align="right">
+                                        <span id="sum" readonly><fmt:formatNumber value="${ plist[0].salePrice }" pattern="#,###"/></span><span style="color:#ff6741; font-weight:bold;">원</span>
                                     </td>
                                 </tr>
                             </table>
+							<!-- 주문하기 가져갈 userId, productNo -->
+                            <input type="hidden" name="userId" value="${ loginMember.userId }">
+                            <input type="hidden" name="productNo" value="${ plist[0].productNo }">
                         </div>
-                        
-                        
-                         <script>
-                            // 요소와 값 가져오기
-                            const salePriceElement = document.getElementById('calculationResult');
-                            const price = ${ plist[0].price };
-                            const sale = ${ plist[0].sale };
-                            const sellPriceElement = document.getElementById('sell_price');
-                            // 식을 계산하고 그 값을 요소의 내용으로 설정
-                            const calculatedValue = Math.round(price - (price / sale));
-                            salePriceElement.textContent = calculatedValue;
-                            sellPriceElement.value = calculatedValue;
-                        </script>
-                        
                         
                         <br><hr>
                         
@@ -496,54 +492,13 @@
                                 <button class="order" type="submit">주문하기</button>
                             </div>
                         </div>
-
-                        
-                         
-                               <script>
-                                  function addCart(){ // 장바구니 추가용 ajax
-                               
-                                     $.ajax({
-                                        url:"insert.cart",
-                                        data:{
-                                           userId:'${ loginMember.userId }',
-                                           productNo:${ plist[0].productNo },
-                                           quantity:$("#amount").val()
-                                        },
-                                        success:function(result){
-                                           
-                                           if(result == "success"){
-                                              console.log(result);
-                                              
-                                              //모달버튼 눌리게
-                                                 $("#modalButton").click();   
-                                              
-                                           }
-                                        
-                                        },
-                                        error:function(){
-                                           console.log("장바구니 추가용 ajax 요청 실패!");
-                                        }
-                                     })
-                
-                                  }
-                              </script>
-                    
-                      
-                     
-               
-
-                        
-                        
-                        
-                            
+  
                     </form>
+                    
                 </div>
-                
             </div>
 
-            <div>
-               <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br>
-            </div>
+            <br><br><br><br>
             
             <div class="move" align="left">
                 <button id="btn1">상세정보</button>
@@ -605,8 +560,7 @@
                 </div>
 
             </div>
-                
-                
+   
         </div>
 
 
@@ -647,20 +601,22 @@
 
 
         <!-- 관련 레시피 -->
-        <div id="recipeAll">
+        <div id="recipeAll" class="clearfix">
+        
             <h1>해당 상품 관련 레시피</h1>
+        
             <div class="recipe" align="left">
                 <div class="recipeImg">
                     <img width="255px" src="https://all-to-delicious.s3.ap-northeast-2.amazonaws.com/atd/a2dcorp.co.kr/earth/recipe/thumbnail/pc/20220123/b9742c9305db4cbcbfee12b8e1699937.jpg">
                 </div>
                 <div class="recipeInfo">
-                    <span class="recipeStyle">난이도 : </span> 
+                	<span class="recipeStyle">난이도 : </span> 
                     <span>누구나</span>
                     <span>&nbsp; | &nbsp;</span>
                     <span class="recipeStyle">소요시간 : </span>
                     <span>15</span>
                     <span>분이내</span>
-                    <h4>간만 잘 맞추면 맛은 보장! 감자양파국</h4>
+                    <h4 width="100%">간만 잘 맞추면 맛은 보장! 감자양파국</h4>
                 </div>
             </div>
             <div class="recipe" align="left">
@@ -705,61 +661,79 @@
                     <h4>간만 잘 맞추면 맛은 보장! 감자양파국</h4>
                 </div>
             </div>
-
         </div>
+        
+     
             
     </div>
+	
 
 
-    <script>
-        const sell_price = document.getElementsByName("sell_price")[0];
-        const add = document.getElementsByName("add")[0];
-        const minus = document.getElementsByName("minus")[0];
-        const amount = document.getElementsByName("amount")[0];
-        const sum = document.getElementsByName("sum")[0];
+		     <script>
+	             function addCart(){ // 장바구니 추가용 ajax
+	          
+	                $.ajax({
+	                   url:"insert.cart",
+	                   data:{
+	                      userId:'${ loginMember.userId }',
+	                      productNo:${ plist[0].productNo },
+	                      quantity:$("#amount").val()
+	                   },
+	                   success:function(result){
+	                      
+	                      if(result == "success"){
+	                         console.log(result);
+	                         
+	                         //모달버튼 눌리게
+	                            $("#modalButton").click();   
+	                         
+	                      }
+	                   
+	                   },
+	                   error:function(){
+	                      console.log("장바구니 추가용 ajax 요청 실패!");
+	                   }
+	                })
+	
+	             }
+	         </script>
 
-        let amountval = parseInt(amount.value);
-        let priceval = parseInt(sell_price.value);
-        sum.value = amountval * priceval;
 
-        // (+) 버튼 클릭 이벤트 처리
-        /*
-        if (add) {
-            add.addEventListener('click', function () {
-                amountval++;
-                sum.value = amountval * priceval; 
-                amount.value = amountval; 
-            });
-        }
-        */
-        
-        // *** 재고수량(stock)에 따른 '+' max값 걸기
-        if (add) {
-	        add.addEventListener('click', function () {
-	            let max = ${ plist[0].stock }; // stock
-	            if (amountval < max) {
-	                amountval++;
-	                sum.value = amountval * priceval;
-	                amount.value = amountval;
-	            }
-	        });
-        }
-     
-     
+	<script>
+	    const add = document.getElementById("add");
+	    const minus = document.getElementById("minus");
+	    const amount = document.getElementById("amount");
+	    const salePrice = document.getElementById("salePrice");
+	
+	    let amountVal = parseInt(amount.value);
+	    let salePriceVal = parseInt(salePrice.innerText.replace(/,/g, '')); // ** salePrice에서 콤마 제거
+	
+	    updateTotalPrice();
+	
+	    // (+)
+	    add.addEventListener('click', function () {
+	        let max = ${ plist[0].stock }; // 해당 상품 재고량
+	        if (amountVal < max) {
+	            amountVal++;
+	            updateTotalPrice();
+	        }
+	    });
+	
+	    // (-)
+	    minus.addEventListener('click', function () {
+	        if (amountVal > 1) {
+	            amountVal--;
+	            updateTotalPrice();
+	        }
+	    });
+	
+	    function updateTotalPrice() {
+	        amount.value = amountVal;
+	        const totalPrice = amountVal * salePriceVal;
+	        sum.innerText = new Intl.NumberFormat('ko-KR').format(totalPrice); // 0,000
+	    }
+	</script>
 
-        // (-) 버튼 클릭 이벤트 처리
-        if (minus) {
-            minus.addEventListener('click', function () {
-                if (amountval > 1) { 
-                    amountval--; 
-                    sum.value = amountval * priceval; 
-                    amount.value = amountval; 
-                } else { 
-                    amountval = 1;
-                }
-            });
-        }
-    </script>
 
 
 
@@ -780,6 +754,13 @@
             window.scrollBy({top: recipeAll.getBoundingClientRect().top, behavior: 'smooth'});
         });
     </script>
-
+    
+    
+    
+    
+    <!-- 푸터 -->
+    <jsp:include page="../common/footer.jsp"/>
+    
+   
 </body>
 </html>

@@ -254,9 +254,6 @@
             <br><br>
 
 
-
-
-
             <div align="center">
                 <button type="submit" class="productEnrollBtn">등록하기</button>
             </div>
@@ -264,6 +261,10 @@
         </form>
     </div>
 		
+	<!-- 푸터 -->
+    <jsp:include page="../common/footer.jsp"/>
+
+
 
 </body>
 </html>
