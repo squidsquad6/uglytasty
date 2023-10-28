@@ -76,12 +76,10 @@
 		<result column="user_id" property="userId" />
 	</resultMap>
 	
-	
-	
-	<!-- 
+
 	<resultMap type="Attachment" id="attachmentResult">
 		<result column="file_no" property="fileNo" />
-		<result column="ref_pno" property="refPno" />
+		<result column="ref_pno" property="refProductNo" />
 		<result column="origin_name" property="originName" />
 		<result column="change_name" property="changeName" />
 		<result column="file_exp" property="fileExp" />
@@ -89,7 +87,9 @@
 		<result column="status" property="status" />
 		<result column="file_level" property="fileLevel" />
 	</resultMap>
-	 -->
+
+
+
 	
 	
 	<select id="selectProductList" resultMap="productResult">
@@ -598,18 +598,53 @@
 	
 	
 	
-	<!-- 전체 삭제됨..
-	<delete id="deleteCartAfterOrder">
-		delete
-		  from cart
-	 	 where product_no = #{productNo}
-	</delete>
-	 -->
+	<select id="selectProduct" resultMap="productResult">
+		select
+				product_no
+			  , product_name
+			  , price
+			  , sale
+			  , explanation
+			  , location
+			  , to_char(production_date, 'YYYY-MM-DD') as "production_date"
+			  , stock
+		  from product
+		 where product_no = #{productNo}
+	</select>
 	 
-	 
+	<select id="selectAttachmentList" resultMap="attachmentResult">
+		select
+		        file_no
+		      , ref_pno
+		      , origin_name
+		      , change_name
+		      , file_exp
+		      , to_char(upload_date, 'YYYY-MM-DD') as "upload_date"
+		      , file_level
+		  from attachment
+		 where ref_pno = #{productNo}
+	</select>
 	
-
-
+	<update id="updateProduct">
+		update product
+		   set  product_name = #{productName}
+              , price = #{price}
+              , sale = #{sale}
+              , explanation = #{explanation}
+              , location = #{location}
+              , production_date = #{productionDate}
+              , stock = #{stock}
+		 where product_no = #{productNo}
+	</update>
+	
+	<update id="updateExistAttachment">
+		update attachment
+		   set  origin_name = #{originName}
+		      , change_name = #{changeName}
+		      , file_exp = #{fileExp}
+		where ref_pno = #{refProductNo}
+		  and file_level = #{fileLevel} 
+	</update>
 
 
 

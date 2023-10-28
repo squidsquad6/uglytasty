@@ -79,6 +79,28 @@ public class ProductDao {
 		return sqlSession.update("productMapper.yesProduct", productNo);
 	}
 	
+	/*상품 수정_ 수정할 상품의 정보1 조회*/
+	public Product selectProduct(SqlSessionTemplate sqlSession, int productNo) {
+		return sqlSession.selectOne("productMapper.selectProduct", productNo);
+	}
+	
+	/*상품 수정_ 수정할 상품의 첨부파일5 조회*/
+	public ArrayList<Attachment> selectAttachmentList(SqlSessionTemplate sqlSession, int productNo) {
+		return (ArrayList)sqlSession.selectList("productMapper.selectAttachmentList", productNo);
+	}
+	
+	/*상품 수정_ 수정할 상품의 정보1 update*/
+	public int updateProduct(SqlSessionTemplate sqlSession, Product p) {
+		return sqlSession.update("productMapper.updateProduct", p);
+	}
+	
+	/*상품 수정_ 수정할 상품의 첨파(기존) update*/
+	public int updateExistAttachment(SqlSessionTemplate sqlSession, Attachment at) {
+		return sqlSession.update("productMapper.updateExistAttachment", at);
+	}
+	
+	
+	
 	
 	/*장바구니 추가*/
 	public int insertCart(SqlSessionTemplate sqlSession, Cart c) {

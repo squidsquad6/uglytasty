@@ -135,35 +135,33 @@ public class ProductServiceImpl implements ProductService {
 		return pDao.yesProduct(sqlSession, productNo);
 	}
 	
+	/*상품 수정_ 수정할 상품의 정보1 조회*/
+	@Override
+	public Product selectProduct(int productNo) {
+		return pDao.selectProduct(sqlSession, productNo);
+	}
 	
+	/*상품 수정_ 수정할 상품의 첨부파일5 조회*/
+	@Override
+	public ArrayList<Attachment> selectAttachmentList(int productNo) {
+		return pDao.selectAttachmentList(sqlSession, productNo);
+	}
+
+	/*상품 수정_ 수정할 상품의 정보1 update*/
 	@Override
 	public int updateProduct(Product p) {
-		return 0;
+		return pDao.updateProduct(sqlSession, p);
 	}
-
+	
 	@Override
-	public ArrayList<Attachment> updateAttachment(int productNo) {
-		return null;
-	}
-
-	@Override
-	public ArrayList<Review> selectReviewList(int productNo) {
-		return null;
-	}
-
-	@Override
-	public int insertReview(Review r) {
-		return 0;
-	}
-
-	@Override
-	public int deleteReview(int ReviewNo) {
-		return 0;
-	}
-
-	@Override
-	public ArrayList<Recipe> selectProRecipeList() {
-		return null;
+	public int updateExistAttachment(ArrayList<Attachment> updateAtList) {
+		int result = 0;
+		
+		for(Attachment at : updateAtList) {
+			result += pDao.updateExistAttachment(sqlSession, at); 
+		}
+		
+		return result;
 	}
 
 	
@@ -321,7 +319,7 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	
-	/*장바구니상품 => 1) 주문코드번호 2:결제완료 업데이트		------------단품꺼 같이써 (updateOrderCode)*/
+	/*장바구니상품 => 1) 주문코드번호 2:결제완료 업데이트			------------단품꺼 같이써 (updateOrderCode)*/
 	/*장바구니상품 => 2) 최종 주문 완료 화면에 줄 배송정보 조회	------------단품꺼 같이써 (selectOrdersDelivery)*/
 
 	/*장바구니상품 => 3)주문상세에서 주문한 상품번호 '조회' 후 장바구니 내역가서 삭제 */
@@ -336,15 +334,6 @@ public class ProductServiceImpl implements ProductService {
 		return pDao.selectUserId(sqlSession, orderNo);
 	}
 
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	/*장바구니상품 => 3)주문상세에서 주문한 상품번호 조회 후 장바구니 내역가서 '삭제' */
 	@Override
 	public int deleteCartAfterOrder(ArrayList<OrdersDetail> delList) {
@@ -359,8 +348,44 @@ public class ProductServiceImpl implements ProductService {
 		return result;
 	}
 
+
+	
+	
+	
+	
+	
+	
+	
+	
 	
 
+	/*후기댓글 관련.....3개*/
+	@Override
+	public ArrayList<Review> selectReviewList(int productNo) {
+		return null;
+	}
+
+	@Override
+	public int insertReview(Review r) {
+		return 0;
+	}
+
+	@Override
+	public int deleteReview(int ReviewNo) {
+		return 0;
+	}
+
+
+
+	
+	
+
+	
+
+
+	
+	
+	
 	
 	
 

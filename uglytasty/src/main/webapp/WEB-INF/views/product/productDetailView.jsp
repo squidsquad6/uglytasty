@@ -6,7 +6,7 @@
 
 <!-- 
     loginMember = 회원정보..
-   	plist = ArrayList<Product> + fileNo + refProductNo + originName + changeName + fileExp + fileLevel
+   	plist = ArrayList<Product> + fileNo + refProductNo + originName + changeName + fileExp + fileLevel / status
  -->
 
 <!DOCTYPE html>
@@ -465,11 +465,12 @@
                 <br clear="both">
          </div>
 
-            <br><br>
+         <br><br>
 
 
          <!-- 관리자만 보이는 버튼 (테스트할때 귀찮으니까 맨 나중에걸라우)-->
          <c:if test="${ loginMember.userId eq 'admin' }">
+         </c:if>
             <div class="adminBtn" align="right">
                 <a id="btnBack" href="list.pro">뒤로가기</a>
                 <a id="btnUpdate" onclick="postFormSubmit(1);">수정하기</a>
@@ -481,7 +482,6 @@
 	                </c:if>
                 <a id="btnDelete" onclick="postFormSubmit(3);">판매종료</a>
             </div>
-         </c:if>
 
             
             <form id="postForm" action="" method="post">

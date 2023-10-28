@@ -40,10 +40,7 @@ public interface ProductService {
 	int insertProduct(Product p, ArrayList<Attachment> alist);
 	int insertAttachment(Attachment at);
 
-	// 상품 수정 서비스
-	int updateProduct(Product p);
-	ArrayList<Attachment> updateAttachment(int productNo);
-
+	
 	// 상품 삭제 서비스
 	// (DB : 둘 다  status=N / spring : 첨파 delete )
 	int deleteProduct(int productNo, ArrayList<String> filepathList);
@@ -54,6 +51,20 @@ public interface ProductService {
 
 	// 상품 재입고 서비스
 	int yesProduct(int productNo);
+	
+	// 상품 수정_ 수정할 상품의 정보1 조회
+	Product selectProduct(int productNo);
+	
+	// 상품 수정_ 수정할 상품의 첨부파일5 조회
+	ArrayList<Attachment> selectAttachmentList(int productNo);
+	
+	// 상품 수정_ 수정할 상품의 정보1 update
+	int updateProduct(Product p);
+	
+	// 상품 수정_ 수정할 상품의 첨파(기존) update
+	int updateExistAttachment(ArrayList<Attachment> updateAtList);
+	
+	
 	
 	
 	// 장바구니 추가용 서비스 (ajax)
@@ -123,12 +134,6 @@ public interface ProductService {
 	// userId 조회
 	String selectUserId(int orderNo);
 	
-	
-	
-	
-	
-	
-	
 	/*장바구니상품 => 3)주문상세에서 주문한 상품번호 조회 후 장바구니 내역가서 '삭제' */
 	int deleteCartAfterOrder(ArrayList<OrdersDetail> delList);
 	
@@ -165,9 +170,6 @@ public interface ProductService {
 	int deleteReview(int ReviewNo);
 
 
-
-	// 레시피 리스트 조회용 서비스
-	ArrayList<Recipe> selectProRecipeList();
 
 	
 	

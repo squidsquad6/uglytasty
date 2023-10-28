@@ -204,7 +204,7 @@ public class ProductController {
    }
 
 
-   /**  현재 넘어온 첨부파일 그 자체를 서버의 폴더에 저장시키는 역할
+   /**  현재 넘어온 첨부파일 그 자체를 서버의 폴더에 저장시키는 역할 **
     * 
     */
    public String saveFile(MultipartFile upfile, HttpSession session) {
@@ -233,6 +233,145 @@ public class ProductController {
       
       return changeName;
    }
+   
+   
+   
+   /**
+	 * 상품 수정하기 (정보1 + 첨부파일5)***************
+	 */
+
+  @RequestMapping("update.pro")
+  public String updateProduct(int productNo, Product p, MultipartFile[] reupfile, Model model, HttpSession session,
+		   					String fileExp1, String fileExp2, String fileExp3, String fileExp4, String fileExp5) {
+	   
+	   
+	   // 1) 정보1 수정
+	   int result1 = pService.updateProduct(p);
+	   
+	   
+	   
+	   // 2) 첨부파일5 수정
+		  
+	   //-------------------------이전 화면에서 넘어온 첨부파일 정보들 (new)----------------------
+		   
+	      for(int i=0; i<reupfile.length; i++) {
+	         System.out.println(reupfile[i]);
+	      }
+	      
+		      
+	      // (준비) 상품 설명이 없을때 null값 들어가지 않도록 하기 위한 작업
+	      ArrayList<String> explist = new ArrayList<String>();
+
+	      if(!fileExp1.equals("")) {
+	         explist.add(fileExp1);
+	      }
+	      if(!fileExp2.equals("")) {
+	         explist.add(fileExp2);            
+	      }
+	      if(!fileExp3.equals("")) {
+	         explist.add(fileExp3);            
+	      }
+	      if(!fileExp4.equals("")) {
+	         explist.add(fileExp4);            
+	      }
+	      if(!fileExp5.equals("")) {
+	         explist.add(fileExp5);            
+	      }
+	      
+	      System.out.println("explist" + explist); 
+	  
+	      
+	      
+	      ArrayList<Attachment> existAtList = pService.selectAttachmentList(productNo);	//db에서 가져온애
+	      ArrayList<Attachment> updateAtList = new ArrayList<Attachment>();
+		
+		  
+		  // 사진x, 설명o
+		  /*
+	      for(int i = 0; i < existAtList.size(); i++) {
+
+	            Attachment newAt = new Attachment();
+	            newAt.setOriginName(existAtList.get(i).getOriginName());
+	            newAt.setChangeName(existAtList.get(i).getChangeName());
+	            newAt.setFileLevel(i + 1);
+	            newAt.setFileExp(explist.get(i));   //new 설명
+	            
+	            newAtList.add(newAt);
+
+	      }
+	      System.out.println("사진x, 설명o / newAtList" + newAtList);
+	      */
+	    	  
+	    	 
+    	  for(int i = 0; i < existAtList.size(); i++) {
+    		  
+    		  if(!reupfile[i].getOriginalFilename().equals("")) {  // 사진o, 설명o | 사진만o, 설명x
+    		  
+    			  // 기존에 첨부파일이 있었을 경우 => 기존의 첨부파일 지우기
+    			  if(existAtList.get(i).getOriginName() != null) {
+    			  	  new File(session.getServletContext().getRealPath(existAtList.get(i).getChangeName())).delete();
+    			  }
+    			  
+	    		  Attachment newAt = new Attachment();
+	    		  
+	    		  String changeName = saveFile(reupfile[i], session);
+	    		  
+	    		  newAt.setRefProductNo(existAtList.get(i).getRefProductNo());
+	    		  newAt.setOriginName(reupfile[i].getOriginalFilename());
+	    		  newAt.setChangeName("resources/uploadFiles/" + changeName);
+	    		  newAt.setFileLevel(i + 1);
+	    		  newAt.setFileExp(explist.get(i));   //new 설명
+	    		  
+	    		  updateAtList.add(newAt);
+	    		  
+    		  }else { // 사진x, 설명o
+    			  Attachment newAt = new Attachment();
+    			
+	  	          newAt.setRefProductNo(existAtList.get(i).getRefProductNo());
+	  	          newAt.setOriginName(existAtList.get(i).getOriginName());
+	  	          newAt.setChangeName(existAtList.get(i).getChangeName());
+	  	          newAt.setFileLevel(i + 1);
+	  	          newAt.setFileExp(explist.get(i));   //new 설명
+	  	            
+	  	          updateAtList.add(newAt);
+    		  }
+    	  }
+    	  
+    	  System.out.println("updateAtList : " + updateAtList);
+    	  
+    	  // 상품 수정_ 수정할 상품의 첨파(기존) update
+    	  int result2 = pService.updateExistAttachment(updateAtList);
+	   
+	   
+    	
+		  
+		 
+			  
+			  
+		int result = result1 * result2;  
+			  
+		if(result > 0) {
+		     session.setAttribute("alertMsg", "성공적으로 상품이 수정되었습니다.");
+		     return "redirect:list.pro";
+	    }else {
+		     model.addAttribute("errorMsg", "상품 수정 실패!");
+		     return "common/errorPage";
+	    }
+	   
+	   
+	   
+  } 
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
    
    
    /** 상품 삭제 (정보:N + 첨부파일:delete)
@@ -334,6 +473,26 @@ public class ProductController {
 	   }
 	   
    }
+   
+   
+   /** 상품 수정 (정보1 + 첨부파일5) ---- 수정 form 에 띄워 줄 내용들 조회
+	 *
+	 */
+   @RequestMapping("updateForm.pro")
+   public String updateProductForm(int productNo, Model model) {
+	   
+	   // 정보1
+	   Product p = pService.selectProduct(productNo);
+	   model.addAttribute("p", p);
+	   
+	   // 첨부파일5
+	   ArrayList<Attachment> alist = pService.selectAttachmentList(productNo);
+	   model.addAttribute("alist", alist);
+	   
+	   return "product/productUpdateForm";
+   }
+   
+   
    
    
    /** 장바구니 추가
