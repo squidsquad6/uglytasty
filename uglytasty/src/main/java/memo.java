@@ -123,11 +123,12 @@ public class memo {
 	/** 상품등록 (정보1 + 첨부파일5)
 	    * 
 	    */
+	/*
 	   @RequestMapping(value="insert.pro")
 	   public String insertProduct(Product p, Attachment at, MultipartFile[] upfile, Model model, HttpSession session, 
 	                        String fileExp1, String fileExp2, String fileExp3, String fileExp4, String fileExp5) { 
 	      
-		   /*공부용*/
+		  // 공부용
 	      for(int i=0; i<upfile.length; i++) {
 	         System.out.println(upfile[i]);
 	      }
@@ -192,7 +193,7 @@ public class memo {
 	      
 	   }
 	
-	
+	*/
 	
 	
 	

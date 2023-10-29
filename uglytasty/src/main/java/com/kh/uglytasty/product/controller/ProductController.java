@@ -252,7 +252,7 @@ public class ProductController {
 	   
 	   // 2) 첨부파일5 수정 (1:update, 2:insert)
 		  
-		  /**/
+		  //공부용
 	      for(int i=0; i<reupfile.length; i++) {
 	         System.out.println(reupfile[i]);
 	      }
@@ -284,10 +284,9 @@ public class ProductController {
 	      ArrayList<Attachment> updateAtList = new ArrayList<Attachment>();
 	      ArrayList<Attachment> insertAtList = new ArrayList<Attachment>();
 	
+	      // 2_1) 상품 수정_ 수정할 상품의 첨파(기존) update -------------------------------------------------------------
 	      
-	      // 2_1) 상품 수정_ 수정할 상품의 첨파(기존) update -----------------------------
-	      
-	      for (int i = 0; i < Math.min(existAtList.size(), reupfile.length); i++) {
+	      for (int i = 0; i < existAtList.size(); i++) {
 	    	    if (!reupfile[i].getOriginalFilename().equals("")) {
 	    	    	// 사진o, 설명o | 사진만o, 설명x
 	    	        Attachment newAt = new Attachment();
@@ -310,17 +309,61 @@ public class ProductController {
 	    	    }
 	    	}
 
-    	  
-    	  System.out.println("updateAtList : " + updateAtList);
-    	  
+    	  //System.out.println("updateAtList : " + updateAtList);
     	  int result2 = pService.updateExistAttachment(updateAtList);
 	   
     	  
+    	  // 2_2) 상품 수정_ 수정할 상품의 첨파(새로운) insert -----------------------------------------------------------
+    	  System.out.println("existAtList.size() : " + existAtList.size());
+    	  System.out.println("도대체 너 뭔데 (reupfile.length) : " + reupfile.length);
     	  
-    	  // 2_2) 상품 수정_ 수정할 상품의 첨파(새로운) insert -----------------------------
-    	
-    	  for (int i = existAtList.size(); i < reupfile.length; i++) {
-    		    if (reupfile[i] != null) {
+    	  
+    	  // ***번뜩!!*** 새로운 첨파 객체 reupfile들 중 마지막 객체의 fileLevel숫자 필요해ㅜㅜㅜㅜ
+    	  ArrayList<Attachment> fileLevelList = new ArrayList<Attachment>();
+    	  
+    	    for(int i = 0; i < reupfile.length; i++) {
+    	           
+    	         if(reupfile[i].getSize() != 0) {
+    	         
+    	            Attachment newAt = new Attachment();
+    	            newAt.setFileLevel(i + 1); // fileLevel 1,2,3,4,5
+    	            fileLevelList.add(newAt);
+
+    	         }
+    	         
+    	     }
+    	  System.out.println("fileLevelList(파일번호만 담은 리스트) : " + fileLevelList);
+
+    	  
+    	  for(int i = 0; i < reupfile.length; i++) {
+	           
+ 	         if(reupfile[i].getSize() != 0) { // 새로운 파일이 넘어왔다는 신호 (그대신 넘어온 파일이 '기존꺼=>수정' 이라면 제외시키고, '새로운첨파=>추가' 인 시작값을 인식해야 함!!)
+ 	        	 
+ 	        	 int lastObjectIndex = fileLevelList.size() - 1;								// fileLevelList에 담긴 객체중 가장 마지막 객체의 인덱스 수
+ 	        	 int lastObjectFileLevel = fileLevelList.get(lastObjectIndex).getFileLevel();  	// 그 객체의 fileLevel 수
+ 	        	 System.out.println("lastObjectFileLevel(리스트 중 마지막 객체의 fileLevel): " + lastObjectFileLevel);
+ 	         
+ 	        	 for (int j = existAtList.size(); j < lastObjectFileLevel; j++) { // 예) 2 ~ 2,3,4 == 시작값 : existAtList.size() ~ lastObjectFileLevel
+ 	    		    //if (reupfile[j] != null) { } // 새로운 파일이 생겼다는 신호
+ 	    		        String changeName = saveFile(reupfile[j], session);
+ 	    		        Attachment insertAt = new Attachment();
+ 	    		        insertAt.setRefProductNo(productNo);
+ 	    		        insertAt.setOriginName(reupfile[j].getOriginalFilename());
+ 	    		        insertAt.setChangeName("resources/uploadFiles/" + changeName);
+ 	    		        insertAt.setFileLevel(j + 1);
+ 	    		        insertAt.setFileExp(explist.get(j));
+ 	    		        insertAtList.add(insertAt);
+ 	    		 }
+
+ 	         }
+ 	         
+ 	     }
+    	  
+    	  
+    	  
+    	  /*
+    	  for (int i = existAtList.size(); i < lastObjectFileLevel; i++) { // 예) 2 ~ 2,3,4
+    		    if (reupfile[i] != null) { // 새로운 파일이 생겼다는 신호
     		        String changeName = saveFile(reupfile[i], session);
     		        Attachment insertAt = new Attachment();
     		        insertAt.setRefProductNo(productNo);
@@ -331,15 +374,17 @@ public class ProductController {
     		        insertAtList.add(insertAt);
     		    }
     		}
-    	
+    	   */
     	  
- 	      System.out.println("제발 insertAtList : " + insertAtList);
-    	  
- 	      int result3 = pService.insertAddAttachment(insertAtList);
+ 	    System.out.println("insertAtList(새로 넣을 첨파) : " + insertAtList);
+ 	    int result3 = pService.insertAddAttachment(insertAtList);
 		 
 		//-------------------------------------마무리--------------------------------------	  
-			  
-		int result = result1 * result2;  
+		// result1 = 상품 정보
+ 	    // result2 = 첨부파일 기존 update
+ 	    // result3 = 첨부파일 새로운 insert
+ 	    
+		int result = result1 + result2 + result3;
 			  
 		if(result > 0) {
 		     session.setAttribute("alertMsg", "성공적으로 상품이 수정되었습니다.");
