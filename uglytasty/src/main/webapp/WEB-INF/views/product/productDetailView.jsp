@@ -608,7 +608,7 @@
                         <div class="order_btn">
                             <div style="text-align: center;">
                             	<c:if test="${ plist[0].status eq 'Y' }">
-	                                <button class="cart" type="button" id="cartButton" onclick="addCart();">장바구니</button>
+	                                <button class="cart" type="button" id="cartButton" onclick="addCartDuplication();">장바구니</button>
 	                                <button class="order" type="submit">주문하기</button>
 				                </c:if>
                             	<c:if test="${ plist[0].status eq 'R' }">
@@ -900,35 +900,64 @@
     </div>
 	
 
+	     <script>
+	     	function addCartDuplication() { // 장바구니 중복 체크
+	     		
+	     		$.ajax({
+	     			url:"duplication.cart",
+	     			data:{
+	     				userId:'${loginMember.userId}',
+	     				productNo:${ plist[0].productNo }
+	     			},
+	     			success:function(result){
+	     					
+     				    if(result == "cartO"){
+                            console.log(result);
+							
+                            alert("이미 장바구니에 담긴 상품입니다. 장바구니에서 확인 부탁드립니다.");
+                           
+                        }else {	// "cartX"
+                            console.log(result);
+                        
+                            // *** (검증 완료) 장바구니 추가하는 함수 호출!!
+                        	addCart();
+                        }
+	     				
+	     			},
+	     			error:function(){
+	     				 console.log("장바구니 상품 중복 검사 ajax 요청 실패!");
+	     			}
+	     		})
+	     		
+	     	}
+	     
+             function addCart(){ // 장바구니 추가용 ajax
+          
+                $.ajax({
+                   url:"insert.cart",
+                   data:{
+                      userId:'${ loginMember.userId }',
+                      productNo:${ plist[0].productNo },
+                      quantity:$("#amount").val()
+                   },
+                   success:function(result){
+                      
+                      if(result == "success"){
+                         console.log(result);
+                         
+                         //모달버튼 눌리게
+                         $("#modalButton").click();   
+                         
+                      }
+                   
+                   },
+                   error:function(){
+                      console.log("장바구니 추가용 ajax 요청 실패!");
+                   }
+                })
 
-		     <script>
-	             function addCart(){ // 장바구니 추가용 ajax
-	          
-	                $.ajax({
-	                   url:"insert.cart",
-	                   data:{
-	                      userId:'${ loginMember.userId }',
-	                      productNo:${ plist[0].productNo },
-	                      quantity:$("#amount").val()
-	                   },
-	                   success:function(result){
-	                      
-	                      if(result == "success"){
-	                         console.log(result);
-	                         
-	                         //모달버튼 눌리게
-	                            $("#modalButton").click();   
-	                         
-	                      }
-	                   
-	                   },
-	                   error:function(){
-	                      console.log("장바구니 추가용 ajax 요청 실패!");
-	                   }
-	                })
-	
-	             }
-	         </script>
+             }
+         </script>
 
 
 	<script>

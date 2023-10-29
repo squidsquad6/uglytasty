@@ -389,6 +389,15 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	
+	
+	
+	/*장바구니 상품 중복 검사*/
+	@Override
+	public int selectAddCartDuplication(Cart c) {
+		return pDao.selectAddCartDuplication(sqlSession, c);
+	}
+
+	
 
 
 	

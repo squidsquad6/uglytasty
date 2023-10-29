@@ -156,7 +156,10 @@ public interface ProductService {
 	// 후기댓글 삭제용 서비스 (ajax)
 	int deleteReview(Review r);
 
-
+	
+	
+	// 장바구니 상품 중복 검사 (ajax)
+	int selectAddCartDuplication(Cart c);
 
 	
 	

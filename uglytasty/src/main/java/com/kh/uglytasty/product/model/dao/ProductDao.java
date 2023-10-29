@@ -235,18 +235,26 @@ public class ProductDao {
 	
 	//-------------------------------댓글(후기review)-------------------------------
 	
+	/*후기댓글 리스트 조회*/
 	public ArrayList<Review> selectReviewList(SqlSessionTemplate sqlSession, int productNo) {
 		return (ArrayList)sqlSession.selectList("productMapper.selectReviewList", productNo);
 	}
 	
+	/*후기댓글 작성*/
 	public int insertReview(SqlSessionTemplate sqlSession, Review r) {
 		return sqlSession.insert("productMapper.insertReview", r);
 	}
 	
+	/*후기댓글 삭제*/
 	public int deleteReview(SqlSessionTemplate sqlSession, Review r) {
 		return sqlSession.update("productMapper.deleteReview", r);
 	}
 	
+	
+	/*장바구니 상품 중복 검사*/
+	public int selectAddCartDuplication(SqlSessionTemplate sqlSession, Cart c) {
+		return sqlSession.selectOne("productMapper.selectAddCartDuplication", c);
+	}
 	
 	
 	

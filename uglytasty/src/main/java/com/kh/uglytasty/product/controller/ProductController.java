@@ -925,13 +925,26 @@ public class ProductController {
 	@ResponseBody
 	@RequestMapping(value="rdelete.pro")
 	public String ajaxDeleteReview(Review r) {
-		System.out.println("r(삭제) : " + r);
+		//System.out.println("r(삭제) : " + r);
 		int result = pService.deleteReview(r);
 		return result>0 ? "success" : "fail";
 	}
-	                                          
-   
-   
+	 
+	
+	
+	
+	
+   /** 장바구니 상품 중복 검사 (ajax)
+	 *
+	 */
+	@ResponseBody
+   @RequestMapping("duplication.cart")
+   public String selectAddCartDuplication(Cart c) {
+	   int result = pService.selectAddCartDuplication(c);
+	   System.out.println("장바구니 상품 중복 검사 result : " + result);
+
+	   return result>0 ? "cartO" : "cartX";
+   }
    
    
 }

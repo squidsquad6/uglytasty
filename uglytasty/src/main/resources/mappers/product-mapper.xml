@@ -717,6 +717,12 @@
 		   and review_no = #{reviewNo}
 	</update>
 
-
+	<select id="selectAddCartDuplication" resultType="_int">
+		select
+		       count(*)
+		  from cart
+		 where user_id = #{userId}
+           and product_no = #{productNo}
+	</select>
 
 </mapper>
