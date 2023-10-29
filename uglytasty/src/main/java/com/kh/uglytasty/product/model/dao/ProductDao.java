@@ -11,6 +11,7 @@ import com.kh.uglytasty.order.model.vo.Orders;
 import com.kh.uglytasty.order.model.vo.OrdersDetail;
 import com.kh.uglytasty.product.model.vo.Attachment;
 import com.kh.uglytasty.product.model.vo.Product;
+import com.kh.uglytasty.product.model.vo.Review;
 
 @Repository
 public class ProductDao {
@@ -225,17 +226,27 @@ public class ProductDao {
 		return sqlSession.selectOne("productMapper.selectUserId", orderNo);
 	}
 	
-	
-	
-	
-	
-	
-	
-	
 	/*장바구니상품 => 3)주문상세에서 주문한 상품번호 조회 후 장바구니 내역가서 '삭제' - 객체 여러번 반복 */
 	public int deleteCartAfterOrder(SqlSessionTemplate sqlSession, OrdersDetail newOD) {
 		return sqlSession.delete("productMapper.deleteCartAfterOrder", newOD);
 	}
+	
+	
+	
+	//-------------------------------댓글(후기review)-------------------------------
+	
+	public ArrayList<Review> selectReviewList(SqlSessionTemplate sqlSession, int productNo) {
+		return (ArrayList)sqlSession.selectList("productMapper.selectReviewList", productNo);
+	}
+	
+	public int insertReview(SqlSessionTemplate sqlSession, Review r) {
+		return sqlSession.insert("productMapper.insertReview", r);
+	}
+	
+	public int deleteReview(SqlSessionTemplate sqlSession, Review r) {
+		return sqlSession.update("productMapper.deleteReview", r);
+	}
+	
 	
 	
 	

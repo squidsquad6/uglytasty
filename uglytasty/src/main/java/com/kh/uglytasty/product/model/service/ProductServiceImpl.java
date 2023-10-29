@@ -368,23 +368,24 @@ public class ProductServiceImpl implements ProductService {
 	
 	
 	
-	
-	
+	//-------------------------------댓글(후기review)-------------------------------
 
-	/*후기댓글 관련.....3개*/
+	/*댓글 전체 조회*/
 	@Override
 	public ArrayList<Review> selectReviewList(int productNo) {
-		return null;
+		return pDao.selectReviewList(sqlSession, productNo);
 	}
 
+	/*댓글 등록*/
 	@Override
 	public int insertReview(Review r) {
-		return 0;
+		return pDao.insertReview(sqlSession, r);
 	}
 
+	/*댓글 삭제*/
 	@Override
-	public int deleteReview(int ReviewNo) {
-		return 0;
+	public int deleteReview(Review r) {
+		return pDao.deleteReview(sqlSession, r);
 	}
 
 	

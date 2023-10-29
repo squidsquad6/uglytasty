@@ -145,25 +145,7 @@ public interface ProductService {
 	
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	//-------------------------------댓글(후기review)-------------------------------
 	
 	// 후기댓글 리스트 조회용 서비스 (ajax)
 	ArrayList<Review> selectReviewList(int productNo);
@@ -172,7 +154,7 @@ public interface ProductService {
 	int insertReview(Review r);
 
 	// 후기댓글 삭제용 서비스 (ajax)
-	int deleteReview(int ReviewNo);
+	int deleteReview(Review r);
 
 
 

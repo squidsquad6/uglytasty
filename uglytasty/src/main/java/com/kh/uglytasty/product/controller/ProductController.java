@@ -25,6 +25,7 @@ import com.kh.uglytasty.order.model.vo.OrdersDetail;
 import com.kh.uglytasty.product.model.service.ProductServiceImpl;
 import com.kh.uglytasty.product.model.vo.Attachment;
 import com.kh.uglytasty.product.model.vo.Product;
+import com.kh.uglytasty.product.model.vo.Review;
 
 /**
  * @author wow59
@@ -245,7 +246,7 @@ public class ProductController {
 		   					String fileExp1, String fileExp2, String fileExp3, String fileExp4, String fileExp5) {
 	   
 	   
-	   // 1) 정보1 수정------------------------------------------------------
+	   // 1) 정보1 수정-------------------------------------------------------------------------------------
 	   int result1 = pService.updateProduct(p);
 	   
 	   
@@ -314,8 +315,8 @@ public class ProductController {
 	   
     	  
     	  // 2_2) 상품 수정_ 수정할 상품의 첨파(새로운) insert -----------------------------------------------------------
-    	  System.out.println("existAtList.size() : " + existAtList.size());
-    	  System.out.println("도대체 너 뭔데 (reupfile.length) : " + reupfile.length);
+    	  //System.out.println("existAtList.size() : " + existAtList.size());
+    	  //System.out.println("도대체 너 뭔데 (reupfile.length) : " + reupfile.length);
     	  
     	  
     	  // ***번뜩!!*** 새로운 첨파 객체 reupfile들 중 마지막 객체의 fileLevel숫자 필요해ㅜㅜㅜㅜ
@@ -332,7 +333,7 @@ public class ProductController {
     	         }
     	         
     	     }
-    	  System.out.println("fileLevelList(파일번호만 담은 리스트) : " + fileLevelList);
+    	  //System.out.println("fileLevelList(파일번호만 담은 리스트) : " + fileLevelList);
 
     	  
     	  for(int i = 0; i < reupfile.length; i++) {
@@ -341,10 +342,10 @@ public class ProductController {
  	        	 
  	        	 int lastObjectIndex = fileLevelList.size() - 1;								// fileLevelList에 담긴 객체중 가장 마지막 객체의 인덱스 수
  	        	 int lastObjectFileLevel = fileLevelList.get(lastObjectIndex).getFileLevel();  	// 그 객체의 fileLevel 수
- 	        	 System.out.println("lastObjectFileLevel(리스트 중 마지막 객체의 fileLevel): " + lastObjectFileLevel);
+ 	        	 //System.out.println("lastObjectFileLevel(리스트 중 마지막 객체의 fileLevel): " + lastObjectFileLevel);
  	         
  	        	 for (int j = existAtList.size(); j < lastObjectFileLevel; j++) { // 예) 2 ~ 2,3,4 == 시작값 : existAtList.size() ~ lastObjectFileLevel
- 	    		    //if (reupfile[j] != null) { } // 새로운 파일이 생겼다는 신호
+ 	    		   
  	    		        String changeName = saveFile(reupfile[j], session);
  	    		        Attachment insertAt = new Attachment();
  	    		        insertAt.setRefProductNo(productNo);
@@ -359,24 +360,8 @@ public class ProductController {
  	         
  	     }
     	  
-    	  
-    	  
-    	  /*
-    	  for (int i = existAtList.size(); i < lastObjectFileLevel; i++) { // 예) 2 ~ 2,3,4
-    		    if (reupfile[i] != null) { // 새로운 파일이 생겼다는 신호
-    		        String changeName = saveFile(reupfile[i], session);
-    		        Attachment insertAt = new Attachment();
-    		        insertAt.setRefProductNo(productNo);
-    		        insertAt.setOriginName(reupfile[i].getOriginalFilename());
-    		        insertAt.setChangeName("resources/uploadFiles/" + changeName);
-    		        insertAt.setFileLevel(i + 1);
-    		        insertAt.setFileExp(explist.get(i));
-    		        insertAtList.add(insertAt);
-    		    }
-    		}
-    	   */
-    	  
- 	    System.out.println("insertAtList(새로 넣을 첨파) : " + insertAtList);
+
+ 	    //System.out.println("insertAtList(새로 넣을 첨파) : " + insertAtList);
  	    int result3 = pService.insertAddAttachment(insertAtList);
 		 
 		//-------------------------------------마무리--------------------------------------	  
@@ -911,11 +896,40 @@ public class ProductController {
    
    
    
+	//-------------------------------댓글(후기review)-------------------------------
 	
+	/** 댓글 리스트 전체 조회 (ajax)
+	 *
+	 */
+	@ResponseBody
+	@RequestMapping(value="rlist.pro", produces="application/json; charset=utf-8")
+	public String ajaxSelectReviewList(int productNo) {
+		ArrayList<Review> rlist = pService.selectReviewList(productNo);
+		return new Gson().toJson(rlist);
+	}
    
+	/** 댓글 작성 (ajax)
+	 *
+	 */
+	@ResponseBody
+	@RequestMapping(value="rinsert.pro")
+	public String ajaxInsertReview(Review r) {
+		//System.out.println("r(등록) : " + r);
+		int result = pService.insertReview(r);
+		return result>0 ? "success" : "fail";
+	}
 	
-	
-	
+	/** 댓글 삭제 (ajax)
+	 * 
+	 */
+	@ResponseBody
+	@RequestMapping(value="rdelete.pro")
+	public String ajaxDeleteReview(Review r) {
+		System.out.println("r(삭제) : " + r);
+		int result = pService.deleteReview(r);
+		return result>0 ? "success" : "fail";
+	}
+	                                          
    
    
    

@@ -7,6 +7,8 @@
 <!-- 
     loginMember = 회원정보..
    	plist = ArrayList<Product> + fileNo + refProductNo + originName + changeName + fileExp + fileLevel / status
+ 
+ 	rlist = (댓글리스트) reviewNo, refProductNo, userId, content, reviewDate
  -->
 
 <!DOCTYPE html>
@@ -17,9 +19,9 @@
 
 <!-- 부트스트랩에서 제공하고 있는 스타일 -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-<!-- 부트스트랩에서 제공하고 있는 스크립트 -->
+<!-- 부트스트랩에서 제공하고 있는 스크립트 
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
+-->
 
 
 <style>
@@ -334,8 +336,26 @@
         cursor: pointer;
     }
     .review .review_btn:hover {
-        background-color: lightgray;
+        background-color: #ff6741;
         color:white;
+    }
+    .rUpdate {
+		border: none;
+		width: 32px;
+		height: 32px;
+		font-size: 12px;
+		border-radius: 5px;   
+		color: white;
+		background-color: darkorange;
+    }
+    .rDelete {
+		border: none;
+		width: 32px;
+		height: 32px;
+		font-size: 12px;
+		border-radius: 5px;
+		color: white;   
+		background-color: red;
     }
     
 
@@ -671,42 +691,148 @@
 
 
         
-        <!-- 댓글 기능은 나중에 ajax 배우고 접목시킬예정! 우선은 화면구현만 해놓음 -->
         <div class="review">
             <h1 id="reviewArea">상품 후기</h1>
-            <table class="table" align="center" width="80%" style="padding-left: 20px;">
+            
+        	<!-- 댓글 기능은 나중에 ajax 배우고 접목시킬예정! 우선은 화면구현만 해놓음 -->
+            <table id="reviewArea" class="table" align="center" width="80%" style="padding-left: 20px;">
                 <thead>
                     <tr>
                         <th colspan="2">
-                            <textarea class="review_content" name="" id="content" cols="90" rows="2" style="resize:none; width:100%"></textarea>
+                            <textarea class="review_content" name="" id="content" cols="90" rows="2" style="resize:none; width:117%"></textarea>
                         </th>
                         <th style="vertical-align: middle">
-                            <button class="review_btn">등록하기</button>
+                            <button class="review_btn" style="margin-left: 120px;" onclick="addReview();">등록하기</button>
                         </th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <th>user02</th>
-                        <td>잘받았습니다! 너무 맛있어요</td>
-                        <td align="center">2023-03-03</td>
-                    </tr>
-                    <tr>
-                        <th>user01</th>
-                        <td>막상 받아보니까 하나도 못생기지 않았어요ㅎㅎ</td>
-                        <td align="center">2023-01-08</td>
-                    </tr>
-                    <tr>
-                        <th>admin</th>
-                        <td>못생기면 어떻누~ 맛만 좋고만~ㅋㅋㅋ</td>
-                        <td align="center">2022-12-02</td>
-                    </tr>
+                
+                	<!-- 여기로 댓글 리스트 꽂힘 -->
+                     
                 </tbody>
             </table>
         </div>
 
+		<script>
+		
+			$(function(){
+				selectReviewList();
+			})
+			
+			
+			// 댓글 리스트 조회 ajax
+			function selectReviewList() {  
+				$.ajax({
+					url:"rlist.pro",
+					data:{
+						productNo: ${ plist[0].productNo }
+					},
+					success:function(rlist){
+						
+						console.log(rlist);
+						
+						let value = "";
+						for(let i in rlist) {
+							value += "<tr>"
+									+ "<td>" + rlist[i].userId + "</td>"
+									+ "<th>" + rlist[i].content + "</th>"
+									+ "<td width='100px;'>" + rlist[i].reviewDate + "</td>";
+									
+									if ('${loginMember.userId}' == 'admin' || '${loginMember.userId}' == rlist[i].userId) {
+							    value += "<td><button class='rUpdate' onclick='upReview(" + rlist[i].reviewNo + ");'>✂</button></td>";
+							    value += "<td><button class='rDelete' onclick='delReview(" + rlist[i].reviewNo + ");'>✖</button></td>";
+							}
+							value += "</tr>";
+						}
+						$("#reviewArea tbody").html(value);
+					},
+					error:function(){
+						console.log("댓글 리스트 조회용 ajax 통신 실패!");
+					}
+					
+				})
+			}
+			
+			// 댓글 등록 ajax
+			function addReview(){
+				if($("#content").val().trim().length != 0) { // 공백 없는 유효한 댓글만 등록 가능
+					
+					$.ajax({
+						url: "rinsert.pro",
+						data: {
+							refProductNo:${ plist[0].productNo },	// int형 뽑을때 {java el구문}
+							userId:'${loginMember.userId}',			// String형 뽑을때 {java el구문} 
+							content:$("#content").val(),			// jQuery 뽑을때 ()
+						},
+						success: function(status){
+							if(status == "success"){
+								console.log(status);
+								
+								selectReviewList();		// 댓글 리스트 재!!조회
+								$("#content").val("");	// 등록 후 다시 비우기
+							}
+						},
+						error: function(){
+							console.log("댓글 작성용 ajax 요청 실패!")
+						}
+					})
+					
+				}else {
+					alertify.alert("댓글 작성 후 등록해주세요! (공백 불가)");
+				}
+			}
+			
+			// 댓글 삭제 ajax
+			function delReview(reviewNo) {
+				$.ajax({
+					url: "rdelete.pro",
+					data:{
+						reviewNo:reviewNo,
+						refProductNo:${ plist[0].productNo }
+					},
+					success:function(status){
+						console.log(status);
+						
+						selectReviewList();		// 댓글 리스트 재!!조회
+					},
+					error:function(){
+						console.log("댓글 삭제용 ajax 요청 실패!");
+					}
+				})
+			}
+			
+			// 댓글 수정 ajax
+			/*
+			function upReview(reviewNo) {
+				$.ajax({
+					url: "rupdate.pro",
+					data: {
+						reviewNo: reviewNo,
+						refProdutNo:${ plist[0].productNo },
+						content:$("#content").val()
+					},
+					success: function(){
+						
+					},
+					error: function(){
+						
+					}
+				})
+			}
+			*/
+			
+			
 
-        <!-- 관련 레시피 -->
+			
+		</script>
+	
+
+
+
+
+
+        <!------------------------------ 관련 레시피 ----------------------------->
         <div id="recipeAll" class="clearfix">
         
             <h1>해당 상품 관련 레시피</h1>

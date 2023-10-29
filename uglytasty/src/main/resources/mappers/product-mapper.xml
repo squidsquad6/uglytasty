@@ -87,6 +87,16 @@
 		<result column="status" property="status" />
 		<result column="file_level" property="fileLevel" />
 	</resultMap>
+	
+	
+	<resultMap type="Review" id="reviewResult">
+		<result column="review_no" property="reviewNo" />
+		<result column="ref_pno" property="refProductNo" />
+		<result column="user_id" property="userId" />
+		<result column="content" property="content" />
+		<result column="review_date" property="reviewDate" />
+		<result column="status" property="status" />
+	</resultMap>
 
 
 
@@ -667,6 +677,45 @@
 		  , #{fileLevel}
 		  )
 	</insert>
+	
+	<select id="selectReviewList" resultMap="reviewResult">
+		select 
+				review_no
+			  , ref_pno
+			  , user_id
+			  , content
+			  , to_char(review_date, 'YYYY-MM-DD') as "review_date"
+		  from review
+		 where ref_pno = #{productNo}
+		   and status = 'Y'
+		 order
+		    by review_date desc
+	</select>
+	
+	<insert id="insertReview">
+		insert
+		  into review
+		  (
+		    review_no
+		  , ref_pno
+		  , user_id
+		  , content
+		  )
+		  values
+		  (
+		    seq_review_no.nextval
+		  , #{refProductNo}
+		  , #{userId}
+		  , #{content}
+		  )
+	</insert>
+	
+	<update id="deleteReview">
+		update review
+		   set status = 'N'
+		 where ref_pno = #{refProductNo}
+		   and review_no = #{reviewNo}
+	</update>
 
 
 
