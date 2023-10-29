@@ -64,6 +64,11 @@ public interface ProductService {
 	// 상품 수정_ 수정할 상품의 첨파(기존) update
 	int updateExistAttachment(ArrayList<Attachment> updateAtList);
 	
+	// 상품 수정_ 수정할 상품의 첨파(새로운) insert
+	int insertAddAttachment(ArrayList<Attachment> insertAtList);
+	
+	
+	
 	
 	
 	

@@ -211,10 +211,6 @@
 					            <div>
 					                현재 업로드된 파일 : 
 					                <a href="${alist[num-1].changeName}" download="${alist[num-1].originName}">${alist[num-1].originName}</a>
-					                <!-- 필요없는듯..
-					                <input type="hidden" name="originName${num}" value="${alist[num-1].originName}">
-					                <input type="hidden" name="changeName${num}" value="${alist[num-1].changeName}">
-					            	 -->
 					            </div>
 				            </c:if>
 				        </td>

@@ -2,6 +2,7 @@ package com.kh.uglytasty.product.model.dao;
 
 import java.util.ArrayList;
 
+import org.apache.ibatis.session.SqlSession;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -99,6 +100,10 @@ public class ProductDao {
 		return sqlSession.update("productMapper.updateExistAttachment", at);
 	}
 	
+	/*상품 수정_ 수정할 상품의 첨파(새로운) insert*/
+	public int insertAddAttachment(SqlSessionTemplate sqlSession, Attachment at) {
+		return sqlSession.insert("productMapper.insertAddAttachment", at);
+	}
 	
 	
 	

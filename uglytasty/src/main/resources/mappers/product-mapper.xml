@@ -645,6 +645,28 @@
 		where ref_pno = #{refProductNo}
 		  and file_level = #{fileLevel} 
 	</update>
+	
+	<insert id="insertAddAttachment">
+		insert
+		  into Attachment
+		  (
+		    file_no
+		  , ref_pno
+		  , origin_name
+		  , change_name
+		  , file_exp
+		  , file_level
+		  )
+		  values
+		  (
+		    seq_attachment_no.nextval
+		  , #{refProductNo}
+		  , #{originName}
+		  , #{changeName}
+		  , #{fileExp}
+		  , #{fileLevel}
+		  )
+	</insert>
 
 
 

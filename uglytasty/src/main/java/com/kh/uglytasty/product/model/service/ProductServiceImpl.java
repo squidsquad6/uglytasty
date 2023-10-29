@@ -153,6 +153,7 @@ public class ProductServiceImpl implements ProductService {
 		return pDao.updateProduct(sqlSession, p);
 	}
 	
+	/*상품 수정_ 수정할 상품의 첨파(기존) update*/
 	@Override
 	public int updateExistAttachment(ArrayList<Attachment> updateAtList) {
 		int result = 0;
@@ -164,7 +165,18 @@ public class ProductServiceImpl implements ProductService {
 		return result;
 	}
 
-	
+	/*상품 수정_ 수정할 상품의 첨파(새로운) insert*/
+	@Override
+	public int insertAddAttachment(ArrayList<Attachment> insertAtList) {
+		int result = 0;
+		
+		for(Attachment at : insertAtList) {
+			result += pDao.insertAddAttachment(sqlSession, at);
+		}
+		
+		return result;
+	}
+
 	
 	
 	/*장바구니 상품 추가*/
@@ -375,6 +387,7 @@ public class ProductServiceImpl implements ProductService {
 		return 0;
 	}
 
+	
 
 
 	
