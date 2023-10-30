@@ -112,7 +112,7 @@
                 <td><input id="status${loop.index }" class="input" type="text" style="border:none" value="${b.status }"></td>
                 <td><input id="count${loop.index }" class="input" type="text" style="border:none" value="${b.count }"></td>
                 <td><input id="enrollDate${loop.index }" class="input" type="text" style="border:none" value="${b.enrollDate}"></td>
-                <td><button class="button is-success is-hovered is-small is-light"  onclick="updateProduct(${loop.index })">수정</button></td>
+                <td><button class="button is-success is-hovered is-small is-light"  onclick="updateProduct(${loop.index }); return false;">수정</button></td>
     
             </tr>
           </c:forEach>
@@ -223,6 +223,8 @@
 		        console.log('실패');
 		      }
 		    });
+		    
+		    return false;
 		}
 		</script>
 

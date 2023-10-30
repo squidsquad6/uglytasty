@@ -212,5 +212,18 @@
 
     </div>
 
+	<script>
+	  document.getElementById("qa_btn").addEventListener("click", function () {
+	    // Redirect to the 1:1 문의 (qa) page
+	    window.location.href = "list.qa";
+	  });
+	
+	  document.getElementById("notice_btn").addEventListener("click", function () {
+	    // Redirect to the 공지사항 (notice) page
+	    window.location.href = "list.no";
+	  });
+	</script>
+
+
 </body>
 </html>
