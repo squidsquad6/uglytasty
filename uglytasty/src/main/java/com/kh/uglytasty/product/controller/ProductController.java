@@ -25,6 +25,7 @@ import com.kh.uglytasty.order.model.vo.OrdersDetail;
 import com.kh.uglytasty.product.model.service.ProductServiceImpl;
 import com.kh.uglytasty.product.model.vo.Attachment;
 import com.kh.uglytasty.product.model.vo.Product;
+import com.kh.uglytasty.product.model.vo.Review;
 
 /**
  * @author wow59
@@ -71,6 +72,30 @@ public class ProductController {
    }
    
    
+   /** 상품 인기순 리스트 조회(Y)
+	 *
+	 */
+   @RequestMapping("popularlist.pro")
+   public String selectPopularList(Model model) {
+	   ArrayList<Product> plist = pService.selectPopularList();
+	   System.out.println("인기순 : " + plist);
+	   model.addAttribute("plist", plist);
+	      
+	   return "product/productPopularListView";
+   }
+   
+   /** 상품 가격낮은순 리스트 조회(Y)
+	 *
+	 */
+   @RequestMapping("lowerpricelist.pro")
+   public String selectLowerPriceList(Model model) {
+	   ArrayList<Product> plist = pService.selectLowerPriceList();
+	   model.addAttribute("plist", plist);
+	      
+	   return "product/productLowerPriceListView";
+   }
+   
+   
    /** 상품 '키워드' 검색 상품들 조회
     * 
     */
@@ -86,6 +111,8 @@ public class ProductController {
       
       return "product/productListView";
    }
+   
+ 
    
    
    
@@ -204,7 +231,7 @@ public class ProductController {
    }
 
 
-   /**  현재 넘어온 첨부파일 그 자체를 서버의 폴더에 저장시키는 역할
+   /**  현재 넘어온 첨부파일 그 자체를 서버의 폴더에 저장시키는 역할 **
     * 
     */
    public String saveFile(MultipartFile upfile, HttpSession session) {
@@ -235,6 +262,165 @@ public class ProductController {
    }
    
    
+   
+   /**
+	 * 상품 수정하기 (정보1 + 첨부파일5)***************
+	 */
+
+  @RequestMapping("update.pro")
+  public String updateProduct(int productNo, Product p, MultipartFile[] reupfile, Model model, HttpSession session,
+		   					String fileExp1, String fileExp2, String fileExp3, String fileExp4, String fileExp5) {
+	   
+	   
+	   // 1) 정보1 수정-------------------------------------------------------------------------------------
+	   int result1 = pService.updateProduct(p);
+	   
+	   
+	   
+	   // 2) 첨부파일5 수정 (1:update, 2:insert)
+		  
+		  //공부용
+	      for(int i=0; i<reupfile.length; i++) {
+	         System.out.println(reupfile[i]);
+	      }
+	      
+		      
+	      // (준비) 상품 설명이 없을때 null값 들어가지 않도록 하기 위한 작업
+	      ArrayList<String> explist = new ArrayList<String>();
+
+	      if(!fileExp1.equals("")) {
+	         explist.add(fileExp1);
+	      }
+	      if(!fileExp2.equals("")) {
+	         explist.add(fileExp2);            
+	      }
+	      if(!fileExp3.equals("")) {
+	         explist.add(fileExp3);            
+	      }
+	      if(!fileExp4.equals("")) {
+	         explist.add(fileExp4);            
+	      }
+	      if(!fileExp5.equals("")) {
+	         explist.add(fileExp5);            
+	      }
+	      
+	      System.out.println("상품 설명 explist" + explist); 
+	  
+	      
+	      ArrayList<Attachment> existAtList = pService.selectAttachmentList(productNo);	//db에서 가져온애
+	      ArrayList<Attachment> updateAtList = new ArrayList<Attachment>();
+	      ArrayList<Attachment> insertAtList = new ArrayList<Attachment>();
+	
+	      // 2_1) 상품 수정_ 수정할 상품의 첨파(기존) update -------------------------------------------------------------
+	      
+	      for (int i = 0; i < existAtList.size(); i++) {
+	    	    if (!reupfile[i].getOriginalFilename().equals("")) {
+	    	    	// 사진o, 설명o | 사진만o, 설명x
+	    	        Attachment newAt = new Attachment();
+	    	        String changeName = saveFile(reupfile[i], session);
+	    	        newAt.setRefProductNo(productNo);
+	    	        newAt.setOriginName(reupfile[i].getOriginalFilename());
+	    	        newAt.setChangeName("resources/uploadFiles/" + changeName);
+	    	        newAt.setFileLevel(i + 1);
+	    	        newAt.setFileExp(explist.get(i));
+	    	        updateAtList.add(newAt);
+	    	    } else {
+	    	    	// 사진x, 설명o
+	    	        Attachment newAt = new Attachment();
+	    	        newAt.setRefProductNo(productNo);
+	    	        newAt.setOriginName(existAtList.get(i).getOriginName());
+	    	        newAt.setChangeName(existAtList.get(i).getChangeName());
+	    	        newAt.setFileLevel(i + 1);
+	    	        newAt.setFileExp(explist.get(i));
+	    	        updateAtList.add(newAt);
+	    	    }
+	    	}
+
+    	  //System.out.println("updateAtList : " + updateAtList);
+    	  int result2 = pService.updateExistAttachment(updateAtList);
+	   
+    	  
+    	  // 2_2) 상품 수정_ 수정할 상품의 첨파(새로운) insert -----------------------------------------------------------
+    	  //System.out.println("existAtList.size() : " + existAtList.size());
+    	  //System.out.println("도대체 너 뭔데 (reupfile.length) : " + reupfile.length);
+    	  
+    	  
+    	  // ***번뜩!!*** 새로운 첨파 객체 reupfile들 중 마지막 객체의 fileLevel숫자 필요해ㅜㅜㅜㅜ
+    	  ArrayList<Attachment> fileLevelList = new ArrayList<Attachment>();
+    	  
+    	    for(int i = 0; i < reupfile.length; i++) {
+    	           
+    	         if(reupfile[i].getSize() != 0) {
+    	         
+    	            Attachment newAt = new Attachment();
+    	            newAt.setFileLevel(i + 1); // fileLevel 1,2,3,4,5
+    	            fileLevelList.add(newAt);
+
+    	         }
+    	         
+    	     }
+    	  //System.out.println("fileLevelList(파일번호만 담은 리스트) : " + fileLevelList);
+
+    	  
+    	  for(int i = 0; i < reupfile.length; i++) {
+	           
+ 	         if(reupfile[i].getSize() != 0) { // 새로운 파일이 넘어왔다는 신호 (그대신 넘어온 파일이 '기존꺼=>수정' 이라면 제외시키고, '새로운첨파=>추가' 인 시작값을 인식해야 함!!)
+ 	        	 
+ 	        	 int lastObjectIndex = fileLevelList.size() - 1;								// fileLevelList에 담긴 객체중 가장 마지막 객체의 인덱스 수
+ 	        	 int lastObjectFileLevel = fileLevelList.get(lastObjectIndex).getFileLevel();  	// 그 객체의 fileLevel 수
+ 	        	 //System.out.println("lastObjectFileLevel(리스트 중 마지막 객체의 fileLevel): " + lastObjectFileLevel);
+ 	         
+ 	        	 for (int j = existAtList.size(); j < lastObjectFileLevel; j++) { // 예) 2 ~ 2,3,4 == 시작값 : existAtList.size() ~ lastObjectFileLevel
+ 	    		   
+ 	    		        String changeName = saveFile(reupfile[j], session);
+ 	    		        Attachment insertAt = new Attachment();
+ 	    		        insertAt.setRefProductNo(productNo);
+ 	    		        insertAt.setOriginName(reupfile[j].getOriginalFilename());
+ 	    		        insertAt.setChangeName("resources/uploadFiles/" + changeName);
+ 	    		        insertAt.setFileLevel(j + 1);
+ 	    		        insertAt.setFileExp(explist.get(j));
+ 	    		        insertAtList.add(insertAt);
+ 	    		 }
+
+ 	         }
+ 	         
+ 	     }
+    	  
+
+ 	    //System.out.println("insertAtList(새로 넣을 첨파) : " + insertAtList);
+ 	    int result3 = pService.insertAddAttachment(insertAtList);
+		 
+		//-------------------------------------마무리--------------------------------------	  
+		// result1 = 상품 정보
+ 	    // result2 = 첨부파일 기존 update
+ 	    // result3 = 첨부파일 새로운 insert
+ 	    
+		int result = result1 + result2 + result3;
+			  
+		if(result > 0) {
+		     session.setAttribute("alertMsg", "성공적으로 상품이 수정되었습니다.");
+		     return "redirect:list.pro";
+	    }else {
+		     model.addAttribute("errorMsg", "상품 수정 실패!");
+		     return "common/errorPage";
+	    }
+	   
+	   
+	   
+  } 
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
+   
    /** 상품 삭제 (정보:N + 첨부파일:delete)
     * 
     */
@@ -262,16 +448,18 @@ public class ProductController {
          filePathList.add(filePath5);            
       }
       
-      System.out.println("filePathList" + filePathList);
+      //System.out.println("filePathList" + filePathList);
       
       
       // ----------상품 [정보1 + 첨부파일5] 삭제
+      // product, attachment리스트 status(N)으로
       int result = pService.deleteProduct(productNo, filePathList);
-      
       
       if(result > 0) { // 삭제 성공 => '상품(N) + 첨부파일(delete)'
          // filePath = "resources/uploadFiles/xxxx.jpg" | ""
          // resources안에 uploadFiles안에 xxxx.jpg 파일을 지워라
+    	  
+    	 /* 첨부파일 찐 삭제 (일단 살려두는 걸로..)
          if(!filePath1.equals("")) {
             new File(session.getServletContext().getRealPath(filePath1)).delete();
          }
@@ -287,19 +475,22 @@ public class ProductController {
          if(!filePath5.equals("")) {
             new File(session.getServletContext().getRealPath(filePath4)).delete();
          }
-         
+         */
+    	  
          // 상품 전체 리스트 페이지 list.pro 재요청
          session.setAttribute("alertMsg", "성공적으로 상품이 삭제되었습니다.");
          return "redirect:list.pro";
       }else {
          model.addAttribute("errorMsg", "상품 삭제 실패!");
          return "common/errorPage";
+         
+         
       }
       
    }
    
    
-   /** 상품 소진 (정보:R)
+   /** 상품 일시품절 (정보:R)
     * 
     */
    @RequestMapping("ready.pro")
@@ -315,6 +506,44 @@ public class ProductController {
          return "common/errorPage";
       }
    }
+   
+   
+   /** 상품 재입고 (정보:Y)
+	 * 
+	 */
+   @RequestMapping("yes.pro")
+   public String yesProduct(int productNo, Model model, HttpSession session) {
+	   
+	   int result = pService.yesProduct(productNo);
+	   
+	   if(result > 0) {
+		   session.setAttribute("alertMsg", "성공적으로 [재입고] 처리가 되었습니다.");
+		   return "redirect:list.pro";
+	   }else {
+		   model.addAttribute("errorMsg", "[재입고] 처리 실패!");
+		   return "common/errorPage";
+	   }
+	   
+   }
+   
+   
+   /** 상품 수정 (정보1 + 첨부파일5) ---- 수정 form 에 띄워 줄 내용들 조회
+	 *
+	 */
+   @RequestMapping("updateForm.pro")
+   public String updateProductForm(int productNo, Model model) {
+	   
+	   // 정보1
+	   Product p = pService.selectProduct(productNo);
+	   model.addAttribute("p", p);
+	   
+	   // 첨부파일5
+	   ArrayList<Attachment> alist = pService.selectAttachmentList(productNo);
+	   model.addAttribute("alist", alist);
+	   
+	   return "product/productUpdateForm";
+   }
+   
    
    
    
@@ -698,13 +927,55 @@ public class ProductController {
    
    
    
+	//-------------------------------댓글(후기review)-------------------------------
 	
+	/** 댓글 리스트 전체 조회 (ajax)
+	 *
+	 */
+	@ResponseBody
+	@RequestMapping(value="rlist.pro", produces="application/json; charset=utf-8")
+	public String ajaxSelectReviewList(int productNo) {
+		ArrayList<Review> rlist = pService.selectReviewList(productNo);
+		return new Gson().toJson(rlist);
+	}
    
+	/** 댓글 작성 (ajax)
+	 *
+	 */
+	@ResponseBody
+	@RequestMapping(value="rinsert.pro")
+	public String ajaxInsertReview(Review r) {
+		//System.out.println("r(등록) : " + r);
+		int result = pService.insertReview(r);
+		return result>0 ? "success" : "fail";
+	}
+	
+	/** 댓글 삭제 (ajax)
+	 * 
+	 */
+	@ResponseBody
+	@RequestMapping(value="rdelete.pro")
+	public String ajaxDeleteReview(Review r) {
+		//System.out.println("r(삭제) : " + r);
+		int result = pService.deleteReview(r);
+		return result>0 ? "success" : "fail";
+	}
+	 
 	
 	
 	
-   
-   
+	
+   /** 장바구니 상품 중복 검사 (ajax)
+	 *
+	 */
+	@ResponseBody
+   @RequestMapping("duplication.cart")
+   public String selectAddCartDuplication(Cart c) {
+	   int result = pService.selectAddCartDuplication(c);
+	   System.out.println("장바구니 상품 중복 검사 result : " + result);
+
+	   return result>0 ? "cartO" : "cartX";
+   }
    
    
 }

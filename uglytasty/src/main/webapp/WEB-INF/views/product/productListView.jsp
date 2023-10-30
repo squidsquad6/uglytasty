@@ -107,18 +107,20 @@
         color: #ff6741;
         font-size: 18px;
         font-weight: bold;
+        margin: 0px;
     }
     .item .originPrice {
         text-decoration: line-through;
         color: gray;
         font-size: 18px;
         font-weight: bold;
-        padding-right: 10px;
+        padding-left: 10px;
     }
     .item .salePrice {
         color: black;
         font-size: 18px;
         font-weight: bold;
+        margin: 0px;
     }
 
     .soldout {
@@ -131,7 +133,7 @@
         top: 0px;
         left: 0px;
         right: 15px;
-        bottom: 3px;
+        bottom: 0px;
         background-color: #000;
     }
 
@@ -141,8 +143,8 @@
     .soldout_text {
         position: absolute;
         color: white;
-        top: 37%;
-        left: 20%;
+        top: 33%;
+        left: 22%;
         transition: translate(-50%, -50%);
         font-size: 20px;
         text-align: center;
@@ -183,12 +185,16 @@
 
         <br><br>
         <div class="orderby" align="left">
-            <a href="">최신순</a>&nbsp;&nbsp;|&nbsp;
-            <a href="">인기순</a>
+            <a href="list.pro">전체</a>&nbsp;&nbsp;|&nbsp;
+            <a href="list.pro">최신순</a>&nbsp;&nbsp;|&nbsp;
+            <a href="popularlist.pro">인기순</a>&nbsp;&nbsp;|&nbsp;
+            <a href="lowerpricelist.pro">가격낮은순</a>
         </div>
         <div class="enrollBtn" align="right">
             <!-- 관리자만 보이는 버튼 -->
-            <a href="enrollForm.pro">등록하기</a>
+            <c:if test="${ loginMember.userId eq 'admin' }">
+	            <a href="enrollForm.pro">등록하기</a>
+            </c:if>
         </div>
         <br><br>
 

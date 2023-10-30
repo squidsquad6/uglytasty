@@ -2,6 +2,7 @@ package com.kh.uglytasty.product.model.dao;
 
 import java.util.ArrayList;
 
+import org.apache.ibatis.session.SqlSession;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.stereotype.Repository;
 
@@ -10,6 +11,7 @@ import com.kh.uglytasty.order.model.vo.Orders;
 import com.kh.uglytasty.order.model.vo.OrdersDetail;
 import com.kh.uglytasty.product.model.vo.Attachment;
 import com.kh.uglytasty.product.model.vo.Product;
+import com.kh.uglytasty.product.model.vo.Review;
 
 @Repository
 public class ProductDao {
@@ -29,6 +31,16 @@ public class ProductDao {
 	
 	public ArrayList<Product> selectSearchKeywordReady(SqlSessionTemplate sqlSession, String keyword) {
 		return (ArrayList)sqlSession.selectList("productMapper.selectSearchKeywordReady", keyword);
+	}
+	
+	/*상품 인기순 리스트 조회*/
+	public ArrayList<Product> selectPopularList(SqlSessionTemplate sqlSession) {
+		return (ArrayList)sqlSession.selectList("productMapper.selectPopularList");
+	}
+	
+	/*상품 가격낮은순 리스트 조회*/
+	public ArrayList<Product> selectLowerPriceList(SqlSessionTemplate sqlSession) {
+		return (ArrayList)sqlSession.selectList("productMapper.selectLowerPriceList");
 	}
 	
 	
@@ -64,15 +76,52 @@ public class ProductDao {
 	public int deleteProduct(SqlSessionTemplate sqlSession, int productNo) {
 		return sqlSession.update("productMapper.deleteProduct", productNo);
 	}
-	
+	/* 첨부파일 찐 삭제 (일단 살려두는 걸로..)
 	public int deleteAttachment(SqlSessionTemplate sqlSession, String filePath) {
 		return sqlSession.delete("productMapper.deleteAttachment", filePath);
 	}
+	*/
+	// 첨부파일 status(N)
+	public int deleteAttachment(SqlSessionTemplate sqlSession, String filePath) {
+		return sqlSession.update("productMapper.deleteAttachment", filePath);
+	}
+
 	
-	/*상품 소진*/
+	/*상품 일시품절*/
 	public int readyProduct(SqlSessionTemplate sqlSession, int productNo) {
 		return sqlSession.update("productMapper.readyProduct", productNo);
 	}
+	
+	/*상품 재입고*/
+	public int yesProduct(SqlSessionTemplate sqlSession, int productNo) {
+		return sqlSession.update("productMapper.yesProduct", productNo);
+	}
+	
+	/*상품 수정_ 수정할 상품의 정보1 조회*/
+	public Product selectProduct(SqlSessionTemplate sqlSession, int productNo) {
+		return sqlSession.selectOne("productMapper.selectProduct", productNo);
+	}
+	
+	/*상품 수정_ 수정할 상품의 첨부파일5 조회*/
+	public ArrayList<Attachment> selectAttachmentList(SqlSessionTemplate sqlSession, int productNo) {
+		return (ArrayList)sqlSession.selectList("productMapper.selectAttachmentList", productNo);
+	}
+	
+	/*상품 수정_ 수정할 상품의 정보1 update*/
+	public int updateProduct(SqlSessionTemplate sqlSession, Product p) {
+		return sqlSession.update("productMapper.updateProduct", p);
+	}
+	
+	/*상품 수정_ 수정할 상품의 첨파(기존) update*/
+	public int updateExistAttachment(SqlSessionTemplate sqlSession, Attachment at) {
+		return sqlSession.update("productMapper.updateExistAttachment", at);
+	}
+	
+	/*상품 수정_ 수정할 상품의 첨파(새로운) insert*/
+	public int insertAddAttachment(SqlSessionTemplate sqlSession, Attachment at) {
+		return sqlSession.insert("productMapper.insertAddAttachment", at);
+	}
+	
 	
 	
 	/*장바구니 추가*/
@@ -193,16 +242,34 @@ public class ProductDao {
 		return sqlSession.selectOne("productMapper.selectUserId", orderNo);
 	}
 	
-	
-	
-	
-	
-	
-	
-	
 	/*장바구니상품 => 3)주문상세에서 주문한 상품번호 조회 후 장바구니 내역가서 '삭제' - 객체 여러번 반복 */
 	public int deleteCartAfterOrder(SqlSessionTemplate sqlSession, OrdersDetail newOD) {
 		return sqlSession.delete("productMapper.deleteCartAfterOrder", newOD);
+	}
+	
+	
+	
+	//-------------------------------댓글(후기review)-------------------------------
+	
+	/*후기댓글 리스트 조회*/
+	public ArrayList<Review> selectReviewList(SqlSessionTemplate sqlSession, int productNo) {
+		return (ArrayList)sqlSession.selectList("productMapper.selectReviewList", productNo);
+	}
+	
+	/*후기댓글 작성*/
+	public int insertReview(SqlSessionTemplate sqlSession, Review r) {
+		return sqlSession.insert("productMapper.insertReview", r);
+	}
+	
+	/*후기댓글 삭제*/
+	public int deleteReview(SqlSessionTemplate sqlSession, Review r) {
+		return sqlSession.update("productMapper.deleteReview", r);
+	}
+	
+	
+	/*장바구니 상품 중복 검사*/
+	public int selectAddCartDuplication(SqlSessionTemplate sqlSession, Cart c) {
+		return sqlSession.selectOne("productMapper.selectAddCartDuplication", c);
 	}
 	
 	

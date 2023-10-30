@@ -76,12 +76,10 @@
 		<result column="user_id" property="userId" />
 	</resultMap>
 	
-	
-	
-	<!-- 
+
 	<resultMap type="Attachment" id="attachmentResult">
 		<result column="file_no" property="fileNo" />
-		<result column="ref_pno" property="refPno" />
+		<result column="ref_pno" property="refProductNo" />
 		<result column="origin_name" property="originName" />
 		<result column="change_name" property="changeName" />
 		<result column="file_exp" property="fileExp" />
@@ -89,7 +87,19 @@
 		<result column="status" property="status" />
 		<result column="file_level" property="fileLevel" />
 	</resultMap>
-	 -->
+	
+	
+	<resultMap type="Review" id="reviewResult">
+		<result column="review_no" property="reviewNo" />
+		<result column="ref_pno" property="refProductNo" />
+		<result column="user_id" property="userId" />
+		<result column="content" property="content" />
+		<result column="review_date" property="reviewDate" />
+		<result column="status" property="status" />
+	</resultMap>
+
+
+
 	
 	
 	<select id="selectProductList" resultMap="productResult">
@@ -213,10 +223,10 @@
 			  , file_exp
 			  , file_level
 			  , round(price - (price * (sale / 100))) as "sale_price"
+			  , p.status
 		 from product p
 		 join attachment a on (p.product_no = a.ref_pno)
 		where product_no = #{productNo}
-		  and a.status = 'Y'
 	</select>
 	
 	
@@ -314,16 +324,32 @@
 		   set status = 'N'
 		 where product_no = #{productNo}
 	</update>
-
+	
+	<!-- 첨부파일 찐 삭제 (일단 살려두는 걸로..)
 	<delete id="deleteAttachment">
 		delete
 		  from attachment
 		 where change_name = #{filePath}
 	</delete>
-	
+	 -->
+	 
+	<!-- 첨부파일 status(N) -->
+	<update id="deleteAttachment">
+		update attachment
+		   set status = 'N'
+		 where change_name = #{filePath}
+	</update>
+
+	 
 	<update id="readyProduct">
 		update product
 		   set status = 'R'
+		 where product_no = #{productNo}
+	</update>
+	
+	<update id="yesProduct">
+		update product
+		   set status = 'Y'
 		 where product_no = #{productNo}
 	</update>
 	
@@ -592,19 +618,171 @@
 	
 	
 	
-	<!-- 전체 삭제됨..
-	<delete id="deleteCartAfterOrder">
-		delete
-		  from cart
-	 	 where product_no = #{productNo}
-	</delete>
-	 -->
+	<select id="selectProduct" resultMap="productResult">
+		select
+				product_no
+			  , product_name
+			  , price
+			  , sale
+			  , explanation
+			  , location
+			  , to_char(production_date, 'YYYY-MM-DD') as "production_date"
+			  , stock
+		  from product
+		 where product_no = #{productNo}
+	</select>
 	 
-	 
+	<select id="selectAttachmentList" resultMap="attachmentResult">
+		select
+		        file_no
+		      , ref_pno
+		      , origin_name
+		      , change_name
+		      , file_exp
+		      , to_char(upload_date, 'YYYY-MM-DD') as "upload_date"
+		      , file_level
+		  from attachment
+		 where ref_pno = #{productNo}
+	</select>
 	
+	<update id="updateProduct">
+		update product
+		   set  product_name = #{productName}
+              , price = #{price}
+              , sale = #{sale}
+              , explanation = #{explanation}
+              , location = #{location}
+              , production_date = #{productionDate}
+              , stock = #{stock}
+		 where product_no = #{productNo}
+	</update>
+	
+	<update id="updateExistAttachment">
+		update attachment
+		   set  origin_name = #{originName}
+		      , change_name = #{changeName}
+		      , file_exp = #{fileExp}
+		where ref_pno = #{refProductNo}
+		  and file_level = #{fileLevel} 
+	</update>
+	
+	<insert id="insertAddAttachment">
+		insert
+		  into Attachment
+		  (
+		    file_no
+		  , ref_pno
+		  , origin_name
+		  , change_name
+		  , file_exp
+		  , file_level
+		  )
+		  values
+		  (
+		    seq_attachment_no.nextval
+		  , #{refProductNo}
+		  , #{originName}
+		  , #{changeName}
+		  , #{fileExp}
+		  , #{fileLevel}
+		  )
+	</insert>
+	
+	<select id="selectReviewList" resultMap="reviewResult">
+		select 
+				review_no
+			  , ref_pno
+			  , user_id
+			  , content
+			  , to_char(review_date, 'YYYY-MM-DD') as "review_date"
+		  from review
+		 where ref_pno = #{productNo}
+		   and status = 'Y'
+		 order
+		    by review_date desc
+	</select>
+	
+	<insert id="insertReview">
+		insert
+		  into review
+		  (
+		    review_no
+		  , ref_pno
+		  , user_id
+		  , content
+		  )
+		  values
+		  (
+		    seq_review_no.nextval
+		  , #{refProductNo}
+		  , #{userId}
+		  , #{content}
+		  )
+	</insert>
+	
+	<update id="deleteReview">
+		update review
+		   set status = 'N'
+		 where ref_pno = #{refProductNo}
+		   and review_no = #{reviewNo}
+	</update>
 
-
-
-
+	<select id="selectAddCartDuplication" resultType="_int">
+		select
+		       count(*)
+		  from cart
+		 where user_id = #{userId}
+           and product_no = #{productNo}
+	</select>
+	
+	<select id="selectPopularList" resultMap="productResult">
+		select
+				product_no
+			  , product_name
+			  , price
+			  , sale
+			  , explanation
+			  , location
+			  , to_char(production_date, 'YYYY-MM-DD') as "production_date"
+			  , stock
+			  , count
+			  , to_char(enroll_date, 'YYYY-MM-DD') as "enroll_date"
+              , change_name
+              , file_level
+              , round(price - (price * (sale / 100))) as "sale_price"
+		  from product p
+          join attachment a on (p.product_no = a.ref_pno)
+		 where p.status = 'Y'
+           and a.file_level = 1
+		 order
+		    by count desc
+	</select>
+	
+	<select id="selectLowerPriceList" resultMap="productResult">
+		select
+				product_no
+			  , product_name
+			  , price
+			  , sale
+			  , explanation
+			  , location
+			  , to_char(production_date, 'YYYY-MM-DD') as "production_date"
+			  , stock
+			  , count
+			  , to_char(enroll_date, 'YYYY-MM-DD') as "enroll_date"
+              , change_name
+              , file_level
+              , round(price - (price * (sale / 100))) as "sale_price"
+		  from product p
+          join attachment a on (p.product_no = a.ref_pno)
+		 where p.status = 'Y'
+           and a.file_level = 1
+		 order
+		    by round(price - (price * (sale / 100)))
+	</select>
+	
+	
+	
+	
 
 </mapper>

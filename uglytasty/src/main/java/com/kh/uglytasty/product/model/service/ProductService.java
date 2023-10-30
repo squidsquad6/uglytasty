@@ -25,6 +25,12 @@ public interface ProductService {
 	// 상품 키워드 검색 리스트 조회용 서비스 (다음에 만나요)
 	ArrayList<Product> selectSearchKeywordReady(String keyword);
 
+	// 상품 인기순 리스트 조회
+	ArrayList<Product> selectPopularList();
+	
+	// 상품 가격낮은순 리스트 조회
+	ArrayList<Product> selectLowerPriceList();
+	
 	
 	
 	
@@ -40,18 +46,36 @@ public interface ProductService {
 	int insertProduct(Product p, ArrayList<Attachment> alist);
 	int insertAttachment(Attachment at);
 
-	// 상품 수정용 서비스
-	int updateProduct(Product p);
-	ArrayList<Attachment> updateAttachment(int productNo);
-
-	// 상품 삭제용 서비스
+	
+	// 상품 삭제 서비스
 	// (DB : 둘 다  status=N / spring : 첨파 delete )
 	int deleteProduct(int productNo, ArrayList<String> filepathList);
 	int deleteAttachment(String filepath);
+
 	
-	// 상품 소진용 서비스
+	// 상품 일시품절 서비스
 	int readyProduct(int productNo);
 
+	// 상품 재입고 서비스
+	int yesProduct(int productNo);
+	
+	// 상품 수정_ 수정할 상품의 정보1 조회
+	Product selectProduct(int productNo);
+	
+	// 상품 수정_ 수정할 상품의 첨부파일5 조회
+	ArrayList<Attachment> selectAttachmentList(int productNo);
+	
+	// 상품 수정_ 수정할 상품의 정보1 update
+	int updateProduct(Product p);
+	
+	// 상품 수정_ 수정할 상품의 첨파(기존) update
+	int updateExistAttachment(ArrayList<Attachment> updateAtList);
+	
+	// 상품 수정_ 수정할 상품의 첨파(새로운) insert
+	int insertAddAttachment(ArrayList<Attachment> insertAtList);
+	
+	
+	
 	
 	
 	
@@ -122,37 +146,13 @@ public interface ProductService {
 	// userId 조회
 	String selectUserId(int orderNo);
 	
-	
-	
-	
-	
-	
-	
 	/*장바구니상품 => 3)주문상세에서 주문한 상품번호 조회 후 장바구니 내역가서 '삭제' */
 	int deleteCartAfterOrder(ArrayList<OrdersDetail> delList);
 	
 	
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	//-------------------------------댓글(후기review)-------------------------------
 	
 	// 후기댓글 리스트 조회용 서비스 (ajax)
 	ArrayList<Review> selectReviewList(int productNo);
@@ -161,12 +161,12 @@ public interface ProductService {
 	int insertReview(Review r);
 
 	// 후기댓글 삭제용 서비스 (ajax)
-	int deleteReview(int ReviewNo);
+	int deleteReview(Review r);
 
-
-
-	// 레시피 리스트 조회용 서비스
-	ArrayList<Recipe> selectProRecipeList();
+	
+	
+	// 장바구니 상품 중복 검사 (ajax)
+	int selectAddCartDuplication(Cart c);
 
 	
 	

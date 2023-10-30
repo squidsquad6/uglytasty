@@ -48,6 +48,7 @@ public Orders(int orderNo, String userId, int productNo, String orderDate, int o
 	this.deliveryMemo = deliveryMemo;
 	this.deliveryFee = deliveryFee;
 	this.totalPrice = totalPrice;
+
 }
    
    

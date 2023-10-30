@@ -25,6 +25,10 @@ public class ProductServiceImpl implements ProductService {
 	private SqlSessionTemplate sqlSession;
 	
 	
+	
+	
+	
+	
 	/*상품 리스트 조회 (기본 + 키워드검색)*/
 	@Override
 	public ArrayList<Product> selectProductList() {
@@ -46,6 +50,19 @@ public class ProductServiceImpl implements ProductService {
 		return pDao.selectSearchKeywordReady(sqlSession, keyword);
 	}
 
+	/*상품 인기순 리스트 조회*/
+	@Override
+	public ArrayList<Product> selectPopularList() {
+		return pDao.selectProductList(sqlSession);
+	}
+	
+	/*상품 가격낮은순 리스트 조회*/
+	@Override
+	public ArrayList<Product> selectLowerPriceList() {
+		return pDao.selectLowerPriceList(sqlSession);
+	}
+
+	
 	
 
 	/*조회수 증가*/
@@ -99,18 +116,23 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	public int deleteProduct(int productNo, ArrayList<String> filePathList) {
 		
+		// product(N)
 		int result1 = pDao.deleteProduct(sqlSession, productNo);
 		
+		// attachment리스트(N)
 		int result2 = 0;
 		
 		if(result1 > 0) {
 			for(int i=0; i<filePathList.size(); i++) {
 				// *** 여기서 성공하면 밑 deleteAttachment() 호출 / 매개변수로 하나씩 보내 ***
-				result2 = deleteAttachment(filePathList.get(i));
+				result2 += deleteAttachment(filePathList.get(i));
 			}
 		}
 		int result = result1 * result2;
 		return result;
+		
+		
+		
 	}
 	
 	/*상품삭제 순서2*/
@@ -118,48 +140,62 @@ public class ProductServiceImpl implements ProductService {
 	public int deleteAttachment(String filePath) {
 		return pDao.deleteAttachment(sqlSession, filePath);
 	}
+	
 
-	/*일시품절*/
+	/*상품 일시품절*/
 	@Override
 	public int readyProduct(int productNo) {
 		return pDao.readyProduct(sqlSession, productNo);
 	}
 
+	/*상품 재입고*/
+	@Override
+	public int yesProduct(int productNo) {
+		return pDao.yesProduct(sqlSession, productNo);
+	}
 	
+	/*상품 수정_ 수정할 상품의 정보1 조회*/
+	@Override
+	public Product selectProduct(int productNo) {
+		return pDao.selectProduct(sqlSession, productNo);
+	}
 	
-	
-	
+	/*상품 수정_ 수정할 상품의 첨부파일5 조회*/
+	@Override
+	public ArrayList<Attachment> selectAttachmentList(int productNo) {
+		return pDao.selectAttachmentList(sqlSession, productNo);
+	}
+
+	/*상품 수정_ 수정할 상품의 정보1 update*/
 	@Override
 	public int updateProduct(Product p) {
-		return 0;
+		return pDao.updateProduct(sqlSession, p);
 	}
-
-	@Override
-	public ArrayList<Attachment> updateAttachment(int productNo) {
-		return null;
-	}
-
-	@Override
-	public ArrayList<Review> selectReviewList(int productNo) {
-		return null;
-	}
-
-	@Override
-	public int insertReview(Review r) {
-		return 0;
-	}
-
-	@Override
-	public int deleteReview(int ReviewNo) {
-		return 0;
-	}
-
-	@Override
-	public ArrayList<Recipe> selectProRecipeList() {
-		return null;
-	}
-
 	
+	/*상품 수정_ 수정할 상품의 첨파(기존) update*/
+	@Override
+	public int updateExistAttachment(ArrayList<Attachment> updateAtList) {
+		int result = 0;
+		
+		for(Attachment at : updateAtList) {
+			result += pDao.updateExistAttachment(sqlSession, at); 
+		}
+		
+		return result;
+	}
+
+	/*상품 수정_ 수정할 상품의 첨파(새로운) insert*/
+	@Override
+	public int insertAddAttachment(ArrayList<Attachment> insertAtList) {
+		int result = 0;
+		
+		for(Attachment at : insertAtList) {
+			result += pDao.insertAddAttachment(sqlSession, at);
+		}
+		
+		return result;
+	}
+
 	
 	
 	/*장바구니 상품 추가*/
@@ -314,7 +350,7 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	
-	/*장바구니상품 => 1) 주문코드번호 2:결제완료 업데이트		------------단품꺼 같이써 (updateOrderCode)*/
+	/*장바구니상품 => 1) 주문코드번호 2:결제완료 업데이트			------------단품꺼 같이써 (updateOrderCode)*/
 	/*장바구니상품 => 2) 최종 주문 완료 화면에 줄 배송정보 조회	------------단품꺼 같이써 (selectOrdersDelivery)*/
 
 	/*장바구니상품 => 3)주문상세에서 주문한 상품번호 '조회' 후 장바구니 내역가서 삭제 */
@@ -329,15 +365,6 @@ public class ProductServiceImpl implements ProductService {
 		return pDao.selectUserId(sqlSession, orderNo);
 	}
 
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	/*장바구니상품 => 3)주문상세에서 주문한 상품번호 조회 후 장바구니 내역가서 '삭제' */
 	@Override
 	public int deleteCartAfterOrder(ArrayList<OrdersDetail> delList) {
@@ -352,6 +379,57 @@ public class ProductServiceImpl implements ProductService {
 		return result;
 	}
 
+
+	
+	
+	
+	
+	
+	
+	
+	//-------------------------------댓글(후기review)-------------------------------
+
+	/*댓글 전체 조회*/
+	@Override
+	public ArrayList<Review> selectReviewList(int productNo) {
+		return pDao.selectReviewList(sqlSession, productNo);
+	}
+
+	/*댓글 등록*/
+	@Override
+	public int insertReview(Review r) {
+		return pDao.insertReview(sqlSession, r);
+	}
+
+	/*댓글 삭제*/
+	@Override
+	public int deleteReview(Review r) {
+		return pDao.deleteReview(sqlSession, r);
+	}
+
+	
+	
+	
+	/*장바구니 상품 중복 검사*/
+	@Override
+	public int selectAddCartDuplication(Cart c) {
+		return pDao.selectAddCartDuplication(sqlSession, c);
+	}
+
+
+	
+	
+
+
+	
+	
+
+	
+
+
+	
+	
+	
 	
 	
 
