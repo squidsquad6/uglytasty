@@ -5,7 +5,6 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
 <title>자주 묻는 질문</title>
 <!-- /* 필수 삽입  */  -->
 
