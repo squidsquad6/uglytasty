@@ -490,7 +490,6 @@
 
          <!-- 관리자만 보이는 버튼 (테스트할때 귀찮으니까 맨 나중에걸라우)-->
          <c:if test="${ loginMember.userId eq 'admin' }">
-         </c:if>
             <div class="adminBtn" align="right">
                 <a id="btnBack" href="list.pro">뒤로가기</a>
                 <a id="btnUpdate" onclick="postFormSubmit(1);">수정하기</a>
@@ -502,6 +501,7 @@
 	                </c:if>
                 <a id="btnDelete" onclick="postFormSubmit(3);">판매종료</a>
             </div>
+         </c:if>
 
             
             <form id="postForm" action="" method="post">
@@ -699,10 +699,10 @@
                 <thead>
                     <tr>
                         <th colspan="2">
-                            <textarea class="review_content" name="" id="content" cols="90" rows="2" style="resize:none; width:117%"></textarea>
+                            <textarea class="review_content" name="" id="content" cols="90" rows="2" style="resize:none; width:120%"></textarea>
                         </th>
                         <th style="vertical-align: middle">
-                            <button class="review_btn" style="margin-left: 120px;" onclick="addReview();">등록하기</button>
+                            <button class="review_btn" style="margin-left: 130px; width:100px;" onclick="addReview();">등록하기</button>
                         </th>
                     </tr>
                 </thead>
@@ -735,14 +735,15 @@
 						let value = "";
 						for(let i in rlist) {
 							value += "<tr>"
-									+ "<td>" + rlist[i].userId + "</td>"
+									+ "<td style='width:100px;'>" + rlist[i].userId + "</td>"
 									+ "<th>" + rlist[i].content + "</th>"
-									+ "<td width='100px;'>" + rlist[i].reviewDate + "</td>";
+									+ "<td>" + rlist[i].reviewDate + "</td>";
 									
 									if ('${loginMember.userId}' == 'admin' || '${loginMember.userId}' == rlist[i].userId) {
-							    value += "<td><button class='rUpdate' onclick='upReview(" + rlist[i].reviewNo + ");'>✂</button></td>";
-							    value += "<td><button class='rDelete' onclick='delReview(" + rlist[i].reviewNo + ");'>✖</button></td>";
-							}
+										
+							    		//value += "<td><button class='rUpdate' onclick='upReview(" + rlist[i].reviewNo + ");'>✂</button></td>";
+							    		value += "<td><button class='rDelete' onclick='delReview(" + rlist[i].reviewNo + ");'>✖</button></td>";
+									}
 							value += "</tr>";
 						}
 						$("#reviewArea tbody").html(value);

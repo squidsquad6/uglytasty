@@ -72,6 +72,30 @@ public class ProductController {
    }
    
    
+   /** 상품 인기순 리스트 조회(Y)
+	 *
+	 */
+   @RequestMapping("popularlist.pro")
+   public String selectPopularList(Model model) {
+	   ArrayList<Product> plist = pService.selectPopularList();
+	   System.out.println("인기순 : " + plist);
+	   model.addAttribute("plist", plist);
+	      
+	   return "product/productPopularListView";
+   }
+   
+   /** 상품 가격낮은순 리스트 조회(Y)
+	 *
+	 */
+   @RequestMapping("lowerpricelist.pro")
+   public String selectLowerPriceList(Model model) {
+	   ArrayList<Product> plist = pService.selectLowerPriceList();
+	   model.addAttribute("plist", plist);
+	      
+	   return "product/productLowerPriceListView";
+   }
+   
+   
    /** 상품 '키워드' 검색 상품들 조회
     * 
     */
@@ -87,6 +111,8 @@ public class ProductController {
       
       return "product/productListView";
    }
+   
+ 
    
    
    
@@ -422,16 +448,18 @@ public class ProductController {
          filePathList.add(filePath5);            
       }
       
-      System.out.println("filePathList" + filePathList);
+      //System.out.println("filePathList" + filePathList);
       
       
       // ----------상품 [정보1 + 첨부파일5] 삭제
+      // product, attachment리스트 status(N)으로
       int result = pService.deleteProduct(productNo, filePathList);
-      
       
       if(result > 0) { // 삭제 성공 => '상품(N) + 첨부파일(delete)'
          // filePath = "resources/uploadFiles/xxxx.jpg" | ""
          // resources안에 uploadFiles안에 xxxx.jpg 파일을 지워라
+    	  
+    	 /* 첨부파일 찐 삭제 (일단 살려두는 걸로..)
          if(!filePath1.equals("")) {
             new File(session.getServletContext().getRealPath(filePath1)).delete();
          }
@@ -447,13 +475,16 @@ public class ProductController {
          if(!filePath5.equals("")) {
             new File(session.getServletContext().getRealPath(filePath4)).delete();
          }
-         
+         */
+    	  
          // 상품 전체 리스트 페이지 list.pro 재요청
          session.setAttribute("alertMsg", "성공적으로 상품이 삭제되었습니다.");
          return "redirect:list.pro";
       }else {
          model.addAttribute("errorMsg", "상품 삭제 실패!");
          return "common/errorPage";
+         
+         
       }
       
    }

@@ -5,21 +5,9 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <!-- 
-	loginMember = 회원정보..
-
- 	(status = 'Y')
-	plist = ArrayList<Product> + changeName + fileLevel + salePrice(판-(판/할))
-		
- 	(status = 'R')
-	xlist = ArrayList<Product> + changeName + fileLevel + salePrice(판-(판/할))
-	
-	(키워드 검색 후 리스트 / status = 'Y')
-	keylist = ArrayList<Product> + changeName + fileLevel + salePrice(판-(판/할))
-	
-	(키워드 검색 후 리스트 / status = 'R')
-	keylistR = ArrayList<Product> + changeName + fileLevel + salePrice(판-(판/할))
+	plist : productNo, productName, price, sale, explantion, location, productionDate, stock, count, enrollDate, fileLevel / salePrice
  -->
-
+    
 <!DOCTYPE html>
 <html>
 <head>
@@ -161,6 +149,28 @@
 	    display: table;
 	    clear: both;
 	}
+	
+	
+	/*가격낮은순*/
+	.toptext {
+		margin: 50px 0px;
+	}
+	.popularProduct {
+		color: gray;
+		font-size: 20px;
+		font-weight: bold;
+	}
+	.ddaum {
+		color: #ff6741;
+		font-size: 30px;
+		font-weight: bold;
+	}
+	.point {
+		color: #ff6741;
+		font-size: 20px;
+		font-weight: bold;
+	}
+    
     
     
 </style>
@@ -200,6 +210,13 @@
 
         <div class="listAll clearfix">
         
+			<div align="center" style="padding-right:100px;" class="toptext">
+	        	<span class="ddaum">💸</span>
+    	    	<span class="popularProduct">가장 <span class="point">저렴한<span class="popularProduct"> 못난이 순으로 살펴보세요</span>
+        		<span class="ddaum">💸</span>
+        	</div>        
+        	
+        	
         	<!-- 상품 더미 (나중에 지울거) -->
             <div class="item">
                 <div class="itemImg">
@@ -230,11 +247,9 @@
                     <span class="salePrice">원</span>
                 </div>
             </div>
+        	
+        	
             
-            
-            
-	
-			
 			<!-- (status='Y') plist 상품들 촤락 -->	
 			<c:forEach var="p" items="${plist}">
 			    <div class="item">
@@ -254,30 +269,6 @@
 			    </div>
 			</c:forEach>
 	
-			
-			<!-- (status='R') xlist 상품들 촤락 -->
-			<c:forEach var="x" items="${xlist}">		
-				<div class="item">
-	                <div class="itemImg soldout">
-	                    <img src="${x.changeName}">
-	                    <!-- hidden : 내가 클릭한 게시글 번호 가져오기 위해 -->
-			            <input type="hidden" value="${x.productNo}">
-	                </div>
-	                <div class="soldout_text">
-	                    <p>다음에 다시 만나요!</p>
-	                </div>
-	                <div class="itemInfo">
-	                    <p>${x.productName}</p>
-	                    <span class="sale">${x.sale}</span><span class="sale">%</span>
-	                    <img src="https://d3cpiew7rze14b.cloudfront.net/assets/ustore/discount-arrow.svg">
-	                    <span class="originPrice">${x.price}</span>
-	                    <span class="salePrice" id="calculationResult_${x.productNo}">${ x.salePrice }</span>
-	                    <span class="salePrice">원</span>
-	                </div>
-	            </div>
-			</c:forEach>
-			
-			  
 			  
 			<!-- 키워드 검색 후 리스트 keylist 상품들 촤락 -->
 			<c:choose>
@@ -307,27 +298,7 @@
 				</c:otherwise>			
 			</c:choose>
 			
-			<!-- 키워드 검색 후 리스트 keylistR 상품들 촤락 -->
-			<c:forEach var="kr" items="${keylistR}">		
-				<div class="item">
-	                <div class="itemImg soldout">
-	                    <img src="${kr.changeName}">
-	                    <!-- hidden : 내가 클릭한 게시글 번호 가져오기 위해 -->
-			            <input type="hidden" value="${kr.productNo}">
-	                </div>
-	                <div class="soldout_text">
-	                    <p>다음에 다시 만나요!</p>
-	                </div>
-	                <div class="itemInfo">
-	                    <p>${kr.productName}</p>
-	                    <span class="sale">${kr.sale}</span><span class="sale">%</span>
-	                    <img src="https://d3cpiew7rze14b.cloudfront.net/assets/ustore/discount-arrow.svg">
-	                    <span class="originPrice">${x.price}</span>
-	                    <span class="salePrice" id="calculationResult_${kr.productNo}">${ kr.salePrice }</span>
-	                    <span class="salePrice">원</span>
-	                </div>
-	            </div>
-			</c:forEach>
+		
 			
 			
             

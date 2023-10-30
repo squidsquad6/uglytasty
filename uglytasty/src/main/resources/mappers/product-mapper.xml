@@ -324,13 +324,23 @@
 		   set status = 'N'
 		 where product_no = #{productNo}
 	</update>
-
+	
+	<!-- 첨부파일 찐 삭제 (일단 살려두는 걸로..)
 	<delete id="deleteAttachment">
 		delete
 		  from attachment
 		 where change_name = #{filePath}
 	</delete>
-	
+	 -->
+	 
+	<!-- 첨부파일 status(N) -->
+	<update id="deleteAttachment">
+		update attachment
+		   set status = 'N'
+		 where change_name = #{filePath}
+	</update>
+
+	 
 	<update id="readyProduct">
 		update product
 		   set status = 'R'
@@ -724,5 +734,55 @@
 		 where user_id = #{userId}
            and product_no = #{productNo}
 	</select>
+	
+	<select id="selectPopularList" resultMap="productResult">
+		select
+				product_no
+			  , product_name
+			  , price
+			  , sale
+			  , explanation
+			  , location
+			  , to_char(production_date, 'YYYY-MM-DD') as "production_date"
+			  , stock
+			  , count
+			  , to_char(enroll_date, 'YYYY-MM-DD') as "enroll_date"
+              , change_name
+              , file_level
+              , round(price - (price * (sale / 100))) as "sale_price"
+		  from product p
+          join attachment a on (p.product_no = a.ref_pno)
+		 where p.status = 'Y'
+           and a.file_level = 1
+		 order
+		    by count desc
+	</select>
+	
+	<select id="selectLowerPriceList" resultMap="productResult">
+		select
+				product_no
+			  , product_name
+			  , price
+			  , sale
+			  , explanation
+			  , location
+			  , to_char(production_date, 'YYYY-MM-DD') as "production_date"
+			  , stock
+			  , count
+			  , to_char(enroll_date, 'YYYY-MM-DD') as "enroll_date"
+              , change_name
+              , file_level
+              , round(price - (price * (sale / 100))) as "sale_price"
+		  from product p
+          join attachment a on (p.product_no = a.ref_pno)
+		 where p.status = 'Y'
+           and a.file_level = 1
+		 order
+		    by round(price - (price * (sale / 100)))
+	</select>
+	
+	
+	
+	
 
 </mapper>

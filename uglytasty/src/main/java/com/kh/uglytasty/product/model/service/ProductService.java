@@ -25,6 +25,12 @@ public interface ProductService {
 	// 상품 키워드 검색 리스트 조회용 서비스 (다음에 만나요)
 	ArrayList<Product> selectSearchKeywordReady(String keyword);
 
+	// 상품 인기순 리스트 조회
+	ArrayList<Product> selectPopularList();
+	
+	// 상품 가격낮은순 리스트 조회
+	ArrayList<Product> selectLowerPriceList();
+	
 	
 	
 	
@@ -45,6 +51,7 @@ public interface ProductService {
 	// (DB : 둘 다  status=N / spring : 첨파 delete )
 	int deleteProduct(int productNo, ArrayList<String> filepathList);
 	int deleteAttachment(String filepath);
+
 	
 	// 상품 일시품절 서비스
 	int readyProduct(int productNo);

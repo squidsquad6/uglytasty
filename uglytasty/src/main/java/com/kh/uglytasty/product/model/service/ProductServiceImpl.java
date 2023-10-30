@@ -50,6 +50,19 @@ public class ProductServiceImpl implements ProductService {
 		return pDao.selectSearchKeywordReady(sqlSession, keyword);
 	}
 
+	/*상품 인기순 리스트 조회*/
+	@Override
+	public ArrayList<Product> selectPopularList() {
+		return pDao.selectProductList(sqlSession);
+	}
+	
+	/*상품 가격낮은순 리스트 조회*/
+	@Override
+	public ArrayList<Product> selectLowerPriceList() {
+		return pDao.selectLowerPriceList(sqlSession);
+	}
+
+	
 	
 
 	/*조회수 증가*/
@@ -103,18 +116,23 @@ public class ProductServiceImpl implements ProductService {
 	@Override
 	public int deleteProduct(int productNo, ArrayList<String> filePathList) {
 		
+		// product(N)
 		int result1 = pDao.deleteProduct(sqlSession, productNo);
 		
+		// attachment리스트(N)
 		int result2 = 0;
 		
 		if(result1 > 0) {
 			for(int i=0; i<filePathList.size(); i++) {
 				// *** 여기서 성공하면 밑 deleteAttachment() 호출 / 매개변수로 하나씩 보내 ***
-				result2 = deleteAttachment(filePathList.get(i));
+				result2 += deleteAttachment(filePathList.get(i));
 			}
 		}
 		int result = result1 * result2;
 		return result;
+		
+		
+		
 	}
 	
 	/*상품삭제 순서2*/
@@ -122,6 +140,7 @@ public class ProductServiceImpl implements ProductService {
 	public int deleteAttachment(String filePath) {
 		return pDao.deleteAttachment(sqlSession, filePath);
 	}
+	
 
 	/*상품 일시품절*/
 	@Override
@@ -397,6 +416,8 @@ public class ProductServiceImpl implements ProductService {
 		return pDao.selectAddCartDuplication(sqlSession, c);
 	}
 
+
+	
 	
 
 

@@ -33,6 +33,16 @@ public class ProductDao {
 		return (ArrayList)sqlSession.selectList("productMapper.selectSearchKeywordReady", keyword);
 	}
 	
+	/*상품 인기순 리스트 조회*/
+	public ArrayList<Product> selectPopularList(SqlSessionTemplate sqlSession) {
+		return (ArrayList)sqlSession.selectList("productMapper.selectPopularList");
+	}
+	
+	/*상품 가격낮은순 리스트 조회*/
+	public ArrayList<Product> selectLowerPriceList(SqlSessionTemplate sqlSession) {
+		return (ArrayList)sqlSession.selectList("productMapper.selectLowerPriceList");
+	}
+	
 	
 	
 	
@@ -66,10 +76,16 @@ public class ProductDao {
 	public int deleteProduct(SqlSessionTemplate sqlSession, int productNo) {
 		return sqlSession.update("productMapper.deleteProduct", productNo);
 	}
-	
+	/* 첨부파일 찐 삭제 (일단 살려두는 걸로..)
 	public int deleteAttachment(SqlSessionTemplate sqlSession, String filePath) {
 		return sqlSession.delete("productMapper.deleteAttachment", filePath);
 	}
+	*/
+	// 첨부파일 status(N)
+	public int deleteAttachment(SqlSessionTemplate sqlSession, String filePath) {
+		return sqlSession.update("productMapper.deleteAttachment", filePath);
+	}
+
 	
 	/*상품 일시품절*/
 	public int readyProduct(SqlSessionTemplate sqlSession, int productNo) {
