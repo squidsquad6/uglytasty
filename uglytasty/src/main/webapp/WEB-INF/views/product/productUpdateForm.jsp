@@ -120,6 +120,21 @@
 		line-height: 27px;
 	}
     
+    /*주소API*/
+	#sample6_address {
+		float:left;
+	}
+	#address_btn {
+		padding-left: 0px;
+		background-color: #ff6741;
+        color: white;
+        border: none;
+    }
+ 	#address_btn:hover {
+        filter: brightness(0.9);
+    }
+    
+    
 </style>
 
 </head>
@@ -156,7 +171,13 @@
                     </tr>
                     <tr>
                         <th>생산지</th>
-                        <td><input type="text" id="location" name="location" value="${ p.location }"></td>
+                        <td>
+                        	<!-- 
+                        	<input type="text" id="location" name="location" value="${ p.location }">
+                        	 -->
+                        	<input type="text" id="sample6_address" name="location" value="${ p.location }" style="width:83%;" readonly>
+                        	<input type="button" id="address_btn" onclick="sample6_execDaumPostcode()" value="검색"  style="width:17%;color:white;">
+                        </td>
                     </tr>
                     <tr>
                         <th>생산 일자</th>
@@ -225,153 +246,8 @@
 				        <th colspan="2" class="blank">[빈칸]</th>
 				    </tr>
 				</c:forEach>
-             
-             	
-             	
-             	<!-- 아래 내용을 반복문 돌림 (위) 
-	                <tr>
-	                    <th>파일 레벨</th>
-	                    <td>
-	                        <input class="fileLevel" type="number" name="fileLevel1" value="1" readonly>
-	                    </td>
-	                </tr>
-	                <tr>
-	                    <th>첨부파일</th>
-	                    <td>
-	                        <input class="upfile" type="file" name="reupfile">
-                           	<c:if test="${ not empty alist[0].originName }">
-	                           	현재 업로드된 파일 : 
-	                            <a href="${ alist[0].changeName }" download="${ alist[0].originName }">${ alist[0].originName }</a>
-                           		<input type="hidden" name="originName1" value="${ alist[0].originName }">
-                           		<input type="hidden" name="changeName1" value="${ alist[0].changeName }">
-                           	</c:if>
-	                    </td>
-	                </tr>
-	                <tr>
-	                    <th>내용</th>
-	                    <th>
-	                        <textarea class="explanation" name="fileExp1" rows="5" cols="72" style="resize:none;">${ alist[0].fileExp }</textarea>
-	                    </th>
-	                </tr>
-	                <tr><th colspan="2" class="blank">[빈칸]</th></tr>
-
-
-
-					<tr>
-	                    <th>파일 레벨</th>
-	                    <td>
-	                        <input class="fileLevel" type="number" name="fileLevel2" value="2" readonly>
-	                    </td>
-	                </tr>
-	                <tr>
-	                     <th>첨부파일</th>
-	                    <td>
-	                        <input class="upfile" type="file" name="reupfile">
-                           	<c:if test="${ not empty alist[1].originName }">
-	                           	현재 업로드된 파일 : 
-	                            <a href="${ alist[1].changeName }" download="${ alist[1].originName }">${ alist[1].originName }</a>
-                           		<input type="hidden" name="originName2" value="${ alist[1].originName }">
-                           		<input type="hidden" name="changeName2" value="${ alist[1].changeName }">
-                           	</c:if>
-	                    </td>
-	                </tr>
-	                <tr>
-	                    <th>내용</th>
-	                    <th>
-	                        <textarea class="explanation" name="fileExp2" rows="5" cols="72" style="resize:none;">${ alist[1].fileLevel }</textarea>
-	                    </th>
-	                </tr>
-	                <tr><th colspan="2" class="blank">[빈칸]</th></tr>
-
-
-
-					<tr>
-	                    <th>파일 레벨</th>
-	                    <td>
-	                        <input class="fileLevel" type="number" name="fileLevel3" value="3" readonly>
-	                    </td>
-	                </tr>
-	                <tr>
-	                     <th>첨부파일</th>
-	                    <td>
-	                        <input class="upfile" type="file" name="reupfile">
-                           	<c:if test="${ not empty alist[2].originName }">
-	                           	현재 업로드된 파일 : 
-	                            <a href="${ alist[2].changeName }" download="${ alist[2].originName }">${ alist[2].originName }</a>
-                           		<input type="hidden" name="originName3" value="${ alist[2].originName }">
-                           		<input type="hidden" name="changeName3" value="${ alist[2].changeName }">
-                           	</c:if>
-	                    </td>
-	                </tr>
-	                <tr>
-	                    <th>내용</th>
-	                    <th>
-	                        <textarea class="explanation" name="fileExp3" rows="5" cols="72" style="resize:none;">${ alist[2].fileLevel }</textarea>
-	                    </th>
-	                </tr>
-	                <tr><th colspan="2" class="blank">[빈칸]</th></tr>
-	                
-	                
-	                
-					<tr>
-	                    <th>파일 레벨</th>
-	                    <td>
-	                        <input class="fileLevel" type="number" name="fileLevel4" value="4" readonly>
-	                    </td>
-	                </tr>
-	                <tr>
-	                     <th>첨부파일</th>
-	                    <td>
-	                        <input class="upfile" type="file" name="reupfile">
-                           	<c:if test="${ not empty alist[3].originName }">
-	                           	현재 업로드된 파일 : 
-	                            <a href="${ alist[3].changeName }" download="${ alist[3].originName }">${ alist[3].originName }</a>
-                           		<input type="hidden" name="originName4" value="${ alist[3].originName }">
-                           		<input type="hidden" name="changeName4" value="${ alist[3].changeName }">
-                           	</c:if>
-	                    </td>
-	                </tr>
-	                <tr>
-	                    <th>내용</th>
-	                    <th>
-	                        <textarea class="explanation" name="fileExp4" rows="5" cols="72" style="resize:none;">${ alist[3].fileLevel }</textarea>
-	                    </th>
-	                </tr>
-	                <tr><th colspan="2" class="blank">[빈칸]</th></tr>
-	                
-	                
-	                
-					<tr>
-	                    <th>파일 레벨</th>
-	                    <td>
-	                        <input class="fileLevel" type="number" name="fileLevel5" value="5" readonly>
-	                    </td>
-	                </tr>
-	                <tr>
-	                     <th>첨부파일</th>
-	                    <td>
-	                        <input class="upfile" type="file" name="reupfile">
-                           	<c:if test="${ not empty alist[4].originName }">
-	                           	현재 업로드된 파일 : 
-	                            <a href="${ alist[4].changeName }" download="${ alist[4].originName }">${ alist[4].originName }</a>
-                           		<input type="hidden" name="originName5" value="${ alist[4].originName }">
-                           		<input type="hidden" name="changeName5" value="${ alist[4].changeName }">
-                           	</c:if>
-	                    </td>
-	                </tr>
-	                <tr>
-	                    <th>내용</th>
-	                    <th>
-	                        <textarea class="explanation" name="fileExp5" rows="5" cols="72" style="resize:none;">${ alist[4].fileLevel }</textarea>
-	                    </th>
-	                </tr>
-	                <tr><th colspan="2" class="blank">[빈칸]</th></tr>
-	                
-	         		-->
-
-
+ 
             </table>
-
             
 			<br>
 
@@ -383,6 +259,52 @@
         
         <br>
     </div>
+		
+		
+	<!-- 주소 API -->
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+    <script>
+	    function sample6_execDaumPostcode() {
+	        new daum.Postcode({
+	            oncomplete: function(data) {
+	               
+	                var addr = ''; // 주소 변수
+	                var extraAddr = ''; // 참고항목 변수
+	
+	                //사용자가 선택한 '주소 타입'에 따라 해당 주소 값을 가져온다.
+	                if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
+	                    addr = data.roadAddress;
+	                } else { // 사용자가 지번 주소를 선택했을 경우(J)
+	                    addr = data.jibunAddress;
+	                }
+	
+	                // 사용자가 선택한 주소가 '도로명 타입'일때 참고항목을 조합한다.
+	                if(data.userSelectedType === 'R'){
+	                    // 법정동명이 있을 경우 추가한다. (법정리는 제외)
+	                    // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
+	                    if(data.bname !== '' && /[동|로|가]$/g.test(data.bname)){
+	                        extraAddr += data.bname;
+	                    }
+	                    // 건물명이 있고, 공동주택일 경우 추가한다.
+	                    if(data.buildingName !== '' && data.apartment === 'Y'){
+	                        extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
+	                    }
+	                    // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
+	                    if(extraAddr !== ''){
+	                        extraAddr = ' (' + extraAddr + ')';
+	                    }
+	                   
+	                } 
+	
+	                document.getElementById("sample6_address").value = addr;
+	                // 커서를 상세주소 필드로 이동한다.
+	                //document.getElementById("sample6_detailAddress").focus();
+	            }
+	        }).open();
+	    }
+    </script>	
+		
+		
 		
 	<!-- 푸터 -->
     <jsp:include page="../common/footer.jsp"/>

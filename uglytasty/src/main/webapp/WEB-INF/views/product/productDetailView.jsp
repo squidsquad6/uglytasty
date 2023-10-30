@@ -307,7 +307,7 @@
     .productItem h2 {
         text-align: left;
         margin-bottom: 20px;
-        width: 90%;
+        width: 100%;
     }
 
     /* --------------------댓글-------------------- */
@@ -398,6 +398,23 @@
         font-weight: bold;
     }
     
+    /* 지도API */
+    .uglytastyText {
+		font-weight: bold;
+		color: #ff6741;
+		width:280px;
+		height:40px;
+		text-align:center;
+		padding-top:10px;
+	}
+    .uglytastyLocation {
+		color: gray;
+		width:280px;
+		height:40px;
+		text-align:center;
+		padding-bottom:2px;
+	}
+    
     /* 푸터 영향받지 않도록 itemAll 에 넣은 스타일 */
     .clearfix::after {	
 	    content: "";
@@ -414,6 +431,7 @@
         z-index:999;
         cursor:pointer;
     }
+    
 </style>
 
 </head>
@@ -670,7 +688,7 @@
                     <h2 style="color:gray;">📦 이렇게 보내드려요</h2>
                     <img src="${ plist[4].changeName }">    
                     <p>
-                        • ${ plist[4].fileExp }
+                       ${ plist[4].fileExp }
                     </p>
                 </div>
                 <br><br>
@@ -684,6 +702,57 @@
                         빠르게 소진 예정이라 상온 보관을 하신다면 2~3도 사이 그늘지고 서늘한 곳에 신문지 등을 덮어 보관해주세요.
                     </p>
                 </div>
+                
+                <!------------------------------- 지도API -------------------------------------->
+                <div class="productItem">
+                	<br><br><br>
+                	<h2 style="color:gray;">👀 못난이 생산지를 확인해보세요!</h2>
+                
+                	<div id="map" style="width:100%;height:350px;"></div>
+	
+					<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=737c59a959b2b8f961819132015a4623&libraries=services"></script>
+					<script>
+					var mapContainer = document.getElementById('map'), // 지도를 표시할 div 
+					    mapOption = {
+					        center: new kakao.maps.LatLng(33.450701, 126.570667), // 지도의 중심좌표
+					        level: 3 // 지도의 확대 레벨
+					    };  
+					
+					// 지도를 생성합니다    
+					var map = new kakao.maps.Map(mapContainer, mapOption); 
+					
+					// 주소-좌표 변환 객체를 생성합니다
+					var geocoder = new kakao.maps.services.Geocoder();
+					
+					// 주소로 좌표를 검색합니다
+					geocoder.addressSearch('${ plist[0].location }', function(result, status) {
+					
+					    // 정상적으로 검색이 완료됐으면 
+					     if (status === kakao.maps.services.Status.OK) {
+					
+					        var coords = new kakao.maps.LatLng(result[0].y, result[0].x);
+					
+					        // 결과값으로 받은 위치를 마커로 표시합니다
+					        var marker = new kakao.maps.Marker({
+					            map: map,
+					            position: coords
+					        });
+					
+					        // 인포윈도우로 장소에 대한 설명을 표시합니다
+					        var infowindow = new kakao.maps.InfoWindow({
+					            content: '<div class="uglytastyText">👨🏻‍🌾 못난이 고향 📦</div><div class="uglytastyLocation">${ plist[0].location }</div>'
+					        });
+					        infowindow.open(map, marker);
+					
+					        // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+					        map.setCenter(coords);
+					    } 
+					});    
+					</script>
+                </div>
+                
+                
+                
 
             </div>
    
@@ -699,7 +768,7 @@
                 <thead>
                     <tr>
                         <th colspan="2">
-                            <textarea class="review_content" name="" id="content" cols="90" rows="2" style="resize:none; width:120%"></textarea>
+                            <textarea class="review_content" name="" id="content" cols="90" rows="2" style="resize:none; width:118%; padding-left:10px; padding-top:10px;" placeholder="로그인 후 작성해주세요."></textarea>
                         </th>
                         <th style="vertical-align: middle">
                             <button class="review_btn" style="margin-left: 130px; width:100px;" onclick="addReview();">등록하기</button>

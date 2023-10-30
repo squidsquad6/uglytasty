@@ -558,7 +558,6 @@ public class ProductController {
       
       int result = pService.insertCart(c);
       
-      System.out.println("result : " + result);
       return result>0 ? "success" : "fail";
    }
    
@@ -771,16 +770,27 @@ public class ProductController {
 	   //System.out.println("토스에서 받아 온 orderId: " + orderId);
 
 	   // 1)주문코드번호 '2:결제완료'로 update
-	   // 2)최종 주문 완료 화면에 줄 배송정보 select
+	   // 2_1)주문한 OrdersDetail에서 productNo, quantity 조회
+   	   // 2_2)상품재고량 stock에서 주문수량 quantity 빼기 
+   	   // 3)최종 주문 완료 화면에 줄 배송정보 select
 	   
 	   // "9a6hV9B4kXJ8QtWS9RCqa" 부분 이후의 숫자 부분을 추출 == *** 주문번호(orderNo) ***
 	   String numberPart = orderId.substring(orderId.lastIndexOf("9a6hV9B4kXJ8QtWS9RCqa") + "9a6hV9B4kXJ8QtWS9RCqa".length());
 	   int orderNo = Integer.parseInt(numberPart);
 	  
 	   // 1)
-	   int result = pService.updateOrderCode(orderNo);
+	   int result1 = pService.updateOrderCode(orderNo);
 	   
-	   if(result > 0) { // 2)
+	   // 2_1)
+	   OrdersDetail quantityProductNo = pService.selectOrdersQuantityProductNo(orderNo);
+	   //System.out.println("quantityProductNo객체" + quantityProductNo);
+	  
+	   // 2_2)
+	   int result2 = pService.updateProductStock(quantityProductNo);
+	   
+	   int result = result1 * result2;
+	   
+	   if(result > 0) { // 3)
 		   
 		   Orders oDelivery = pService.selectOrdersDelivery(orderNo);
 		   model.addAttribute("oDelivery", oDelivery);
@@ -871,6 +881,8 @@ public class ProductController {
   	   // 3_4)객체 OrdersDetail (vo userId추가한)에 userId, productNo, orderNo 들 set하고
   	   // 3_5)빈배열에 add객체들
   	   // 3)준비 끝.. list들고 장바구니 내역가서 '삭제'
+  	   // 4_1)주문한 productNo, quantity 조회
+  	   // 4_2)재고량 - 주문수량 update
 	   
 	   // "9a6hV9B4kXJ8QtWS9RCqa" 부분 이후의 숫자 부분을 추출 == *** 주문번호(orderNo) ***
 	   String numberPart = orderId.substring(orderId.lastIndexOf("9a6hV9B4kXJ8QtWS9RCqa") + "9a6hV9B4kXJ8QtWS9RCqa".length());
@@ -899,11 +911,18 @@ public class ProductController {
 		   
 	   }
 	   
-	   System.out.println("주문 후 삭제할 장바구니 리스트 : " + delList);
+	   //System.out.println("주문 후 삭제할 장바구니 리스트 : " + delList);
 	   
 	   // 3) '삭제'
 	   int result3 = pService.deleteCartAfterOrder(delList);
-
+	   
+	   
+	   // 4_1)
+	   ArrayList<OrdersDetail> ordersDetailPnoQuanList = pService.selectOrdersDetailPnoQuanList(orderNo);
+	   //System.out.println("주문후재고량변경리스트 : " + ordersDetailPnoQuanList);
+	   
+	   // 4_2)
+	   int result4 = pService.updateProductStockCart(ordersDetailPnoQuanList);
 	   
 	   int result = result1 * result3;
 	   
@@ -972,7 +991,7 @@ public class ProductController {
    @RequestMapping("duplication.cart")
    public String selectAddCartDuplication(Cart c) {
 	   int result = pService.selectAddCartDuplication(c);
-	   System.out.println("장바구니 상품 중복 검사 result : " + result);
+	   //System.out.println("장바구니 상품 중복 검사 result : " + result);
 
 	   return result>0 ? "cartO" : "cartX";
    }

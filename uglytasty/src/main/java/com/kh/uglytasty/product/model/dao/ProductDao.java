@@ -208,6 +208,15 @@ public class ProductDao {
 		return sqlSession.selectOne("productMapper.selectOrdersDelivery", orderNo);
 	}
 	
+	/*단품 => 2_1) 주문한 OrdersDetail에서 productNo, quantity 조회*/
+	public OrdersDetail selectOrdersQuantityProductNo(SqlSessionTemplate sqlSession, int orderNo) {
+		return sqlSession.selectOne("productMapper.selectOrdersQuantityProductNo", orderNo);
+	}
+	
+	/*단품 => 2_2) 상품재고량 stock에서 주문수량 quantity 빼기 */
+	public int updateProductStock(SqlSessionTemplate sqlSession, OrdersDetail quantityProductNo) {
+		return sqlSession.update("productMapper.updateProductStock", quantityProductNo);
+	}
 	
 	//----------------------------------------- (장바구니 상품)
 	
@@ -247,6 +256,15 @@ public class ProductDao {
 		return sqlSession.delete("productMapper.deleteCartAfterOrder", newOD);
 	}
 	
+	/*4_1)*/
+	public ArrayList<OrdersDetail> selectOrdersDetailPnoQuanList(SqlSessionTemplate sqlSession, int orderNo) {
+		return (ArrayList)sqlSession.selectList("productMapper.selectOrdersDetailPnoQuanList", orderNo);
+	}
+	
+	/*4_2)*/
+	public int updateProductStockCart(SqlSessionTemplate sqlSession, OrdersDetail newOD) {
+		return sqlSession.update("productMapper.updateProductStockCart", newOD);
+	}
 	
 	
 	//-------------------------------댓글(후기review)-------------------------------

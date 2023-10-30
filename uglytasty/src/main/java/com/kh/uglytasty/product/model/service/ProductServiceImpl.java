@@ -53,7 +53,7 @@ public class ProductServiceImpl implements ProductService {
 	/*상품 인기순 리스트 조회*/
 	@Override
 	public ArrayList<Product> selectPopularList() {
-		return pDao.selectProductList(sqlSession);
+		return pDao.selectPopularList(sqlSession);
 	}
 	
 	/*상품 가격낮은순 리스트 조회*/
@@ -309,12 +309,26 @@ public class ProductServiceImpl implements ProductService {
 		return pDao.updateOrderCode(sqlSession, orderNo);
 	}
 
-	/*단품 => 2) 최종 주문 완료 화면에 줄 배송정보 조회*/
+	/*단품 => 3) 최종 주문 완료 화면에 줄 배송정보 조회*/
 	@Override
 	public Orders selectOrdersDelivery(int orderNo) {
 		return pDao.selectOrdersDelivery(sqlSession, orderNo);
 	}
+	
+	/*단품 => 2_1) 주문한 OrdersDetail에서 productNo, quantity 조회*/
+	@Override
+	public OrdersDetail selectOrdersQuantityProductNo(int orderNo) {
+		return pDao.selectOrdersQuantityProductNo(sqlSession, orderNo);
+	}
 
+	/*단품 => 2_2) 상품재고량 stock에서 주문수량 quantity 빼기 */
+	@Override
+	public int updateProductStock(OrdersDetail quantityProductNo) {
+		return pDao.updateProductStock(sqlSession, quantityProductNo);
+	}
+	
+	
+	
 	
 	
 	//----------------------------------------- (장바구니 상품)
@@ -379,9 +393,23 @@ public class ProductServiceImpl implements ProductService {
 		return result;
 	}
 
+	/*4_1)*/
+	@Override
+	public ArrayList<OrdersDetail> selectOrdersDetailPnoQuanList(int orderNo) {
+		return pDao.selectOrdersDetailPnoQuanList(sqlSession, orderNo);
+	}
 
-	
-	
+	/*4_2)*/
+	@Override
+	public int updateProductStockCart(ArrayList<OrdersDetail> ordersDetailPnoQuanList) {
+		
+		int result = 0;
+		for(OrdersDetail newOD : ordersDetailPnoQuanList) {
+			// 객체 하나씩 계속 보내
+			result += pDao.updateProductStockCart(sqlSession, newOD);
+		}
+		return result;
+	}
 	
 	
 	
@@ -416,6 +444,12 @@ public class ProductServiceImpl implements ProductService {
 		return pDao.selectAddCartDuplication(sqlSession, c);
 	}
 
+	
+
+	
+
+	
+
 
 	
 	
@@ -434,5 +468,3 @@ public class ProductServiceImpl implements ProductService {
 	
 
 }
-
-	
