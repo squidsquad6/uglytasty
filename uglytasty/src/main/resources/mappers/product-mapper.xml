@@ -781,8 +781,37 @@
 		    by round(price - (price * (sale / 100)))
 	</select>
 	
+	<select id="selectOrdersQuantityProductNo" resultMap="ordersDetailResult">
+		select 
+				product_no
+			  , quantity
+		  from orders_detail
+		 where order_no = #{orderNo}
+	</select>
 	
+	<update id="updateProductStock">
+		update product
+		   set stock = stock - #{quantity}
+		 where product_no = #{productNo}
+	</update>
+
+	<select id="selectOrdersDetailPnoQuanList" resultMap="ordersDetailResult">
+		select 
+				product_no
+			  , quantity
+		  from orders_detail
+		 where order_no = #{orderNo}
+	</select>
 	
-	
+	<update id="updateProductStockCart">
+		update product
+		   set stock = stock - #{quantity}
+		 where product_no = #{productNo}
+	</update>
+
+
+
+
+
 
 </mapper>

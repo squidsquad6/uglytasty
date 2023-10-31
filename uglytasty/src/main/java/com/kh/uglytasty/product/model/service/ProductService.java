@@ -122,8 +122,15 @@ public interface ProductService {
 	// 단품 => 1) 주문코드번호 2:결제완료 업데이트
 	int updateOrderCode(int orderNo);
 	
-	// 단품 => 2) 최종 주문 완료 화면에 줄 배송정보 조회
+	// 단품 => 3) 최종 주문 완료 화면에 줄 배송정보 조회
 	Orders selectOrdersDelivery(int orderNo);
+	
+	// 단품 => 2_1) 주문한 OrdersDetail에서 productNo, quantity 조회
+	OrdersDetail selectOrdersQuantityProductNo(int orderNo);
+	
+	// 단품 => 2_1) 상품재고량 stock에서 주문수량 quantity 빼기 
+	int updateProductStock(OrdersDetail quantityProductNo);
+	
 	
 	
 	//----------------------------------------- (장바구니 상품)
@@ -149,6 +156,11 @@ public interface ProductService {
 	/*장바구니상품 => 3)주문상세에서 주문한 상품번호 조회 후 장바구니 내역가서 '삭제' */
 	int deleteCartAfterOrder(ArrayList<OrdersDetail> delList);
 	
+	/*4_1)*/
+	ArrayList<OrdersDetail> selectOrdersDetailPnoQuanList(int orderNo);
+	
+	/*4_2)*/
+	int updateProductStockCart(ArrayList<OrdersDetail> ordersDetailPnoQuanList);
 	
 	
 	
