@@ -14,14 +14,16 @@ import lombok.ToString;
 public class Recipe {
 	
 	private int recipeNo;
-	private String userId;
+	private String recipeWriter;
 	private String recipeTitle;
-	private String recipeImage;
+	private String recipeOriginName;
+	private String recipeChangeName; // "resources/uploadFiles/xxxx.jpg"
 	private String recipeExplanation;
 	private String recipeContent;
 	private int count;
 	private String difficulty;
 	private String time;
+	private String recipeDate;
 	private String status;
 
 }

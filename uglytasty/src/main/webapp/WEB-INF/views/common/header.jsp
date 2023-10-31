@@ -211,7 +211,7 @@
                                 <a href="list.pro"><span>못난이 단품</span></a>
                             </div>
                             <div class="header_eachmenu flex-fill">
-                                <a href="#"><span>맛난이 레시피</span></a>
+                                <a href="list.re"><span>맛난이 레시피</span></a>
                             </div>
                             <div class="header_eachmenu flex-fill">
                                 <a href="list.no"><span>공지사항</span></a>                  
