@@ -49,6 +49,11 @@
  		border-radius : 10px;
  	}
  	
+ 	
+ 	    .modal-content {
+    max-width: 600px; 
+    margin: 0 auto; 
+  }
 </style>
 
 
@@ -77,14 +82,15 @@
    </script>
  <div>
  		<br><br><br>
-        <div style="padding-left:420px">
-            <nav class="breadcrumb is-centered is-large has-background-white" aria-label="breadcrumbs">
-                <ul class="mainBtn">
-	                <li><a href="member.ad">&nbsp;&nbsp;&nbsp;회원 관리</a></li>
-	                <li><a href="order.ad">주문 관리</a></li>
-	                <li><a href="subscribe.ad">구독 관리</a></li>
-	                <li><a href="qa.ad">1:1문의 관리</a></li>
-	                <li><a href="product.ad">단품 관리</a></li>
+        <div style="padding-left:625px">
+            <nav class="breadcrumb is-centered is-large has-background-white" aria-label="breadcrumbs" >
+                <ul>
+                
+                <li><a href="member.ad" style="color: #ff6741;">회원 관리</a></li>
+                <li><a href="order.ad" style="color: #ff6741;">주문 관리</a></li>
+                <li><a href="subscribe.ad" style="color: #ff6741;">구독 관리</a></li>
+                <li><a href="qa.ad" style="color: #ff6741;">1:1문의 관리</a></li>
+                <li><a href="product.ad" style="color: #ff6741;">단품 관리</a></li>
                 </ul>
             </nav>
          </div>
@@ -115,7 +121,7 @@
             <tr>
               <td><input id="orderNo${loop.index}" class="input" type="text" style="border:none" value="${b.orderNo }" readonly></td>
               <td><input id="userId${loop.index }" class="input" type="text" style="border:none" value="${b.userId }" readonly></td>
-              <td><input id="productNo${loop.index }" class="input" type="text" style="border:none" value="${b.products }" readonly></td>
+              <td><input id="productNo${loop.index }" class="input" type="text" style="border:none" value="${b.products }" readonly onclick="openProductContentModal(${loop.index} , '${b.products}')"></td>
  
                 <td width="100px;">
                 	 <select id="orderCode${loop.index}" class="input">
@@ -139,12 +145,37 @@
                 <td><button class="button is-success is-hovered is-small is-light"  onclick="updateOrder(${loop.index })">수정</button></td>
     
             </tr>
+            
+            <div id="productContentModal${loop.index}" class="modal">
+			    <div class="modal-background"></div>
+			    <div class="modal-content">
+			        <textarea id="productContentDisplay${loop.index}" class="textarea" style="width: 100%; min-height: 150px;" readonly></textarea>
+			        <button class="button is-danger" onclick="closeProductContentModal(${loop.index})">닫기</button>
+			    </div>
+			    <button class="modal-close is-large" aria-label="close" onclick="closeProductContentModal(${loop.index})"></button>
+			</div>
+            
+            
           </c:forEach>
              
                 
               
           </tbody>
         </table>
+        
+        <script>
+		function openProductContentModal(index, productContent) {
+			 $('#productContentDisplay' + index).val(productContent);
+			  $('#productContentModal' + index).addClass('is-active');
+		}
+		
+		function closeProductContentModal(index) {
+		  $('#productContentModal' + index).removeClass('is-active');
+		}
+		</script>
+        
+        
+        
 		<script>
 			function updateOrder(index) {
 			    var orderNo = $('#orderNo' + index).val();
