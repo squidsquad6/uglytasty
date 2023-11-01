@@ -12,7 +12,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>상품 인기순 리스트</title>
 <style>
 	div * {box-sizing: border-box;}
 

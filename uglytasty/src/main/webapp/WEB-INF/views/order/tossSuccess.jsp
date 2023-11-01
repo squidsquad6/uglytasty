@@ -13,7 +13,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>결제 성공</title>
 <style>
     div * {box-sizing: border-box;}
 

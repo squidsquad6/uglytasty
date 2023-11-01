@@ -9,13 +9,17 @@
    	plist = ArrayList<Product> + fileNo + refProductNo + originName + changeName + fileExp + fileLevel / status
  
  	rlist = (댓글리스트) reviewNo, refProductNo, userId, content, reviewDate
+ 	
+ 	lastWord = 상품 마지막 단어(키워드)
+ 	
+ 	relatedRecipe = recipeNo, recipeTitle, recipeOriginName, recipeChangeName, difficulty, time
  -->
 
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>상품 상세페이지</title>
 
 <!-- 부트스트랩에서 제공하고 있는 스타일 -->
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
@@ -156,6 +160,41 @@
         filter: brightness(0.9);
     }
     
+    .order_btn .cart2{
+        width: 260px;
+        height: 50px;
+        border: 1px solid #ff6741;
+        border-radius: 5px;
+        background-color: white;
+        color: #ff6741;
+        margin-top: 15px;
+        margin-right: 5px;
+        font-weight: bold;
+        cursor: pointer;
+        text-decoration: none;
+        padding: 15px 100px;
+    }
+    .order_btn .cart2:hover {
+        border: 2px solid #ff6741;
+    }
+    .order_btn .order2{
+        width: 260px;
+        height: 50px;
+        border: 1px solid #ff6741;
+        border-radius: 5px;
+        background-color: #ff6741;
+        color: white;
+        margin-top: 15px;
+        margin-left: 5px;
+        font-weight: bold;
+        cursor: pointer;
+        text-decoration: none;
+        padding: 15px 100px;
+    }
+    .order_btn .order2:hover {
+        filter: brightness(0.9);
+    }
+    
     /*일시품절 때 버튼 비활성화 스타일*/
     .order_btn .cart1{
         width: 260px;
@@ -273,7 +312,7 @@
 
     hr {border: 1px solid #dadada;}
 
-    .delivery h1 {
+    .delivery h2 {
         margin-top: 50px;
         margin-bottom: 20px;
     }
@@ -314,7 +353,7 @@
     .review {
         margin: 100px 150px;
     }
-    .review h1 {
+    .review h2 {
         color: #ff6741;
         text-align: left;
         
@@ -363,7 +402,7 @@
     #recipeAll {
         width: 80%;
     }
-    #recipeAll h1 {
+    #recipeAll h2 {
         color: #ff6741;
         text-align: left;
         margin-bottom: 20px;
@@ -397,6 +436,15 @@
         color: #ff6741;
         font-weight: bold;
     }
+    .recipeTitle {
+    	color: gray;
+    }
+    .lastWord {
+    	color: gray;
+    	font-size: 32px;
+    	padding-left: 15px;
+    }
+    
     
     /* 지도API */
     .uglytastyText {
@@ -414,6 +462,22 @@
 		text-align:center;
 		padding-bottom:2px;
 	}
+	
+	.difficulty_time_option{
+        border-radius: 3px;
+        background-color: #FF6741;
+        padding: 2px;
+        color: white;
+        font-weight: 500;
+    }
+    .difficulty_time_option2{
+        border-radius: 3px;
+        background-color: #f1f1f1;
+        padding: 2px;
+        color: #FF6741;
+        font-weight: 500;
+    }
+	
     
     /* 푸터 영향받지 않도록 itemAll 에 넣은 스타일 */
     .clearfix::after {	
@@ -486,10 +550,6 @@
                             <div align="center" class="modal-footer">
                             
                             	<form action="list.cart">
-	                                <!-- 
-	                                <a href="#" class="btn btn-secondary" data-dismiss="modal">쇼핑 계속하기</a>
-	                                <a href="confirmForm.cart" class="btn btn-warning">장바구니 가기</a>
-	                                 -->
 	                                <input type="hidden" name="userId" value="${ loginMember.userId }">
                             		<input class="btn btn-secondary" data-dismiss="modal" value="쇼핑 계속하기" style="width:130px;">
                             		<input type="submit" class="btn btn-warning" value="장바구니 가기" style="width:130px; color:white;">
@@ -626,8 +686,17 @@
                         <div class="order_btn">
                             <div style="text-align: center;">
                             	<c:if test="${ plist[0].status eq 'Y' }">
-	                                <button class="cart" type="button" id="cartButton" onclick="addCartDuplication();">장바구니</button>
-	                                <button class="order" type="submit">주문하기</button>
+                            		<c:choose>
+                            			<c:when test="${not empty loginMember }">
+			                                <button class="cart" type="button" id="cartButton" onclick="addCartDuplication();">장바구니</button>
+			                                <button class="order" type="submit">주문하기</button>
+                            			</c:when>
+                            			<c:otherwise>
+                            				<a class="cart2" href="loginForm.me">장바구니</a>
+                            				<a class="order2" href="loginForm.me">주문하기</a>
+                            			</c:otherwise>
+                            		</c:choose>
+                            	
 				                </c:if>
                             	<c:if test="${ plist[0].status eq 'R' }">
                             		<p class="soldoutP" style="font-size: 12px;">[ 일시품절 ] 상품입니다. 재입고 후 주문 가능합니다.</p>
@@ -653,7 +722,7 @@
             <!-- 상세정보(배송일정, 상세정보, 후기(댓글), 관련레시피) -->
             
             <div class="delivery" align="left">
-                <h1>배송 일정</h1>
+                <h2>배송 일정</h2>
                 <p class="delivery_day">발송 요일 : 월, 금 출고</p>
                 <p>📦 주문 마감 시간 : 발송 전일 오후 5시</p>
                 <p>📦 발송 요일이 공휴일일 경우 공휴일 다음날 출고</p>
@@ -663,7 +732,7 @@
             
             <div class="productDetail" >
                 
-                <h1>'${ plist[0].productName }'</h1>
+                <h1>'${ plist[0].productName }'</h1><br><br>
 
                 <div class="productItem">
                     <img src="${ plist[1].changeName }">    
@@ -671,12 +740,14 @@
                         ${ plist[1].fileExp }
                     </p>
                 </div>
+                <br><br>
                 <div class="productItem">
                     <img src="${ plist[2].changeName }">    
                     <p>
                        ${ plist[2].fileExp }
                     </p>
                 </div>
+                <br><br>
                 <div class="productItem">
                     <img src="${ plist[3].changeName }">    
                     <p>
@@ -768,22 +839,38 @@
         </div>
 
 
+        <!-- 상품 후기 (댓글) -->
         
         <div class="review">
-            <h1 id="reviewArea">상품 후기</h1>
+            <h2 id="reviewArea">상품 후기</h2>
             
-        	<!-- 댓글 기능은 나중에 ajax 배우고 접목시킬예정! 우선은 화면구현만 해놓음 -->
             <table id="reviewArea" class="table" align="center" width="80%" style="padding-left: 20px;">
-                <thead>
-                    <tr>
-                        <th colspan="2">
-                            <textarea class="review_content" name="" id="content" cols="90" rows="2" style="resize:none; width:118%; padding-left:10px; padding-top:10px;" placeholder="로그인 후 작성해주세요."></textarea>
-                        </th>
-                        <th style="vertical-align: middle">
-                            <button class="review_btn" style="margin-left: 130px; width:100px;" onclick="addReview();">등록하기</button>
-                        </th>
-                    </tr>
-                </thead>
+            	<c:choose>
+            		<c:when test="${ not empty loginMember }">
+		                <thead>
+		                    <tr>
+		                        <th colspan="2">
+		                            <textarea class="review_content" name="" id="content" cols="90" rows="2" style="resize:none; width:118%; padding-left:10px; padding-top:10px;" placeholder="로그인 후 작성해주세요."></textarea>
+		                        </th>
+		                        <th style="vertical-align: middle">
+		                            <button class="review_btn" style="margin-left: 130px; width:100px;" onclick="addReview();">등록하기</button>
+		                        </th>
+		                    </tr>
+		                </thead>
+            		</c:when>
+            		<c:otherwise>
+            			<thead>
+		                    <tr>
+		                        <th colspan="3">
+		                        	<p style="color:gray; font-weight:100px; padding-top:15px;">로그인 후 작성해주세요.</p>
+		                        	<!-- 
+		                            <textarea class="review_content" name="" id="content" cols="90" rows="2" style="resize:none; width:118%; padding-left:10px; padding-top:10px;" placeholder="로그인 후 작성해주세요."></textarea>
+		                        	 -->
+		                        </th>
+		                    </tr>
+		                </thead>
+            		</c:otherwise>
+            	</c:choose>
                 <tbody>
                 
                 	<!-- 여기로 댓글 리스트 꽂힘 -->
@@ -913,65 +1000,39 @@
 
         <!------------------------------ 관련 레시피 ----------------------------->
         <div id="recipeAll" class="clearfix">
-        
+        	<!-- 
             <h1>해당 상품 관련 레시피</h1>
-        
-            <div class="recipe" align="left">
-                <div class="recipeImg">
-                    <img width="255px" src="https://all-to-delicious.s3.ap-northeast-2.amazonaws.com/atd/a2dcorp.co.kr/earth/recipe/thumbnail/pc/20220123/b9742c9305db4cbcbfee12b8e1699937.jpg">
-                </div>
-                <div class="recipeInfo">
-                	<span class="recipeStyle">난이도 : </span> 
-                    <span>누구나</span>
-                    <span>&nbsp; | &nbsp;</span>
-                    <span class="recipeStyle">소요시간 : </span>
-                    <span>15</span>
-                    <span>분이내</span>
-                    <h4 width="100%">간만 잘 맞추면 맛은 보장! 감자양파국</h4>
-                </div>
-            </div>
-            <div class="recipe" align="left">
-                <div class="recipeImg">
-                    <img width="255px" src="https://all-to-delicious.s3.ap-northeast-2.amazonaws.com/atd/a2dcorp.co.kr/earth/recipe/thumbnail/pc/20220123/15a5a1c5cc1c407ea3d8fa1968b910dd.jpg">
-                </div>
-                <div class="recipeInfo">
-                    <span class="recipeStyle">난이도 : </span> 
-                    <span>누구나</span>
-                    <span>&nbsp; | &nbsp;</span>
-                    <span class="recipeStyle">소요시간 : </span>
-                    <span>15</span>
-                    <span>분이내</span>
-                    <h4 width="100%">간만 잘 맞추면 맛은 보장! 감자양파국</h4>
-                </div>
-            </div>
-            <div class="recipe" align="left">
-                <div class="recipeImg">
-                    <img width="255px" src="https://all-to-delicious.s3.ap-northeast-2.amazonaws.com/atd/a2dcorp.co.kr/earth/recipe/thumbnail/pc/20220203/131897533e5f42aa836b56513a26e631.jpg">
-                </div>
-                <div class="recipeInfo">
-                    <span class="recipeStyle">난이도 : </span> 
-                    <span>누구나</span>
-                    <span>&nbsp; | &nbsp;</span>
-                    <span class="recipeStyle">소요시간 : </span>
-                    <span>15</span>
-                    <span>분이내</span>
-                    <h4>간만 잘 맞추면 맛은 보장! 감자양파국</h4>
-                </div>
-            </div>
-            <div class="recipe" align="left">
-                <div class="recipeImg">
-                    <img width="255px" src="https://all-to-delicious.s3.ap-northeast-2.amazonaws.com/atd/a2dcorp.co.kr/earth/recipe/thumbnail/pc/20220123/c6f63529e4184603bfca715c94be002a.jpg">
-                </div>
-                <div class="recipeInfo">
-                    <span class="recipeStyle">난이도 : </span> 
-                    <span>누구나</span>
-                    <span>&nbsp; | &nbsp;</span>
-                    <span class="recipeStyle">소요시간 : </span>
-                    <span>15</span>
-                    <span>분이내</span>
-                    <h4>간만 잘 맞추면 맛은 보장! 감자양파국</h4>
-                </div>
-            </div>
+			 -->
+            <h2 style="padding-left:10px;">상품 '<span class="lastWord">${ lastWord }</span>' 관련 레시피</h2>
+
+		    <c:choose>
+		    	<c:when test="${ not empty relatedRecipe }">
+		            <c:forEach var="rcp" items="${ relatedRecipe }">
+		            	<a href="detail.re?rno=${ rcp.recipeNo }">
+			            	<div class="recipe" align="left">
+				                <div class="recipeImg">
+				                    <img width="255px" src="${ rcp.recipeChangeName }">
+				                </div>
+				                <div class="recipeInfo">
+				                	<span class="recipeStyle">난이도 : </span> 
+				                    <span class="difficulty_time_option">${ rcp.difficulty }</span>
+				                    <span>&nbsp; | &nbsp;</span>
+				                    <span class="recipeStyle">소요시간 : </span>
+				                    <span class="difficulty_time_option2">${ rcp.time }</span>
+				                    <span>이내</span>
+				                    <h4 class="recipeTitle" width="100%">${ rcp.recipeTitle }</h4>
+				                </div>
+			            	</div>
+		            	</a>
+		            </c:forEach>
+		    	</c:when>
+		    	<c:otherwise>
+		    		<div>
+		    			<br><br><p>해당 상품과 관련된 레시피가 없습니다 😥<p> <br><br><br><br>
+		    		</div>
+		    	</c:otherwise>
+		    </c:choose>
+            
         </div>
         
      

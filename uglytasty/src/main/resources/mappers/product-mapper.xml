@@ -27,6 +27,8 @@
 		<result column="sale_price" property="salePrice" />
 		<result column="total_price" property="totalPrice" />
 		<result column="deliveryInclude_price" property="deliveryIncludePrice" />
+		
+		<result column="last_word" property="lastWord" />
 	</resultMap>
 	
 	
@@ -95,6 +97,22 @@
 		<result column="user_id" property="userId" />
 		<result column="content" property="content" />
 		<result column="review_date" property="reviewDate" />
+		<result column="status" property="status" />
+	</resultMap>
+	
+	
+	<resultMap type="Recipe" id="recipeResult">
+		<result column="recipe_no" property="recipeNo" />
+		<result column="recipe_writer" property="recipeWriter" />
+		<result column="recipe_title" property="recipeTitle" />
+		<result column="recipe_origin_name" property="recipeOriginName" />
+		<result column="recipe_change_name" property="recipeChangeName" />
+		<result column="recipe_exp" property="recipeExplanation" />
+		<result column="recipe_content" property="recipeContent" />
+		<result column="count" property="count" />
+		<result column="difficulty" property="difficulty" />
+		<result column="time" property="time" />
+		<result column="recipe_date" property="recipeDate" />
 		<result column="status" property="status" />
 	</resultMap>
 
@@ -809,6 +827,24 @@
 		 where product_no = #{productNo}
 	</update>
 
+	<select id="selectLastWord" resultType="string">
+		select 	distinct
+        		SUBSTR(#{productName}, INSTR(#{productName}, ' ', -1) + 1) as "last_word"
+		from product
+	</select>
+
+	<select id="selectRelatedRecipe" resultMap="recipeResult">
+		select 
+		        recipe_no
+		      , recipe_title
+		      , recipe_origin_name
+		      , recipe_change_name
+		      , difficulty
+		      , time
+		  from recipe
+		 where upper(recipe_title) like upper('%' || #{lastWord} || '%')
+		   and status = 'Y'
+	</select>
 
 
 

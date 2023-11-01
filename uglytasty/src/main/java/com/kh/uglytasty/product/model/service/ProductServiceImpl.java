@@ -77,7 +77,18 @@ public class ProductServiceImpl implements ProductService {
 		return pDao.selectDetailProduct(sqlSession, productNo);
 	}
 	
+	/*상품 마지막 단어*/
+	@Override
+	public String selectLastWord(String productName) {
+		return pDao.selectLastWord(sqlSession, productName);
+	}
 	
+	
+	/*관련레시피*/
+	@Override
+	public ArrayList<Recipe> selectRelatedRecipe(String lastWord) {
+		return pDao.selectRelatedRecipe(sqlSession, lastWord);
+	}
 	
 	
 	/*상품등록시 엑셀데이터 조회*/
@@ -443,6 +454,10 @@ public class ProductServiceImpl implements ProductService {
 	public int selectAddCartDuplication(Cart c) {
 		return pDao.selectAddCartDuplication(sqlSession, c);
 	}
+
+	
+
+	
 
 	
 

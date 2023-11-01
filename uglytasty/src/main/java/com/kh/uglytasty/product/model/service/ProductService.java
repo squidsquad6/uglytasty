@@ -37,6 +37,8 @@ public interface ProductService {
 	// 상품 상세 조회용 서비스
 	int increaseCount(int productNo);
 	ArrayList<Product> selectDetailProduct(int productNo);
+	String selectLastWord(String productName);
+	ArrayList<Recipe> selectRelatedRecipe(String lastWord);
 
 	// 상품 엑셀데이터 검색 조회용 서비스 (ajax)
 	Product selectSearchProduct(int productNo);

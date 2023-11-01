@@ -26,6 +26,7 @@ import com.kh.uglytasty.product.model.service.ProductServiceImpl;
 import com.kh.uglytasty.product.model.vo.Attachment;
 import com.kh.uglytasty.product.model.vo.Product;
 import com.kh.uglytasty.product.model.vo.Review;
+import com.kh.uglytasty.recipe.model.vo.Recipe;
 
 
 @Controller
@@ -130,7 +131,19 @@ public class ProductController {
          
          //System.out.println("상품의 상세정보(plist) : " + plist);
          
+         //** 레시피 키워드 조회 작업 (해당 상품 제목의 가장 마지막 키워드 구해서)
+         String productName = plist.get(0).getProductName();
+         
+         String lastWord = pService.selectLastWord(productName);
+         
+         //System.out.println("상품 마지막 단어 : " + lastWord);
+         
+         ArrayList<Recipe> relatedRecipe = pService.selectRelatedRecipe(lastWord);
+
+         
          model.addAttribute("plist", plist);
+         model.addAttribute("lastWord", lastWord);
+         model.addAttribute("relatedRecipe", relatedRecipe); 
          return "product/productDetailView";
       }else {
          model.addAttribute("errorMsg", "상세조회 실패!");
