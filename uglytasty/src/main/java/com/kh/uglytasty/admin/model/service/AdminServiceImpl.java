@@ -129,6 +129,13 @@ public class AdminServiceImpl implements AdminService{
 		
 		return aDao.selectProductList(sqlSession);
 	}
+
+	
+	// 송장번호 추가
+	@Override
+	public int updateTrackingNo(Orders o) {
+		return aDao.updateTrackingNo(sqlSession, o);
+	}
 	
 	
 	

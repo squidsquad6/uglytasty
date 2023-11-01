@@ -27,10 +27,7 @@ import com.kh.uglytasty.product.model.vo.Attachment;
 import com.kh.uglytasty.product.model.vo.Product;
 import com.kh.uglytasty.product.model.vo.Review;
 
-/**
- * @author wow59
- *
- */
+
 @Controller
 public class ProductController {
 
@@ -924,7 +921,7 @@ public class ProductController {
 	   // 4_2)
 	   int result4 = pService.updateProductStockCart(ordersDetailPnoQuanList);
 	   
-	   int result = result1 * result3;
+	   int result = result1 * result3 * result4;
 	   
 	   if(result > 0) { // 2)
 		   

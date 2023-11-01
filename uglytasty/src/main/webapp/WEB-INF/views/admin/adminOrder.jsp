@@ -36,6 +36,19 @@
         z-index:999;
         cursor:pointer;
     }
+    .orderStatusCode {
+    	color: #ff6741;
+    	font-size: 12px;
+    	padding-left: 10px;
+    }
+ 	
+ 	
+ 	.mainBtn a {
+ 		color:white;
+ 		background-color : #ff6741;
+ 		border-radius : 10px;
+ 	}
+ 	
 </style>
 
 
@@ -63,27 +76,27 @@
        });
    </script>
  <div>
-        <div style="padding-left:550px">
+ 		<br><br><br>
+        <div style="padding-left:420px">
             <nav class="breadcrumb is-centered is-large has-background-white" aria-label="breadcrumbs">
-                <ul>
-                
-                <li><a href="member.ad">회원 관리</a></li>
-                <li><a href="order.ad">주문 관리</a></li>
-                <li><a href="subscribe.ad">구독 관리</a></li>
-                <li><a href="qa.ad">1:1문의 관리</a></li>
-                 <li><a href="product.ad">단품 관리</a></li>
+                <ul class="mainBtn">
+	                <li><a href="member.ad">&nbsp;&nbsp;&nbsp;회원 관리</a></li>
+	                <li><a href="order.ad">주문 관리</a></li>
+	                <li><a href="subscribe.ad">구독 관리</a></li>
+	                <li><a href="qa.ad">1:1문의 관리</a></li>
+	                <li><a href="product.ad">단품 관리</a></li>
                 </ul>
             </nav>
          </div>
-<br>
+<br><br>
     <div class="container">
-       
+       	<p class="orderStatusCode">주문상태코드 : [1:미결제 | 2:결제완료(주문번호) | 3:배송준비중(송장번호) | 4:배송중 | 5:배송완료]</p>
         <table class="table-container is-fullwidth is-hoverable">
           <thead class="thead-dark">
             <tr>
-              <th>주문번호</th>
-              <th>아이디</th>
-              <th>상품번호</th>
+              	<th>주문번호</th>
+              	<th>아이디</th>
+              	<th>상품번호</th>
                 <th>주문상태코드</th>
                 <th>주문일자</th>
                 <th>송장번호</th>
@@ -95,7 +108,6 @@
                 <th>배송비</th>
                 <th>총 주문 금액</th>
                 <th>수정</th>
-               
             </tr>
           </thead>
           <tbody>
@@ -104,9 +116,19 @@
               <td><input id="orderNo${loop.index}" class="input" type="text" style="border:none" value="${b.orderNo }" readonly></td>
               <td><input id="userId${loop.index }" class="input" type="text" style="border:none" value="${b.userId }" readonly></td>
               <td><input id="productNo${loop.index }" class="input" type="text" style="border:none" value="${b.productNo }"></td>
-                <td><input id="orderCode${loop.index }" class="input" type="text" style="border:none" value="${b.orderCode }"></td>
-                <td><input id="orderDate${loop.index }" class="input" type="text" style="border:none" value="${b.orderDate }"></td>
-                <td><input id="trackingNo${loop.index }" class="input" type="text" style="border:none" value="${b.trackingNo }"></td>
+ 
+                <td width="100px;">
+                	 <select id="orderCode${loop.index}" class="input">
+			            <option value="1" ${b.orderCode == 1 ? 'selected' : ''}>1</option>
+			            <option value="2" ${b.orderCode == 2 ? 'selected' : ''}>2</option>
+			            <option value="3" ${b.orderCode == 3 ? 'selected' : ''}>3</option>
+			            <option value="4" ${b.orderCode == 4 ? 'selected' : ''}>4</option>
+			            <option value="5" ${b.orderCode == 5 ? 'selected' : ''}>5</option>
+			        </select>
+                </td>
+                
+                <td width="120px;"><input id="orderDate${loop.index }" class="input" type="text" style="border:none" value="${b.orderDate }"></td>
+                <td width="180px;"><input id="trackingNo${loop.index }" class="input" type="text" style="border:none" value="${b.trackingNo }"></td>
                 <td><input id="addressMain${loop.index }" class="input" type="text" style="border:none" value="${b.addressMain }"></td>
                 <td><input id="addressDetail${loop.index }" class="input" type="text" style="border:none" value="${b.addressDetail }"></td>
                 <td><input id="receiver${loop.index }" class="input" type="text" style="border:none" value="${b.receiver }"></td>
@@ -160,6 +182,7 @@
 			      success: function(response) {
 			        console.log('성공');
 			        alert('주문 정보가 성공적으로 수정되었습니다.');
+			        location.reload();
 			      },
 			      error: function() {
 			        console.log('실패');
