@@ -86,6 +86,13 @@
 		<result column="detail_address" property="detailAddress"/>
 		
 			</resultMap>
+<resultMap type="OrdersDetail" id="orderDetailResult">
+		<result column ="order_no" property="orderNo"/>
+		<result column ="product_no" property="productNo"/>
+		<result column ="quantity" property="quantity"/>
+		<result column ="product_name" property="productName"/>
+
+</resultMap>
 
 
 
@@ -93,7 +100,7 @@
 		select
 		         ORDER_NO
 				,USER_ID
-				,PRODUCT_NO
+				
 				,to_char(order_date, 'YYYY-MM-DD') AS "order_date"
 				,ORDER_CODE
 				,TRACKING_NO
@@ -112,6 +119,14 @@
 		  	by  order_no desc
 </select>
 
+<select id="selectOrderListProducts" resultMap="orderDetailResult">
+		select
+				ORDER_NO
+				,PRODUCT_NAME
+		FROM ORDERS_DETAIL
+		JOIN PRODUCT ON ORDERS_DETAIL.PRODUCT_NO = PRODUCT.PRODUCT_NO
+
+</select>
 
 	
 <select id="selectMemberList" resultMap="memberResult">
@@ -237,8 +252,8 @@ where product_no = #{productNo}
 <update id="updateAdminOrder">
 update
 		 orders
-set		     PRODUCT_NO =#{productNo}
-			,ORDER_DATE =#{orderDate}
+set		     
+			ORDER_DATE =#{orderDate}
 			,ORDER_CODE =#{orderCode}
 			,TRACKING_NO =#{trackingNo}
 			,ADDRESS_MAIN =#{addressMain}

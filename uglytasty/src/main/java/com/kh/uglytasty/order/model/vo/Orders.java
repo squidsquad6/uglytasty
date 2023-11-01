@@ -29,15 +29,16 @@ public class Orders {
    
    
    private int quantity;
+   
+   private String products;
 
 
-public Orders(int orderNo, String userId, int productNo, String orderDate, int orderCode, String trackingNo,
+public Orders(int orderNo, String userId, String orderDate, int orderCode, String trackingNo,
 		String addressMain, String addressDetail, String receiver, String receiverPhone, String deliveryMemo,
 		int deliveryFee, int totalPrice) {
 	super();
 	this.orderNo = orderNo;
 	this.userId = userId;
-	this.productNo = productNo;
 	this.orderDate = orderDate;
 	this.orderCode = orderCode;
 	this.trackingNo = trackingNo;
@@ -48,6 +49,7 @@ public Orders(int orderNo, String userId, int productNo, String orderDate, int o
 	this.deliveryMemo = deliveryMemo;
 	this.deliveryFee = deliveryFee;
 	this.totalPrice = totalPrice;
+	
 
 }
    

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 import com.kh.uglytasty.common.model.vo.PageInfo;
 import com.kh.uglytasty.member.model.vo.Member;
 import com.kh.uglytasty.order.model.vo.Orders;
+import com.kh.uglytasty.order.model.vo.OrdersDetail;
 import com.kh.uglytasty.product.model.vo.Product;
 import com.kh.uglytasty.qa.model.vo.QA;
 import com.kh.uglytasty.subscribe.model.vo.Subscribe;
@@ -122,6 +123,11 @@ public class AdminDao {
 	// 송장번호 추가
 	public int updateTrackingNo(SqlSessionTemplate sqlSession, Orders o) {
 		return sqlSession.insert("adminMapper.updateTrackingNo", o);
+	}
+
+	public ArrayList<OrdersDetail> selectOrderListProducts(SqlSessionTemplate sqlSession) {
+		
+		return (ArrayList)sqlSession.selectList("adminMapper.selectOrderListProducts");
 	}
 	
 	

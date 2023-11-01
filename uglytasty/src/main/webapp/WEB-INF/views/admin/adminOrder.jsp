@@ -96,7 +96,7 @@
             <tr>
               	<th>주문번호</th>
               	<th>아이디</th>
-              	<th>상품번호</th>
+              	<th>상품구성</th>
                 <th>주문상태코드</th>
                 <th>주문일자</th>
                 <th>송장번호</th>
@@ -115,7 +115,7 @@
             <tr>
               <td><input id="orderNo${loop.index}" class="input" type="text" style="border:none" value="${b.orderNo }" readonly></td>
               <td><input id="userId${loop.index }" class="input" type="text" style="border:none" value="${b.userId }" readonly></td>
-              <td><input id="productNo${loop.index }" class="input" type="text" style="border:none" value="${b.productNo }"></td>
+              <td><input id="productNo${loop.index }" class="input" type="text" style="border:none" value="${b.products }" readonly></td>
  
                 <td width="100px;">
                 	 <select id="orderCode${loop.index}" class="input">

@@ -18,5 +18,7 @@ public class OrdersDetail {
     private int quantity;
     
     private String userId;
+    
+    private String productName;
    
 }

@@ -99,7 +99,7 @@
             <c:forEach var="b" items="${list }" varStatus="loop">
             <tr>
                 <td><input id="userId${loop.index}" name="userId${loop.index}" class="input" type="text" style="border:none" value="${b.userId}" readonly></td>
-		        <td><input id="userPwd${loop.index}" class="input" type="text" style="border:none" value="${b.userPwd}"></td>
+		        <td><input id="userPwd${loop.index}" class="input" type="text" style="border:none" value="${b.userPwd}" readonly></td>
 		        <td><input id="userName${loop.index}" class="input" type="text" style="border:none" value="${b.userName}"></td>
 		        <td><input id="email${loop.index}" class="input" type="text" style="border:none" value="${b.email}"></td>
 		        <td><input id="phone${loop.index}" class="input" type="text" style="border:none" value="${b.phone}"></td>

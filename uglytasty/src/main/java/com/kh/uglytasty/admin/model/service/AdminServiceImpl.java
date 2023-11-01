@@ -10,6 +10,7 @@ import com.kh.uglytasty.admin.model.dao.AdminDao;
 import com.kh.uglytasty.common.model.vo.PageInfo;
 import com.kh.uglytasty.member.model.vo.Member;
 import com.kh.uglytasty.order.model.vo.Orders;
+import com.kh.uglytasty.order.model.vo.OrdersDetail;
 import com.kh.uglytasty.product.model.vo.Product;
 import com.kh.uglytasty.qa.model.vo.QA;
 import com.kh.uglytasty.subscribe.model.vo.Subscribe;
@@ -135,6 +136,12 @@ public class AdminServiceImpl implements AdminService{
 	@Override
 	public int updateTrackingNo(Orders o) {
 		return aDao.updateTrackingNo(sqlSession, o);
+	}
+
+
+	public ArrayList<OrdersDetail> selectOrderListProducts() {
+		
+		return aDao.selectOrderListProducts(sqlSession);
 	}
 	
 	

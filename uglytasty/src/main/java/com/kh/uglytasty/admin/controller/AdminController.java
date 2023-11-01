@@ -3,7 +3,9 @@ package com.kh.uglytasty.admin.controller;
 import java.io.IOException;
 import java.security.SecureRandom;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -59,12 +61,48 @@ public class AdminController {
 		
 		int listCount = aService.selectOrderListCount();
 		
+		
+		
+		
 		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 10);
 		
 		
 		ArrayList<Orders> list =   aService.selectOrderList(pi);
+		ArrayList<OrdersDetail> list2 =  aService.selectOrderListProducts();
+		System.out.println("list2:"+ list2);
 		
 		
+		
+		Map<Integer, List<String>> orderDetailsMap = new HashMap<>();
+		for (OrdersDetail orderDetail : list2) {
+		    int orderId = orderDetail.getOrderNo();
+		    String product = orderDetail.getProductName();
+		    
+		    // Check if the order ID is already in the map, and add the product
+		    if (orderDetailsMap.containsKey(orderId)) {
+		        orderDetailsMap.get(orderId).add(product);
+		    } else {
+		        // If not, create a new list and add the product
+		        List<String> products = new ArrayList<>();
+		        products.add(product);
+		        orderDetailsMap.put(orderId, products);
+		    }
+		}
+
+		// Iterate through the orders in list and add the corresponding products
+		for (Orders order : list) {
+		    int orderId = order.getOrderNo();
+		    
+		    // Check if the order ID exists in the map
+		    if (orderDetailsMap.containsKey(orderId)) {
+		    	 List<String> productsList = orderDetailsMap.get(orderId);
+		        String products = String.join("/", productsList);
+		        
+		        order.setProducts(products);
+		    }
+		}
+		
+		System.out.println("list:" + list);
 		
 		model.addAttribute("list", list).addAttribute("pi",pi);
 		
@@ -147,9 +185,9 @@ public class AdminController {
 	
 	@ResponseBody
 	@RequestMapping(value= "updateOrder.ad", produces="application/json; charset=UTF-8")
-	public String updateAdminOrder(int orderNo,String userId, int productNo, int orderCode, String orderDate, String trackingNo, String addressMain, String addressDetail, String receiver, String receiverPhone, String deliveryMemo, int deliveryFee, int totalPrice) {
+	public String updateAdminOrder(int orderNo,String userId,  int orderCode, String orderDate, String trackingNo, String addressMain, String addressDetail, String receiver, String receiverPhone, String deliveryMemo, int deliveryFee, int totalPrice) {
 		
-		Orders b = new Orders(orderNo, userId, productNo, orderDate, orderCode, trackingNo, addressMain, addressDetail, receiver, receiverPhone, deliveryMemo, deliveryFee, totalPrice);
+		Orders b = new Orders(orderNo, userId,  orderDate, orderCode, trackingNo, addressMain, addressDetail, receiver, receiverPhone, deliveryMemo, deliveryFee, totalPrice);
 		
 		
 		// 수정
