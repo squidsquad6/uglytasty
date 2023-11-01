@@ -87,6 +87,8 @@
 		
 			</resultMap>
 
+
+
 <select id="selectOrderList" resultMap="orderResult">
 		select
 		         ORDER_NO
@@ -106,7 +108,11 @@
 		      
 		      
 		  from  orders
-	</select>
+		 order
+		  	by  order_no desc
+</select>
+
+
 	
 <select id="selectMemberList" resultMap="memberResult">
 
@@ -298,4 +304,13 @@ where user_id = #{userId}
   	   	
   
   </select>
+  
+  
+<update id="updateTrackingNo">
+	update orders
+	  set tracking_no = #{trackingNo}
+	  where order_no = #{orderNo}
+</update>
+  
+  
 </mapper>

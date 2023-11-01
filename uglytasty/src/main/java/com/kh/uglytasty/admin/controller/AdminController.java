@@ -1,6 +1,7 @@
 package com.kh.uglytasty.admin.controller;
 
 import java.io.IOException;
+import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,6 +27,7 @@ import com.kh.uglytasty.common.model.vo.PageInfo;
 import com.kh.uglytasty.common.template.Pagination;
 import com.kh.uglytasty.member.model.vo.Member;
 import com.kh.uglytasty.order.model.vo.Orders;
+import com.kh.uglytasty.order.model.vo.OrdersDetail;
 import com.kh.uglytasty.product.model.vo.Product;
 import com.kh.uglytasty.qa.model.vo.QA;
 import com.kh.uglytasty.subscribe.model.vo.Subscribe;
@@ -57,7 +59,7 @@ public class AdminController {
 		
 		int listCount = aService.selectOrderListCount();
 		
-		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 5);
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 10, 10);
 		
 		
 		ArrayList<Orders> list =   aService.selectOrderList(pi);
@@ -150,8 +152,31 @@ public class AdminController {
 		Orders b = new Orders(orderNo, userId, productNo, orderDate, orderCode, trackingNo, addressMain, addressDetail, receiver, receiverPhone, deliveryMemo, deliveryFee, totalPrice);
 		
 		
-		
+		// 수정
 		int result = aService.updateAdminOrder(b);
+		
+		// 송장번호 생성 (주문상태번호:3배송준비중 => 16자리 랜덤 숫자)
+		if(orderCode == 3) {
+			
+			SecureRandom secureRandom = new SecureRandom();
+			
+			long randomNumber;
+			do {
+			    randomNumber = secureRandom.nextLong();
+			    if (randomNumber < 0) {
+			        randomNumber = -randomNumber; // 음수 방지
+			    }
+			} while (String.valueOf(randomNumber).length() != 16); // 16자리로 제한
+
+			String randomTrackingNo = String.valueOf(randomNumber);
+			//System.out.println("송장번호 : " + randomTrackingNo);
+			
+			Orders o = new Orders();
+			o.setOrderNo(orderNo);
+			o.setTrackingNo(randomTrackingNo);
+			
+			int result2 = aService.updateTrackingNo(o);
+		}
 		
 		return new Gson().toJson(b);
 		

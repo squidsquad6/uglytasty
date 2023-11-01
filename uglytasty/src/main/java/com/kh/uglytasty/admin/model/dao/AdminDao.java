@@ -119,7 +119,10 @@ public class AdminDao {
 	}
 
 	
-	
+	// 송장번호 추가
+	public int updateTrackingNo(SqlSessionTemplate sqlSession, Orders o) {
+		return sqlSession.insert("adminMapper.updateTrackingNo", o);
+	}
 	
 	
 }

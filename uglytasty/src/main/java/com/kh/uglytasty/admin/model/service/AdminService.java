@@ -25,7 +25,7 @@ public interface AdminService {
 	int updateAdminMember(Member b);
 	
 	
-	
+	int updateTrackingNo(Orders o);
 
 }
 
