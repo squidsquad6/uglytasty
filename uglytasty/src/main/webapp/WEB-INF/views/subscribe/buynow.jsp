@@ -41,7 +41,7 @@
     }
     
     #modal-js-example .modal-card {
-    width: 400px; /* 원하는 너비 설정 */
+    width: 650px; /* 원하는 너비 설정 */
     max-height: 70vh; /* 원하는 최대 높이 설정 (뷰포트 높이의 70%) */
     overflow-y: auto; /* 내용이 모달을 벗어날 경우 스크롤 표시 */
 }
@@ -463,20 +463,27 @@ document.addEventListener('DOMContentLoaded', () => {
 <div id="modal-js-example" class="modal">
   <div class="modal-background"></div>
   <div class="modal-card">
-    <header class="modal-card-head">
-      <p class="modal-card-title">제외할 품목 선택하기</p>
+    <header class="modal-card-head" style="height: 60px;" >
+      <p class="modal-card-title" style=" padding-top: 20px;"><i class="fa-solid fa-check"></i>&nbsp;제외할 품목 선택하기</p>
       <button class="delete" aria-label="close"></button>
     </header>
-   <section class="modal-card-body">
-  
-		 <c:forEach var="vegetable" items="${list}">
-		    <label class="checkbox">
-		        <input type="checkbox" value="${vegetable.compName}" onclick="updateHateVegi()">
-		        ${vegetable.compName}
-		    </label>
-		</c:forEach>
-		  
-		 
+  <section class="modal-card-body">
+  <table>
+	<c:forEach var="vegetable" items="${list}" varStatus="loop">
+	  <c:if test="${loop.index % 5 == 0}">
+	    <tr>
+	  </c:if>
+	  <td>
+	    <label class="checkbox">
+	      <input type="checkbox" value="${vegetable.compName}" onclick="updateHateVegi()">
+	      ${vegetable.compName}
+	    </label>
+	  </td>
+	  <c:if test="${loop.index % 5 == 4 or loop.last}">
+	    </tr>
+	  </c:if>
+	</c:forEach>
+  </table>
 </section>
     <footer class="modal-card-foot">
       <button class="button is-success">선택 완료</button>
@@ -513,6 +520,7 @@ document.addEventListener('DOMContentLoaded', () => {
         // sample6_address 입력값이 변경될 때 이벤트 핸들러 추가
         addressInput.addEventListener('input', function () {
             addressHiddenInput.value = addressInput.value;
+            
         });
 
         // sample6_detailAddress 입력값이 변경될 때 이벤트 핸들러 추가
