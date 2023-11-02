@@ -2,6 +2,7 @@ package com.kh.uglytasty.member.controller;
 
 import java.math.BigInteger;
 import java.security.SecureRandom;
+import java.util.ArrayList;
 import java.util.Map;
 
 import javax.servlet.http.HttpSession;
@@ -23,6 +24,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kh.uglytasty.member.model.service.MemberServiceImpl;
 import com.kh.uglytasty.member.model.vo.Member;
+import com.kh.uglytasty.product.model.vo.Product;
 
 @Controller
 public class MemberController {
@@ -195,7 +197,9 @@ public class MemberController {
 
 		
 		Member loginMember = mService.loginMember(m);
-
+		
+		// ** 재고량 0 인 상품 조회 (select) - 관리자알림용
+		ArrayList<Product> productStockList = mService.selectProductStockList();
 			
 		if(loginMember == null) { 
 			// 로그인 실패 => 에러메세지 requestScope에 담아서 에러 페이지(/WEB-INF/views/common/errorPage.jsp)로 포워딩
@@ -209,11 +213,25 @@ public class MemberController {
 			// 로그인 성공 => loginMember를 sessionScope에 담고 메인페이지 url 재요청
 			
 			session.setAttribute("loginMember", loginMember);
-
+			
+			// ** 재고량 0 인 상품 조회 (select) - 관리자알림용
+			//System.out.println("재고량0상품 : " + productStockList);
+			session.setAttribute("productStockList", productStockList);
+			
 			model.addAttribute("errorMsg", "로그인 성공!");
 
 			return "redirect:/";
 		}
+	}
+
+	/** 재고량 0 인 상품 관련 - 관리자알림용 제거
+	 *
+	 */
+	@RequestMapping("removeAlert.stock")
+	public String removeStockAlert(HttpSession session) {
+	    // 세션에서 loginMember 속성을 삭제
+	    session.removeAttribute("productStockList");
+	    return "redirect:/";
 	}
 	
 

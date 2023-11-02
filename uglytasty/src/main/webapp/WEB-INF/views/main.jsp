@@ -1,11 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
+<!-- 
+	* 재고량 0 인 상품 조회 (select) - 관리자알림용
+	productStockList : productNo, productName, stock
+ -->
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>못난이맛난이</title>
 
 <style>
     div * {box-sizing: border-box;}
@@ -254,6 +259,8 @@
         cursor:pointer;
     }
     
+
+    
 </style>
 
 </head>
@@ -282,6 +289,59 @@
            return false;
        });
    </script>
+   
+   
+   
+   
+   
+   	<!-- '재고량 0' 상품 발생시, '관리자' 에게 보여줄 modal -->
+   	<c:if test="${ loginMember.userId eq 'admin' }">
+   		<c:if test="${ not empty productStockList }">
+	         <div align="left" class="modalOuter"  style="width:500px;">
+	             <button data-toggle="modal" data-target="#loginModal" id="modalButton" style="border:none;color:white;background-color:white;">숨길버튼(모달)</button>
+	             <div class="modal fade" id="loginModal">
+	                 <div class="modal-dialog modal-sm">
+	                     <div class="modal-content">
+	                         <!-- Modal Header -->
+	                         <div class="modal-header">
+	                             <h4 class="modal-title" style="padding-left:5px;">📍 재고량 '0' 상품 알림</h4>
+	                             <button type="button" class="close" data-dismiss="modal">&times;</button>
+	                         </div>
+	                   
+	                         <div class="modal-body" align="center">
+	                             <p>[R: 일시품절] 또는 [N: 판매종료] <br>상품 상태를 변경해주세요.</p><br>
+	                             	<c:forEach var="s" items="${ productStockList }">
+	                             		상품명 : <span style="color:#ff6741; font-size:15px;">${ s.productName }</span><br>
+	                             		재고량 : <span style="color:#ff6741; font-size:15px;">${ s.stock }</span><br><br>
+	                             	</c:forEach>
+	                         </div>
+	                         
+	                         <div align="center" class="modal-footer" style="padding-right:45px;">
+	                         	  <!-- 
+		                          <a href="product.ad" class="btn btn-warning">상품 관리 페이지로</a>
+		                           -->
+		                          <a href="removeAlert.stock" class="btn btn-warning" style="padding:7px 86px 7px 86px;">OK</a>
+	                         </div>
+	                     </div>
+	                 </div>
+	             </div>
+	             <br clear="both">
+	         </div>
+   		</c:if>
+	</c:if>
+	
+    <!-- '재고량 0' 상품 발생시, '관리자' 에게 보여줄 modal -->
+    <script>
+		$(function(){
+			// 'productStockList'가 존재하면 모달 띄움
+		    $("#modalButton").click();
+		});
+	</script>
+   
+   
+   
+   
+   
        
 
    
@@ -481,6 +541,9 @@
         </div>
         
       <br><br><br>
+      
+  
+      
 
     </div>
    

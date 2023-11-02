@@ -882,7 +882,8 @@
 		<script>
 		
 			$(function(){
-				selectReviewList();
+				  selectReviewList();
+				
 			})
 			
 			

@@ -76,7 +76,7 @@ public class ProductController {
    @RequestMapping("popularlist.pro")
    public String selectPopularList(Model model) {
 	   ArrayList<Product> plist = pService.selectPopularList();
-	   System.out.println("인기순 : " + plist);
+	   //System.out.println("인기순 : " + plist);
 	   model.addAttribute("plist", plist);
 	      
 	   return "product/productPopularListView";

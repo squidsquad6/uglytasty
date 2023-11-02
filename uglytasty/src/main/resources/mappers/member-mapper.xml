@@ -15,6 +15,14 @@
 	</resultMap>
 
 
+	<resultMap type="Product" id="productResult">
+		<result column="product_no" property="productNo" />
+		<result column="product_name" property="productName" />
+		<result column="stock" property="stock" />
+	</resultMap>
+	
+	
+	
 	
 	<!-- 비밀번호 암호화 후 로그인 -->
 	<!-- (user_pwd 조건 삭제 / 비교는 Controller에서 .matches 메소드로 할것) -->
@@ -36,6 +44,18 @@
 	where status = 'Y'
 	and user_id = #{userId}
 	</select>
+	
+	<!-- 재고량 0 인 상품 조회 (select) - 관리자알림용 -->
+	<select id="selectProductStockList" resultMap="productResult">
+		select
+		        product_no 
+		      , product_name
+		      , stock
+		  from product
+		 where status = 'Y'
+		   and stock = 0
+	</select>
+	
 	
 	<!-- 회원가입 -->
 	<insert id="insertMember">

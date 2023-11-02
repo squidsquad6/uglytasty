@@ -22,20 +22,27 @@
     }
 
     .search input {
-        width: 950px;
-        height: 50px;
-        border-radius: 6px;
+        width: 770px;
+        height: 58px;
+        border-radius: 10px;
         border: 1px solid lightgray;
+        padding-left: 10px;
+        font-size:15px;
+        
+    }
+    .search input::placeholder{ /* place holder 글자색 */
+        color:#a0aec0;
     }
     .search button {
-        width: 150px;
-        height: 50px;
+        width: 100px;
+        height: 58px;
         background-color: #ff6741;
         color: white;
         border: none;
         margin: 30px 0;
-        border-radius: 6px;
+        border-radius: 10px;
         cursor: pointer;
+        font-weight: bold;
     }
     .search button:hover {
         filter: brightness(0.9);
@@ -183,7 +190,9 @@
 
 	<div class="all">
 		
-		<br><br>
+		<br><br><br>
+        <h2 align="center" style="font-weight:bold;">못난이 단품</h2>
+		<br>
 		
 		<!-- 상품(키워드) 검색 -->
         <form action="searchKeyword.pro">

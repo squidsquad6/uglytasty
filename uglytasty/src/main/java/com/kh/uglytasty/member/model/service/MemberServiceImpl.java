@@ -1,5 +1,6 @@
 package com.kh.uglytasty.member.model.service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -27,6 +28,7 @@ import org.springframework.stereotype.Service;
 
 import com.kh.uglytasty.member.model.dao.MemberDao;
 import com.kh.uglytasty.member.model.vo.Member;
+import com.kh.uglytasty.product.model.vo.Product;
 
 @Service
 public class MemberServiceImpl implements MemberService{
@@ -43,6 +45,12 @@ public class MemberServiceImpl implements MemberService{
 	@Override
 	public Member loginMember(Member m) {
 		return mDao.loginMember(sqlSession, m);
+	}
+	
+	// 재고량 0 인 상품 조회 (select) - 관리자알림용
+	@Override
+	public ArrayList<Product> selectProductStockList() {
+		return mDao.selectProductStockList(sqlSession);
 	}
 
 	@Override
@@ -201,6 +209,8 @@ public class MemberServiceImpl implements MemberService{
 		
 		return mDao.checkMemberByGoogle(sqlSession, userId);
 	}
+
+	
 
 	
 
