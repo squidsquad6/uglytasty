@@ -12,6 +12,7 @@ import com.kh.uglytasty.order.model.vo.OrdersDetail;
 import com.kh.uglytasty.product.model.vo.Attachment;
 import com.kh.uglytasty.product.model.vo.Product;
 import com.kh.uglytasty.product.model.vo.Review;
+import com.kh.uglytasty.recipe.model.vo.Recipe;
 
 @Repository
 public class ProductDao {
@@ -45,14 +46,26 @@ public class ProductDao {
 	
 	
 	
-	
+	/*조회수 증가*/
 	public int increaseCount(SqlSessionTemplate sqlSession, int productNo) {
 		return sqlSession.update("productMapper.increaseCount", productNo);
 	}
 	
+	/*상품 상세페이지*/
 	public ArrayList<Product> selectDetailProduct(SqlSessionTemplate sqlSession, int productNo) {
 		return (ArrayList)sqlSession.selectList("productMapper.selectDetailProduct", productNo);
 	}
+	
+	/*상품 마지막 단어*/
+	public String selectLastWord(SqlSessionTemplate sqlSession, String productName) {
+		return sqlSession.selectOne("productMapper.selectLastWord", productName);
+	}
+	
+	/*관련레시피*/
+	public ArrayList<Recipe> selectRelatedRecipe(SqlSessionTemplate sqlSession, String lastWord) {
+		return (ArrayList)sqlSession.selectList("productMapper.selectRelatedRecipe", lastWord);
+	}
+	
 	
 	/*등록시 엑셀 상품 데이터 조회*/
 	public Product selectSearchProduct(SqlSessionTemplate sqlSession, int productNo) {

@@ -24,7 +24,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>상품 전체 리스트</title>
 <style>
 	div * {box-sizing: border-box;}
 
@@ -34,20 +34,27 @@
     }
 
     .search input {
-        width: 950px;
-        height: 50px;
-        border-radius: 6px;
+        width: 770px;
+        height: 58px;
+        border-radius: 10px;
         border: 1px solid lightgray;
+        padding-left: 10px;
+        font-size:15px;
+        
+    }
+    .search input::placeholder{ /* place holder 글자색 */
+        color:#a0aec0;
     }
     .search button {
-        width: 150px;
-        height: 50px;
+        width: 100px;
+        height: 58px;
         background-color: #ff6741;
         color: white;
         border: none;
         margin: 30px 0;
-        border-radius: 6px;
+        border-radius: 10px;
         cursor: pointer;
+        font-weight: bold;
     }
     .search button:hover {
         filter: brightness(0.9);
@@ -161,6 +168,31 @@
 	    display: table;
 	    clear: both;
 	}
+	
+	
+	
+	/* The Modal (background) */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 1; /* Sit on top */
+            left: 0;
+            top: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgb(0,0,0); /* Fallback color */
+            background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+        }
+    
+        /* Modal Content/Box */
+        .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto; /* 15% from the top and centered */
+            padding: 20px;
+            border: 1px solid #888;
+            width: 30%; /* Could be more or less, depending on screen size */                          
+        }
     
     
 </style>
@@ -173,7 +205,9 @@
 
 	<div class="all">
 		
-		<br><br>
+		<br><br><br>
+        <h2 align="center" style="font-weight:bold;">못난이 단품</h2>
+		<br>
 		
 		<!-- 상품(키워드) 검색 -->
         <form action="searchKeyword.pro">
@@ -341,6 +375,8 @@
             		})
             	})
             </script>
+            
+         
             
         
         </div>

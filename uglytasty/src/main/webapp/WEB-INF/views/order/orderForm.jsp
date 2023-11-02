@@ -20,7 +20,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>주문서</title>
  <style>
      div * {box-sizing: border-box;}
 

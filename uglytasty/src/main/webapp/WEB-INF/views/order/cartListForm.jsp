@@ -14,7 +14,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>장바구니 리스트</title>
 <style>
     div * {box-sizing: border-box;}
 
@@ -170,7 +170,7 @@
 				    <tr id="<c:out value="${rowCounter}" />">
 				        <td><input type="checkbox" name="rowCheck" value="${ c.productNo }"></td>
 	                    <td>
-	                        <a href="#">
+	                        <a href="detail.pro?pno=${ c.productNo }">
 	                            <img style="width: 100px; height: 100px;" src="${ c.changeName }">
 	                        </a>
 	                    </td>

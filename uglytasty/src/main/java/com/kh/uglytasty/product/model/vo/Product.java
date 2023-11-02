@@ -42,6 +42,8 @@ public class Product {
 	private int totalPrice;
 	private int deliveryIncludePrice;
 	
+	private String lastWord;
+	
 	
 	public Product(int productNo, String productName, int price, int sale, String explanation, String location,
 			String productionDate, int stock, String status, int count, String enrollDate) {
