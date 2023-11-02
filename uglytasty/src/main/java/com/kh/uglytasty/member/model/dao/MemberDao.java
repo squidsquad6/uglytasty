@@ -36,6 +36,39 @@ public class MemberDao {
 	public int idCheck(SqlSessionTemplate sqlSession, String checkId) {
 		return sqlSession.selectOne("memberMapper.idCheck", checkId);
 	}
+	
+	/** 회원탈퇴
+	 * @param sqlSession
+	 * @param userId
+	 * @return
+	 */
+	public int deleteMember(SqlSessionTemplate sqlSession, String userId) {
+		
+		return sqlSession.delete("memberMapper.deleteMember", userId);
+	}
+
+
+	/** 회원정보 수정
+	 * @param sqlSession
+	 * @param m
+	 * @return
+	 */
+	public int updateMember(SqlSessionTemplate sqlSession, Member m) {
+		
+		return sqlSession.update("memberMapper.updateMember",m);
+	}
+
+
+	/** 비밀번호 변경
+	 * @param sqlSession
+	 * @param userPwd
+	 * @return
+	 */
+	public int updatePwd(SqlSessionTemplate sqlSession, Member updatePwdMem) {
+		
+		return sqlSession.update("memberMapper.updatePwd", updatePwdMem);
+	}
+
 
 
 

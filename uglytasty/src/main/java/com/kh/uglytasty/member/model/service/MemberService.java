@@ -21,5 +21,16 @@ public interface MemberService {
 
 	// 재고량 0 인 상품 조회 (select) - 관리자알림용
 	ArrayList<Product> selectProductStockList();
-
+	
+	// ========================= 마이페이지 =========================
+	
+	// 회원탈퇴 서비스 (update)
+	int deleteMember(String userId);
+	
+	// 회원정보 수정하기 (update)
+	int updateMember(Member m);
+	
+	// 비밀번호 변경하기 (update)
+	int updatePwd(Member updatePwdMem);
+		
 }

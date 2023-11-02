@@ -120,6 +120,36 @@
 		 where status = 'Y'
 		   and user_id = #{userId}
 	</select>
+	
+	<!-- 회원탈퇴 -->
+	<update id="deleteMember">
+		update
+				member
+		   set  status = 'N'
+		 where  user_id = #{userId}  	
+	</update>
+	
+	
+	<!-- 회원정보 수정 -->
+	<update id="updateMember">
+		update
+				member
+		   set  user_name = #{ userName }
+			  , email = #{ email }
+			  , phone = #{ phone }
+			  , address_base = #{ addressBase }
+			  , address_detail = #{ addressDetail }
+		 where  user_id = #{ userId }	  
+	</update>
+	
+	
+	<!-- 비밀번호 변경 -->
+	<update id="updatePwd">
+		update
+				member
+		   set  user_pwd = #{ userPwd }		
+		 where  user_id = #{ userId }		
+	</update>
 
 
 

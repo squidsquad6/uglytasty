@@ -211,7 +211,39 @@ public class MemberServiceImpl implements MemberService{
 	}
 
 	
+	// ========================= 마이페이지 =========================
+	
+	
+		/**
+		 * 회원탈퇴
+		 */
+		@Override
+		public int deleteMember(String userId) {
+			return mDao.deleteMember(sqlSession, userId);
+		}
 
+
+		/**
+		 * 회원정보 수정
+		 */
+		@Override
+		public int updateMember(Member m) {
+			
+			return mDao.updateMember(sqlSession, m);
+		}
+
+
+		/**
+		 * 비밀번호 변경
+		 */
+		@Override
+		public int updatePwd(Member updatePwdMem) {
+			
+			//System.out.println("여기는 service, encNewPwd : " + encNewPwd);
+			return mDao.updatePwd(sqlSession, updatePwdMem);
+		}
+		
+		
 	
 
 	

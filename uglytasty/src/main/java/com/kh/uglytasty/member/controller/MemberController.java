@@ -309,13 +309,216 @@ public class MemberController {
 		
 	}
 
-
-
+	
+	// ========================= 마이페이지 =========================
 	
 	
+		/** 마이페이지 폼 띄우기
+		 * @return
+		 */
+		@RequestMapping("myPage.me")
+		public String myPage(HttpSession session) {
+			
+			String subscribeOrNot = ((Member) session.getAttribute("loginMember")).getSubscribe();
+			
+			if(subscribeOrNot.equals("N")) {
+				// 현재 로그인한 회원이 구독자일 때
+				
+				return "myPage/myPageMyBoxForm";
+				
+			}else {
+				// 현재 로그인한 회원이 구독자가 아닐 때
+				
+				return "myPage/myPageMain";
+						
+			}
+			
+		}
+		
+		
+		/** 마이페이지 - 회원정보 폼 띄우기
+		 * @return
+		 */
+		@RequestMapping("myPageMemberInfo.me")
+		public String myPageMemberInfo() {
+			
+			return "myPage/myPageMemberInfo";
+		}
+		
+		
+		
+		/** 회원정보 수정
+		 * @param m
+		 * @param model
+		 * @param session
+		 * @return
+		 */
+		@RequestMapping("update.me")
+		public String updateMember(Member m, Model model, HttpSession session) {
+			
+			int result = mService.updateMember(m);
+			
+			if(result>0) { // 수정 성공
+				
+				// 로그인했을 때 설정된 세션을 갈아끼워주기
+				session.setAttribute("loginMember", mService.loginMember(m));
+				
+				session.setAttribute("alertMsg", "회원 정보가 변경되었습니다.");
 
+				return "redirect:/myPageMemberInfo.me";
+				
+			}else { // 수정 실패
+				model.addAttribute("errorMsg", "회원정보 변경 실패!");
+				
+				return "common/errorPage";
+			}
+			
+		}
+		
+		
+		/** 마이페이지 - 비밀번호 변경 폼 띄우기
+		 * @return
+		 */
+		@RequestMapping("myPageUpdatePwdForm.me")
+		public String myPageUpdateMemberPwdForm() {
+			
+			return "myPage/myPageUpdateMemberPwd";
+		}
+		
+		
+		
+		/** 마이페이지 - 회원탈퇴 폼 띄우기
+		 * @return
+		 */
+		@RequestMapping("deleteForm.me")
+		public String deleteMemberForm() {
+			
+			return "myPage/myPageDeleteMember";
+		}
+		
+		
+		
+		/** 회원 탈퇴
+		 * @param userPwd
+		 * @param userId
+		 * @param session
+		 * @return
+		 */
+		@RequestMapping("delete.me")
+		public String deleteMember(String userPwd, String userId, HttpSession session, Model model) {
+			// userPwd : 회원탈퇴 요청시 사용자가 입력한 비밀번호 평문이 들어가있음
+			// session에 loginMember Member 객체 userPwd 필드 : db로부터 조회된 비번(암호문)
+			
+			String encPwd = ((Member)session.getAttribute("loginMember")).getUserPwd();
+			// session에 담아오면 Object형으로 반환되므로 Member 객체로 바꿔주고 그 객체의 userPwd(암호문)을 뽑아서 encPwd로 설정해주기
+			
+			if(bcryptPasswordEncoder.matches(userPwd, encPwd)) { 
+				// 비번 맞음 => 탈퇴처리
+				
+				// userId 히든으로 가져옴
+				int result = mService.deleteMember(userId);
+				
+				
+				if(result > 0) { // 탈퇴처리 성공
+					
+					session.removeAttribute("loginMember");
+					session.setAttribute("alertMsg", "성공적으로 탈퇴되었습니다. 그동안 이용해주셔서 감사합니다.");
+					return "redirect:/";
+					
+				}else { // 탈퇴처리 실패
+					
+					model.addAttribute("errorMsg", "회원탈퇴 실패!");
+					
+					return "common/errorPage";
+					
+				}
+				
+			}else { // 비번틀림 => 비밀번호가 틀림을 알리고 마이페이지가 보여지게
+				session.setAttribute("alertMsg", "비밀번호를 잘못 입력하셨습니다. 확인해주세요.");
+				return "redirect:/deleteForm.me";
+			}
+			
+		}
+		
 
-
-
+		// 나의 못난이 박스 폼 띄우기 용 - 머지하고 subscribe로 옮기기
+		@RequestMapping("myPageMyBoxForm.sub")
+		public String myPageMyBoxForm() {
+			
+			return "myPage/myPageMyBoxForm";
+		}
+		
+		
+		/** 비밀번호 변경
+		 * @param userPwd
+		 * @param newPwd
+		 * @param checkNewPwd
+		 * @param userId
+		 * @param session
+		 * @param model
+		 * @return
+		 */
+		@RequestMapping("updatePwd.me")
+		public String updatePwd(String userPwd, String newPwd, String checkNewPwd, String userId, HttpSession session, Model model) {
+			
+			// 사용자가 입력한 '현재 비밀번호'가 암호화되어 db에 저장되어있는 값과 일치하는지 확인
+			
+			// userPwd : 사용자가 입력한 현재 비밀번호 값(원문,name값으로 받아온 것)
+			// encPwd : 그 원문이 암호화 되어 db에 저장되어 있는 값(암호문)
+			// newPwd : 사용자가 새롭게 설정하려고 하는 비밀번호
+			// checkPwd : 새 비밀번호와 일치하는지 비교하는 값
+			// encNewPwd : 사용자가 새롭게 설정하려고 하는 비밀번호를 암호화한 것
+			
+			String encPwd = ((Member)session.getAttribute("loginMember")).getUserPwd();
+			
+			
+			if(bcryptPasswordEncoder.matches(userPwd, encPwd)) {
+				// 현재 비밀번호 맞게 입력 => 비밀번호 변경하기
+				
+				// 새 비밀번호(newPwd)와 새 비밀번호 확인(checkNewPwd)에 입력된 값이 같으면 업데이트 치러가기
+				if(newPwd.equals(checkNewPwd)) {
+					
+					// 새 비밀번호(newPwd)를 암호화 해주기(이게 db에 들어감)
+					String encNewPwd = bcryptPasswordEncoder.encode(newPwd);
+					
+					// 히든으로 가져온 아이디로 암호화된 새 비밀번호(encNewPwd)로 db에 업데이트)
+					
+					Member updatePwdMem = new Member();
+					
+					updatePwdMem.setUserId(userId);
+					updatePwdMem.setUserPwd(encNewPwd);
+					
+					int result = mService.updatePwd(updatePwdMem);
+					
+					if(result > 0) {
+						// 비밀번호 변경 성공
+						session.setAttribute("userPwd", encNewPwd);
+						session.setAttribute("alertMsg", "비밀번호가 성공적으로 변경되었습니다.");
+						
+						return "redirect:/myPage.me";
+						
+					}else {
+						// 비밀번호 변경 실패
+						model.addAttribute("errorMsg", "비밀번호 변경 실패!!!");
+						
+						return "common/errorPage";
+					}
+					
+					
+				}else {
+					session.setAttribute("alertMsg", "비밀번호가 일치하지 않습니다. 확인 후 다시 입력해주세요.");
+					return "redirect:/";
+				}
+				
+				
+			}else {
+				// 현재 비밀번호 틀리게 입력
+				session.setAttribute("alertMsg", "비밀번호를 잘못 입력하셨습니다. 확인 후 다시 입력해주세요.");
+				return "redirect:/";
+			}
+			
+		}
+	
+	
 
 }
