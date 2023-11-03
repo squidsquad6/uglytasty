@@ -5,9 +5,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
-
-
+<title>못난이맛난이</title>
+<link rel="icon" href="http://owzl.github.io/uggy.png">
 
   <!-- Alertify -->
    <!-- JavaScript -->

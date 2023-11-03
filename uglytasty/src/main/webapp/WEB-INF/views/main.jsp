@@ -11,7 +11,7 @@
 <head>
 <meta charset="UTF-8">
 <title>못난이맛난이</title>
-
+<link rel="icon" href="http://owzl.github.io/uggy.png">
 <style>
     div * {box-sizing: border-box;}
 

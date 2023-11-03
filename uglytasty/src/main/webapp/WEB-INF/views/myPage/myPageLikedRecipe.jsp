@@ -203,6 +203,23 @@
             color: #FF6741;
             font-weight: 500;
         }
+        
+        /* 좋아요 한 레시피 없을 때 */
+        #empty_liked_recipe{
+            margin: auto;
+            margin-top: 70px;
+        }
+        #empty_liked_recipe>p{
+            font-size: 18px;
+            color: rgb(72, 72, 72);
+            text-align: center;
+        }
+        #go_to_recipe_list_btn{ /* 레시피 보러가기 버튼 */
+            margin-top: 30px;
+            width: 70%;
+            margin-left: 15%;
+            margin-right: 15%;
+        }
 
     </style>
 
@@ -275,42 +292,57 @@
                 <!-- 반응형 -->
                 <div class="row">
                     
-                    <c:forEach var="l" items="${ likeList }">
-                    
-                    	<input type="hidden" class="rno" value="${ l.recipeNo }">
-	                    <div class="col-sm-4">
-	                        <div class="card">
-	                            <a href="detail.re?rno=${ l.recipeNo }" class="stretched-link">
-	                                <div class="card-img-div">
-	                                    <img class="card-img-top" src="${ l.recipeChangeName }" alt="Card image">
-	                                </div>
-	                                <div class="card-body">
-	                                    <div class="difficulty_time">
-	                                        
-	                                        <div class="difficulty">
-	                                            난이도&nbsp;
-	                                            <span class="difficulty_time_option">${ l.difficulty }</span>
-	                                        </div> 
-	                                        <div class="time">
-	                                            소요 시간&nbsp;
-	                                            <span class="difficulty_time_option2">${ l.time }</span>
-	                                        </div> 
-	                                    </div>
-	
-	                                    <p class="recipe_title text-center">
-	                                        <b>
-	                                            ${ l.recipeTitle }
-	                                        </b>
-	                                    </p>
-	
-	                                    <div style="font-size: 14px;">조회수 <span style="color: #FF6741;">${ l.count }</span></div>
-	                                </div>
-	                            </a>
-	                        </div>
-	                    </div>
-                    
-                    </c:forEach>
+                    <c:choose>
+                    	<c:when test="${ likeListCount eq 0 }">
+		                    <div id="empty_liked_recipe">
 
+                                    <p>
+                                        마음에 쏙 든 레시피는 💗하트💗를 꾹 눌러<br>
+                                        나만의 레시피북을 완성해보세요!🍲🧆🍝
+                                    </p>
+                                    <div>
+                                        <input type="button" id="go_to_recipe_list_btn" class="submit-btn" onclick = "location.href = 'list.re'" value="맛난이 레시피 보러가기">
+                                    </div>
+
+                                </div>
+	                    </c:when>
+	                    <c:otherwise>
+	                    	<c:forEach var="l" items="${ likeList }">
+		                    
+		                    	<input type="hidden" class="rno" value="${ l.recipeNo }">
+			                    <div class="col-sm-4">
+			                        <div class="card">
+			                            <a href="detail.re?rno=${ l.recipeNo }" class="stretched-link">
+			                                <div class="card-img-div">
+			                                    <img class="card-img-top" src="${ l.recipeChangeName }" alt="Card image">
+			                                </div>
+			                                <div class="card-body">
+			                                    <div class="difficulty_time">
+			                                        
+			                                        <div class="difficulty">
+			                                            난이도&nbsp;
+			                                            <span class="difficulty_time_option">${ l.difficulty }</span>
+			                                        </div> 
+			                                        <div class="time">
+			                                            소요 시간&nbsp;
+			                                            <span class="difficulty_time_option2">${ l.time }</span>
+			                                        </div> 
+			                                    </div>
+			
+			                                    <p class="recipe_title text-center">
+			                                        <b>
+			                                            ${ l.recipeTitle }
+			                                        </b>
+			                                    </p>
+			
+			                                    <div style="font-size: 14px;">조회수 <span style="color: #FF6741;">${ l.count }</span></div>
+			                                </div>
+			                            </a>
+			                        </div>
+			                    </div>
+		                    </c:forEach>
+	                    </c:otherwise>
+					</c:choose>
 
                 </div>
                 
