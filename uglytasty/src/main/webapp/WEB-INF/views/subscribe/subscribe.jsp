@@ -27,7 +27,7 @@
          /* div{border: 1px solid red; box-sizing: border-box;} */
 
         .outer{
-            width: 1300px;height: 2000px;margin: auto;
+            width: 1400px;height: 2000px;margin: auto;
         }
 
         .intro{
@@ -266,12 +266,13 @@
 			</c:if>
         </div>
     </div>
+    <br><br><br><br><br><br><br><br>
  <jsp:include page="../common/footer.jsp"/>
  <br>
 </div>
  
 
-<br><br><br><br><br><br><br><br>
+
 
 <div id="modal-js-example" class="modal">
   <div class="modal-background"></div>

@@ -94,6 +94,7 @@
                 <th>답변상태</th>
                 <th>문의작성일</th>
                 <th>답변작성일</th>
+                <th>수정</th>
                
             </tr>
           </thead>
@@ -111,7 +112,7 @@
                 <td><input id="answerStatus${loop.index }" class="input" type="text" style="border:none" value="${b.answerStatus }"></td>
                 <td><input id="qaDate${loop.index }" class="input" type="text" style="border:none" value="${b.qaDate }" readonly></td>
                 <td><input id="answerDate${loop.index }" class="input" type="text" style="border:none" value="${b.answerDate }" readonly></td>
-                <td><button class="button is-success is-hovered is-small is-light"  onclick="updateQA(${loop.index })">수정</button></td>
+                <td><button class="button is-success is-hovered is-small is-light" style="display: block; margin: 0 auto; margin-top: 5px;"  onclick="updateQA(${loop.index })">수정</button></td>
     
             </tr>
             <div id="answerContentModal${loop.index}" class="modal">

@@ -116,7 +116,7 @@
 		        -->
                 
                 <td>
-                <button class="button is-success is-hovered is-small is-light"
+                <button class="button is-success is-hovered is-small is-light" style="display: block; margin: 0 auto; margin-top: 5px;"
               onclick="updateUser(${loop.index})">수정</button>
               </td>
            
