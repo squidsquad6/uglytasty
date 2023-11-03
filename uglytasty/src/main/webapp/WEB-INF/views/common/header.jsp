@@ -182,6 +182,9 @@
            $('html, body').animate({scrollTop:0},400);
            return false;
        });
+       
+    	
+    
    </script>
    
    <div class="YRcontent">
@@ -255,7 +258,7 @@
                                 <a href="list.qa"><span>1:1 문의</span></a>
                             </div>
                             <div class="">
-                                <a href="logout.me"><span>로그아웃</span></a>
+                                <a href="javascript:void(0)" id="logoutLink"><span>로그아웃</span></a>
                             </div>
                         </div>
                     </c:otherwise>
@@ -264,7 +267,22 @@
             </div>
         </div>
 
-    </div>    
-
+    </div> 
+    
+    <script>
+	 // 링크에 클릭 이벤트 리스너 추가
+	    document.getElementById("logoutLink").addEventListener("click", function(e) {
+	        e.preventDefault(); // 기본 링크 동작 중지
+	
+	        // alertify 팝업 메시지 표시
+	        alertify.alert("🔔알립니다!딸랑!🔔","로그아웃 되었습니다.");
+	
+	        // 잠시 기다린 후 (선택 사항) 리디렉션 수행
+	        setTimeout(function() {
+	            window.location.href = "logout.me"; // 메시지 표시 후 리디렉션
+	        }, 1500); // 1초 (1000 밀리초) 대기 후 리디렉션
+	    });
+    </script>
+    
 </body>
 </html>

@@ -176,10 +176,8 @@
             <div id="mypage-all" class="row">
                 
                 <div class="col-sm-3" style="border: 1px solid red;">
-
                     
                     <jsp:include page="myPageList.jsp"/>
-
 
                 </div>
 
@@ -195,7 +193,7 @@
                         <div id="subscribe_x_img">
                             <img src="https://d3cpiew7rze14b.cloudfront.net/assets/manual/Frame+5072.svg?w=1024">
                             <br>
-                            <button type="button" class="submit-btn">못난이 구출하러 가기</button>
+                            <button onclick = "location.href = 'subscribe.su'" type="button" class="submit-btn">못난이 구출하러 가기</button>
                         </div>
                         <!-- 못난이 박스 구독자 O -->
                         

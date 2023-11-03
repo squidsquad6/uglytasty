@@ -27,22 +27,22 @@
 	<!-- 비밀번호 암호화 후 로그인 -->
 	<!-- (user_pwd 조건 삭제 / 비교는 Controller에서 .matches 메소드로 할것) -->
 	<select id="loginMember" resultMap="memberResult">
-	select
-	user_id
-	, user_pwd
-	, user_name
-	, phone
-	, email
-	, address_base
-	, address_detail
-	, status
-	, subscribe
-	, provider
-	, access_token
-	, refresh_token
-	from member
-	where status = 'Y'
-	and user_id = #{userId}
+		select
+				user_id
+			  , user_pwd
+			  , user_name
+			  , phone
+			  , email
+			  , address_base
+			  , address_detail
+			  , status
+			  , subscribe
+			  , provider
+			  , access_token
+			  , refresh_token
+		from  member
+		where status = 'Y'
+		  and user_id = #{userId}
 	</select>
 	
 	<!-- 재고량 0 인 상품 조회 (select) - 관리자알림용 -->
@@ -51,54 +51,54 @@
 		        product_no 
 		      , product_name
 		      , stock
-		  from product
-		 where status = 'Y'
-		   and stock = 0
+		  from 	product
+		 where 	status = 'Y'
+		   and 	stock = 0
 	</select>
 	
 	
 	<!-- 회원가입 -->
 	<insert id="insertMember">
 	insert
-	into member
-	(
-	user_id
-	, user_pwd
-	, user_name
-	, phone
-	, email
-	, address_base
-	, address_detail
-	, status
-	, subscribe
-	, provider
-	, access_token
-	, refresh_token
-	)
+	  into member
+		(
+		user_id
+		, user_pwd
+		, user_name
+		, phone
+		, email
+		, address_base
+		, address_detail
+		, status
+		, subscribe
+		, provider
+		, access_token
+		, refresh_token
+		)
 	values
-	(
-	#{userId}
-	, #{userPwd}
-	, #{userName}
-	, #{phone}
-	, #{email}
-	, #{addressBase}
-	, #{addressDetail}
-	, default
-	, default
-	, #{provider}
-	, #{accessToken}
-	, #{refreshToken}
-	)
+		(
+		#{userId}
+		, #{userPwd}
+		, #{userName}
+		, #{phone}
+		, #{email}
+		, #{addressBase}
+		, #{addressDetail}
+		, default
+		, default
+		, #{provider}
+		, #{accessToken}
+		, #{refreshToken}
+		)
 	</insert>
 	
 	
 	<!-- 아이디 중복체크 -->
 	<select id="idCheck" resultType="_int">
-	select
-	count(*)
-	from member
-	where user_id = #{checkId}
+		select
+				count(*)
+		  from 	member
+		 where  user_id = #{checkId}
 	</select>
 	
 	

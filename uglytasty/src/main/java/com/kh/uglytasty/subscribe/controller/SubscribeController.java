@@ -189,6 +189,17 @@ public class SubscribeController {
 	
 	}
 	
+	// ========================= 마이페이지 =========================
+	
+	/** 나의 못난이 박스 폼 띄우기
+	 * @return
+	 */
+	@RequestMapping("myPageMyBoxForm.sub")
+	public String myPageMyBoxForm() {
+		
+		return "myPage/myPageMyBoxForm";
+	}
+
 	
 	
 }

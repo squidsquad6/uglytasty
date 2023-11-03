@@ -35,18 +35,28 @@ public class MemberController {
 	@Autowired
 	private BCryptPasswordEncoder bcryptPasswordEncoder;
 	
-	@RequestMapping("loginForm.me")
-	   public String loginForm() {
-	      
-	      return "member/loginMemberForm";
-	   }
 	
+	/** 로그인 폼 띄우기
+	 * @return
+	 */
+	@RequestMapping("loginForm.me")
+	public String loginForm() {
+		return "member/loginMemberForm";
+	}
+	
+	
+	/** 로그아웃
+	 * @param session
+	 * @return
+	 */
 	@RequestMapping("logout.me")
-	   public String logoutMember(HttpSession session) {
-	      
-	      session.invalidate();
-	      
-	      return "redirect:/";   }
+	public String logoutMember(HttpSession session, Model model) {
+		
+		session.invalidate();
+		
+		return "redirect:/";
+      
+	}
 	
 
 	@RequestMapping(value="oauth2/naver", produces="application/json")
@@ -99,7 +109,6 @@ public class MemberController {
 	      
 	     Map<String, Object> result = mService.getGoogleAccessToken(code);
 	     
-	   
 
 	     String accessToken = (String) result.get("accessToken");
 	     
@@ -137,7 +146,7 @@ public class MemberController {
 				return "redirect:/";
 			}
 	    
-	         }
+	}
 	
 	
 	
@@ -151,7 +160,6 @@ public class MemberController {
 
 	     String accessToken = (String) result.get("accessToken");
 	     
-	  
 	     
 	     
 	     JsonNode userInfoNode = (JsonNode) result.get("userInfo");
@@ -186,44 +194,42 @@ public class MemberController {
 				return "redirect:/";
 			}
 	    
-	         }
+	}
 	
 	
-	
-	
+	/** 로그인
+	 * @param m
+	 * @param model
+	 * @param session
+	 * @return
+	 */
 	@RequestMapping("login.me")
 	public String loginMember(Member m, Model model, HttpSession session) {
-		
-
 		
 		Member loginMember = mService.loginMember(m);
 		
 		// ** 재고량 0 인 상품 조회 (select) - 관리자알림용
 		ArrayList<Product> productStockList = mService.selectProductStockList();
 			
-		if(loginMember == null) { 
-			// 로그인 실패 => 에러메세지 requestScope에 담아서 에러 페이지(/WEB-INF/views/common/errorPage.jsp)로 포워딩
-			
-			
-			model.addAttribute("errorMsg", "로그인 실패!");
-			
-			return "common/errorPage";
-			
-		}else { 
-			// 로그인 성공 => loginMember를 sessionScope에 담고 메인페이지 url 재요청
-			
+		
+		if(loginMember != null && bcryptPasswordEncoder.matches(m.getUserPwd(), loginMember.getUserPwd())) {
+			// 로그인 성공
 			session.setAttribute("loginMember", loginMember);
 			
 			// ** 재고량 0 인 상품 조회 (select) - 관리자알림용
-			//System.out.println("재고량0상품 : " + productStockList);
 			session.setAttribute("productStockList", productStockList);
 			
-			model.addAttribute("errorMsg", "로그인 성공!");
-
 			return "redirect:/";
+			
+		}else {
+			// 로그인 실패	
+			session.setAttribute("alertMsg", "아이디 또는 비밀번호를 잘못 입력했습니다. 입력하신 내용을 다시 확인해주세요.");
+			return "member/loginMemberForm";
 		}
+
 	}
 
+	
 	/** 재고량 0 인 상품 관련 - 관리자알림용 제거
 	 *
 	 */
@@ -234,17 +240,14 @@ public class MemberController {
 	    return "redirect:/";
 	}
 	
-
 	
 	/** (단순jsp이동) 회원가입 폼 띄우기
 	* @return
 	*/
 	@RequestMapping("enrollForm.me")
 	public String enrollForm() {
-
-	return "member/memberEnrollForm";
+		return "member/memberEnrollForm";
 	}
-
 	
 
 	/** 회원가입
@@ -262,17 +265,17 @@ public class MemberController {
 	
 		int result = mService.insertMember(m);
 	
-		if(result > 0) { // 성공 => 메인페이지 url 재요청
+		if(result > 0) { // 성공 
 	
-		session.setAttribute("alertMsg", "성공적으로 회원가입 되었습니다.");
-	
-		return "redirect:/";
-	
-		}else { // 실패 => 에러페이지 포워딩 (머리)(꼬리)
-	
-		model.addAttribute("errorMsg", "회원가입 실패!");
-	
-		return "common/errorPage";
+			session.setAttribute("alertMsg", "성공적으로 회원가입 되었습니다.");
+		
+			return "redirect:/";
+		
+			}else { // 실패
+		
+			model.addAttribute("errorMsg", "회원가입 실패!");
+		
+			return "common/errorPage";
 	
 		}
 
@@ -288,9 +291,9 @@ public class MemberController {
 	@RequestMapping("idCheck.me")
 	public String idCheck(String checkId) {
 
-	int count = mService.idCheck(checkId);
-
-	return count>0 ? "NNNNN" : "NNNNY";
+		int count = mService.idCheck(checkId);
+	
+		return count>0 ? "NNNNN" : "NNNNY";
 
 	}
 
@@ -300,12 +303,10 @@ public class MemberController {
 	@RequestMapping("generateState.me")
 	public String generateState(HttpSession session){
 		
-		
 	    SecureRandom random = new SecureRandom();
 	    String state = new BigInteger(130, random).toString(32);
 	    session.setAttribute("state", state);
 		return state;
-		
 		
 	}
 
@@ -321,7 +322,7 @@ public class MemberController {
 			
 			String subscribeOrNot = ((Member) session.getAttribute("loginMember")).getSubscribe();
 			
-			if(subscribeOrNot.equals("N")) {
+			if(subscribeOrNot.equals("Y")) {
 				// 현재 로그인한 회원이 구독자일 때
 				
 				return "myPage/myPageMyBoxForm";
@@ -340,7 +341,9 @@ public class MemberController {
 		 * @return
 		 */
 		@RequestMapping("myPageMemberInfo.me")
-		public String myPageMemberInfo() {
+		public String myPageMemberInfo(HttpSession session) {
+			
+			//System.out.println("로그인멤버 정보 : " + session.getAttribute("loginMember"));
 			
 			return "myPage/myPageMemberInfo";
 		}
@@ -369,7 +372,6 @@ public class MemberController {
 				
 			}else { // 수정 실패
 				model.addAttribute("errorMsg", "회원정보 변경 실패!");
-				
 				return "common/errorPage";
 			}
 			
@@ -440,13 +442,7 @@ public class MemberController {
 			
 		}
 		
-
-		// 나의 못난이 박스 폼 띄우기 용 - 머지하고 subscribe로 옮기기
-		@RequestMapping("myPageMyBoxForm.sub")
-		public String myPageMyBoxForm() {
-			
-			return "myPage/myPageMyBoxForm";
-		}
+		
 		
 		
 		/** 비밀번호 변경
@@ -500,21 +496,20 @@ public class MemberController {
 					}else {
 						// 비밀번호 변경 실패
 						model.addAttribute("errorMsg", "비밀번호 변경 실패!!!");
-						
 						return "common/errorPage";
 					}
 					
 					
 				}else {
 					session.setAttribute("alertMsg", "비밀번호가 일치하지 않습니다. 확인 후 다시 입력해주세요.");
-					return "redirect:/";
+					return "redirect:/myPage.me";
 				}
 				
 				
 			}else {
 				// 현재 비밀번호 틀리게 입력
 				session.setAttribute("alertMsg", "비밀번호를 잘못 입력하셨습니다. 확인 후 다시 입력해주세요.");
-				return "redirect:/";
+				return "redirect:/myPage.me";
 			}
 			
 		}

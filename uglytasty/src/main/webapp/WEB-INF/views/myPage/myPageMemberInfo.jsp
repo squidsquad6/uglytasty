@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>      
 <!DOCTYPE html>
 <html>
 <head>
@@ -323,21 +324,6 @@
 			                        </td>
 			                    </tr>
 			                    
-			                    
-			                    
-			
-			                    <!-- 약관 동의 파트 -->
-			                    <tr>
-			                        <td>
-			                            <div class="checkbox_group">
-			                                <div class="member-enroll-terms">
-			                                    <input type="checkbox" id="check_3" class="normal">
-			                                    <label for="check_3">[선택] 긴급할인 등 정보·혜택 수신 동의</label>
-			                                </div>
-			                            </div>
-			                        </td>
-			                    </tr>
-			
 			                    <tr>
 			                        <td>
 	                                    <button type="submit" class="submit-btn">수정하기</button>

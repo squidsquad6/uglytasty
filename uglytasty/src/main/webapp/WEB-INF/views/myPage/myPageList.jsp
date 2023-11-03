@@ -216,16 +216,8 @@
                         </a>
                     </div>
 
-                    <div class="p-2">
-                        <a href="logout.me">
-                            <div class="d-flex justify-content-between">
-                                <div class="p-2">로그아웃</div>
-                                <div class="p-2"><img src="https://d3cpiew7rze14b.cloudfront.net/assets/svg/gray-600-chevron-right_5qBS9q-mc.svg"></div>
-                            </div>
-                        </a>
-                    </div>
-
                 </div>
+                
 
 
     <!--        

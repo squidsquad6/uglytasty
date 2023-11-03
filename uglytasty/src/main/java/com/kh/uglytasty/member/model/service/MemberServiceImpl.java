@@ -33,19 +33,22 @@ import com.kh.uglytasty.product.model.vo.Product;
 @Service
 public class MemberServiceImpl implements MemberService{
 	
-
 	
 	@Autowired
 	private MemberDao mDao;
 	
-	// 전역으로
 	@Autowired
 	private SqlSessionTemplate sqlSession;
 
+	
+	/**
+	 * 로그인 (일반회원)
+	 */
 	@Override
 	public Member loginMember(Member m) {
 		return mDao.loginMember(sqlSession, m);
 	}
+	
 	
 	// 재고량 0 인 상품 조회 (select) - 관리자알림용
 	@Override
@@ -53,16 +56,15 @@ public class MemberServiceImpl implements MemberService{
 		return mDao.selectProductStockList(sqlSession);
 	}
 
+	
 	@Override
 	public void googleLogin(String code) {
 		
 		
 	}
 	
-	
-	
 
-	public  Map<String, Object> getGoogleAccessToken(String code) {
+	public Map<String, Object> getGoogleAccessToken(String code) {
 		
 		String accessToken = "";
 		
@@ -103,17 +105,24 @@ public class MemberServiceImpl implements MemberService{
 	}
 
 
+	/**
+	 * 회원가입
+	 */
 	@Override
-
 	public int insertMember(Member m) {
 		return mDao.insertMember(sqlSession, m);
 	}
 
+	
+	/**
+	 * 아이디 중복체크
+	 */
 	@Override
 	public int idCheck(String checkId) {
 		return mDao.idCheck(sqlSession, checkId);
 	}
 
+	
 	public Map<String, Object> getNaverAccessToken(String code, String state) {
 		
 		String accessToken = "";
@@ -157,6 +166,7 @@ public class MemberServiceImpl implements MemberService{
 	      
 	}
 
+	
 	public Member checkMemberByNaver(String userId) {
 		
 		userId = userId + "nvr";
@@ -164,6 +174,7 @@ public class MemberServiceImpl implements MemberService{
 		return mDao.checkMemberByGoogle(sqlSession, userId);
 	}
 
+	
 	public Map<String, Object> getKakaoAccessToken(String code) {
 		String accessToken = "";
 		
@@ -239,13 +250,10 @@ public class MemberServiceImpl implements MemberService{
 		@Override
 		public int updatePwd(Member updatePwdMem) {
 			
-			//System.out.println("여기는 service, encNewPwd : " + encNewPwd);
 			return mDao.updatePwd(sqlSession, updatePwdMem);
 		}
 		
 		
-	
-
 	
 
 }
