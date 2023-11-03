@@ -103,7 +103,7 @@
                 <td><input id="dislike${loop.index }" class="input" type="text" style="border:none" value="${b.dislike }"></td>
                 <td><input id="address${loop.index }" class="input" type="text" style="border:none" value="${b.address }"></td>
                 <td><input id="detailAddress${loop.index }" class="input" type="text" style="border:none" value="${b.detailAddress }"></td>
-                <td><button class="button is-success is-hovered is-small is-light" onclick="updateSubscribe('${loop.index}')">수정</button></td>
+                <td><button class="button is-success is-hovered is-small is-light" style="display: block; margin: 0 auto; margin-top: 5px;" onclick="updateSubscribe('${loop.index}')">수정</button></td>
                
             </tr>
             </c:forEach>

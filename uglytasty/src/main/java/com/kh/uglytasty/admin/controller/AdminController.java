@@ -69,7 +69,7 @@ public class AdminController {
 		
 		ArrayList<Orders> list =   aService.selectOrderList(pi);
 		ArrayList<OrdersDetail> list2 =  aService.selectOrderListProducts();
-		System.out.println("list2:"+ list2);
+		
 		
 		
 		
@@ -102,7 +102,7 @@ public class AdminController {
 		    }
 		}
 		
-		System.out.println("list:" + list);
+		
 		
 		model.addAttribute("list", list).addAttribute("pi",pi);
 		

@@ -359,8 +359,12 @@
 						            <div class="flex-fill" style="width: 80%; margin-right: 2%;">
 						                <input type="email" class="input-text-style" id="email" name="email" placeholder="이메일 주소를 입력해주세요" required>
 						            </div>
+						             <div class="flex-fill">
+						                <input type="text" class="input-text-style" id="certification" placeholder="인증번호">
+						            </div>
+						            
 						            <div class="flex-fill">
-						                <input type="button" class="search_confirm_btn" onclick="" value="인증하기">
+						                <input type="button" class="search_confirm_btn" id="mail-Check-btn" value="인증하기">
 						            </div>
 						        </div>
 						    </c:when>
@@ -450,7 +454,7 @@
 
                     <tr>
                         <td>
-                            <button type="submit" id="enroll_mem_btn" class="submit-btn">회원가입</button>
+                            <button type="submit" id="enroll_mem_btn" class="submit-btn" disabled>회원가입</button>
                         </td>
                     </tr>
 
@@ -464,6 +468,49 @@
 
     </div>
     
+
+	<script>
+
+	
+	
+	$('#mail-Check-btn').click(function(){
+		const email = $('#email').val();
+		const checkInput =$('#certification');
+		
+		$.ajax({
+			type:'post',
+			url : '<c:url value ="/mailCheck?email="/>'+email,
+			success : function (data) {
+				console.log("data : " +  data);-
+				checkInput.attr('disabled',false);
+				code =data;
+				alert('인증번호가 전송되었습니다.')
+			}		
+		})
+	})
+	
+
+	$(document).ready(function() {
+   
+    const $certificationInput = $("#certification");
+    const $enrollButton = $("#enroll_mem_btn");
+
+    $certificationInput.on("input", function() {
+      
+        if ($certificationInput.val() === code) {
+          
+            $enrollButton.prop("disabled", false);
+        } else {
+           
+            $enrollButton.prop("disabled", true);
+        }
+    });
+});
+	
+	
+	</script>
+
+
 
 
     <!-- 카카오 주소 조회 API -->

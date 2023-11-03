@@ -93,6 +93,7 @@
                 <th>상품상태</th>
                 <th>조회수</th>
                 <th>작성일</th>
+                <th>수정</th>
                
             </tr>
           </thead>
@@ -113,7 +114,7 @@
                 <td><input id="status${loop.index }" class="input" type="text" style="border:none" value="${b.status }"></td>
                 <td><input id="count${loop.index }" class="input" type="text" style="border:none" value="${b.count }"></td>
                 <td><input id="enrollDate${loop.index }" class="input" type="text" style="border:none" value="${b.enrollDate}"></td>
-                <td><button class="button is-success is-hovered is-small is-light"  onclick="updateProduct(${loop.index }); return false;">수정</button></td>
+                <td style="text-align: center;"><button class="button is-success is-hovered is-small is-light" style="display: block; margin: 0 auto; margin-top: 5px;" onclick="updateProduct(${loop.index }); return false;">수정</button></td>
     
             </tr>
           </c:forEach>

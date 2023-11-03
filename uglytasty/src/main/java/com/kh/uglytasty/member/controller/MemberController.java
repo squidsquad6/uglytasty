@@ -1,19 +1,29 @@
 package com.kh.uglytasty.member.controller;
 
+import java.io.UnsupportedEncodingException;
 import java.math.BigInteger;
 import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Map;
+import java.util.Random;
 
+import javax.mail.Address;
+import javax.mail.MessagingException;
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -22,6 +32,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.bind.annotation.ResponseBody;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.kh.uglytasty.common.EmailCheckReq;
 import com.kh.uglytasty.member.model.service.MemberServiceImpl;
 import com.kh.uglytasty.member.model.vo.Member;
 import com.kh.uglytasty.product.model.vo.Product;
@@ -194,7 +205,104 @@ public class MemberController {
 				return "redirect:/";
 			}
 	    
+
+	         }
+	
+	
+	@Autowired
+	private JavaMailSender emailSender;
+	private String authNum;
+	
+	
+	public void createCode() {
+		Random random = new Random();
+        StringBuffer key = new StringBuffer();
+
+        for(int i=0; i<8; i++) {
+            int idx = random.nextInt(3);
+
+            switch (idx) {
+                case 0 :
+                    key.append((char) ((int)random.nextInt(26) + 97));
+                    break;
+                case 1:
+                    key.append((char) ((int)random.nextInt(26) + 65));
+                    break;
+                case 2:
+                    key.append(random.nextInt(9));
+                    break;
+            }
+        }
+        authNum = key.toString();
 	}
+	
+	
+	
+	
+	
+
+	public MimeMessage mailCheck(String email) throws MessagingException {
+		System.out.println("메일 인증 요청");
+		System.out.println("메일:" + email);
+		
+		
+		createCode();
+		Address setFrom= new InternetAddress("kh.h.final6@gmail.com");
+		String toEmail = email;
+		String title = "못난이맛난이입니다. 이메일 인증을 해주세요.";
+		
+        MimeMessage message = emailSender.createMimeMessage();
+        message.addRecipients(MimeMessage.RecipientType.TO, toEmail);
+        message.setSubject(title);
+
+        // 메일 내용
+        String msgOfEmail="";
+        msgOfEmail += "<div style='margin:20px;'>";
+        msgOfEmail += "<h1> 안녕하세요 못난이맛난이 입니다. </h1>";
+        msgOfEmail += "<br>";
+        msgOfEmail += "<p>아래 코드를 입력해주세요<p>";
+        msgOfEmail += "<br>";
+        msgOfEmail += "<p>감사합니다.<p>";
+        msgOfEmail += "<br>";
+        msgOfEmail += "<div align='center' style='border:1px solid black; font-family:verdana';>";
+        msgOfEmail += "<h3 style='color:blue;'>회원가입 인증 코드입니다.</h3>";
+        msgOfEmail += "<div style='font-size:130%'>";
+        msgOfEmail += "CODE : <strong>";
+        msgOfEmail += authNum + "</strong><div><br/> ";
+        msgOfEmail += "</div>";
+
+        message.setFrom(setFrom);
+        message.setText(msgOfEmail, "utf-8", "html");
+		
+		
+		
+		return message;
+	}
+	
+	
+		@ResponseBody
+		@RequestMapping("/mailCheck")		
+	    public String emailCheck(@RequestParam String email) throws MessagingException, UnsupportedEncodingException  {
+	        EmailCheckReq emailCheckReq = new EmailCheckReq(email);
+			
+			String authCode = sendEmail(emailCheckReq.getEmail());
+	        
+	        System.out.println(authCode);
+	        
+	        return new String(authCode);	
+	    }
+
+	
+		public String sendEmail(String email) throws MessagingException, UnsupportedEncodingException {
+
+	        //메일전송에 필요한 정보 설정
+	        MimeMessage emailForm = mailCheck(email);
+	        //실제 메일 전송
+	        emailSender.send(emailForm);
+
+	        return authNum; //인증 코드 반환
+	    }
+
 	
 	
 	/** 로그인
