@@ -510,7 +510,20 @@
 	
 	</script>
 
+<script>
+$(document).ready(function() {
+    // 이메일 필드에 대한 값을 가져옵니다.
+    const emailValue = '${email}';
 
+    // 회원가입 버튼을 가져옵니다.
+    const $enrollButton = $("#enroll_mem_btn");
+
+    // 이메일 값이 null이 아닌 경우, 회원가입 버튼을 활성화합니다.
+    if (emailValue !== 'null') {
+        $enrollButton.prop("disabled", false);
+    }
+});
+</script>
 
 
     <!-- 카카오 주소 조회 API -->
