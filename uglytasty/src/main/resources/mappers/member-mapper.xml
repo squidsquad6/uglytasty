@@ -8,10 +8,13 @@
 		<result column="user_name" property="userName" />
 		<result column="phone" property="phone" />
 		<result column="email" property="email" />
-		<result column="address" property="address" />
+		<result column="address_base" property="addressBase" />
+		<result column="address_detail" property="addressDetail" />
 		<result column="status" property="status" />
 		<result column="subscribe" property="subscribe" />
+		<result column="provider" property="provider"/>
 		<result column="access_token" property="accessToken"/>
+		<result column="refresh_token" property="refreshToken"/>
 	</resultMap>
 
 
