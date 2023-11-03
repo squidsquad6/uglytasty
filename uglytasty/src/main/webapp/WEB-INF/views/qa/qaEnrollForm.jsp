@@ -170,7 +170,7 @@
  
 </style>
 </head>
-<body style="background-color: #f5f5f5;" style="box-sizing:content-box;">
+<body style="box-sizing:content-box;">
 	<jsp:include page="../common/header.jsp"/>
 	
     <div class="inquiry-wrap" style="max-width: 960px; margin: 0 auto; padding: 50px 0;">

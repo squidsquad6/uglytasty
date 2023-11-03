@@ -139,7 +139,7 @@
    }
 </style>
 </head>
-<body style="background-color: #f5f5f5;">
+<body>
 
 	<jsp:include page="../common/header.jsp"/>
 	
