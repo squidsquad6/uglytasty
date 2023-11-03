@@ -353,11 +353,38 @@
 	</delete>
 	
 	
-	<select id="sendLikeData" resultMap="likedResult">
+	<select id="selectLikeListCount" resultType="_int">
 		select
-				user_id
-			  , recipe_no
-		  from  liked
+				count(*)
+		  from  recipe r
+		  join  liked l on r.recipe_no = l.recipe_no
+	     where  l.user_id = #{ userId }
+	       and  r.status = 'Y'
+	     order
+	        by  r.recipe_no desc 
+	</select>
+	
+	
+	<select id="selectLikeList" resultMap="recipeResult">
+		select
+			    r.recipe_no
+			  , recipe_writer
+			  , recipe_title
+	   	      , recipe_origin_name
+		      , recipe_change_name
+			  , recipe_exp
+			  , recipe_content
+			  , count
+			  , difficulty
+			  , time
+			  , recipe_date
+			  , status
+		from  recipe r
+		join  liked l on r.recipe_no = l.recipe_no
+	   where  l.user_id = #{ userId }
+	     and  r.status = 'Y'
+	   order
+	      by  r.recipe_no desc  
 	</select>
 	
 	

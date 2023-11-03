@@ -675,7 +675,7 @@
 			
 								                			  if(list[i].userId === '${loginMember.userId}'){
 								                					value += "<div id='reply_edit_delete' class='reply_edit_delete' style='float:right; margin-right: 15px;'>"
-								                						   +	"<button class='btn btn-sm btn-success'>수정</button> &nbsp;"
+								                						   //+	"<button class='btn btn-sm btn-success'>수정</button> &nbsp;"
 								                						   +	"<button class='btn btn-sm btn-danger' onclick='deleteReply(" + list[i].replyNo +");'>삭제</button>"
 								                						   +  "</div>";
 								                				}
@@ -718,7 +718,7 @@
                 				success:function(data){
                 					if(data == "success"){
                 						
-		                				alertify.alert("댓글이 삭제되었습니다!")
+		                				alertify.alert("🔔알립니다!딸랑!🔔", "댓글이 삭제되었습니다!")
 		                				
 		                				selectReplyList();
 		                				

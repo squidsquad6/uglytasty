@@ -52,7 +52,7 @@ public interface RecipeService {
 	// 레피시 수정 서비스 (재료 Ingredients i)
 	int updateIngredients(Ingredients i);
 	
-	// <레시피 좋아요 관련>
+	// ========================= 좋아요 =========================
 	// 좋아요 여부 확인
 	Liked checkLike(Liked l);
 	// 좋아요 하기
@@ -62,5 +62,13 @@ public interface RecipeService {
 	
 	// 좋아요 개수
 	int likeCount(int recipeNo);
+	
+	
+	// ========================= 마이페이지 =========================
+	// 좋아요 한 레시피 총 갯수 조회 서비스
+	int selectLikeListCount(String userId);
+	
+	// 좋아요 한 레시피 리스트 조회 서비스
+	ArrayList<Recipe> selectLikeList(String userId);
 	
 }

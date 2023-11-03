@@ -436,6 +436,32 @@ public class RecipeController {
 		
 	}
 	
+	
+	// ========================= 마이페이지 =========================
+	
+	
+		/** 마이페이지 좋아요한 레시피 리스트 조회(리스트, 총 갯수)
+		 * @return
+		 */
+		@RequestMapping("myPageLikedRecipeList.re")
+		public String myPageLikedRecipeList(HttpSession session, Model model) {
+			
+			String userId = ((Member) session.getAttribute("loginMember")).getUserId();
+			
+			// 찜한 레시피 총 갯수
+			int likeListCount = rService.selectLikeListCount(userId);
+			
+			// 찜한 레시피 리스트
+			ArrayList<Recipe> likeList = rService.selectLikeList(userId);
+			
+			model.addAttribute("likeListCount", likeListCount);
+			model.addAttribute("likeList", likeList);
+			
+			
+			return "myPage/myPageLikedRecipe";
+			
+		}
+	
 
 	
 

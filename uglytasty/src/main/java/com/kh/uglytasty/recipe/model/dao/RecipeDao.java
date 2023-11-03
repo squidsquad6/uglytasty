@@ -244,7 +244,6 @@ public class RecipeDao {
 	 */
 	public int insertLike(SqlSessionTemplate sqlSession, Liked l) {
 		
-		
         return sqlSession.insert("recipeMapper.insertLike", l);
 	}
 
@@ -257,12 +256,33 @@ public class RecipeDao {
 	 */
 	public int deleteLike(SqlSessionTemplate sqlSession, Liked l) {
 		
-		
         return sqlSession.delete("recipeMapper.deleteLike", l);
 	}
 
 
-	
+	// ========================= 마이페이지 =========================
+
+	/** 마이페이지 좋아요한 레시피 리스트 조회 - 총 갯수
+	 * @param sqlSession
+	 * @param userId
+	 * @return
+	 */
+	public int selectLikeListCount(SqlSessionTemplate sqlSession, String userId) {
+		
+		return sqlSession.selectOne("recipeMapper.selectLikeListCount", userId);
+	}
+
+
+	/** 마이페이지 좋아요한 레시피 리스트 조회 - 리스트
+	 * @param sqlSession
+	 * @param userId
+	 * @return
+	 */
+	public ArrayList<Recipe> selectLikeList(SqlSessionTemplate sqlSession, String userId) {
+		
+		return (ArrayList)sqlSession.selectList("recipeMapper.selectLikeList", userId);
+	}
+
 
 
 }

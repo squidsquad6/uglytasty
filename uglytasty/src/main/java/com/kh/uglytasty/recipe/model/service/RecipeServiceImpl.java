@@ -244,7 +244,27 @@ public class RecipeServiceImpl implements RecipeService{
 	}
 
 
+	// ========================= 마이페이지 =========================
 	
+	
+	/**
+	 * 찜한 레시피 총 갯수
+	 */
+	@Override
+	public int selectLikeListCount(String userId) {
+		
+		return rDao.selectLikeListCount(sqlSession, userId);
+	}
+	
+	
+	/**
+	 * 찜한 레시피 리스트
+	 */
+	@Override
+	public ArrayList<Recipe> selectLikeList(String userId) {
+		
+		return rDao.selectLikeList(sqlSession, userId);
+	}
 
 
 
