@@ -167,7 +167,7 @@
       }
 </style>
 </head>
-<body style="background-color: #f5f5f5;">
+<body>
     <jsp:include page="../common/header.jsp"/>
     <div class="qna-wrap" style="max-width: 1020px; margin: 0 auto; padding: 50px 0;">
         <h2>1:1 문의</h2>

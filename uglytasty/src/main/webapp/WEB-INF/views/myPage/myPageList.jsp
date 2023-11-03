@@ -208,7 +208,7 @@
                     </div>
 
                     <div class="p-2">
-                        <a href="#">
+                        <a href="myPageQAList.qa">
                             <div class="d-flex justify-content-between">
                                 <div class="p-2">1:1 문의</div>
                                 <div class="p-2"><img src="https://d3cpiew7rze14b.cloudfront.net/assets/svg/gray-600-chevron-right_5qBS9q-mc.svg"></div>

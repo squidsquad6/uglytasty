@@ -210,6 +210,7 @@ public class QAController {
 		return "qa/qaUpdateForm";
 	}
 	
+	
 	@RequestMapping("update.qa")
 	public String updateQA(QA qa, Model model) {
 		int result = qService.updateQA(qa);
@@ -224,7 +225,30 @@ public class QAController {
 		}
 	}
 	
+	
+	// ========================= 마이페이지 =========================
+	
+	@RequestMapping("myPageQAList.qa")
+	public String myPageQAList(@RequestParam(value="cpage", defaultValue = "1") int currentPage, 
+			HttpSession session, Model model) {
+		
+		String userId = ((Member)(session.getAttribute("loginMember"))).getUserId();
 
+		int listCount = qService.selectListCount(userId);
+		PageInfo pi = Pagination.getPageInfo(listCount, currentPage, 5, 5);
+		
+		ArrayList<QA> list = qService.selectQAList(userId, pi);
+		
+		model.addAttribute("list", list);
+		model.addAttribute("pi", pi);
+		
+		return "myPage/myPageQAList";
+		
+	}
+	
+
+	
+	
 
 }
 
