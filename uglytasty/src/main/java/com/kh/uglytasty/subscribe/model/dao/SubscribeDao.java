@@ -46,4 +46,12 @@ public class SubscribeDao {
 		return (ArrayList)sqlSession.selectList("subscribeMapper.selectSubCompList");
 	}
 
+	
+	// -------------마이페이지----------------
+	
+	public int myPageUpdateSubscribe(SqlSessionTemplate sqlSession, Subscribe s) {
+		
+		return sqlSession.update("subscribeMapper.myPageUpdateSubscribe", s);
+	}
+
 }

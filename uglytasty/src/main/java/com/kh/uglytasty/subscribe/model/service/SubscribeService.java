@@ -15,6 +15,9 @@ public interface SubscribeService {
 	int insertSubscribe(Subscribe newSub);
 	
 	int updateSubscribeStatus(String userId);
+	
+	//--------------마이페이지-----------------
+	int myPageUpdateSubscribe(Subscribe s);
 
 
 }

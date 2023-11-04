@@ -23,9 +23,6 @@ public class SubscribeServiceImpl implements SubscribeService{
 	@Override
 	public int updateSubscirbe(Subscribe newSub) {
 		
-		
-		
-		
 		return sDao.updateSubscribe(sqlSession,newSub);
 	}
 
@@ -61,6 +58,15 @@ public class SubscribeServiceImpl implements SubscribeService{
 	public ArrayList<SubComp> selectSubCompList() {
 		
 		return sDao.selectSubCompList(sqlSession);
+	}
+
+	
+	// -------------마이페이지----------------
+	
+	@Override
+	public int myPageUpdateSubscribe(Subscribe s) {
+		
+		return sDao.myPageUpdateSubscribe(sqlSession, s);
 	}
 	
 }

@@ -36,12 +36,17 @@ import com.kh.uglytasty.common.EmailCheckReq;
 import com.kh.uglytasty.member.model.service.MemberServiceImpl;
 import com.kh.uglytasty.member.model.vo.Member;
 import com.kh.uglytasty.product.model.vo.Product;
+import com.kh.uglytasty.subscribe.model.service.SubscribeServiceImpl;
+import com.kh.uglytasty.subscribe.model.vo.Subscribe;
 
 @Controller
 public class MemberController {
 	
 	@Autowired 
 	private MemberServiceImpl mService;
+	
+	@Autowired
+	private SubscribeServiceImpl sService;
 	
 	@Autowired
 	private BCryptPasswordEncoder bcryptPasswordEncoder;
@@ -433,6 +438,13 @@ public class MemberController {
 			if(subscribeOrNot.equals("Y")) {
 				// 현재 로그인한 회원이 구독자일 때
 				
+				String id = ((Member)session.getAttribute("loginMember")).getUserId();
+				
+				Subscribe loginMemSubscribInfo = sService.selectSubscribe(id);
+				
+				session.setAttribute("loginMemSubscribInfo", loginMemSubscribInfo);
+				
+				
 				return "myPage/myPageMyBoxForm";
 				
 			}else {
@@ -451,7 +463,6 @@ public class MemberController {
 		@RequestMapping("myPageMemberInfo.me")
 		public String myPageMemberInfo(HttpSession session) {
 			
-			//System.out.println("로그인멤버 정보 : " + session.getAttribute("loginMember"));
 			
 			return "myPage/myPageMemberInfo";
 		}

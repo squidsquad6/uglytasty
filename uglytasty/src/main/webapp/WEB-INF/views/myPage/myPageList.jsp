@@ -190,7 +190,7 @@
                     </div>
 
                     <div class="p-2">
-                        <a href="myPageMyBoxForm.sub">
+                        <a href="myPageMyBoxForm.su">
                             <div class="d-flex justify-content-between">
                                 <div class="p-2">나의 못난이 박스</div>
                                 <div class="p-2"><img src="https://d3cpiew7rze14b.cloudfront.net/assets/svg/gray-600-chevron-right_5qBS9q-mc.svg"></div>

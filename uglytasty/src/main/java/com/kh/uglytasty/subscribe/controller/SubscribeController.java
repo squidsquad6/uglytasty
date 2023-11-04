@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.gson.Gson;
+import com.kh.uglytasty.member.model.vo.Member;
 import com.kh.uglytasty.subscribe.model.service.SubscribeServiceImpl;
 import com.kh.uglytasty.subscribe.model.vo.SubComp;
 import com.kh.uglytasty.subscribe.model.vo.Subscribe;
@@ -137,9 +138,6 @@ public class SubscribeController {
 		
 		String id = userId;
 		
-		
-		
-		
 		Subscribe s = sService.selectSubscribe(id);
 		
 		Subscribe newSub = new Subscribe();
@@ -194,12 +192,46 @@ public class SubscribeController {
 	/** 나의 못난이 박스 폼 띄우기
 	 * @return
 	 */
-	@RequestMapping("myPageMyBoxForm.sub")
-	public String myPageMyBoxForm() {
+	@RequestMapping("myPageMyBoxForm.su")
+	public String myPageMyBoxForm(HttpSession session, String userId) {
+		
+		String id = ((Member)session.getAttribute("loginMember")).getUserId();
+				
+		Subscribe loginMemSubscribInfo = sService.selectSubscribe(id);
+		
+		session.setAttribute("loginMemSubscribInfo", loginMemSubscribInfo);
 		
 		return "myPage/myPageMyBoxForm";
 	}
-
 	
+	
+	/** 나의 못난이 박스 - 구독 정보 변경
+	 * @param s
+	 * @param model
+	 * @param session
+	 * @return
+	 */
+	@RequestMapping("myPageMyBoxUpdate.su")
+	public String myPageMyBoxUpdate(Subscribe s, HttpSession session, Model model) {
+
+		int result = sService.myPageUpdateSubscribe(s);
+		//System.out.println("결과아 : " + result);
+		if(result > 0) {
+			
+			Subscribe newSubscribe = sService.selectSubscribe(s.getUserId());
+			model.addAttribute("s", newSubscribe);
+			session.setAttribute("alertMsg", "구독 정보가 수정되었습니다.");
+			
+			return "redirect:/myPageMyBoxForm.su";
+			
+		}else {
+			
+			model.addAttribute("errorMsg", "구독 정보 수정에 실패하였습니다!");
+			return "common/errorPage";
+			
+		}
+		
+		
+	}
 	
 }
