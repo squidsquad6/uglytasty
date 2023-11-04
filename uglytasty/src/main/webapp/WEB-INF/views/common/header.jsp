@@ -78,6 +78,7 @@
         /* -------------------- 로고 이미지 --------------------- */
         #header_logoimg{
             /* border: 1px solid orange; */
+            width: 205px;
         }
         #header_logoimg img{
             width: 200px;
@@ -215,13 +216,16 @@
                             </div>
                             <div class="header_eachmenu flex-fill">
                                 <a href="list.no"><span>공지사항</span></a>                  
-                           </div>
+                            </div>
+                            <div class="header_eachmenu flex-fill">
+                                <a href="test.eat"><span>먹비티아이</span></a>                  
+                            </div>
                          
                            
                                 <div class="header_eachmenu flex-fill">
                                    <c:choose>
                                 <c:when test="${loginMember.userId == 'admin'}">
-                                    <a href="member.ad"><span>관리자 페이지</span></a>
+                                    <a href="member.ad"><span style="font-weight:bold;">관리자 페이지</span></a>
                                 </c:when>
                                    
                                       

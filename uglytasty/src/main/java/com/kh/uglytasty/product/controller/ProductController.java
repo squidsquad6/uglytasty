@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Random;
 
 import javax.servlet.http.HttpSession;
 
@@ -992,19 +993,71 @@ public class ProductController {
 	 
 	
 	
-	
-	
-   /** 장바구니 상품 중복 검사 (ajax)
+    /** 장바구니 상품 중복 검사 (ajax)
 	 *
 	 */
 	@ResponseBody
-   @RequestMapping("duplication.cart")
-   public String selectAddCartDuplication(Cart c) {
-	   int result = pService.selectAddCartDuplication(c);
-	   //System.out.println("장바구니 상품 중복 검사 result : " + result);
+    @RequestMapping("duplication.cart")
+    public String selectAddCartDuplication(Cart c) {
+	    int result = pService.selectAddCartDuplication(c);
+	    //System.out.println("장바구니 상품 중복 검사 result : " + result);
 
-	   return result>0 ? "cartO" : "cartX";
-   }
+	    return result>0 ? "cartO" : "cartX";
+    }
+	
+	
+
+	
+	/** 먹비티아이 단순 jsp 이동
+	 *
+	 */
+	@RequestMapping("test.eat")
+	public String testEatForm() {
+		return "product/testEatForm";
+	}
+	
+	/** 먹비티아이 테스트 결과 값 처리(inner or outer)
+	 *
+	 */
+	@RequestMapping("testResult.eat")
+	public String testEatResult(Model model, String tester, String one, String two, String three, String four, String five, String six, String seven) {
+	
+		ArrayList<String> resultArr = new ArrayList<String>();
+		
+	    resultArr.add(one);
+	    resultArr.add(two);
+	    resultArr.add(three);
+	    resultArr.add(four);
+	    resultArr.add(five);
+	    resultArr.add(six);
+	    resultArr.add(seven);
+
+	    //System.out.println(resultArr);
+
+	    int yCount = 0;
+	    for (String value : resultArr) {	// value : Y or N
+	        if ("Y".equals(value)) {
+	            yCount++;
+	        }
+	    }
+
+	    //System.out.println("Y의 개수: " + yCount);
+
+	    if (yCount >= 4) {
+	    	String inner = "inner";
+	        model.addAttribute("inner", inner);
+	        model.addAttribute("tester", tester);
+	    }else {
+	    	String outer = "outer";
+	        model.addAttribute("outer", outer);
+	        model.addAttribute("tester", tester);
+	    }
+
+	    return "product/testEatResultView";
+		    
+	}
+	
+	
    
    
 }
