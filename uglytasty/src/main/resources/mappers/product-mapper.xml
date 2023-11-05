@@ -842,7 +842,8 @@
 		      , difficulty
 		      , time
 		  from recipe
-		 where upper(recipe_title) like upper('%' || #{lastWord} || '%')
+          join ingredients using (recipe_no)
+		 where upper(ingredient) like upper('%' || #{lastWord} || '%')
 		   and status = 'Y'
 	</select>
 

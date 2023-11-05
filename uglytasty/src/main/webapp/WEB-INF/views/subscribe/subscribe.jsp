@@ -182,7 +182,7 @@
                 <div class="row" style="margin-top: 20px;">
                     <div class="col-sm-4"  style=" border: white;"><img src="resources/images/week1.svg" style="height: 100%; width: 100%;"></div>
                     <div class="col-sm-4"  style=" border: white;"><img src="resources/images/week2.svg" style="height: 100%; width: 100%;"></div>
-                    <div class="col-sm-4"  style="  border: white;"><img src="resources/images/week3.svg" style="height: 100%; width: 100%;"></div>
+                    <div class="col-sm-4"  style="  border: white;"><img src="resources/images/week4.png" style="height: 100%; width: 100%;"></div>
                 </div>
                 <div style="margin-top:30px; font-size: large; color: rgb(58, 58, 58);">비선호 품목은 배송되는 주간의 다른 품목으로 대체해 보내드려요!</div>
             </div>
