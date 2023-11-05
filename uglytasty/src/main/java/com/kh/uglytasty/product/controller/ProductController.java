@@ -5,6 +5,8 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
@@ -19,6 +21,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.google.gson.Gson;
+import com.kh.uglytasty.member.model.vo.Member;
 import com.kh.uglytasty.order.model.vo.Cart;
 import com.kh.uglytasty.order.model.vo.Orders;
 import com.kh.uglytasty.order.model.vo.OrdersDetail;
@@ -1005,6 +1008,57 @@ public class ProductController {
 
 	   return result>0 ? "cartO" : "cartX";
    }
+	
+	
+	//-------------------- 마이페이지 -------------------------
+	
+	/** 주문 및 배송 조회 페이지 띄우기
+	 * @return
+	 */
+	@RequestMapping("myPageOrderList.or")
+	public String myPageOrderList(HttpSession session, Model model) {
+		
+		String userId = ((Member) session.getAttribute("loginMember")).getUserId();
+		
+		ArrayList<Product> orderList = pService.myPageSelectOrderList(userId);
+		
+		model.addAttribute("orderList",orderList);
+		
+		System.out.println(" orderList " + orderList);
+		
+		return "myPage/myPageOrderList";
+	}
+	
+	
+	
+	@RequestMapping("myPageOrderDetail.or")
+	public String myPageOrderDetail(int orderNo, HttpSession session, Model model) {
+		
+		String userId = ((Member) session.getAttribute("loginMember")).getUserId();
+		
+		ArrayList<Product> orderList = pService.myPageSelectOrderList(userId);
+		model.addAttribute("orderList", orderList);
+		
+		//ArrayList<Orders> orderInfo = pService.myPageSelectOrderInfo(orderNo);
+		//session.setAttribute("orderInfo", orderInfo);
+		Orders orderInfo = pService.myPageSelectOrderInfo(orderNo);
+		session.setAttribute("orderInfo", orderInfo);
+		
+		System.out.println("orderInfo" + orderInfo);
+		
+		return "myPage/myPageOrderDetail";
+		
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
    
    
 }

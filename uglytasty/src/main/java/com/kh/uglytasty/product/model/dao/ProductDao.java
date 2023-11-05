@@ -302,6 +302,29 @@ public class ProductDao {
 	public int selectAddCartDuplication(SqlSessionTemplate sqlSession, Cart c) {
 		return sqlSession.selectOne("productMapper.selectAddCartDuplication", c);
 	}
+
+	
+	//-----------------------------마이페이지-----------------------------
+	
+	/** 마이페이지 주문 상품 조회 리스트
+	 * @param sqlSession
+	 * @return
+	 */
+	public ArrayList<Product> myPageSelectOrderList(SqlSessionTemplate sqlSession, String userId) {
+		
+		return (ArrayList)sqlSession.selectList("productMapper.myPageSelectOrderList", userId);
+		
+	}
+
+	/** 마이페이지 주문 배송 관련 정보
+	 * @param sqlSession
+	 * @param orderNo
+	 * @return
+	 */
+	public Orders myPageSelectOrderInfo(SqlSessionTemplate sqlSession, int orderNo) {
+		
+		return sqlSession.selectOne("productMapper.myPageSelectOrderInfo", orderNo);
+	}
 	
 	
 	

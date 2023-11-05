@@ -456,6 +456,28 @@ public class ProductServiceImpl implements ProductService {
 	}
 
 	
+	//-----------------------------마이페이지-----------------------------
+	
+	/**
+	 * 마이페이지 주문 상품 리스트 조회
+	 */
+	@Override
+	public ArrayList<Product> myPageSelectOrderList(String userId) {
+		
+		return pDao.myPageSelectOrderList(sqlSession, userId);
+	}
+
+	
+	/**
+	 * 마이페이지 주문 배송 관련 정보
+	 */
+	@Override
+	public Orders myPageSelectOrderInfo(int orderNo) {
+		
+		return pDao.myPageSelectOrderInfo(sqlSession, orderNo);
+	}
+
+	
 
 	
 

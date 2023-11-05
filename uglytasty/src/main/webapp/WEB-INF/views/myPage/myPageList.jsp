@@ -181,7 +181,7 @@
                     </div>
 
                     <div class="p-2">
-                        <a href="#">
+                        <a href="myPageOrderList.or">
                             <div class="d-flex justify-content-between">
                                 <div class="p-2">주문 및 배송 조회</div>
                                 <div class="p-2"><img src="https://d3cpiew7rze14b.cloudfront.net/assets/svg/gray-600-chevron-right_5qBS9q-mc.svg"></div>
