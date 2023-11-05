@@ -63,20 +63,19 @@
        });
    </script>
  <div>
-         		<br><br><br>
-        <div style="padding-left:625px">
+        <br><br><br>
+        <div style="display: flex; justify-content: center;">
             <nav class="breadcrumb is-centered is-large has-background-white" aria-label="breadcrumbs" >
                 <ul>
-                
-                <li><a href="member.ad" style="color: #ff6741;">회원 관리</a></li>
-                <li><a href="order.ad" style="color: #ff6741;">주문 관리</a></li>
-                <li><a href="subscribe.ad" style="color: #ff6741;">구독 관리</a></li>
-                <li><a href="qa.ad" style="color: #ff6741;">1:1문의 관리</a></li>
-                <li><a href="product.ad" style="color: #ff6741;">단품 관리</a></li>
+	                <li><a href="member.ad" style="color: #ff6741;">회원 관리</a></li>
+	                <li><a href="order.ad" style="color: #ff6741;">주문 관리</a></li>
+	                <li><a href="subscribe.ad" style="color: #ff6741;">구독 관리</a></li>
+	                <li><a href="qa.ad" style="color: #ff6741;">1:1문의 관리</a></li>
+	                <li><a href="product.ad" style="color: #ff6741;">단품 관리</a></li>
                 </ul>
             </nav>
          </div>
-<br><br>
+	<br><br>
     <div class="container">
         <form action="excel.ad" method="get">
         <table class="table-container is-fullwidth is-hoverable">
@@ -124,7 +123,7 @@
           </tbody>
            
         </table>
-        <button class="button is-success is-normal" type="submit"><i class="fa-solid fa-download"></i>&nbsp;&nbsp;Excel 다운로드</button>
+        <button class="button is-success is-normal" type="submit" style="float:left;"><i class="fa-solid fa-download"></i>&nbsp;&nbsp;Excel 다운로드</button>
         
         </form>
         

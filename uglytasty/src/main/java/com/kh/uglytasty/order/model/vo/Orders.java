@@ -31,6 +31,8 @@ public class Orders {
    private int quantity;
    
    private String products;
+   
+   private String userName;
 
 
 public Orders(int orderNo, String userId, String orderDate, int orderCode, String trackingNo,

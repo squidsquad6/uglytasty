@@ -8,6 +8,12 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 
+<!-- 
+	orderInfo : orderNo, orderDate, orderCode, trackingNo, userId, receiver, receiverPhone, addressMain, addressDetail, deliveryMemo, totalPrice
+	
+	orderList : orderNo, userId, userName, productNo, productName, explanation, price, sale, salePrice, quantity, totalPrice, changeName, fileLevel
+ -->
+
 	<style>
 
         * { /* 헤더에 포함하기 */
@@ -364,16 +370,11 @@
             <div id="mypage-all" class="row">
                 
                 <div class="col-sm-3" style="border: 1px solid red;">
-
-                    
                     <jsp:include page="myPageList.jsp"/>
-
-
                 </div>
 
                 <div class="col-sm-9" style="border: 1px solid blue;">
                     <!-- 페이지 -->
-                    
                     <div class="mypage_content">
 
                         <h3>상세 주문 내역</h3>
@@ -382,8 +383,20 @@
                             <div id="all_orderInfo_wrap">
 
                                 <h4>📄 배송 정보</h4><br>
-                    
                                 <div id="deliveryInfo_wrap">
+                                    <div class="d-flex">
+                                        <div class="p-2" style="width: 150px;">
+                                            <span class="deliveryInfo_title">
+                                                주문한 사람
+                                            </span>
+                                        </div>
+                                        <div class="p-2 flex-grow-1">
+                                            <span>
+                                                ${ orderInfo.userName }
+                                            </span>
+                                        </div>
+                                    </div>
+                                    
                                     <div class="d-flex">
                                         <div class="p-2" style="width: 150px;">
                                             <span class="deliveryInfo_title">
@@ -409,6 +422,19 @@
                                             </span>
                                         </div>
                                     </div>
+                                    
+                                    <div class="d-flex">
+                                        <div class="p-2" style="width: 150px;">
+                                            <span class="deliveryInfo_title">
+                                                주소
+                                            </span>
+                                        </div>
+                                        <div class="p-2 flex-grow-1">
+                                            <span>
+                                                ${ orderInfo.addressMain } ${ orderInfo.addressDetail }
+                                            </span>
+                                        </div>
+                                    </div>
 
                                     <div class="d-flex">
                                         <div class="p-2" style="width: 150px;">
@@ -422,17 +448,63 @@
                                             </span>
                                         </div>
                                     </div>
-        
+                                    
                                     <div class="d-flex">
                                         <div class="p-2" style="width: 150px;">
                                             <span class="deliveryInfo_title">
-                                                주소
+                                                주문 상태
                                             </span>
                                         </div>
                                         <div class="p-2 flex-grow-1">
-                                            <span>
-                                                ${ orderInfo.addressMain } ${ orderInfo.addressDetail }
+                                        	<c:choose>
+                                        		<c:when test="${ orderInfo.orderCode eq 2 }">
+		                                            <span>
+		                                                결제완료
+		                                            </span>
+                                        		</c:when>
+                                        		<c:when test="${ orderInfo.orderCode eq 3 }">
+		                                            <span style="color: #2a79ff;">
+		                                                배송준비중
+		                                            </span>
+                                        		</c:when>
+                                        		<c:when test="${ orderInfo.orderCode eq 4 }">
+		                                            <span style="color: #2a79ff;">
+		                                                배송중
+		                                            </span>
+                                        		</c:when>
+                                        		<c:when test="${ orderInfo.orderCode eq 5 }">
+		                                            <span style="color: #2a79ff;">
+		                                                배송완료
+		                                            </span>
+                                        		</c:when>
+                                        		<c:otherwise>
+                                        			<span>
+		                                                미결제
+		                                            </span>
+                                        		</c:otherwise>
+                                        	</c:choose>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="d-flex">
+                                        <div class="p-2" style="width: 150px;">
+                                            <span class="deliveryInfo_title">
+                                                송장 번호
                                             </span>
+                                        </div>
+                                        <div class="p-2 flex-grow-1">
+                                        	<c:choose>
+                                        		<c:when test="${ not empty orderInfo.trackingNo }">
+		                                            <span>
+		                                            	<a href="https://www.cjlogistics.com/ko/tool/parcel/tracking">${ orderInfo.trackingNo }</a>
+		                                            </span>
+                                        		</c:when>
+                                        		<c:otherwise>
+                                        			<span>
+		                                                ( 아직 배송 준비 전 단계 입니다. )
+		                                            </span>
+                                        		</c:otherwise>
+                                        	</c:choose>
                                         </div>
                                     </div>
         
@@ -464,47 +536,42 @@
                                 	<c:forEach var="o" items="${ orderList }">
                                 		<c:choose>
                                 			<c:when test="${o.orderNo == orderInfo.orderNo }">
-		                                    <!-- 한 덩어리 반복 -->
-		                                    <div class="orderProduct">
-		    
-		                                        <div class="p-2">
-		    
-		                                            <div class="d-flex">
-		    
-		                                                <div class="p-2">
-		                                                    <div class="order_product_pic">
-		                                                        <!-- 상품사진 -->
-		                                                        <img style="width: 130px; height: 130px;" src="${ o.changeName }">
-		                                                    </div>
-		                                                </div>
-		                                                
-		    
-		                                                <div class="p-3 flex-grow-1">
-		                                                    <h4>${ o.productName }</h4>
-		                                                    <p style="color: gray; font-weight:400;">${ o.explanation }</p>
-		                                                    <div class="item">
-		                                                    <span class="sale">${ o.sale }%</span>
-			                                                    <img src="https://d3cpiew7rze14b.cloudfront.net/assets/ustore/discount-arrow.svg">
-			                                                    <span class="originPrice">﻿<fmt:formatNumber value="${ o.price }" pattern="#,###"/></span>
-			                                                    <span class="salePrice" id="salePrice"><fmt:formatNumber value="${ o.salePrice }" pattern="#,###"/></span>
-			                                                    <span class="salePrice">원</span>
-		                                                    </div>
-		                                                    <p style="color: black; font-weight:500;">구매수량&nbsp;&nbsp;:&nbsp;&nbsp;
-		                                                    <span style="font-weight:bold; color:black;"><input style="width:20px; border:none; font-weight:bold; font-size:18px;" name="quantity" value="${ o.quantity }"></span>개</p>      
-		                                                </div>
-		    
-		                                                <div class="p-2">
-		                                                    <div id="eachProductPrice">
-		                                                        <span class="chong">총&nbsp;:&nbsp;&nbsp;</span>
-		                                                        <span class="chongPrice"><fmt:formatNumber value="${ o.salePrice }" pattern="#,###"/>&nbsp;</span><span class="one">원</span>	
-		                                                    </div>
-		                                                </div>
-		    
-		                                            </div>
-		                                            
-		    
-		                                        </div>
-		                                    </div>
+			                                    <!-- 한 덩어리 반복 -->
+			                                    <div class="orderProduct">
+			                                        <div class="p-2">
+			                                            <div class="d-flex">
+			    
+			                                                <div class="p-2">
+			                                                    <div class="order_product_pic">
+			                                                        <!-- 상품사진 -->
+			                                                        <img style="width: 130px; height: 130px;" src="${ o.changeName }">
+			                                                    </div>
+			                                                </div>
+			    
+			                                                <div class="p-3 flex-grow-1">
+			                                                    <h4>${ o.productName }</h4>
+			                                                    <p style="color: gray; font-weight:400;">${ o.explanation }</p>
+			                                                    <div class="item">
+			                                                    <span class="sale">${ o.sale }%</span>
+				                                                    <img src="https://d3cpiew7rze14b.cloudfront.net/assets/ustore/discount-arrow.svg">
+				                                                    <span class="originPrice">﻿<fmt:formatNumber value="${ o.price }" pattern="#,###"/></span>
+				                                                    <span class="salePrice" id="salePrice"><fmt:formatNumber value="${ o.salePrice }" pattern="#,###"/></span>
+				                                                    <span class="salePrice">원</span>
+			                                                    </div>
+			                                                    <p style="color: black; font-weight:500;">구매수량&nbsp;&nbsp;:&nbsp;&nbsp;
+			                                                    <span style="font-weight:bold; color:black;"><input style="width:20px; border:none; font-weight:bold; font-size:18px;" name="quantity" value="${ o.quantity }"></span>개</p>      
+			                                                </div>
+			    
+			                                                <div class="p-2">
+			                                                    <div id="eachProductPrice">
+			                                                        <span class="chong">총&nbsp;:&nbsp;&nbsp;</span>
+			                                                        <span class="chongPrice"><fmt:formatNumber value="${ o.salePrice * o.quantity }" pattern="#,###"/>&nbsp;</span><span class="one">원</span>	
+			                                                    </div>
+			                                                </div>
+			    
+			                                            </div>
+			                                        </div>
+			                                    </div>
 		                                    </c:when>
 	                                    </c:choose>
                                     </c:forEach>
@@ -531,31 +598,30 @@
                                         <td style="padding-top:40px;">
                                         
                                             <fmt:formatNumber value="${orderInfo.totalPrice + 2500}" pattern="#,###"/>&nbsp;원
-                                            <p style="font-size: 10px; color: #ff6741; font-weight:400;">(+ 배송비 포함)</p>
+                                            <p style="font-size: 10px; color: #ff6741; font-weight:400; padding-left:30px;">(+ 배송비 포함)</p>
                                             
                                         </td>
                                     </tr>
                                 </table>
                                 
-                                
-                            </div>    
+                           </div>    
 
-                        
-                    </div>
+                      </div>
 
-                    
+                  </div>
 
-                </div>
-
-            </div>
+             </div>
             
-            
-            <br>
+        <br>
         </div>
-
         
     </div>
 
+
+	<br><br><br><br>
+          
+ 	<!-- 푸터 -->
+    <jsp:include page="../common/footer.jsp"/>
 
 
 </body>

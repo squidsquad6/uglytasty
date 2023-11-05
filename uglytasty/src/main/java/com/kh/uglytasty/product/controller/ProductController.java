@@ -11,6 +11,7 @@ import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
+import org.apache.poi.util.SystemOutLogger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -180,10 +181,11 @@ public class ProductController {
    @RequestMapping(value="insert.pro")
    public String insertProduct(Product p, Attachment at, MultipartFile[] upfile, Model model, HttpSession session, 
                         String fileExp1, String fileExp2, String fileExp3, String fileExp4, String fileExp5) { 
-      /*공부용*/
+      /*공부용
       for(int i=0; i<upfile.length; i++) {
          System.out.println(upfile[i]);
       }
+      */
       
       ArrayList<String> explist = new ArrayList<String>();
 
@@ -203,7 +205,7 @@ public class ProductController {
          explist.add(fileExp5);            
       }
       
-      System.out.println("explist" + explist);
+      //System.out.println("explist" + explist);
       
       
       // -----------첨부파일 등록
@@ -227,7 +229,7 @@ public class ProductController {
          
       }
       
-      System.out.println("alist" + alist);
+      //System.out.println("alist" + alist);
       
       // ----------상품 [정보1 + 첨부파일5] 등록
       int result = pService.insertProduct(p, alist);
@@ -1065,8 +1067,8 @@ public class ProductController {
 	
 	//-------------------- 마이페이지 -------------------------
 	
-	/** 주문 및 배송 조회 페이지 띄우기
-	 * @return
+	/** 주문번호 & 주문한 상품정보들 조회
+	 * 
 	 */
 	@RequestMapping("myPageOrderList.or")
 	public String myPageOrderList(HttpSession session, Model model) {
@@ -1074,30 +1076,30 @@ public class ProductController {
 		String userId = ((Member) session.getAttribute("loginMember")).getUserId();
 		
 		ArrayList<Product> orderList = pService.myPageSelectOrderList(userId);
-		
 		model.addAttribute("orderList",orderList);
 		
-		System.out.println(" orderList " + orderList);
+		//System.out.println(" orderList " + orderList);
 		
 		return "myPage/myPageOrderList";
 	}
 	
 	
-	
+	/** 주문번호 & 배송정보 조회
+	 * 
+	 */
 	@RequestMapping("myPageOrderDetail.or")
 	public String myPageOrderDetail(int orderNo, HttpSession session, Model model) {
 		
-		String userId = ((Member) session.getAttribute("loginMember")).getUserId();
+		//System.out.println("주문번호 : " + orderNo);
 		
-		ArrayList<Product> orderList = pService.myPageSelectOrderList(userId);
-		model.addAttribute("orderList", orderList);
-		
-		//ArrayList<Orders> orderInfo = pService.myPageSelectOrderInfo(orderNo);
-		//session.setAttribute("orderInfo", orderInfo);
 		Orders orderInfo = pService.myPageSelectOrderInfo(orderNo);
-		session.setAttribute("orderInfo", orderInfo);
+		//System.out.println("orderInfo : " + orderInfo);
+		model.addAttribute("orderInfo", orderInfo);
 		
-		System.out.println("orderInfo" + orderInfo);
+		String userId = ((Member) session.getAttribute("loginMember")).getUserId();
+		ArrayList<Product> orderList = pService.myPageSelectOrderList(userId);			// 위 메소드 재활용
+		//System.out.println("orderList : " + orderList);
+		model.addAttribute("orderList", orderList);
 		
 		return "myPage/myPageOrderDetail";
 		

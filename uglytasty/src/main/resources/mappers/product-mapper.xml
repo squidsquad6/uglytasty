@@ -29,6 +29,8 @@
       <result column="deliveryInclude_price" property="deliveryIncludePrice" />
       
       <result column="last_word" property="lastWord" />
+      
+      <result column="order_no" property="orderNo" />
    </resultMap>
    
    
@@ -67,6 +69,8 @@
       <result column="total_price" property="totalPrice" />
       
       <result column="quantity" property="quantity" />
+      
+      <result column="user_name" property="userName" />
    </resultMap>
    
    
@@ -847,6 +851,11 @@
          and status = 'Y'
    </select>
 
+
+
+
+	<!-- 마이페이지 -->
+
 	<select id="myPageSelectOrderList" resultMap="productResult">
 		select
 		         order_no
@@ -878,14 +887,16 @@
 		      , order_code
 		      , tracking_no
 		      , user_id
+              , user_name
 		      , receiver
 		      , receiver_phone      
-		      , address_main
-		      , address_detail
+		      , o.address_main
+		      , o.address_detail
 		      , delivery_memo
 		      , total_price
-		  from orders
-		 where order_no = #{orderNo};	
+		  from orders o
+          join member m using (user_id)
+		 where order_no = #{orderNo}
 	</select>
 
 

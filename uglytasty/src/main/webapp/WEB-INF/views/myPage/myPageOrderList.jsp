@@ -8,6 +8,11 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 
+<!-- 
+	orderList : orderNo, userId, productNo, productName, explanation, price, sale, salePrice, quantity, totalPrice, changeName, fileLevel
+ -->
+
+
 	<style>
 
         * { /* 헤더에 포함하기 */
@@ -237,16 +242,11 @@
             <div id="mypage-all" class="row">
                 
                 <div class="col-sm-3" style="border: 1px solid red;">
-
-                    
                     <jsp:include page="myPageList.jsp"/>
-
-
                 </div>
 
                 <div class="col-sm-9" style="border: 1px solid blue;">
                     <!-- 페이지 -->
-                    
                     <div class="mypage_content">
 
                         <h3>주문 내역</h3>
@@ -254,10 +254,12 @@
                         
                         <c:set var="currentOrderNo" value="-1" />
 						<c:forEach var="p" items="${orderList}">
+						
 						    <c:choose>
 						        <c:when test="${p.orderNo != currentOrderNo}">
 						            <!-- 새 주문 그룹 시작 -->
 						            <c:set var="currentOrderNo" value="${p.orderNo}" />
+						            <hr>
 						            <div class="d-flex flex-row-reverse">
 						                <p style="margin:0px; margin-right:20px; color:#ff6741;">
 						                	주문번호 <a href="myPageOrderDetail.or?orderNo=${ p.orderNo }" style=" text-decoration:none; color:#ff6741;">9a6hV9B4kXJ8QtWS9RCqa${p.orderNo} </a>
@@ -265,16 +267,15 @@
 						            </div>
 						        </c:when>
 						    </c:choose>
+						    
 						    <div class="order_wrap_each">
 						        <!-- 제품 정보 표시 부분을 여기에 추가하세요 -->
 						        <div class="d-flex flex-column">
-                                <!-- 한 덩어리 반복 -->
-                                <div class="orderProduct">
-
-                                    <div class="p-2">
-
+	                                <!-- 한 덩어리 반복 -->
+	                                <div class="orderProduct">
+	                                    <div class="p-2">
                                             <div class="d-flex">
-
+                                            
                                                 <div class="p-2">
                                                     <div class="order_product_pic">
                                                         <!-- 상품사진 -->
@@ -282,7 +283,6 @@
                                                     </div>
                                                 </div>
                                                 
-
                                                 <div class="p-3 flex-grow-1">
                                                     <h4>${ p.productName }</h4>
                                                     <p style="color: gray; font-weight:400;">${ p.explanation }</p>
@@ -304,35 +304,28 @@
                                                 </div>
 
                                             </div>
-                                            <hr>
-
-                                        
-
-                                    </div>
-                                </div>
-
-                            </div>
+	                                    </div>
+	                                </div>
+                            	</div>
 						    </div>
+	                      
 						</c:forEach>
 
+                 	</div>
+
+        	     </div>
                         
-                    </div>
+             </div>
 
-                        
-                    </div>
-                        
-                    </div>
+    	</div>
 
-                </div>
-
-            </div>
-            
-            
-            <br>
-        </div>
-
-        
     </div>
+            
+    <br><br><br><br><br><br>
+          
+          
+ 	<!-- 푸터 -->
+    <jsp:include page="../common/footer.jsp"/>
 
 
 
