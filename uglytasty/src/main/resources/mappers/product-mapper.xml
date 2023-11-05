@@ -2,808 +2,889 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "mybatis-3-mapper.dtd" >
 <mapper namespace="productMapper">
 
-	<resultMap type="Product" id="productResult">
-		<result column="product_no" property="productNo" />
-		<result column="product_name" property="productName" />
-		<result column="price" property="price" />
-		<result column="sale" property="sale" />
-		<result column="explanation" property="explanation" />
-		<result column="location" property="location" />
-		<result column="production_date" property="productionDate" />
-		<result column="stock" property="stock" />
-		<result column="status" property="status" />
-		<result column="count" property="count" />
-		<result column="enroll_date" property="enrollDate" />
-				
-		<result column="file_no" property="fileNo" />
-		<result column="ref_pno" property="refProductNo" />
-		<result column="origin_name" property="originName" />
-		<result column="change_name" property="changeName" />
-		<result column="file_exp" property="fileExp" />
-		<result column="file_level" property="fileLevel" />
-		
-		<result column="quantity" property="quantity" />
-		
-		<result column="sale_price" property="salePrice" />
-		<result column="total_price" property="totalPrice" />
-		<result column="deliveryInclude_price" property="deliveryIncludePrice" />
-		
-		<result column="last_word" property="lastWord" />
-	</resultMap>
-	
-	
-	<resultMap type="Cart" id="cartResult">
-		<result column="user_id" property="userId" />
-		<result column="product_no" property="productNo" />
-		<result column="quantity" property="quantity" />
-	
-		<result column="product_name" property="productName" />
-		<result column="explanation" property="explanation" />
-		<result column="stock" property="stock" />
-		<result column="price" property="price" />
-		<result column="sale" property="sale" />
+   <resultMap type="Product" id="productResult">
+      <result column="product_no" property="productNo" />
+      <result column="product_name" property="productName" />
+      <result column="price" property="price" />
+      <result column="sale" property="sale" />
+      <result column="explanation" property="explanation" />
+      <result column="location" property="location" />
+      <result column="production_date" property="productionDate" />
+      <result column="stock" property="stock" />
+      <result column="status" property="status" />
+      <result column="count" property="count" />
+      <result column="enroll_date" property="enrollDate" />
+            
+      <result column="file_no" property="fileNo" />
+      <result column="ref_pno" property="refProductNo" />
+      <result column="origin_name" property="originName" />
+      <result column="change_name" property="changeName" />
+      <result column="file_exp" property="fileExp" />
+      <result column="file_level" property="fileLevel" />
+      
+      <result column="quantity" property="quantity" />
+      
+      <result column="sale_price" property="salePrice" />
+      <result column="total_price" property="totalPrice" />
+      <result column="deliveryInclude_price" property="deliveryIncludePrice" />
+      
+      <result column="last_word" property="lastWord" />
+   </resultMap>
+   
+   
+   <resultMap type="Cart" id="cartResult">
+      <result column="user_id" property="userId" />
+      <result column="product_no" property="productNo" />
+      <result column="quantity" property="quantity" />
+   
+      <result column="product_name" property="productName" />
+      <result column="explanation" property="explanation" />
+      <result column="stock" property="stock" />
+      <result column="price" property="price" />
+      <result column="sale" property="sale" />
 
-		<result column="sale_price" property="salePrice" />
-		<result column="total_price" property="totalPrice" />
+      <result column="sale_price" property="salePrice" />
+      <result column="total_price" property="totalPrice" />
 
-		<result column="change_name" property="changeName" />
-		<result column="file_level" property="fileLevel" />
-	</resultMap>
-	
-	
-	<resultMap type="Orders" id="ordersResult">
-		<result column="order_no" property="orderNo" />
-		<result column="user_id" property="userId" />
-		<result column="product_no" property="productNo" />
-		<result column="order_date" property="orderDate" />
-		<result column="order_code" property="orderCode" />
-		<result column="tracking_no" property="trackingNo" />
-		<result column="address_main" property="addressMain" />
-		<result column="address_detail" property="addressDetail" />
-		<result column="receiver" property="receiver" />
-		<result column="receiver_phone" property="receiverPhone" />
-		<result column="delivery_memo" property="deliveryMemo" />
-		<result column="delivery_fee" property="deliveryFee" />
-		<result column="total_price" property="totalPrice" />
-		
-		<result column="quantity" property="quantity" />
-	</resultMap>
-	
-	
-	<resultMap type="OrdersDetail" id="ordersDetailResult">
-		<result column="order_no" property="orderNo" />
-		<result column="product_no" property="productNo" />	
-		<result column="quantity" property="quantity" />
-		
-		<result column="user_id" property="userId" />
-	</resultMap>
-	
+      <result column="change_name" property="changeName" />
+      <result column="file_level" property="fileLevel" />
+   </resultMap>
+   
+   
+   <resultMap type="Orders" id="ordersResult">
+      <result column="order_no" property="orderNo" />
+      <result column="user_id" property="userId" />
+      <result column="product_no" property="productNo" />
+      <result column="order_date" property="orderDate" />
+      <result column="order_code" property="orderCode" />
+      <result column="tracking_no" property="trackingNo" />
+      <result column="address_main" property="addressMain" />
+      <result column="address_detail" property="addressDetail" />
+      <result column="receiver" property="receiver" />
+      <result column="receiver_phone" property="receiverPhone" />
+      <result column="delivery_memo" property="deliveryMemo" />
+      <result column="delivery_fee" property="deliveryFee" />
+      <result column="total_price" property="totalPrice" />
+      
+      <result column="quantity" property="quantity" />
+   </resultMap>
+   
+   
+   <resultMap type="OrdersDetail" id="ordersDetailResult">
+      <result column="order_no" property="orderNo" />
+      <result column="product_no" property="productNo" />   
+      <result column="quantity" property="quantity" />
+      
+      <result column="user_id" property="userId" />
+   </resultMap>
+   
 
-	<resultMap type="Attachment" id="attachmentResult">
-		<result column="file_no" property="fileNo" />
-		<result column="ref_pno" property="refProductNo" />
-		<result column="origin_name" property="originName" />
-		<result column="change_name" property="changeName" />
-		<result column="file_exp" property="fileExp" />
-		<result column="upload_date" property="uploadDate" />
-		<result column="status" property="status" />
-		<result column="file_level" property="fileLevel" />
-	</resultMap>
-	
-	
-	<resultMap type="Review" id="reviewResult">
-		<result column="review_no" property="reviewNo" />
-		<result column="ref_pno" property="refProductNo" />
-		<result column="user_id" property="userId" />
-		<result column="content" property="content" />
-		<result column="review_date" property="reviewDate" />
-		<result column="status" property="status" />
-	</resultMap>
-	
-	
-	<resultMap type="Recipe" id="recipeResult">
-		<result column="recipe_no" property="recipeNo" />
-		<result column="recipe_writer" property="recipeWriter" />
-		<result column="recipe_title" property="recipeTitle" />
-		<result column="recipe_origin_name" property="recipeOriginName" />
-		<result column="recipe_change_name" property="recipeChangeName" />
-		<result column="recipe_exp" property="recipeExplanation" />
-		<result column="recipe_content" property="recipeContent" />
-		<result column="count" property="count" />
-		<result column="difficulty" property="difficulty" />
-		<result column="time" property="time" />
-		<result column="recipe_date" property="recipeDate" />
-		<result column="status" property="status" />
-	</resultMap>
+   <resultMap type="Attachment" id="attachmentResult">
+      <result column="file_no" property="fileNo" />
+      <result column="ref_pno" property="refProductNo" />
+      <result column="origin_name" property="originName" />
+      <result column="change_name" property="changeName" />
+      <result column="file_exp" property="fileExp" />
+      <result column="upload_date" property="uploadDate" />
+      <result column="status" property="status" />
+      <result column="file_level" property="fileLevel" />
+   </resultMap>
+   
+   
+   <resultMap type="Review" id="reviewResult">
+      <result column="review_no" property="reviewNo" />
+      <result column="ref_pno" property="refProductNo" />
+      <result column="user_id" property="userId" />
+      <result column="content" property="content" />
+      <result column="review_date" property="reviewDate" />
+      <result column="status" property="status" />
+   </resultMap>
+   
+   
+   <resultMap type="Recipe" id="recipeResult">
+      <result column="recipe_no" property="recipeNo" />
+      <result column="recipe_writer" property="recipeWriter" />
+      <result column="recipe_title" property="recipeTitle" />
+      <result column="recipe_origin_name" property="recipeOriginName" />
+      <result column="recipe_change_name" property="recipeChangeName" />
+      <result column="recipe_exp" property="recipeExplanation" />
+      <result column="recipe_content" property="recipeContent" />
+      <result column="count" property="count" />
+      <result column="difficulty" property="difficulty" />
+      <result column="time" property="time" />
+      <result column="recipe_date" property="recipeDate" />
+      <result column="status" property="status" />
+   </resultMap>
 
 
 
-	
-	
-	<select id="selectProductList" resultMap="productResult">
-		select
-				product_no
-			  , product_name
-			  , price
-			  , sale
-			  , explanation
-			  , location
-			  , to_char(production_date, 'YYYY-MM-DD') as "production_date"
-			  , stock
-			  , count
-			  , to_char(enroll_date, 'YYYY-MM-DD') as "enroll_date"
+   
+   
+   <select id="selectProductList" resultMap="productResult">
+      select
+            product_no
+           , product_name
+           , price
+           , sale
+           , explanation
+           , location
+           , to_char(production_date, 'YYYY-MM-DD') as "production_date"
+           , stock
+           , count
+           , to_char(enroll_date, 'YYYY-MM-DD') as "enroll_date"
               , change_name
               , file_level
               , round(price - (price * (sale / 100))) as "sale_price"
-		  from product p
+        from product p
           join attachment a on (p.product_no = a.ref_pno)
-		 where p.status = 'Y'
+       where p.status = 'Y'
            and a.file_level = 1
-		 order
-		    by product_no desc
-	</select>
-	
-	<select id="selectReadyList" resultMap="productResult">
-		select
-				product_no
-			  , product_name
-			  , price
-			  , sale
-			  , explanation
-			  , location
-			  , to_char(production_date, 'YYYY-MM-DD') as "production_date"
-			  , stock
-			  , count
-			  , to_char(enroll_date, 'YYYY-MM-DD') as "enroll_date"
+       order
+          by product_no desc
+   </select>
+   
+   <select id="selectReadyList" resultMap="productResult">
+      select
+            product_no
+           , product_name
+           , price
+           , sale
+           , explanation
+           , location
+           , to_char(production_date, 'YYYY-MM-DD') as "production_date"
+           , stock
+           , count
+           , to_char(enroll_date, 'YYYY-MM-DD') as "enroll_date"
               , change_name
               , file_level
               , round(price - (price * (sale / 100))) as "sale_price"
-		  from product p
+        from product p
           join attachment a on (p.product_no = a.ref_pno)
-		 where p.status = 'R'
+       where p.status = 'R'
            and a.file_level = 1
-		 order
-		    by product_no desc
-	</select>
-	
-	<select id="selectSearchKeyword" resultMap="productResult">
-	    select
-				product_no
-			  , product_name
-			  , price
-			  , sale
-			  , explanation
-			  , location
-			  , stock
-			  , count
+       order
+          by product_no desc
+   </select>
+   
+   <select id="selectSearchKeyword" resultMap="productResult">
+       select
+            product_no
+           , product_name
+           , price
+           , sale
+           , explanation
+           , location
+           , stock
+           , count
               , to_char(production_date, 'YYYY-MM-DD') as "production_date"
-			  , to_char(enroll_date, 'YYYY-MM-DD') as "enroll_date"
+           , to_char(enroll_date, 'YYYY-MM-DD') as "enroll_date"
               , round(price - (price * (sale / 100))) as "sale_price"
               , change_name
               , file_level
-		  from product p
+        from product p
           left join attachment a on (p.product_no = a.ref_pno)
-		 where upper(product_name) like upper('%' || #{keyword} || '%')
-		   and p.status = 'Y'
+       where upper(product_name) like upper('%' || #{keyword} || '%')
+         and p.status = 'Y'
            and a.file_level = 1
-		 order
-		    by product_no desc
-	</select>
-	
-	<select id="selectSearchKeywordReady" resultMap="productResult">
-			    select
-				product_no
-			  , product_name
-			  , price
-			  , sale
-			  , explanation
-			  , location
-			  , stock
-			  , count
+       order
+          by product_no desc
+   </select>
+   
+   <select id="selectSearchKeywordReady" resultMap="productResult">
+             select
+            product_no
+           , product_name
+           , price
+           , sale
+           , explanation
+           , location
+           , stock
+           , count
               , to_char(production_date, 'YYYY-MM-DD') as "production_date"
-			  , to_char(enroll_date, 'YYYY-MM-DD') as "enroll_date"
+           , to_char(enroll_date, 'YYYY-MM-DD') as "enroll_date"
               , round(price - (price * (sale / 100))) as "sale_price"
               , change_name
               , file_level
-		  from product p
+        from product p
           left join attachment a on (p.product_no = a.ref_pno)
-		 where upper(product_name) like upper('%' || #{keyword} || '%')
-		   and p.status = 'R'
+       where upper(product_name) like upper('%' || #{keyword} || '%')
+         and p.status = 'R'
            and a.file_level = 1
-		 order
-		    by product_no desc
-	</select>
-	
-	
-	
-	<update id="increaseCount">
-		update product
-		   set count = count + 1
-		 where product_no = #{productNo}
-	</update>
-	
-	<select id="selectDetailProduct" resultMap="productResult">
-		select
-				product_no
-			  , product_name
-			  , price
-			  , sale
-			  , explanation
-			  , location
-			  , to_char(production_date, 'YYYY-MM-DD') as "production_date"
-			  , stock
-			  , count
-			  , to_char(enroll_date, 'YYYY-MM-DD') as "enroll_date"
-			  , file_no
-			  , ref_pno
-			  , origin_name
-			  , change_name
-			  , file_exp
-			  , file_level
-			  , round(price - (price * (sale / 100))) as "sale_price"
-			  , p.status
-		 from product p
-		 join attachment a on (p.product_no = a.ref_pno)
-		where product_no = #{productNo}
-	</select>
-	
-	
-	
-	<!-- 등록시 엑셀 상품 데이터 조회 -->
-	<select id="selectSearchProduct" resultMap="productResult">
-		select
-				product_no
-			  , product_name
-			  , price
-			  , sale
-			  , explanation
-			  , location
-			  , to_char(production_date, 'YYYY-MM-DD') as "production_date" <!-- 별칭:컬럼명 -->
-			  , stock
-		  from product
-		 where product_no = #{productNo}
-	</select>
-	
-	<insert id="insertProduct">
-		insert
-		  into product
-		  (
-		  	product_no
-		  , product_name
-		  , price
-		  , sale
-		  , explanation
-		  , location
-		  , production_date
-		  , stock
-		  )
-		  values
-		  (
-		  	seq_product_no.nextval
-		  , #{productName}
-		  , #{price}
-		  , #{sale}
-		  , #{explanation}
-		  , #{location}
-		  , #{productionDate}
-		  , #{stock}
-		  )
-	</insert>
-	
-	<!-- 
-	<select id="selectPno" resultType="_int">	
-		select
-       		   product_no
-		  from product
-		 where product_name = #{pName}
-	</select>
-	 -->
-	 
-	<insert id="insertAttachment">
-		insert
-		  into Attachment
-		  (
-		    file_no
-		  , ref_pno
-		  , origin_name
-		  , change_name
-		  , file_exp
-		  , file_level
-		  )
-		  values
-		  (
-		    seq_attachment_no.nextval
-		  , seq_product_no.currval
-		  , #{originName}
-		  , #{changeName}
-		  , #{fileExp}
-		  , #{fileLevel}
-		  )
-	</insert>
-	
-	<insert id="insertCart">
-		insert
-		  into cart
-		  (
-		  	user_id
-		  , product_no
-		  , quantity
-		  )
-		  values
-		  (
-		  	#{userId}
-		  , #{productNo}
-		  , #{quantity}
-		  )
-	</insert>
-	
-	<update id="deleteProduct">
-		update product
-		   set status = 'N'
-		 where product_no = #{productNo}
-	</update>
-	
-	<!-- 첨부파일 찐 삭제 (일단 살려두는 걸로..)
-	<delete id="deleteAttachment">
-		delete
-		  from attachment
-		 where change_name = #{filePath}
-	</delete>
-	 -->
-	 
-	<!-- 첨부파일 status(N) -->
-	<update id="deleteAttachment">
-		update attachment
-		   set status = 'N'
-		 where change_name = #{filePath}
-	</update>
+       order
+          by product_no desc
+   </select>
+   
+   
+   
+   <update id="increaseCount">
+      update product
+         set count = count + 1
+       where product_no = #{productNo}
+   </update>
+   
+   <select id="selectDetailProduct" resultMap="productResult">
+      select
+            product_no
+           , product_name
+           , price
+           , sale
+           , explanation
+           , location
+           , to_char(production_date, 'YYYY-MM-DD') as "production_date"
+           , stock
+           , count
+           , to_char(enroll_date, 'YYYY-MM-DD') as "enroll_date"
+           , file_no
+           , ref_pno
+           , origin_name
+           , change_name
+           , file_exp
+           , file_level
+           , round(price - (price * (sale / 100))) as "sale_price"
+           , p.status
+       from product p
+       join attachment a on (p.product_no = a.ref_pno)
+      where product_no = #{productNo}
+   </select>
+   
+   
+   
+   <!-- 등록시 엑셀 상품 데이터 조회 -->
+   <select id="selectSearchProduct" resultMap="productResult">
+      select
+            product_no
+           , product_name
+           , price
+           , sale
+           , explanation
+           , location
+           , to_char(production_date, 'YYYY-MM-DD') as "production_date" <!-- 별칭:컬럼명 -->
+           , stock
+        from product
+       where product_no = #{productNo}
+   </select>
+   
+   <insert id="insertProduct">
+      insert
+        into product
+        (
+           product_no
+        , product_name
+        , price
+        , sale
+        , explanation
+        , location
+        , production_date
+        , stock
+        )
+        values
+        (
+           seq_product_no.nextval
+        , #{productName}
+        , #{price}
+        , #{sale}
+        , #{explanation}
+        , #{location}
+        , #{productionDate}
+        , #{stock}
+        )
+   </insert>
+   
+   <!-- 
+   <select id="selectPno" resultType="_int">   
+      select
+                product_no
+        from product
+       where product_name = #{pName}
+   </select>
+    -->
+    
+   <insert id="insertAttachment">
+      insert
+        into Attachment
+        (
+          file_no
+        , ref_pno
+        , origin_name
+        , change_name
+        , file_exp
+        , file_level
+        )
+        values
+        (
+          seq_attachment_no.nextval
+        , seq_product_no.currval
+        , #{originName}
+        , #{changeName}
+        , #{fileExp}
+        , #{fileLevel}
+        )
+   </insert>
+   
+   <insert id="insertCart">
+      insert
+        into cart
+        (
+           user_id
+        , product_no
+        , quantity
+        )
+        values
+        (
+           #{userId}
+        , #{productNo}
+        , #{quantity}
+        )
+   </insert>
+   
+   <update id="deleteProduct">
+      update product
+         set status = 'N'
+       where product_no = #{productNo}
+   </update>
+   
+   <!-- 첨부파일 찐 삭제 (일단 살려두는 걸로..)
+   <delete id="deleteAttachment">
+      delete
+        from attachment
+       where change_name = #{filePath}
+   </delete>
+    -->
+    
+   <!-- 첨부파일 status(N) -->
+   <update id="deleteAttachment">
+      update attachment
+         set status = 'N'
+       where change_name = #{filePath}
+   </update>
 
-	 
-	<update id="readyProduct">
-		update product
-		   set status = 'R'
-		 where product_no = #{productNo}
-	</update>
-	
-	<update id="yesProduct">
-		update product
-		   set status = 'Y'
-		 where product_no = #{productNo}
-	</update>
-	
-	<select id="selectCartList" resultMap="cartResult">
-		select
-		        user_id
-		      , product_no
-		      , quantity
-		      , product_name
+    
+   <update id="readyProduct">
+      update product
+         set status = 'R'
+       where product_no = #{productNo}
+   </update>
+   
+   <update id="yesProduct">
+      update product
+         set status = 'Y'
+       where product_no = #{productNo}
+   </update>
+   
+   <select id="selectCartList" resultMap="cartResult">
+      select
+              user_id
+            , product_no
+            , quantity
+            , product_name
               , stock
-		      , price
-		      , sale
-		      , round(price - (price * (sale / 100))) as "sale_price"
-		      , change_name
-		      , file_level
-		  from cart c
-		  join product p using (product_no)
-		  join attachment a on (product_no = ref_pno)
-		 where user_id = #{userId}
-		   and file_level = 1
-		 order
-		    by product_no desc
-	</select>
-	
-	<select id="selectCartListCount" resultType="_int">
-		select
-		       count(*)
-		  from cart
-		 where user_id = #{userId}
-	</select>
-	
-	<update id="updateAddQuantity">
-		update cart
-		   set quantity = quantity + 1
-		 where user_id = #{userId}
-		   and product_no = #{productNo}
-	</update>
-	
-	<update id="updateMinusQuantity">
-		update cart
-		   set quantity = quantity - 1
-		 where user_id = #{userId}
-		   and product_no = #{productNo}
-	</update>
+            , price
+            , sale
+            , round(price - (price * (sale / 100))) as "sale_price"
+            , change_name
+            , file_level
+        from cart c
+        join product p using (product_no)
+        join attachment a on (product_no = ref_pno)
+       where user_id = #{userId}
+         and file_level = 1
+       order
+          by product_no desc
+   </select>
+   
+   <select id="selectCartListCount" resultType="_int">
+      select
+             count(*)
+        from cart
+       where user_id = #{userId}
+   </select>
+   
+   <update id="updateAddQuantity">
+      update cart
+         set quantity = quantity + 1
+       where user_id = #{userId}
+         and product_no = #{productNo}
+   </update>
+   
+   <update id="updateMinusQuantity">
+      update cart
+         set quantity = quantity - 1
+       where user_id = #{userId}
+         and product_no = #{productNo}
+   </update>
 
-	<delete id="deleteCart">
-		delete
-		  from cart
-		 where product_No = #{productNo}
-		   and user_id = #{userId}
-	</delete>
+   <delete id="deleteCart">
+      delete
+        from cart
+       where product_No = #{productNo}
+         and user_id = #{userId}
+   </delete>
 
-	<select id="orderCart" resultMap="cartResult">
-		select
-		        c.product_no
-		      , quantity
-		      , product_name
-		      , explanation 
-		      , price
-		      , sale
+   <select id="orderCart" resultMap="cartResult">
+      select
+              c.product_no
+            , quantity
+            , product_name
+            , explanation 
+            , price
+            , sale
               , round(price - (price * (sale / 100))) as "sale_price"
               , round((price - (price * (sale / 100))) * quantity) as "total_price"
               , change_name
               , file_level
-		  from cart c
-		  join product p on (c.product_no = p.product_no)
+        from cart c
+        join product p on (c.product_no = p.product_no)
           join attachment a on (p.product_no = a.ref_pno)
-		 where user_id = #{ userId }
+       where user_id = #{ userId }
            and c.product_no = #{ productNo }
            and file_level = 1
-	</select>
-	
-	<select id="selectOrderProductInfo" resultMap="productResult">
-		select
-				product_no
-			  , product_name
-			  , explanation
-			  , price
-			  , sale
-			  , round(price - (price * (sale / 100))) as "sale_price"
-			  , change_name
+   </select>
+   
+   <select id="selectOrderProductInfo" resultMap="productResult">
+      select
+            product_no
+           , product_name
+           , explanation
+           , price
+           , sale
+           , round(price - (price * (sale / 100))) as "sale_price"
+           , change_name
               , file_level
           from product p
           join attachment a on (p.product_no = a.ref_pno)
-		 where product_no = #{productNo}
+       where product_no = #{productNo}
            and a.file_level = 1
-	</select>
+   </select>
 
 
 
 
-	<insert id="insertOrderProduct">
-		insert
-		  into orders
-		  (
-		  	order_no
-		  , user_id
-		  , address_main
-		  , address_detail
-		  , receiver
-		  , receiver_phone
-		  , delivery_memo
-		  , total_price
-		  )
-		  values
-		  (
-		  	seq_orders_no.nextval
-		  , #{userId}
-		  , #{addressMain}
-		  , #{addressDetail}
-		  , #{receiver}
-		  , #{receiverPhone}
-		  , #{deliveryMemo}
-		  , #{totalPrice}
-		  )
-	</insert>
-	
-	<insert id="insertOrderDetailProduct">
-		insert
-		  into orders_detail
-		  (
-		  	order_no
-		  , product_no
-		  , quantity
-		  )
-		  values
-		  (
-		  	seq_orders_no.currval
-		  , #{productNo}
-		  , #{quantity}
-		  )
-	</insert>
-	
-	<insert id="insertOrderCart">
-		insert
-		  into orders
-		  (
-		  	order_no
-		  , user_id
-		  , address_main
-		  , address_detail
-		  , receiver
-		  , receiver_phone
-		  , delivery_memo
-		  , total_price
-		  )
-		  values
-		  (
-		  	seq_orders_no.nextval
-		  , #{userId}
-		  , #{addressMain}
-		  , #{addressDetail}
-		  , #{receiver}
-		  , #{receiverPhone}
-		  , #{deliveryMemo}
-		  , #{totalPrice}
-		  )
-	</insert>
-	
-	<insert id="insertOrderDetailCart">
-		insert
-		  into orders_detail
-		  (
-		  	order_no
-		  , product_no
-		  , quantity
-		  )
-		  values
-		  (
-		  	seq_orders_no.currval
-		  , #{productNo}
-		  , #{quantity}
-		  )
-	</insert>
-	
-	
-	<select id="selectOrdersInfoFinal" resultMap="ordersResult">
-		select
-	            order_no
-	          , user_id
-	          , order_date
-	          , to_char(order_date, 'YYYY-MM-DD') as "order_date"
-	          , tracking_no
-	          , address_main
-	          , address_detail
-	          , receiver
-	          , receiver_phone
-	          , delivery_memo
-	          , total_price
-		  from orders
-	     where address_main = #{addressMain}
-	       and order_code = 1
-	</select>
+   <insert id="insertOrderProduct">
+      insert
+        into orders
+        (
+           order_no
+        , user_id
+        , address_main
+        , address_detail
+        , receiver
+        , receiver_phone
+        , delivery_memo
+        , total_price
+        )
+        values
+        (
+           seq_orders_no.nextval
+        , #{userId}
+        , #{addressMain}
+        , #{addressDetail}
+        , #{receiver}
+        , #{receiverPhone}
+        , #{deliveryMemo}
+        , #{totalPrice}
+        )
+   </insert>
+   
+   <insert id="insertOrderDetailProduct">
+      insert
+        into orders_detail
+        (
+           order_no
+        , product_no
+        , quantity
+        )
+        values
+        (
+           seq_orders_no.currval
+        , #{productNo}
+        , #{quantity}
+        )
+   </insert>
+   
+   <insert id="insertOrderCart">
+      insert
+        into orders
+        (
+           order_no
+        , user_id
+        , address_main
+        , address_detail
+        , receiver
+        , receiver_phone
+        , delivery_memo
+        , total_price
+        )
+        values
+        (
+           seq_orders_no.nextval
+        , #{userId}
+        , #{addressMain}
+        , #{addressDetail}
+        , #{receiver}
+        , #{receiverPhone}
+        , #{deliveryMemo}
+        , #{totalPrice}
+        )
+   </insert>
+   
+   <insert id="insertOrderDetailCart">
+      insert
+        into orders_detail
+        (
+           order_no
+        , product_no
+        , quantity
+        )
+        values
+        (
+           seq_orders_no.currval
+        , #{productNo}
+        , #{quantity}
+        )
+   </insert>
+   
+   
+   <select id="selectOrdersInfoFinal" resultMap="ordersResult">
+      select
+               order_no
+             , user_id
+             , order_date
+             , to_char(order_date, 'YYYY-MM-DD') as "order_date"
+             , tracking_no
+             , address_main
+             , address_detail
+             , receiver
+             , receiver_phone
+             , delivery_memo
+             , total_price
+        from orders
+        where address_main = #{addressMain}
+          and order_code = 1
+   </select>
 
-	<update id="updateOrderCode">
-		update orders
-		   set order_code = 2
-		 where order_no = #{orderNo}
-	</update>
-	
-	<select id="selectOrdersDelivery" resultMap="ordersResult">
-		select
-			 	order_no
-	          , user_id
-	          , to_char(order_date, 'YYYY-MM-DD') as "order_date"
-	          , order_code
-	          , tracking_no
-	          , address_main
-	          , address_detail
-	          , receiver
-	          , receiver_phone
-	          , delivery_memo
-	          , total_price
-	      from orders
-	     where order_no = #{orderNo}
-	       and order_code = 2
-	</select>
-	
-	
-	<select id="selectOrdersDetailInfoFinal" resultMap="ordersResult">
-		select
-	            order_no
-	          , user_id
-	          , order_date
-	          , to_char(order_date, 'YYYY-MM-DD') as "order_date"
-	          , tracking_no
-	          , address_main
-	          , address_detail
-	          , receiver
-	          , receiver_phone
-	          , delivery_memo
-	          , total_price
-		  from orders
-	     where address_main = #{addressMain}
-	       and order_code = 1
-	</select>
+   <update id="updateOrderCode">
+      update orders
+         set order_code = 2
+       where order_no = #{orderNo}
+   </update>
+   
+   <select id="selectOrdersDelivery" resultMap="ordersResult">
+      select
+             order_no
+             , user_id
+             , to_char(order_date, 'YYYY-MM-DD') as "order_date"
+             , order_code
+             , tracking_no
+             , address_main
+             , address_detail
+             , receiver
+             , receiver_phone
+             , delivery_memo
+             , total_price
+         from orders
+        where order_no = #{orderNo}
+          and order_code = 2
+   </select>
+   
+   
+   <select id="selectOrdersDetailInfoFinal" resultMap="ordersResult">
+      select
+               order_no
+             , user_id
+             , order_date
+             , to_char(order_date, 'YYYY-MM-DD') as "order_date"
+             , tracking_no
+             , address_main
+             , address_detail
+             , receiver
+             , receiver_phone
+             , delivery_memo
+             , total_price
+        from orders
+        where address_main = #{addressMain}
+          and order_code = 1
+   </select>
 
-	<select id="selectOrdersDetailPnoList" resultMap="ordersDetailResult">
-		select
-			    order_no
-		      , product_no
-		  from orders_detail o
-		  join cart c using (product_no)
-		 where order_no = #{orderNo}
-	</select>
-	
-	<select id="selectUserId" resultType="string">
-		select
-				user_id
-		  from orders
-		 where order_no = #{orderNo}
-	</select>
-	
-	
-	
-	
-	
-	<delete id="deleteCartAfterOrder">
-		delete
-		  from cart
-		 where user_id = #{userId}
-		   and product_no in (select product_no
-		                        from orders_detail
-		                       where order_no = #{orderNo})
-	</delete>
-	
-	
-	
-	<select id="selectProduct" resultMap="productResult">
-		select
-				product_no
-			  , product_name
-			  , price
-			  , sale
-			  , explanation
-			  , location
-			  , to_char(production_date, 'YYYY-MM-DD') as "production_date"
-			  , stock
-		  from product
-		 where product_no = #{productNo}
-	</select>
-	 
-	<select id="selectAttachmentList" resultMap="attachmentResult">
-		select
-		        file_no
-		      , ref_pno
-		      , origin_name
-		      , change_name
-		      , file_exp
-		      , to_char(upload_date, 'YYYY-MM-DD') as "upload_date"
-		      , file_level
-		  from attachment
-		 where ref_pno = #{productNo}
-	</select>
-	
-	<update id="updateProduct">
-		update product
-		   set  product_name = #{productName}
+   <select id="selectOrdersDetailPnoList" resultMap="ordersDetailResult">
+      select
+             order_no
+            , product_no
+        from orders_detail o
+        join cart c using (product_no)
+       where order_no = #{orderNo}
+   </select>
+   
+   <select id="selectUserId" resultType="string">
+      select
+            user_id
+        from orders
+       where order_no = #{orderNo}
+   </select>
+   
+   
+   
+   
+   
+   <delete id="deleteCartAfterOrder">
+      delete
+        from cart
+       where user_id = #{userId}
+         and product_no in (select product_no
+                              from orders_detail
+                             where order_no = #{orderNo})
+   </delete>
+   
+   
+   
+   <select id="selectProduct" resultMap="productResult">
+      select
+            product_no
+           , product_name
+           , price
+           , sale
+           , explanation
+           , location
+           , to_char(production_date, 'YYYY-MM-DD') as "production_date"
+           , stock
+        from product
+       where product_no = #{productNo}
+   </select>
+    
+   <select id="selectAttachmentList" resultMap="attachmentResult">
+      select
+              file_no
+            , ref_pno
+            , origin_name
+            , change_name
+            , file_exp
+            , to_char(upload_date, 'YYYY-MM-DD') as "upload_date"
+            , file_level
+        from attachment
+       where ref_pno = #{productNo}
+   </select>
+   
+   <update id="updateProduct">
+      update product
+         set  product_name = #{productName}
               , price = #{price}
               , sale = #{sale}
               , explanation = #{explanation}
               , location = #{location}
               , production_date = #{productionDate}
               , stock = #{stock}
-		 where product_no = #{productNo}
-	</update>
-	
-	<update id="updateExistAttachment">
-		update attachment
-		   set  origin_name = #{originName}
-		      , change_name = #{changeName}
-		      , file_exp = #{fileExp}
-		where ref_pno = #{refProductNo}
-		  and file_level = #{fileLevel} 
-	</update>
-	
-	<insert id="insertAddAttachment">
-		insert
-		  into Attachment
-		  (
-		    file_no
-		  , ref_pno
-		  , origin_name
-		  , change_name
-		  , file_exp
-		  , file_level
-		  )
-		  values
-		  (
-		    seq_attachment_no.nextval
-		  , #{refProductNo}
-		  , #{originName}
-		  , #{changeName}
-		  , #{fileExp}
-		  , #{fileLevel}
-		  )
-	</insert>
-	
-	<select id="selectReviewList" resultMap="reviewResult">
-		select 
-				review_no
-			  , ref_pno
-			  , user_id
-			  , content
-			  , to_char(review_date, 'YYYY-MM-DD') as "review_date"
-		  from review
-		 where ref_pno = #{productNo}
-		   and status = 'Y'
-		 order
-		    by review_date desc
-	</select>
-	
-	<insert id="insertReview">
-		insert
-		  into review
-		  (
-		    review_no
-		  , ref_pno
-		  , user_id
-		  , content
-		  )
-		  values
-		  (
-		    seq_review_no.nextval
-		  , #{refProductNo}
-		  , #{userId}
-		  , #{content}
-		  )
-	</insert>
-	
-	<update id="deleteReview">
-		update review
-		   set status = 'N'
-		 where ref_pno = #{refProductNo}
-		   and review_no = #{reviewNo}
-	</update>
+       where product_no = #{productNo}
+   </update>
+   
+   <update id="updateExistAttachment">
+      update attachment
+         set  origin_name = #{originName}
+            , change_name = #{changeName}
+            , file_exp = #{fileExp}
+      where ref_pno = #{refProductNo}
+        and file_level = #{fileLevel} 
+   </update>
+   
+   <insert id="insertAddAttachment">
+      insert
+        into Attachment
+        (
+          file_no
+        , ref_pno
+        , origin_name
+        , change_name
+        , file_exp
+        , file_level
+        )
+        values
+        (
+          seq_attachment_no.nextval
+        , #{refProductNo}
+        , #{originName}
+        , #{changeName}
+        , #{fileExp}
+        , #{fileLevel}
+        )
+   </insert>
+   
+   <select id="selectReviewList" resultMap="reviewResult">
+      select 
+            review_no
+           , ref_pno
+           , user_id
+           , content
+           , to_char(review_date, 'YYYY-MM-DD') as "review_date"
+        from review
+       where ref_pno = #{productNo}
+         and status = 'Y'
+       order
+          by review_date desc
+   </select>
+   
+   <insert id="insertReview">
+      insert
+        into review
+        (
+          review_no
+        , ref_pno
+        , user_id
+        , content
+        )
+        values
+        (
+          seq_review_no.nextval
+        , #{refProductNo}
+        , #{userId}
+        , #{content}
+        )
+   </insert>
+   
+   <update id="deleteReview">
+      update review
+         set status = 'N'
+       where ref_pno = #{refProductNo}
+         and review_no = #{reviewNo}
+   </update>
 
-	<select id="selectAddCartDuplication" resultType="_int">
-		select
-		       count(*)
-		  from cart
-		 where user_id = #{userId}
+   <select id="selectAddCartDuplication" resultType="_int">
+      select
+             count(*)
+        from cart
+       where user_id = #{userId}
            and product_no = #{productNo}
-	</select>
-	
-	<select id="selectPopularList" resultMap="productResult">
-		select
-				product_no
-			  , product_name
-			  , price
-			  , sale
-			  , explanation
-			  , location
-			  , to_char(production_date, 'YYYY-MM-DD') as "production_date"
-			  , stock
-			  , count
-			  , to_char(enroll_date, 'YYYY-MM-DD') as "enroll_date"
+   </select>
+   
+   <select id="selectPopularList" resultMap="productResult">
+      select
+            product_no
+           , product_name
+           , price
+           , sale
+           , explanation
+           , location
+           , to_char(production_date, 'YYYY-MM-DD') as "production_date"
+           , stock
+           , count
+           , to_char(enroll_date, 'YYYY-MM-DD') as "enroll_date"
               , change_name
               , file_level
               , round(price - (price * (sale / 100))) as "sale_price"
-		  from product p
+        from product p
           join attachment a on (p.product_no = a.ref_pno)
-		 where p.status = 'Y'
+       where p.status = 'Y'
            and a.file_level = 1
-		 order
-		    by count desc
-	</select>
-	
-	<select id="selectLowerPriceList" resultMap="productResult">
-		select
-				product_no
-			  , product_name
-			  , price
-			  , sale
-			  , explanation
-			  , location
-			  , to_char(production_date, 'YYYY-MM-DD') as "production_date"
-			  , stock
-			  , count
-			  , to_char(enroll_date, 'YYYY-MM-DD') as "enroll_date"
+       order
+          by count desc
+   </select>
+   
+   <select id="selectLowerPriceList" resultMap="productResult">
+      select
+            product_no
+           , product_name
+           , price
+           , sale
+           , explanation
+           , location
+           , to_char(production_date, 'YYYY-MM-DD') as "production_date"
+           , stock
+           , count
+           , to_char(enroll_date, 'YYYY-MM-DD') as "enroll_date"
               , change_name
               , file_level
               , round(price - (price * (sale / 100))) as "sale_price"
-		  from product p
+        from product p
           join attachment a on (p.product_no = a.ref_pno)
-		 where p.status = 'Y'
+       where p.status = 'Y'
            and a.file_level = 1
+       order
+          by round(price - (price * (sale / 100)))
+   </select>
+   
+   <select id="selectOrdersQuantityProductNo" resultMap="ordersDetailResult">
+      select 
+            product_no
+           , quantity
+        from orders_detail
+       where order_no = #{orderNo}
+   </select>
+   
+   <update id="updateProductStock">
+      update product
+         set stock = stock - #{quantity}
+       where product_no = #{productNo}
+   </update>
+
+   <select id="selectOrdersDetailPnoQuanList" resultMap="ordersDetailResult">
+      select 
+            product_no
+           , quantity
+        from orders_detail
+       where order_no = #{orderNo}
+   </select>
+   
+   <update id="updateProductStockCart">
+      update product
+         set stock = stock - #{quantity}
+       where product_no = #{productNo}
+   </update>
+
+   <select id="selectLastWord" resultType="string">
+      select    distinct
+              SUBSTR(#{productName}, INSTR(#{productName}, ' ', -1) + 1) as "last_word"
+      from product
+   </select>
+
+   <select id="selectRelatedRecipe" resultMap="recipeResult">
+      select 
+              recipe_no
+            , recipe_title
+            , recipe_origin_name
+            , recipe_change_name
+            , difficulty
+            , time
+        from recipe
+          join ingredients using (recipe_no)
+       where upper(ingredient) like upper('%' || #{lastWord} || '%')
+         and status = 'Y'
+   </select>
+
+	<select id="myPageSelectOrderList" resultMap="productResult">
+		select
+		         order_no
+		       , user_id
+		       , d.product_no
+		       , product_name
+		       , explanation
+		       , price
+		       , sale
+		       , round(price - (price * (sale / 100))) as "sale_price"
+		       , quantity
+		       , total_price
+		       , change_name
+		       , file_level
+		  from  orders o
+		  join  orders_detail d using (order_no)
+		  join  product p on (d.product_no = p.product_no)
+		  join  attachment a on (p.product_no = a.ref_pno)
+		 where  user_id = #{userId}
+		   and  file_level = 1
 		 order
-		    by round(price - (price * (sale / 100)))
+    		by  order_no desc    
 	</select>
 	
-	<select id="selectOrdersQuantityProductNo" resultMap="ordersDetailResult">
-		select 
-				product_no
-			  , quantity
-		  from orders_detail
+	<select id="myPageSelectOrderInfo" resultMap="ordersResult">
+		select
+		        order_no
+		      , to_char(order_date, 'YYYY-MM-DD') as "order_date"
+		      , order_code
+		      , tracking_no
+		      , user_id
+		      , receiver
+		      , receiver_phone      
+		      , address_main
+		      , address_detail
+		      , delivery_memo
+		      , total_price
+		  from orders
 		 where order_no = #{orderNo}
 	</select>
 	

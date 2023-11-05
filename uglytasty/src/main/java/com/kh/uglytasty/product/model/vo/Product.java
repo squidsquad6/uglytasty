@@ -44,6 +44,8 @@ public class Product {
 	
 	private String lastWord;
 	
+	private int orderNo;
+	
 	
 	public Product(int productNo, String productName, int price, int sale, String explanation, String location,
 			String productionDate, int stock, String status, int count, String enrollDate) {

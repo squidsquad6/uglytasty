@@ -181,7 +181,13 @@ public interface ProductService {
 	
 	// 장바구니 상품 중복 검사 (ajax)
 	int selectAddCartDuplication(Cart c);
-
 	
+	
+	//-----------------------------마이페이지-----------------------------
+	// 마이페이지 주문 상품 목록
+	ArrayList<Product> myPageSelectOrderList(String userId);
+
+	// 마이페이지 주문 및 배송 관련 정보
+	Orders myPageSelectOrderInfo(int orderNo);
 	
 }
