@@ -868,7 +868,7 @@
 		 where  user_id = #{userId}
 		   and  file_level = 1
 		 order
-    		by  order_no desc    
+		    by  order_no desc	
 	</select>
 	
 	<select id="myPageSelectOrderInfo" resultMap="ordersResult">
@@ -885,49 +885,8 @@
 		      , delivery_memo
 		      , total_price
 		  from orders
-		 where order_no = #{orderNo}
+		 where order_no = #{orderNo};	
 	</select>
-	
-	<update id="updateProductStock">
-		update product
-		   set stock = stock - #{quantity}
-		 where product_no = #{productNo}
-	</update>
-
-	<select id="selectOrdersDetailPnoQuanList" resultMap="ordersDetailResult">
-		select 
-				product_no
-			  , quantity
-		  from orders_detail
-		 where order_no = #{orderNo}
-	</select>
-	
-	<update id="updateProductStockCart">
-		update product
-		   set stock = stock - #{quantity}
-		 where product_no = #{productNo}
-	</update>
-
-	<select id="selectLastWord" resultType="string">
-		select 	distinct
-        		SUBSTR(#{productName}, INSTR(#{productName}, ' ', -1) + 1) as "last_word"
-		from product
-	</select>
-
-	<select id="selectRelatedRecipe" resultMap="recipeResult">
-		select 
-		        recipe_no
-		      , recipe_title
-		      , recipe_origin_name
-		      , recipe_change_name
-		      , difficulty
-		      , time
-		  from recipe
-          join ingredients using (recipe_no)
-		 where upper(ingredient) like upper('%' || #{lastWord} || '%')
-		   and status = 'Y'
-	</select>
-
 
 
 

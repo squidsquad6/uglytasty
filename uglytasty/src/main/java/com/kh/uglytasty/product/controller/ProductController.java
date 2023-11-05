@@ -1061,9 +1061,7 @@ public class ProductController {
 	}
 	
 	
-	   return result>0 ? "cartO" : "cartX";
-   }
-	
+
 	
 	//-------------------- 마이페이지 -------------------------
 	
@@ -1104,12 +1102,6 @@ public class ProductController {
 		return "myPage/myPageOrderDetail";
 		
 	}
-	
-	
-	
-	
-	
-	
 	
 	
 	
