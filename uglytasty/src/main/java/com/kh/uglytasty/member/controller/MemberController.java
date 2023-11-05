@@ -214,11 +214,16 @@ public class MemberController {
 	         }
 	
 	
+	// -----------이메일 인증------------
+	
 	@Autowired
 	private JavaMailSender emailSender;
 	private String authNum;
 	
 	
+	/**
+	 * 인증 번호 생성
+	 */
 	public void createCode() {
 		Random random = new Random();
         StringBuffer key = new StringBuffer();
@@ -245,7 +250,11 @@ public class MemberController {
 	
 	
 	
-
+	/** 메일 전송에 필요한 정보 설정
+	 * @param email
+	 * @return
+	 * @throws MessagingException
+	 */
 	public MimeMessage mailCheck(String email) throws MessagingException {
 		System.out.println("메일 인증 요청");
 		System.out.println("메일:" + email);
@@ -300,7 +309,7 @@ public class MemberController {
 	
 		public String sendEmail(String email) throws MessagingException, UnsupportedEncodingException {
 
-	        //메일전송에 필요한 정보 설정
+	        //메일 전송에 필요한 정보 설정
 	        MimeMessage emailForm = mailCheck(email);
 	        //실제 메일 전송
 	        emailSender.send(emailForm);

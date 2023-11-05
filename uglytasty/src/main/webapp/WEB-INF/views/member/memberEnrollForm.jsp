@@ -359,14 +359,17 @@
 						            <div class="flex-fill" style="width: 80%; margin-right: 2%;">
 						                <input type="email" class="input-text-style" id="email" name="email" placeholder="이메일 주소를 입력해주세요" required>
 						            </div>
-						             <div class="flex-fill">
-						                <input type="text" class="input-text-style" id="certification" placeholder="인증번호">
-						            </div>
 						            
 						            <div class="flex-fill">
 						                <input type="button" class="search_confirm_btn" id="mail-Check-btn" value="인증하기">
 						            </div>
 						        </div>
+						        <div class="d-flex" >
+						        	<div class="flex-fill">
+						                <input type="text" class="input-text-style" id="certification" placeholder="인증번호를 입력해주세요">
+						            </div>
+						        </div>
+						        
 						    </c:when>
 						    <c:otherwise>
 						        <input type="hidden" id="email" name="email" value="${email}">
@@ -454,7 +457,7 @@
 
                     <tr>
                         <td>
-                            <button type="submit" id="enroll_mem_btn" class="submit-btn" disabled>회원가입</button>
+                            <button type="submit" id="enroll_mem_btn" class="submit-btn" disabled="disabled">회원가입</button>
                         </td>
                     </tr>
 
@@ -470,60 +473,59 @@
     
 
 	<script>
-
 	
-	
-	$('#mail-Check-btn').click(function(){
-		const email = $('#email').val();
-		const checkInput =$('#certification');
+			// 이메일 인증 관련
+			$('#mail-Check-btn').click(function(){
+				const email = $('#email').val();
+				const checkInput =$('#certification');
+				
+				$.ajax({
+					type:'post',
+					url : '<c:url value ="/mailCheck?email="/>'+email,
+					success : function (data) {
+						console.log("data : " +  data);-
+						checkInput.attr('disabled',false);
+						code =data;
+						alert('인증번호가 전송되었습니다.')
+					}		
+				})
+			})
+			
 		
-		$.ajax({
-			type:'post',
-			url : '<c:url value ="/mailCheck?email="/>'+email,
-			success : function (data) {
-				console.log("data : " +  data);-
-				checkInput.attr('disabled',false);
-				code =data;
-				alert('인증번호가 전송되었습니다.')
-			}		
-		})
-	})
-	
-
-	$(document).ready(function() {
-   
-    const $certificationInput = $("#certification");
-    const $enrollButton = $("#enroll_mem_btn");
-
-    $certificationInput.on("input", function() {
-      
-        if ($certificationInput.val() === code) {
-          
-            $enrollButton.prop("disabled", false);
-        } else {
-           
-            $enrollButton.prop("disabled", true);
-        }
-    });
-});
+			$(document).ready(function() {
+		   
+		    const $certificationInput = $("#certification");
+		    const $enrollButton = $("#enroll_mem_btn");
+		
+		    $certificationInput.on("input", function() {
+		      
+		        if ($certificationInput.val() === code) {
+		          
+		            $enrollButton.prop("disabled", false);
+		        } else {
+		           
+		            $enrollButton.prop("disabled", true);
+		        }
+		    });
+		});
 	
 	
 	</script>
 
-<script>
-$(document).ready(function() {
-    // 이메일 필드에 대한 값을 가져옵니다.
-    const emailValue = '${email}';
-
-    // 회원가입 버튼을 가져옵니다.
-    const $enrollButton = $("#enroll_mem_btn");
-
-    // 이메일 값이 null이 아닌 경우, 회원가입 버튼을 활성화합니다.
-    if (emailValue !== 'null') {
-        $enrollButton.prop("disabled", false);
-    }
-});
-</script>
+	<script>
+	$(document).ready(function() {
+	    // 이메일 필드에 대한 값을 가져옵니다.
+	    const emailValue = '${email}';
+	
+	    // 회원가입 버튼을 가져옵니다.
+	    const $enrollButton = $("#enroll_mem_btn");
+	
+	    // 이메일 값이 null이 아닌 경우, 회원가입 버튼을 활성화합니다.
+	    if (emailValue !== 'null') {
+	        $enrollButton.prop("disabled", false);
+	    }
+	});
+	</script>
 
 
     <!-- 카카오 주소 조회 API -->
