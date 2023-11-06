@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>못난이맛난이 레시피</title>
 	
 	<style>
 
@@ -363,7 +363,7 @@
                         </div>
 
                         <div style="float: right; font-size: 16px; vertical-align: middle; color:rgb(81, 81, 81); margin-right: 15px;">
-                            <b>${ loginMember.userName }</b>
+                            <b>${ r.recipeWriter }</b>
                         </div>
 
                     </div>

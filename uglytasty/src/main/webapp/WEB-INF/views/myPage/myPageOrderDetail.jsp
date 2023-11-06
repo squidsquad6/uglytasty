@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>못난이맛난이 마이페이지</title>
 
 <!-- 
 	orderInfo : orderNo, orderDate, orderCode, trackingNo, userId, receiver, receiverPhone, addressMain, addressDetail, deliveryMemo, totalPrice
