@@ -363,7 +363,7 @@
                         </div>
 
                         <div style="float: right; font-size: 16px; vertical-align: middle; color:rgb(81, 81, 81); margin-right: 15px;">
-                            <b>${ r.recipeWriter }</b>
+                            <b>${ loginMember.userName }</b>
                         </div>
 
                     </div>
