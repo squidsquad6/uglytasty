@@ -277,12 +277,17 @@
 			                            </div>
 			                            <div class="d-flex" style="margin-bottom: 10px;">
 			                                <div class="flex-fill" style=" width: 80%; margin-right: 2%;">
-			                                    <input type="email" class="input-text-style" id="email" name="email" value="${ loginMember.email }" placeholder="이메일 주소를 입력해주세요" required>
+			                                    <input type="email" class="input-text-style" id="email" name="email" value="${ loginMember.email }" style="margin-bottom:0px;" placeholder="이메일 주소를 입력해주세요" required>
 			                                </div>
 			                                <div class="flex-fill">
-			                                    <input type="button" class="search_confirm_btn" onclick="" value="인증하기">
+			                                    <input type="button" class="search_confirm_btn" id="mail-Check-btn" value="인증하기">
 			                                </div>
 			                            </div>
+			                            <div>
+								        	<div class="flex-fill">
+								                <input type="text" class="input-text-style" id="certification" placeholder="인증 번호를 입력해주세요">
+								            </div>
+								        </div>
 			                        </td>
 			                    </tr>
 			
@@ -326,7 +331,7 @@
 			                    
 			                    <tr>
 			                        <td>
-	                                    <button type="submit" class="submit-btn">수정하기</button>
+	                                    <button type="submit" id="update_mem_btn" class="submit-btn" disabled>수정하기</button>
 	                                    <a href="deleteForm.me" style="color: rgb(58, 58, 58); display:block; text-align: center;">
 	                                        회원 탈퇴를 원하세요?
 	                                    </a>
@@ -351,6 +356,64 @@
 
         
     </div>
+    
+    	<script>
+
+			
+			
+			$('#mail-Check-btn').click(function(){
+				const email = $('#email').val();
+				const checkInput =$('#certification');
+				
+				$.ajax({
+					type:'post',
+					url : '<c:url value ="/mailCheck?email="/>'+email,
+					success : function (data) {
+						console.log("data : " +  data);-
+						checkInput.attr('disabled',false);
+						code =data;
+						alert('인증번호가 전송되었습니다.')
+					}		
+				})
+			})
+			
+		
+			$(document).ready(function() {
+		   
+		    const $certificationInput = $("#certification");
+		    const $updateButton = $("#update_mem_btn");
+		
+		    $certificationInput.on("input", function() {
+		      
+		        if ($certificationInput.val() === code) {
+		          
+		            $updateButton.prop("disabled", false);
+		        } else {
+		           
+		            $updateButton.prop("disabled", true);
+		        }
+		    });
+		});
+			
+			
+			</script>
+		
+		<script>
+		$(document).ready(function() {
+		    // 이메일 필드에 대한 값을 가져옵니다.
+		    const emailValue = '${email}';
+		
+		    // 회원가입 버튼을 가져옵니다.
+		    const $updateButton = $("#update_mem_btn");
+		
+		    // 이메일 값이 null이 아닌 경우, 회원가입 버튼을 활성화합니다.
+		    if (!emailValue || emailValue.trim() === '') {
+		        $updateButton.prop("disabled", true);
+		    } else {
+		        $updateButton.prop("disabled", false);
+		    }
+		});
+		</script>
     
     <!-- 카카오 주소 조회 API -->
     <!--
