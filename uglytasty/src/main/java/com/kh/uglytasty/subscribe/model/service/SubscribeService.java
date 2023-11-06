@@ -19,5 +19,7 @@ public interface SubscribeService {
 	//--------------마이페이지-----------------
 	int myPageUpdateSubscribe(Subscribe s);
 
+	int myPageUpdateSubscribeStatus(String userId);
+	int myPageUpdateMemberStatus(String userId);
 
 }

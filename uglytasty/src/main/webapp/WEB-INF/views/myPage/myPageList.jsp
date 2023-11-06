@@ -108,7 +108,7 @@
         /* ---------------------------마이페이지 - list------------------------------ */
 
         .mypage_menu_list{  /* 마이페이지 menu_list */
-            margin-top: 120px;
+            margin-top: 170px;
             margin-bottom: 10px;
             height: 700px;
         }
@@ -119,7 +119,7 @@
         }
         .mypage_menu_list a{
             text-decoration: none;
-            color: rgb(58, 58, 58);
+            color: rgb(58, 58, 58) !important;
             display: block;
             width: 100%;
             font-weight: 700;
@@ -137,6 +137,8 @@
             font-weight: 700;
             text-align: center;
         }
+        
+        
 
     </style>
 
@@ -190,7 +192,7 @@
                     </div>
 
                     <div class="p-2">
-                        <a href="myPageMyBoxForm.su">
+                        <a href="myPage.me">
                             <div class="d-flex justify-content-between">
                                 <div class="p-2">나의 못난이 박스</div>
                                 <div class="p-2"><img src="https://d3cpiew7rze14b.cloudfront.net/assets/svg/gray-600-chevron-right_5qBS9q-mc.svg"></div>

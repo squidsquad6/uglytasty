@@ -435,14 +435,15 @@ public class MemberController {
 			
 			String subscribeOrNot = ((Member) session.getAttribute("loginMember")).getSubscribe();
 			
+			
 			if(subscribeOrNot.equals("Y")) {
 				// 현재 로그인한 회원이 구독자일 때
 				
 				String id = ((Member)session.getAttribute("loginMember")).getUserId();
 				
 				Subscribe loginMemSubscribInfo = sService.selectSubscribe(id);
-				
 				session.setAttribute("loginMemSubscribInfo", loginMemSubscribInfo);
+				
 				
 				
 				return "myPage/myPageMyBoxForm";

@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.gson.Gson;
+import com.kh.uglytasty.member.model.service.MemberServiceImpl;
 import com.kh.uglytasty.member.model.vo.Member;
 import com.kh.uglytasty.subscribe.model.service.SubscribeServiceImpl;
 import com.kh.uglytasty.subscribe.model.vo.SubComp;
@@ -31,6 +32,9 @@ public class SubscribeController {
 
 	@Autowired
 	private SubscribeServiceImpl sService;
+	
+	@Autowired 
+	private MemberServiceImpl mService;
 	
 	@RequestMapping("subscribe.su")
 	public String goToSubscribe() {
@@ -229,6 +233,45 @@ public class SubscribeController {
 			model.addAttribute("errorMsg", "구독 정보 수정에 실패하였습니다!");
 			return "common/errorPage";
 			
+		}
+		
+		
+	}
+	
+	
+	/** 못난이 박스 구독 취소
+	 * @param model
+	 * @param session
+	 * @return
+	 */
+	@RequestMapping("myPageUpdateSubscribeStatus.su")
+	public String myPageUpdateSubscribeStatus(Member m, Model model, HttpSession session) {
+		
+		String userId = ((Member)session.getAttribute("loginMember")).getUserId();
+		
+		int mResult = sService.myPageUpdateSubscribeStatus(userId);
+		
+		if(mResult > 0) {
+			
+			int sResult = sService.myPageUpdateMemberStatus(userId);
+			
+			if(sResult > 0) {
+				
+				Subscribe loginMemSubscribInfo = sService.selectSubscribe(userId);
+				session.setAttribute("loginMemSubscribInfo", loginMemSubscribInfo);
+
+				Member loginMember = mService.loginMember(m);
+				session.setAttribute("loginMember", mService.loginMember(m));
+				
+				session.setAttribute("alertMsg", "못난이 박스 구독이 취소되었습니다.");
+				
+			}
+			return "redirect:/myPage.me";
+			
+			
+		}else {
+			model.addAttribute("errorMsg", "Member 구독 정보 수정 실패!");
+			return "common/errorPage";
 		}
 		
 		

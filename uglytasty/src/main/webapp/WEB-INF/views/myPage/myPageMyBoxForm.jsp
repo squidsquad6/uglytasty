@@ -300,18 +300,6 @@
                     <div class="mypage_content">
                     
                     
-                    	<c:choose>
-                    		<c:when test="${ loginMember.subscribe eq 'N' }">
-                    			<br><br>
-								<h3>안심하고 구독하세요!</h3>
-		                        <br>
-		                        <div id="subscribe_x_img">
-		                            <img src="https://d3cpiew7rze14b.cloudfront.net/assets/manual/Frame+5072.svg?w=1024">
-		                            <br>
-		                            <button onclick = "location.href = 'subscribe.su'" type="button" class="submit-btn">못난이 구출하러 가기</button>
-		                        </div>	
-                    		</c:when>
-                    		<c:otherwise>
                     			<h3>나의 못난이 박스</h3>
 		                        <br><br>
 		
@@ -375,7 +363,7 @@
 		                                                    <label for="2week">2주</label>
 		                                                </div>
 		                                                <div class="p-2 flex-fill">
-		                                                    <input type="radio" id="4week" name="term" value="3">
+		                                                    <input type="radio" id="4week" name="term" value="4">
 		                                                    <label for="4week">4주</label>
 		                                                </div>
 		                                                <!-- <input type="text" value="${ loginMemSubscribInfo.term }"> -->
@@ -475,20 +463,47 @@
 		                                    <tr>
 		                                        <td>
 		                                            <button type="submit" class="submit-btn" style="margin-bottom: 10px; margin-top: 10px;">설정하기</button>
-		                                            <a href="" style="color: rgb(58, 58, 58); display:block; text-align: center;">
+		                                            <a href="" style="color: rgb(58, 58, 58); display:block; text-align: center;" data-toggle="modal" data-target="#quitForm">
 				                                        구독 취소를 원하세요?
 				                                    </a>
 		                                        </td>
 		                                    </tr>
 		                                        
 		                                </table>
+		                                
 		
 		                            </form>
 		                        </div>	
-                    		</c:otherwise>
-                    	</c:choose>
-                    
                     </div>
+                    
+                    <!-- The Modal -->
+					  <div class="modal fade" id="quitForm">
+					    <div class="modal-dialog">
+					      <div class="modal-content">
+					      
+					        <!-- Modal Header -->
+					        <div class="modal-header">
+					          <h4 class="modal-title">구독 취소</h4>
+					          <button type="button" class="close" data-dismiss="modal">&times;</button>
+					        </div>
+					        
+					        <!-- Modal body -->
+					        <div class="modal-body" align="center" style="font-size:16px;">
+					        	<b>
+			                                   정말로 못난이 박스 구독을 취소하시겠습니까?<br>
+			                   	</b>
+			                   	<br>
+			
+			                   <form action="myPageUpdateSubscribeStatus.su" method="post">
+			                       <input type="hidden" name="userId" value="${ loginMember.userId }">
+			                       <button type="submit" class="btn btn-danger">취소하기</button>
+			                   </form>
+					        </div>
+					        
+					        
+					      </div>
+					    </div>
+					  </div>
 
                 </div>
 

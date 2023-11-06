@@ -63,10 +63,33 @@ public class SubscribeServiceImpl implements SubscribeService{
 	
 	// -------------마이페이지----------------
 	
+	/**
+	 * 마이페이지 구독 정보 수정
+	 */
 	@Override
 	public int myPageUpdateSubscribe(Subscribe s) {
 		
 		return sDao.myPageUpdateSubscribe(sqlSession, s);
 	}
+	
+	/**
+	 * 마이페이지용 Subscribe 구독 상태 수정(N으로)
+	 */
+	@Override
+	public int myPageUpdateSubscribeStatus(String userId) {
+		
+		return sDao.myPageUpdateSubscribeStatus(sqlSession, userId);
+	}
+
+	/**
+	 * 마이페이지용 Member 구독 상태 수정(N으로)
+	 */
+	@Override
+	public int myPageUpdateMemberStatus(String userId) {
+		
+		return sDao.myPageUpdateMemberStatus(sqlSession, userId);
+	}
+
+	
 	
 }

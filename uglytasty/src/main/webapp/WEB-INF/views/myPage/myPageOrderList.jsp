@@ -214,7 +214,7 @@
         	margin-left:15px;
         	margin-right:15px;
         }
-        
+		*>a{text-decoration:none;}        
         
 
     </style>
