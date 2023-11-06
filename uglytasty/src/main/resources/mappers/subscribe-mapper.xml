@@ -134,5 +134,22 @@ from sub_comp
   	      , end_date = #{endDate}
   	 where  user_id = #{userId}     		
   </update>
+  
+  <update id="myPageUpdateSubscribeStatus">
+  	update
+  		 subscribe
+  	set  
+  		status = 'N'
+  	
+   where user_id = #{userId}	
+  </update>
+  
+  <update id="myPageUpdateMemberStatus">
+  	update
+  			 member
+  		set
+  			 subscribe = 'N'
+  		where user_id = #{userId}
+  </update>
 
 </mapper>

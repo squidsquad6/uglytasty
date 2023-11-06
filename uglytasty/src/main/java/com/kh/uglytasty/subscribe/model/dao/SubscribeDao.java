@@ -49,9 +49,37 @@ public class SubscribeDao {
 	
 	// -------------마이페이지----------------
 	
+	/** 마이페이지 구독 정보 수정
+	 * @param sqlSession
+	 * @param s
+	 * @return
+	 */
 	public int myPageUpdateSubscribe(SqlSessionTemplate sqlSession, Subscribe s) {
 		
 		return sqlSession.update("subscribeMapper.myPageUpdateSubscribe", s);
 	}
+	
+	
+	/** 마이페이지용 Subscribe 구독 상태 수정(N으로)
+	 * @param sqlSession
+	 * @param userId
+	 * @return
+	 */
+	public int myPageUpdateSubscribeStatus(SqlSessionTemplate sqlSession, String userId) {
+		
+		return sqlSession.update("subscribeMapper.myPageUpdateSubscribeStatus", userId);
+	}
+ 
+	/** 마이페이지용 Member 구독 상태 수정(N으로)
+	 * @param sqlSession
+	 * @param userId
+	 * @return
+	 */
+	public int myPageUpdateMemberStatus(SqlSessionTemplate sqlSession, String userId) {
+		
+		return sqlSession.update("subscribeMapper.myPageUpdateMemberStatus", userId);
+	}
+
+	
 
 }

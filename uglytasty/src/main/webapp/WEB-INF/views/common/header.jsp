@@ -149,6 +149,14 @@
 	        z-index:999;
 	        cursor:pointer;
 	    }
+	    
+	    /*공사*/
+	    a {
+		  text-decoration: none !important;
+		}
+		#header_login_cart_mypage_logout span{
+		  margin-right:16px;
+		}
 
 
     </style>
