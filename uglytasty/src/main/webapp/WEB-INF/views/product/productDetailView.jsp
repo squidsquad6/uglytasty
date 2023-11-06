@@ -740,28 +740,28 @@
                         ${ plist[1].fileExp }
                     </p>
                 </div>
-                <br><br>
+                <br>
                 <div class="productItem">
                     <img src="${ plist[2].changeName }">    
                     <p>
                        ${ plist[2].fileExp }
                     </p>
                 </div>
-                <br><br>
+                <br>
                 <div class="productItem">
                     <img src="${ plist[3].changeName }">    
                     <p>
                        ${ plist[3].fileExp }
                     </p>
                 </div>
-                <br><br>
+                <br>
                 <div class="productItem">
                     <img src="${ plist[4].changeName }">    
                     <p>
                        ${ plist[4].fileExp }
                     </p>
                 </div>
-                <br><br>
+                <br>
                 <div class="productItem">
                     <h2 style="color:gray;">📦 이렇게 보내드려요</h2>
                     <img src="https://file.newswire.co.kr/data/datafile2/thumb_640/2020/08/3068535908_20200831163955_9943011087.jpg" style="height:700px;"><br><br>    

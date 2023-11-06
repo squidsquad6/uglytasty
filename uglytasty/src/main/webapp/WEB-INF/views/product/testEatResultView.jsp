@@ -26,7 +26,7 @@
     
     .homeBtn {
     	
-    	padding: 15px 120px;
+    	padding: 15px 60px;
     
        
         border: 1px solid #ff6741;
@@ -140,6 +140,15 @@
 			<br><br>
 			<a href="test.eat" class="homeBtn">한번 더 ^^!</a>
 			<a href="/uglytasty" class="homeBtn">홈으로</a>
+			
+			<c:choose>
+				<c:when test="${ not empty loginMember }">
+					<a href="subscribe.su" class="homeBtn">못난이박스 구독!</a>
+				</c:when>
+				<c:otherwise>
+					<a href="enrollForm.me" class="homeBtn">회원가입 GO!</a>
+				</c:otherwise>
+			</c:choose>
 		</div>
            
 
