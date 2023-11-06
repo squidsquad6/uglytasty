@@ -115,7 +115,10 @@ public class NoticeController {
 		
 		Notice n = nService.selectNotice(noticeNo);
 		
-		
+		n.setNoticeContent(content);
+		n.setNoticeTitle(title);
+		n.setUpfix(upfix);
+		System.out.println(n);
 		
 		
 		int result = nService.noticeUpdate(n);

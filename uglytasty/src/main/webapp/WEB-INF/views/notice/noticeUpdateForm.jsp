@@ -193,6 +193,7 @@
                                 <label for="upfix2"></label>
                                 <input type="hidden" name="upfix" id="upfix" value="${n.upfix }">
                                 <input type="hidden" name="noticeNo" id="noticeNo" value="${n.noticeNo }">
+                               
                             </td>
                         </tr>
                         
@@ -227,6 +228,8 @@
                 $(this).val(content.substring(0, 2000));
                 $('#counter').html("(2000/2,000)");
             }
+            
+           
         });
     </script>
     <script>
