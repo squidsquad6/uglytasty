@@ -519,7 +519,9 @@ $(document).ready(function() {
     const $enrollButton = $("#enroll_mem_btn");
 
     // 이메일 값이 null이 아닌 경우, 회원가입 버튼을 활성화합니다.
-    if (emailValue !== 'null') {
+    if (!emailValue || emailValue.trim() === '') {
+        $enrollButton.prop("disabled", true);
+    } else {
         $enrollButton.prop("disabled", false);
     }
 });
