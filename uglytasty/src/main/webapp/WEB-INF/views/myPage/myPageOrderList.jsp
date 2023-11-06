@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>못난이맛난이 마이페이지</title>
 
 <!-- 
 	orderList : orderNo, userId, productNo, productName, explanation, price, sale, salePrice, quantity, totalPrice, changeName, fileLevel
