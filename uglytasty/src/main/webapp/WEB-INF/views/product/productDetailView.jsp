@@ -820,7 +820,7 @@
 					
 					        // 인포윈도우로 장소에 대한 설명을 표시합니다
 					        var infowindow = new kakao.maps.InfoWindow({
-					            content: '<div class="uglytastyText">👨🏻‍🌾 못난이 고향 📦</div><div class="uglytastyLocation">${ plist[0].location }</div>'
+					            content: '<div class="uglytastyText">🌱 못난이 고향 🌱</div><div class="uglytastyLocation">${ plist[0].location }</div>'
 					        });
 					        infowindow.open(map, marker);
 					
@@ -1017,7 +1017,7 @@
 				                <div class="recipeInfo">
 				                	<span class="recipeStyle">난이도 : </span> 
 				                    <span class="difficulty_time_option">${ rcp.difficulty }</span>
-				                    <span>&nbsp; | &nbsp;</span>
+				                    <span>|</span>
 				                    <span class="recipeStyle">소요시간 : </span>
 				                    <span class="difficulty_time_option2">${ rcp.time }</span>
 				                    <span>이내</span>

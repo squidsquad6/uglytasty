@@ -167,10 +167,10 @@ public class ProductController {
    @RequestMapping(value="search.pro", produces="application/json; charset=UTF-8")
    public String selectSearchProduct(int productNo) {
       
-      System.out.println("productNo : " + productNo);
+      //System.out.println("productNo : " + productNo);
       
       Product p = pService.selectSearchProduct(productNo);
-      System.out.println(p);
+      //System.out.println(p);
       return new Gson().toJson(p);
    }
    
@@ -295,11 +295,11 @@ public class ProductController {
 	   
 	   // 2) 첨부파일5 수정 (1:update, 2:insert)
 		  
-		  //공부용
+		  /*공부용
 	      for(int i=0; i<reupfile.length; i++) {
 	         System.out.println(reupfile[i]);
 	      }
-	      
+	      */
 		      
 	      // (준비) 상품 설명이 없을때 null값 들어가지 않도록 하기 위한 작업
 	      ArrayList<String> explist = new ArrayList<String>();
@@ -320,7 +320,7 @@ public class ProductController {
 	         explist.add(fileExp5);            
 	      }
 	      
-	      System.out.println("상품 설명 explist" + explist); 
+	      //System.out.println("상품 설명 explist" + explist); 
 	  
 	      
 	      ArrayList<Attachment> existAtList = pService.selectAttachmentList(productNo);	//db에서 가져온애
@@ -415,7 +415,8 @@ public class ProductController {
 			  
 		if(result > 0) {
 		     session.setAttribute("alertMsg", "성공적으로 상품이 수정되었습니다.");
-		     return "redirect:list.pro";
+		     //return "redirect:list.pro";
+		     return "redirect:detail.pro?pno=" + productNo;
 	    }else {
 		     model.addAttribute("errorMsg", "상품 수정 실패!");
 		     return "common/errorPage";
@@ -570,7 +571,7 @@ public class ProductController {
    @RequestMapping("insert.cart")
    public String ajaxInsertCart(Cart c) {
       
-      System.out.println(c);
+      //System.out.println(c);
       
       int result = pService.insertCart(c);
       
