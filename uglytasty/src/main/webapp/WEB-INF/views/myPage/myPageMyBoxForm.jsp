@@ -132,6 +132,27 @@
             font-weight: 700;
             text-align: center;
         }
+        
+        /* 구독 안 한 경우일 때 */
+        /* 구독 안 한 회원 */
+        #subscribe_x_img{
+            margin:auto;
+        }
+        #subscribe_x_img img{
+            width: 80%;
+            margin-left: 10%;
+            margin-right: 10%;
+            margin-top: 50px;
+        }
+        #subscribe_x_img button{
+            width: 80%;
+            margin-left: 10%;
+            margin-right: 10%;
+            margin-top: 50px;
+        }
+        
+        
+        
 
         /* --------------------------------정보 작성 부분(박스 관리용으로 수정)------------------------------- */
         /* #mybox-wrap{
@@ -265,7 +286,7 @@
             
             <div id="mypage-all" class="row">
                 
-                <div class="col-sm-3" style="border: 1px solid red;">
+                <div class="col-sm-3">
 
                     
                     <jsp:include page="myPageList.jsp"/>
@@ -273,181 +294,200 @@
 
                 </div>
 
-                <div class="col-sm-9" style="border: 1px solid blue;">
+                <div class="col-sm-9">
                     <!-- 페이지 -->
                     
                     <div class="mypage_content">
-
-                        <h3>나의 못난이 박스</h3>
-                        <br><br>
-
-                        <div id="mybox-wrap">
-                            <form action="myPageMyBoxUpdate.su" method="post" id="myBoxUpdateForm">
-                            
-                            	<input type="hidden" name="userId" value="${ loginMember.userId }">
-                            
-                                <table id="mybox-table">
-                                    <tr>
-                                        <td>
-                                            <!-- name값을 필드부의 변수명과 완벽히 일치하게 적어줘야 함*** -->
-                                            <div class="enrollform_input_label d-flex mb-1">
-                                                <div class="mybox-option mr-auto">박스 크기</div>
-                                            </div>
-                                            
-                                            <div class="d-flex">
-                                                <div class="p-2 flex-fill">
-                                                    <input type="radio" id="standard-box" name="boxSize" value="1">
-                                                    <label for="standard-box">스탠다드 박스</label>
-                                                </div>
-                                                <div class="p-2 flex-fill">
-                                                    <input type="radio" id="jumbo-box" name="boxSize" value="2">
-                                                    <label for="jumbo-box">점보 박스</label>
-                                                </div>
-                                                <!-- <input type="text" id="boxSize_value" value="${ loginMemSubscribInfo.boxSize }"> -->
-                                            </div> 
-                                            
-                                            <script>
-                                            
-											    // loginMemSubscribInfo.boxSize에 "1" 또는 "2" 값이 들어 있다고 가정합니다.
-											    var boxSizeValue = "${ loginMemSubscribInfo.boxSize }";
-											
-											    if (boxSizeValue === "1") {
-											        document.getElementById("standard-box").checked = true;
-											    } else if (boxSizeValue === "2") {
-											        document.getElementById("jumbo-box").checked = true;
-											    }
-											</script>
-
-
-                                            <div style="height: 30px;">
-                                                <!-- 간격 div -->
-                                            </div>
-                                        </td>
-                                    </tr>
-                
-                                    <tr>
-                                        <td>
-                                            <div class="enrollform_input_label d-flex mb-1">
-                                                <div class="mybox-option mr-auto">배송 주기</div>
-                                            </div>
-                                            
-                                            <div class="d-flex">
-                                                <div class="p-2 flex-fill">
-                                                    <input type="radio" id="1week" name="term" value="1">
-                                                    <label for="1week">1주</label>
-                                                </div>
-                                                <div class="p-2 flex-fill">
-                                                    <input type="radio" id="2week" name="term" value="2">
-                                                    <label for="2week">2주</label>
-                                                </div>
-                                                <div class="p-2 flex-fill">
-                                                    <input type="radio" id="4week" name="term" value="3">
-                                                    <label for="4week">4주</label>
-                                                </div>
-                                                <!-- <input type="text" value="${ loginMemSubscribInfo.term }"> -->
-                                            </div>
-                                            
-                                            <script>
-											    // loginMemSubscribInfo.term에 "1", "2", 또는 "3" 값이 들어 있다고 가정합니다.
-											    var termValue = "${ loginMemSubscribInfo.term }";
-											
-											    var radioButtons = document.getElementsByName("term");
-											
-											    for (var i = 0; i < radioButtons.length; i++) {
-											        if (radioButtons[i].value === termValue) {
-											            radioButtons[i].checked = true;
-											        }
-											    }
-											</script>
-                                            
-                                            
-
-                                            <div style="height: 30px;">
-                                                <!-- 간격 div -->
-                                            </div>
-                                        </td>
-                                    </tr>
-                
-                                    <tr>
-                                        <td>
-                                            <div class="enrollform_input_label d-flex mb-1">
-                                                <div class="mybox-option mr-auto">비선호 품목</div>
-                                            </div>
-                                            <div id="dislike-wrap" style="margin: auto; padding-left: 8px; padding-right: 8px;">
-                                                
-                                                <div id="dislike-list">
-                                                    <!-- <p style="color: #03c75a;">제외된 비선호 품목✏️</p> -->
-                                                    <input type="text" class="input-text-style" name="dislike" placeholder="비선호 품목 목록" value="${ loginMemSubscribInfo.dislike }">
-                                                </div>
-                                            </div>
-
-                                            <div style="height: 30px;">
-                                                <!-- 간격 div -->
-                                            </div>
-                                        </td>
-                                    </tr>
-                
-                                    <tr>
-                                        <td>
-                                            <div class="enrollform_input_label d-flex mb-1">
-                                                <div class="mybox-option smr-auto">기본 배송 정보</div>
-                                            </div>
-                                            <div style="padding-left: 8px; padding-right: 8px;">
-                                                <div class="d-flex" style="margin-bottom: 10px;">
-                                                    <!-- 기본주소 -->
-                                                    <div class="flex-fill" style=" width: 80%;">
-                                                        <input type="text" class="address_base" id="address" name="address" value="${ loginMemSubscribInfo.address }" placeholder="기본 주소를 입력해주세요" readonly required>
-                                                    </div>
-                                                    <div class="flex-fill">
-                                                        <!-- 주소 검색 버튼 -->
-                                                        <input type="button" class="search_confirm_btn" onclick="sample6_execDaumPostcode()" value="검색">
-                                                    </div>  
-                                                </div>
                     
-                                                <!-- 상세 주소 -->
-                                                <input type="text" class="address_detail input-text-style" id="addressDetail" name="detailAddress" value="${ loginMemSubscribInfo.detailAddress }" placeholder="상세 주소를 입력해주세요" required>
-                                                <input type="hidden" id="sample6_postcode" value="우편번호">
-                                                <input type="hidden" id="sample6_extraAddress" value="참고항목">
-                                            </div>
-                
-                                            <div style="height: 30px;">
-                                                <!-- 간격 div -->
-                                            </div>
-
-                                        </td>
-                                    </tr>
-                                    
-                                    <tr>
-                                        <td>
-                                            <div class="d-flex">
-                                                <div class="mybox-option p-2 flex-fill">
-                                                    시작 날짜
-                                                    <input type="text" class="input-text-style" placeholder="시작 날짜" name="startDate" value="${ loginMemSubscribInfo.startDate }" readonly>
-                                                </div>
-                                                
-                                                <div class="mybox-option p-2 flex-fill">
-                                                    종료 날짜
-                                                    <input type="text" class="input-text-style" placeholder="종료 날짜" name="endDate" value="${ loginMemSubscribInfo.endDate }" readonly>
-                                                </div>
-                                                
-                                            </div>
-
-                                            <div style="height: 30px;">
-                                                <!-- 간격 div -->
-                                            </div>
-                                        </td>
-                                    </tr>
-                
-                                    <tr>
-                                        <td>
-                                            <button type="submit" class="submit-btn" style="margin-bottom: 10px; margin-top: 10px;">설정하기</button>
-                                        </td>
-                                    </tr>
-                                        
-                                </table>
-
-                            </form>
-                        </div>    
+                    
+                    	<c:choose>
+                    		<c:when test="${ loginMember.subscribe eq 'N' }">
+                    			<br><br>
+								<h3>안심하고 구독하세요!</h3>
+		                        <br>
+		                        <div id="subscribe_x_img">
+		                            <img src="https://d3cpiew7rze14b.cloudfront.net/assets/manual/Frame+5072.svg?w=1024">
+		                            <br>
+		                            <button onclick = "location.href = 'subscribe.su'" type="button" class="submit-btn">못난이 구출하러 가기</button>
+		                        </div>	
+                    		</c:when>
+                    		<c:otherwise>
+                    			<h3>나의 못난이 박스</h3>
+		                        <br><br>
+		
+		                        <div id="mybox-wrap">
+		                            <form action="myPageMyBoxUpdate.su" method="post" id="myBoxUpdateForm">
+		                            
+		                            	<input type="hidden" name="userId" value="${ loginMember.userId }">
+		                            
+		                                <table id="mybox-table">
+		                                    <tr>
+		                                        <td>
+		                                            <!-- name값을 필드부의 변수명과 완벽히 일치하게 적어줘야 함*** -->
+		                                            <div class="enrollform_input_label d-flex mb-1">
+		                                                <div class="mybox-option mr-auto">박스 크기</div>
+		                                            </div>
+		                                            
+		                                            <div class="d-flex">
+		                                                <div class="p-2 flex-fill">
+		                                                    <input type="radio" id="standard-box" name="boxSize" value="1">
+		                                                    <label for="standard-box">스탠다드 박스</label>
+		                                                </div>
+		                                                <div class="p-2 flex-fill">
+		                                                    <input type="radio" id="jumbo-box" name="boxSize" value="2">
+		                                                    <label for="jumbo-box">점보 박스</label>
+		                                                </div>
+		                                                <!-- <input type="text" id="boxSize_value" value="${ loginMemSubscribInfo.boxSize }"> -->
+		                                            </div> 
+		                                            
+		                                            <script>
+		                                            
+													    // loginMemSubscribInfo.boxSize에 "1" 또는 "2" 값이 들어 있다고 가정합니다.
+													    var boxSizeValue = "${ loginMemSubscribInfo.boxSize }";
+													
+													    if (boxSizeValue === "1") {
+													        document.getElementById("standard-box").checked = true;
+													    } else if (boxSizeValue === "2") {
+													        document.getElementById("jumbo-box").checked = true;
+													    }
+													</script>
+		
+		
+		                                            <div style="height: 30px;">
+		                                                <!-- 간격 div -->
+		                                            </div>
+		                                        </td>
+		                                    </tr>
+		                
+		                                    <tr>
+		                                        <td>
+		                                            <div class="enrollform_input_label d-flex mb-1">
+		                                                <div class="mybox-option mr-auto">배송 주기</div>
+		                                            </div>
+		                                            
+		                                            <div class="d-flex">
+		                                                <div class="p-2 flex-fill">
+		                                                    <input type="radio" id="1week" name="term" value="1">
+		                                                    <label for="1week">1주</label>
+		                                                </div>
+		                                                <div class="p-2 flex-fill">
+		                                                    <input type="radio" id="2week" name="term" value="2">
+		                                                    <label for="2week">2주</label>
+		                                                </div>
+		                                                <div class="p-2 flex-fill">
+		                                                    <input type="radio" id="4week" name="term" value="3">
+		                                                    <label for="4week">4주</label>
+		                                                </div>
+		                                                <!-- <input type="text" value="${ loginMemSubscribInfo.term }"> -->
+		                                            </div>
+		                                            
+		                                            <script>
+													    // loginMemSubscribInfo.term에 "1", "2", 또는 "3" 값이 들어 있다고 가정합니다.
+													    var termValue = "${ loginMemSubscribInfo.term }";
+													
+													    var radioButtons = document.getElementsByName("term");
+													
+													    for (var i = 0; i < radioButtons.length; i++) {
+													        if (radioButtons[i].value === termValue) {
+													            radioButtons[i].checked = true;
+													        }
+													    }
+													</script>
+		                                            
+		                                            
+		
+		                                            <div style="height: 30px;">
+		                                                <!-- 간격 div -->
+		                                            </div>
+		                                        </td>
+		                                    </tr>
+		                
+		                                    <tr>
+		                                        <td>
+		                                            <div class="enrollform_input_label d-flex mb-1">
+		                                                <div class="mybox-option mr-auto">비선호 품목</div>
+		                                            </div>
+		                                            <div id="dislike-wrap" style="margin: auto; padding-left: 8px; padding-right: 8px;">
+		                                                
+		                                                <div id="dislike-list">
+		                                                    <!-- <p style="color: #03c75a;">제외된 비선호 품목✏️</p> -->
+		                                                    <input type="text" class="input-text-style" name="dislike" placeholder="비선호 품목 목록" value="${ loginMemSubscribInfo.dislike }">
+		                                                </div>
+		                                            </div>
+		
+		                                            <div style="height: 30px;">
+		                                                <!-- 간격 div -->
+		                                            </div>
+		                                        </td>
+		                                    </tr>
+		                
+		                                    <tr>
+		                                        <td>
+		                                            <div class="enrollform_input_label d-flex mb-1">
+		                                                <div class="mybox-option smr-auto">기본 배송 정보</div>
+		                                            </div>
+		                                            <div style="padding-left: 8px; padding-right: 8px;">
+		                                                <div class="d-flex" style="margin-bottom: 10px;">
+		                                                    <!-- 기본주소 -->
+		                                                    <div class="flex-fill" style=" width: 80%;">
+		                                                        <input type="text" class="address_base" id="address" name="address" value="${ loginMemSubscribInfo.address }" placeholder="기본 주소를 입력해주세요" readonly required>
+		                                                    </div>
+		                                                    <div class="flex-fill">
+		                                                        <!-- 주소 검색 버튼 -->
+		                                                        <input type="button" class="search_confirm_btn" onclick="sample6_execDaumPostcode()" value="검색">
+		                                                    </div>  
+		                                                </div>
+		                    
+		                                                <!-- 상세 주소 -->
+		                                                <input type="text" class="address_detail input-text-style" id="addressDetail" name="detailAddress" value="${ loginMemSubscribInfo.detailAddress }" placeholder="상세 주소를 입력해주세요" required>
+		                                                <input type="hidden" id="sample6_postcode" value="우편번호">
+		                                                <input type="hidden" id="sample6_extraAddress" value="참고항목">
+		                                            </div>
+		                
+		                                            <div style="height: 30px;">
+		                                                <!-- 간격 div -->
+		                                            </div>
+		
+		                                        </td>
+		                                    </tr>
+		                                    
+		                                    <tr>
+		                                        <td>
+		                                            <div class="d-flex">
+		                                                <div class="mybox-option p-2 flex-fill">
+		                                                    시작 날짜
+		                                                    <input type="text" class="input-text-style" placeholder="시작 날짜" name="startDate" value="${ loginMemSubscribInfo.startDate }" readonly>
+		                                                </div>
+		                                                
+		                                                <div class="mybox-option p-2 flex-fill">
+		                                                    종료 날짜
+		                                                    <input type="text" class="input-text-style" placeholder="종료 날짜" name="endDate" value="${ loginMemSubscribInfo.endDate }" readonly>
+		                                                </div>
+		                                                
+		                                            </div>
+		
+		                                            <div style="height: 30px;">
+		                                                <!-- 간격 div -->
+		                                            </div>
+		                                        </td>
+		                                    </tr>
+		                
+		                                    <tr>
+		                                        <td>
+		                                            <button type="submit" class="submit-btn" style="margin-bottom: 10px; margin-top: 10px;">설정하기</button>
+		                                            <a href="" style="color: rgb(58, 58, 58); display:block; text-align: center;">
+				                                        구독 취소를 원하세요?
+				                                    </a>
+		                                        </td>
+		                                    </tr>
+		                                        
+		                                </table>
+		
+		                            </form>
+		                        </div>	
+                    		</c:otherwise>
+                    	</c:choose>
+                    
                     </div>
 
                 </div>

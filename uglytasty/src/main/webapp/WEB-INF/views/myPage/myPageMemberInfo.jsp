@@ -217,7 +217,7 @@
             
             <div id="mypage-all" class="row">
                 
-                <div class="col-sm-3" style="border: 1px solid red;">
+                <div class="col-sm-3">
 
                     
                     <jsp:include page="myPageList.jsp"/>
@@ -225,7 +225,7 @@
 
                 </div>
 
-                <div class="col-sm-9" style="border: 1px solid blue;">
+                <div class="col-sm-9">
                     <!-- 페이지 -->
                     
                     <div class="mypage_content">

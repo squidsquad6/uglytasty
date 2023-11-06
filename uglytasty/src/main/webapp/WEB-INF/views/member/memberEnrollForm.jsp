@@ -359,14 +359,17 @@
 						            <div class="flex-fill" style="width: 80%; margin-right: 2%;">
 						                <input type="email" class="input-text-style" id="email" name="email" placeholder="이메일 주소를 입력해주세요" required>
 						            </div>
-						             <div class="flex-fill">
-						                <input type="text" class="input-text-style" id="certification" placeholder="인증번호">
-						            </div>
 						            
 						            <div class="flex-fill">
 						                <input type="button" class="search_confirm_btn" id="mail-Check-btn" value="인증하기">
 						            </div>
 						        </div>
+						        <div>
+						        	<div class="flex-fill">
+						                <input type="text" class="input-text-style" id="certification" placeholder="인증 번호를 입력해주세요">
+						            </div>
+						        </div>
+						        
 						    </c:when>
 						    <c:otherwise>
 						        <input type="hidden" id="email" name="email" value="${email}">
