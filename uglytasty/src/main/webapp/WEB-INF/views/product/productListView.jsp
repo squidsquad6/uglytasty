@@ -305,8 +305,8 @@
 	                    <p>${x.productName}</p>
 	                    <span class="sale">${x.sale}</span><span class="sale">%</span>
 	                    <img src="https://d3cpiew7rze14b.cloudfront.net/assets/ustore/discount-arrow.svg">
-	                    <span class="originPrice">${x.price}</span>
-	                    <span class="salePrice" id="calculationResult_${x.productNo}">${ x.salePrice }</span>
+	                    <span class="originPrice"><fmt:formatNumber value="${x.price}" pattern="#,###"/></span>
+			            <span class="salePrice" id="calculationResult_${x.productNo}"><fmt:formatNumber value="${ x.salePrice }" pattern="#,###"/></span>
 	                    <span class="salePrice">원</span>
 	                </div>
 	            </div>
