@@ -1,6 +1,6 @@
 # 못난이맛난이 UGLYTASTY 🥕🥦🥔🍎
 <img src="https://github.com/squidsquad6/uglytasty/assets/145431108/f4b8c61c-9653-4845-b87c-551f11857bef"  width="500" height="120"/>  
-      
+<br/><br/>
 ### 🖥 About Project
 못난이 농산물 판매로 환경, 판매자, 소비자 모두에게 순기능을 발생시키기고 구매한 채소를 활용할 수 있는 레시피를 제공하여 소비자로 하여금 그러한 순기능을 더욱 극대화할 수 있는 웹 사이트 구현  
 
