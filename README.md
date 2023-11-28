@@ -35,57 +35,23 @@
 
 
 ### 기술별 설명
-## ⭐메인페이지⭐<hr>
+## ⭐회원가입⭐
+#### - 아이디 중복 체크
+ajax를 활용하여 아이디 중복 체크 기능 구현
+<img src="https://github.com/squidsquad6/uglytasty/blob/main/uglytasty/src/main/webapp/resources/readmeImages/yuri/%ED%9A%8C%EC%9B%90%EA%B0%80%EC%9E%85%20%EC%95%84%EC%9D%B4%EB%94%94%20%EC%A4%91%EB%B3%B5%20%EC%B2%B4%ED%81%AC.gif?raw=true">
+
+
+## ⭐메인페이지⭐
 #### - 어바웃어스(사이트 소개) 및 생산자 납품 문의
 문의 작성 시 관리자 구글 계정 form 에서 확인
 <img src="https://github.com/squidsquad6/uglytasty/blob/readme_img/uglytasty/src/main/webapp/resources/%EB%A0%88%EC%8B%9C%ED%94%BC%20-%20%EA%B2%8C%EC%8B%9C%EA%B8%80%20%EC%9E%91%EC%84%B1,%EC%88%98%EC%A0%95,%EC%82%AD%EC%A0%9C.gif?raw=true">
 
-<img src="https://github.com/squidsquad6/uglytasty/blob/readme_img/uglytasty/src/main/webapp/resources/%EB%A0%88%EC%8B%9C%ED%94%BC%20-%20%EA%B2%8C%EC%8B%9C%EA%B8%80%20%EC%A1%B0%ED%9A%8C%20(%EC%B5%9C%EC%8B%A0%EC%88%9C,%20%EC%A1%B0%ED%9A%8C%EC%88%9C).gif?raw=true">
 
-⭐사용자 프로필 화면⭐
-- 상단메뉴바의 프로필 이미지를 누르면 메뉴 출력
-- 프로필 수정,로그아웃
-
-⭐일정 관리⭐
-- 일정 등록 삭제 가능
-- 칸반으로 쉽게 이동 가능
-
-⭐레파지토리⭐
-- 다른 레파지토리 등록
-- 파일 경로 이동 + 코드 확인 가능
-
-⭐이슈⭐
-- 이슈 상태별 조회 + 무한스크롤 구현
-- 메인페이지 최근 나에게 할당된 이슈에서도 조회 가능
-- 이슈 등록 + 깃허브 연동
-- 이슈 수정 + 상태 변경
-
-⭐마일스톤⭐
-- 마일스톤 상태별로 조회
-- 마일스톤 안에 이슈 상세페이지 이동 가능
-- 이슈에서 마일스톤 제거
-
-⭐채팅⭐
-- 채팅 친구추가
-- 채팅 대화
-
-⭐뉴스 피드⭐
-- 뉴스 좋아요 순으로 hot nuws 상위 노출 바뀜
-- 뉴스 등록 + 수정 + 삭제
-- 뉴스 댓글 작성
-
-⭐팀원 모집⭐
-- 카테고리별 조회
-- 원하는 언어만 선택해서 볼수있음
-- 프로젝트 등록
-
-⭐친구 관리⭐
-- 친구 추가
-- 친구 차단
-- 친구 찾기
-
-⭐챗봇⭐
-- 챗봇과 상담
+>>양식<<
+## ⭐양식⭐
+#### - 기능
+간단 설명
+<img src="">
 
 
 
