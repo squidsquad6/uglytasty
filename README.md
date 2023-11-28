@@ -38,7 +38,7 @@
 ## ⭐메인페이지⭐<hr>
 #### - 어바웃어스(사이트 소개) 및 생산자 납품 문의
 문의 작성 시 관리자 구글 계정 form 에서 확인
-<img src="https://github.com/squidsquad6/uglytasty/assets/134485735/92e7bae7-cede-489b-8714-e339cfbf3e5c">
+<img src="https://github.com/squidsquad6/uglytasty/blob/readme_img/uglytasty/src/main/webapp/resources/%EB%A0%88%EC%8B%9C%ED%94%BC%20-%20%EA%B2%8C%EC%8B%9C%EA%B8%80%20%EC%9E%91%EC%84%B1,%EC%88%98%EC%A0%95,%EC%82%AD%EC%A0%9C.gif?raw=true">
 
 ⭐사용자 프로필 화면⭐
 - 상단메뉴바의 프로필 이미지를 누르면 메뉴 출력
