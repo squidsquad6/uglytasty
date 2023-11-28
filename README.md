@@ -5,13 +5,12 @@
 못난이 농산물 판매로 환경, 판매자, 소비자 모두에게 순기능을 발생시키기고 구매한 채소를 활용할 수 있는 레시피를 제공하여 소비자로 하여금 그러한 순기능을 더욱 극대화할 수 있는 웹 사이트 구현  
 <br/><br/>
 <br/><br/>
-<br/><br/>
 
 ### 📚 Background Story
 규격 외 농산물들은 맛도 영양도 다를 바 없지만, 크기가 조금 작거나 크거나 개성 있다는 이유로 적절한 판로를 찾기가 어렵습니다. 이러한 규격 외 농산물의 폐기는 유통과 소비 모든 단계에서 사회적 손실을 야기합니다.
 이에 저희는 ‘못난이 농산물’이라고 불리며 폐기되는 규격 외 농산물들을 판매하고, 이러한 농산물을 활용해 직접 요리할 수 있는 레시피를 제공하는 사이트를 만들고자 했습니다.  
-
-
+<br/><br/>
+<br/><br/>
 
 ### 💡 Features
 - 소셜 로그인(카카오, 네이버, 구글)
@@ -25,20 +24,24 @@
 - 먹비티아이 : 맞춤 서비스 제공 및 재미 요소
 - 고객 센터(1:1 문의, 공지사항)
 - 관리자 페이지 (엑셀 업로드 / 다운로드)
-
-
+<br/><br/>
+<br/><br/>
 
 ### ERD
 ![erd](https://github.com/squidsquad6/uglytasty/assets/145431108/8c5eb9b1-1226-4917-8495-94df52288fbd)  
-
-
+<br/><br/>
+<br/><br/>
 
 ### 기술별 설명
 ## ⭐회원가입⭐
 #### - 아이디 중복 체크
 ajax를 활용하여 아이디 중복 체크 기능 구현
 <img src="https://github.com/squidsquad6/uglytasty/blob/main/uglytasty/src/main/webapp/resources/readmeImages/yuri/%ED%9A%8C%EC%9B%90%EA%B0%80%EC%9E%85%20%EC%95%84%EC%9D%B4%EB%94%94%20%EC%A4%91%EB%B3%B5%20%EC%B2%B4%ED%81%AC.gif?raw=true">
+<br/><br/>
 
+#### - 주소 찾기 API 활용
+<img src="https://github.com/squidsquad6/uglytasty/blob/main/uglytasty/src/main/webapp/resources/readmeImages/yuri/%ED%9A%8C%EC%9B%90%EA%B0%80%EC%9E%85%20%EC%A3%BC%EC%86%8C%20%EC%B0%BE%EA%B8%B0%20API.gif?raw=true">
+<br/><br/>
 
 ## ⭐메인페이지⭐
 #### - 어바웃어스(사이트 소개) 및 생산자 납품 문의
@@ -46,11 +49,12 @@ ajax를 활용하여 아이디 중복 체크 기능 구현
 <img src="https://github.com/squidsquad6/uglytasty/blob/readme_img/uglytasty/src/main/webapp/resources/%EB%A0%88%EC%8B%9C%ED%94%BC%20-%20%EA%B2%8C%EC%8B%9C%EA%B8%80%20%EC%9E%91%EC%84%B1,%EC%88%98%EC%A0%95,%EC%82%AD%EC%A0%9C.gif?raw=true">
 
 
->>양식<<
+*양식(리드미 작성 완료 후 지울 예정)*
 ## ⭐양식⭐
 #### - 기능
 간단 설명
 <img src="">
+<br/><br/>
 
 
 
