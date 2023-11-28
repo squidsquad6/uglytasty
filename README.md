@@ -39,7 +39,7 @@
 #### - 어바웃어스(사이트 소개) 및 생산자 납품 문의
 문의 작성 시 관리자 구글 계정 form 에서 확인
 <img src="https://github.com/squidsquad6/uglytasty/assets/134485735/92e7bae7-cede-489b-8714-e339cfbf3e5c">
-<img src="uglytasty/src/main/webapp/resources/레시피 - 게시글 작성,수정,삭제.gif">
+<img src="http://uglytasty/src/main/webapp/resources/레시피 - 게시글 작성,수정,삭제.gif">
 
 ⭐사용자 프로필 화면⭐
 - 상단메뉴바의 프로필 이미지를 누르면 메뉴 출력
