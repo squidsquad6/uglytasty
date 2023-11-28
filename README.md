@@ -84,29 +84,30 @@ ajax를 활용하여 아이디 중복 체크 기능 구현
 
 
 ## ⭐마이페이지⭐
-#### - 기능
-(간단 설명)
-<img src="">
+#### - 회원정보 조회 및 변경 : 이메일 인증 후 가능
+비활성화 되어있던 회원정보 수정 버튼을 이메일 인증 성공 후 활성화되도록 구현
+<img src="https://github.com/squidsquad6/uglytasty/blob/main/uglytasty/src/main/webapp/resources/readmeImages/yuri/%EB%A7%88%EC%9D%B4%ED%8E%98%EC%9D%B4%EC%A7%80%20-%20%ED%9A%8C%EC%9B%90%EC%A0%95%EB%B3%B4%20%EC%9D%B4%EB%A9%94%EC%9D%BC%EC%9D%B8%EC%A6%9D.gif?raw=true">
 <br/><br/>
 
-#### - 기능
-(간단 설명)
-<img src="">
+#### - 비밀번호 변경 : 암호화
+사용자가 비밀번호 확인란에 입력한 비밀번호와 DB에 암호화되어 저장된 비밀번호를 비교 후 일치할 경우에만 비밀번호 변경 가능   
+일치한다면 사용자가 새로운 비밀번호 입력란에 입력한 비밀번호를 다시 암호화 하여 DB에 저장
+<img src="https://github.com/squidsquad6/uglytasty/blob/main/uglytasty/src/main/webapp/resources/readmeImages/yuri/%EB%A7%88%EC%9D%B4%ED%8E%98%EC%9D%B4%EC%A7%80%20-%20%EB%B9%84%EB%B0%80%EB%B2%88%ED%98%B8%20%EB%B3%80%EA%B2%BD.gif?raw=true">
 <br/><br/> 
 
-#### - 기능
-(간단 설명)
-<img src="">
+#### - 주문 및 배송 조회
+주문 번호 별 주문 내역 조회 가능, 주문 번호 클릭시 해당 주문 번호의 주문자 정보, 품목, 가격 등 상세 내용 확인 가능
+<img src="https://github.com/squidsquad6/uglytasty/blob/main/uglytasty/src/main/webapp/resources/readmeImages/yuri/%EB%A7%88%EC%9D%B4%ED%8E%98%EC%9D%B4%EC%A7%80%20-%20%EC%A3%BC%EB%AC%B8%20%EB%B0%B0%EC%86%A1%20%EC%A1%B0%ED%9A%8C.gif?raw=true">
 <br/><br/> 
 
-#### - 기능
-(간단 설명)
-<img src="">
+#### - 찜한 레시피
+로그인한 사용자가 좋아요 한 레시피 목록 조회 가능, 게시글 클릭시 해당 게시글 상세 페이지로 이동
+<img src="https://github.com/squidsquad6/uglytasty/blob/main/uglytasty/src/main/webapp/resources/readmeImages/yuri/%EB%A7%88%EC%9D%B4%ED%8E%98%EC%9D%B4%EC%A7%80%20-%20%EC%B0%9C%ED%95%9C%20%EB%A0%88%EC%8B%9C%ED%94%BC.gif?raw=true">
 <br/><br/> 
 
-#### - 기능
-(간단 설명)
-<img src="">
+#### - 1:1 문의 게시판
+로그인한 사용자가 작성한 1:1 문의 게시글 조회 가
+<img src="https://github.com/squidsquad6/uglytasty/blob/main/uglytasty/src/main/webapp/resources/readmeImages/yuri/%EB%A7%88%EC%9D%B4%ED%8E%98%EC%9D%B4%EC%A7%80%20-%201%EB%8C%801%20%EB%AC%B8%EC%9D%98.gif?raw=true">
 <br/><br/> 
 
 
