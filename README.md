@@ -33,15 +33,82 @@
 <br/><br/>
 
 ### 기술별 설명
+## ⭐로그인⭐
+#### - 일반 로그인 및 소셜 로그인 서비스 제공
+<img src="https://github.com/squidsquad6/uglytasty/blob/main/uglytasty/src/main/webapp/resources/readmeImages/yuri/%EB%A1%9C%EA%B7%B8%EC%9D%B8%20%ED%8E%98%EC%9D%B4%EC%A7%80%20%EC%BA%A1%EC%B3%90%20-%20%EC%86%8C%EC%85%9C%EB%A1%9C%EA%B7%B8%EC%9D%B8%20%EC%84%9C%EB%B9%84%EC%8A%A4%20%EC%A0%9C%EA%B3%B5.png?raw=true">
+<br/><br/> 
+<br/><br/>
+
+
 ## ⭐회원가입⭐
 #### - 아이디 중복 체크
 ajax를 활용하여 아이디 중복 체크 기능 구현
 <img src="https://github.com/squidsquad6/uglytasty/blob/main/uglytasty/src/main/webapp/resources/readmeImages/yuri/%ED%9A%8C%EC%9B%90%EA%B0%80%EC%9E%85%20%EC%95%84%EC%9D%B4%EB%94%94%20%EC%A4%91%EB%B3%B5%20%EC%B2%B4%ED%81%AC.gif?raw=true">
 <br/><br/>
 
+#### - 이메일 인증
+비활성화 상태인 회원가입 버튼이 이메일 인증이 완료되면 활성화
+<img src="https://github.com/squidsquad6/uglytasty/blob/main/uglytasty/src/main/webapp/resources/readmeImages/yuri/%ED%9A%8C%EC%9B%90%EA%B0%80%EC%9E%85%20-%20%EC%9D%B4%EB%A9%94%EC%9D%BC%20%EC%9D%B8%EC%A6%9D.gif?raw=true">
+<br/><br/>
+
 #### - 주소 찾기 API 활용
 <img src="https://github.com/squidsquad6/uglytasty/blob/main/uglytasty/src/main/webapp/resources/readmeImages/yuri/%ED%9A%8C%EC%9B%90%EA%B0%80%EC%9E%85%20%EC%A3%BC%EC%86%8C%20%EC%B0%BE%EA%B8%B0%20API.gif?raw=true">
 <br/><br/>
+<br/><br/>
+
+
+## ⭐맛난이 레시피 게시판⭐
+#### - 게시글 리스트 조회 : 최신순/조회순 정렬
+<img src="https://github.com/squidsquad6/uglytasty/blob/main/uglytasty/src/main/webapp/resources/readmeImages/yuri/%EB%A0%88%EC%8B%9C%ED%94%BC%20-%20%EA%B2%8C%EC%8B%9C%EA%B8%80%20%EC%A1%B0%ED%9A%8C%20(%EC%B5%9C%EC%8B%A0%EC%88%9C,%20%EC%A1%B0%ED%9A%8C%EC%88%9C).gif?raw=true">
+<br/><br/>
+
+#### - 게시글 키워드 검색
+게시글 제목 또는 해당 게시글 음식의 재료 목록에 사용자가 입력한 키워드가 포함되어 있는 게시글 목록 조회 가능
+<img src="https://github.com/squidsquad6/uglytasty/blob/main/uglytasty/src/main/webapp/resources/readmeImages/yuri/%EB%A0%88%EC%8B%9C%ED%94%BC%20-%20%ED%82%A4%EC%9B%8C%EB%93%9C%20%EA%B2%80%EC%83%89.gif?raw=true">
+<br/><br/>
+
+#### - 게시글 작성/수정/삭제
+화면단과 서버단에서 재료와 수량을 각각 쉼표 구분자로 이은 문자열로 넘기고 받도록 구현
+<img src="https://github.com/squidsquad6/uglytasty/blob/main/uglytasty/src/main/webapp/resources/readmeImages/yuri/%EB%A0%88%EC%8B%9C%ED%94%BC%20-%20%EA%B2%8C%EC%8B%9C%EA%B8%80%20%EC%9E%91%EC%84%B1,%EC%88%98%EC%A0%95,%EC%82%AD%EC%A0%9C.gif?raw=true">
+<br/><br/> 
+
+#### - 게시글 댓글 작성 및 삭제
+댓글 작성 기능을 ajax로 구현
+<img src="https://github.com/squidsquad6/uglytasty/blob/main/uglytasty/src/main/webapp/resources/readmeImages/yuri/%EB%A0%88%EC%8B%9C%ED%94%BC%20-%20%EB%8C%93%EA%B8%80%20%EC%9E%91%EC%84%B1,%20%EC%82%AD%EC%A0%9C.gif?raw=true">
+<br/><br/> 
+
+#### - 게시글 좋아요 기능
+<img src="https://github.com/squidsquad6/uglytasty/blob/main/uglytasty/src/main/webapp/resources/readmeImages/yuri/%EB%A0%88%EC%8B%9C%ED%94%BC%20-%20%EC%A2%8B%EC%95%84%EC%9A%94.gif?raw=true">
+<br/><br/>
+<br/><br/>
+
+
+## ⭐마이페이지⭐
+#### - 기능
+(간단 설명)
+<img src="">
+<br/><br/>
+
+#### - 기능
+(간단 설명)
+<img src="">
+<br/><br/> 
+
+#### - 기능
+(간단 설명)
+<img src="">
+<br/><br/> 
+
+#### - 기능
+(간단 설명)
+<img src="">
+<br/><br/> 
+
+#### - 기능
+(간단 설명)
+<img src="">
+<br/><br/> 
+
 
 ## ⭐메인페이지⭐
 #### - 어바웃어스(사이트 소개) 및 생산자 납품 문의
@@ -49,12 +116,16 @@ ajax를 활용하여 아이디 중복 체크 기능 구현
 <img src="https://github.com/squidsquad6/uglytasty/blob/readme_img/uglytasty/src/main/webapp/resources/%EB%A0%88%EC%8B%9C%ED%94%BC%20-%20%EA%B2%8C%EC%8B%9C%EA%B8%80%20%EC%9E%91%EC%84%B1,%EC%88%98%EC%A0%95,%EC%82%AD%EC%A0%9C.gif?raw=true">
 
 
+
+
 *양식(리드미 작성 완료 후 지울 예정)*
 ## ⭐양식⭐
 #### - 기능
-간단 설명
+(간단 설명)
 <img src="">
+<br/><br/> 
 <br/><br/>
+(별표시 메뉴 사이에는 br 두 줄, - 메뉴 사이에는 br 한 줄)
 
 
 
