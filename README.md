@@ -33,6 +33,13 @@
 <br/><br/>
 
 ### 기술별 설명
+## ⭐메인 페이지⭐
+#### - 어바웃어스(못난이맛난이 사이트 소개) 및 생산자 납품 문의
+<img src="https://github.com/squidsquad6/uglytasty/blob/main/uglytasty/src/main/webapp/resources/readmeImages/sujin/%EB%A9%94%EC%9D%B8%ED%8E%98%EC%9D%B4%EC%A7%80(%EC%83%9D%EC%82%B0%EC%9E%90%EB%82%A9%ED%92%88%EB%AC%B8%EC%9D%98).gif?raw=true">
+<br/><br/> 
+<br/><br/>
+
+
 ## ⭐로그인⭐
 #### - 일반 로그인 및 소셜 로그인 서비스 제공
 <img src="https://github.com/squidsquad6/uglytasty/blob/main/uglytasty/src/main/webapp/resources/readmeImages/yuri/%EB%A1%9C%EA%B7%B8%EC%9D%B8%20%ED%8E%98%EC%9D%B4%EC%A7%80%20%EC%BA%A1%EC%B3%90%20-%20%EC%86%8C%EC%85%9C%EB%A1%9C%EA%B7%B8%EC%9D%B8%20%EC%84%9C%EB%B9%84%EC%8A%A4%20%EC%A0%9C%EA%B3%B5.png?raw=true">
@@ -53,6 +60,47 @@ ajax를 활용하여 아이디 중복 체크 기능 구현
 
 #### - 주소 찾기 API 활용
 <img src="https://github.com/squidsquad6/uglytasty/blob/main/uglytasty/src/main/webapp/resources/readmeImages/yuri/%ED%9A%8C%EC%9B%90%EA%B0%80%EC%9E%85%20%EC%A3%BC%EC%86%8C%20%EC%B0%BE%EA%B8%B0%20API.gif?raw=true">
+<br/><br/>
+<br/><br/>
+
+
+## ⭐못난이 단품 게시판⭐
+#### - 상품 전체 리스트 조회 : 상품 키워드 검색 & 최신순/인기순/가격낮은순 조회
+<img src="https://github.com/squidsquad6/uglytasty/blob/main/uglytasty/src/main/webapp/resources/readmeImages/sujin/%EB%8B%A8%ED%92%88_%EC%A0%84%EC%B2%B4%EB%A6%AC%EC%8A%A4%ED%8A%B8.gif?raw=true">
+<br/><br/>
+
+#### - 상품 등록
+<img src="https://github.com/squidsquad6/uglytasty/blob/main/uglytasty/src/main/webapp/resources/readmeImages/sujin/%EB%8B%A8%ED%92%88_%EC%83%81%ED%92%88-%EB%93%B1%EB%A1%9D.gif?raw=true">
+<br/><br/>
+
+#### - 상품 상세 페이지 (생산지 : 지도 API)
+#### - 상품 후기 댓글 & 레시피
+<img src="https://github.com/squidsquad6/uglytasty/blob/main/uglytasty/src/main/webapp/resources/readmeImages/sujin/%EB%8B%A8%ED%92%88_%EC%83%81%EC%84%B8%ED%8E%98%EC%9D%B4%EC%A7%80_%EB%8C%93%EA%B8%80_%EB%A0%88%EC%8B%9C%ED%94%BC_.gif?raw=true">
+<br/><br/>
+
+#### - 상품 수정
+<img src="https://github.com/squidsquad6/uglytasty/blob/main/uglytasty/src/main/webapp/resources/readmeImages/sujin/%EB%8B%A8%ED%92%88_%EC%83%81%EC%84%B8%ED%8E%98%EC%9D%B4%EC%A7%80_%EC%88%98%EC%A0%95_.gif?raw=true">
+<br/><br/>
+
+#### - 상품 일시품절 / 재입고
+<img src="https://github.com/squidsquad6/uglytasty/blob/main/uglytasty/src/main/webapp/resources/readmeImages/sujin/%EB%8B%A8%ED%92%88_%EC%83%81%EC%84%B8%ED%8E%98%EC%9D%B4%EC%A7%80_%EC%9D%BC%EC%8B%9C%ED%92%88%EC%A0%88_%EC%9E%AC%EC%9E%85%EA%B3%A0_.gif?raw=true">
+<br/><br/>
+<br/><br/>
+
+
+## ⭐장바구니⭐
+#### - 전체 선택 / 선택 상품 삭제
+#### - 수량(max값 : 재고량) 변경
+#### - 선택 상품 주문하기
+<img src="https://github.com/squidsquad6/uglytasty/blob/main/uglytasty/src/main/webapp/resources/readmeImages/sujin/%EC%9E%A5%EB%B0%94%EA%B5%AC%EB%8B%88.gif?raw=true">
+<br/><br/>
+<br/><br/>
+
+
+## ⭐주문하기 + 결제하기⭐
+#### - 배송정보 (주소 API)
+#### - 결제하기 (toss API)
+<img src="https://github.com/squidsquad6/uglytasty/blob/main/uglytasty/src/main/webapp/resources/readmeImages/sujin/%EC%A3%BC%EB%AC%B8%ED%95%98%EA%B8%B0_%EA%B2%B0%EC%A0%9C%ED%95%98%EA%B8%B0.gif?raw=true">
 <br/><br/>
 <br/><br/>
 
@@ -79,6 +127,13 @@ ajax를 활용하여 아이디 중복 체크 기능 구현
 
 #### - 게시글 좋아요 기능
 <img src="https://github.com/squidsquad6/uglytasty/blob/main/uglytasty/src/main/webapp/resources/readmeImages/yuri/%EB%A0%88%EC%8B%9C%ED%94%BC%20-%20%EC%A2%8B%EC%95%84%EC%9A%94.gif?raw=true">
+<br/><br/>
+<br/><br/>
+
+
+## ⭐먹비티아이⭐
+#### - 재미 요소를 통해 못난이맛난이 회원이 되도록 유도하는 테스트
+<img src="https://github.com/squidsquad6/uglytasty/blob/main/uglytasty/src/main/webapp/resources/readmeImages/sujin/%EB%A8%B9%EB%B9%84%ED%8B%B0%EC%95%84%EC%9D%B4.gif?raw=true">
 <br/><br/>
 <br/><br/>
 
@@ -110,11 +165,6 @@ ajax를 활용하여 아이디 중복 체크 기능 구현
 <img src="https://github.com/squidsquad6/uglytasty/blob/main/uglytasty/src/main/webapp/resources/readmeImages/yuri/%EB%A7%88%EC%9D%B4%ED%8E%98%EC%9D%B4%EC%A7%80%20-%201%EB%8C%801%20%EB%AC%B8%EC%9D%98.gif?raw=true">
 <br/><br/> 
 
-
-## ⭐메인페이지⭐
-#### - 어바웃어스(사이트 소개) 및 생산자 납품 문의
-문의 작성 시 관리자 구글 계정 form 에서 확인
-<img src="https://github.com/squidsquad6/uglytasty/blob/readme_img/uglytasty/src/main/webapp/resources/%EB%A0%88%EC%8B%9C%ED%94%BC%20-%20%EA%B2%8C%EC%8B%9C%EA%B8%80%20%EC%9E%91%EC%84%B1,%EC%88%98%EC%A0%95,%EC%82%AD%EC%A0%9C.gif?raw=true">
 
 
 
