@@ -35,6 +35,7 @@
 ### 기술별 설명
 ## ⭐메인 페이지⭐
 #### - 어바웃어스(못난이맛난이 사이트 소개) 및 생산자 납품 문의
+구글 설문지form을 통해 문의 정보 확인 가능
 <img src="https://github.com/squidsquad6/uglytasty/blob/main/uglytasty/src/main/webapp/resources/readmeImages/sujin/%EB%A9%94%EC%9D%B8%ED%8E%98%EC%9D%B4%EC%A7%80(%EC%83%9D%EC%82%B0%EC%9E%90%EB%82%A9%ED%92%88%EB%AC%B8%EC%9D%98).gif?raw=true">
 <br/><br/> 
 <br/><br/>
@@ -73,12 +74,15 @@ ajax를 활용하여 아이디 중복 체크 기능 구현
 <img src="https://github.com/squidsquad6/uglytasty/blob/main/uglytasty/src/main/webapp/resources/readmeImages/sujin/%EB%8B%A8%ED%92%88_%EC%83%81%ED%92%88-%EB%93%B1%EB%A1%9D.gif?raw=true">
 <br/><br/>
 
-#### - 상품 상세 페이지 (생산지 : 지도 API)
-#### - 상품 후기 댓글 & 레시피
+#### - 상품 상세 페이지 (생산지 : 지도 API) & 상품 댓글(후기) & 레시피
+상품 수량 : + / - 클릭할 때마다 구매 가격 동적으로 변동 <br/>
+댓글(후기) : ajax 이용하여 작성 또는 삭제 <br/>
+관련 레시피 : 상품 제목에서 키워드 추출하여 레시피의 재료와 일치하는 레시피들 모두 조회 <br/>
 <img src="https://github.com/squidsquad6/uglytasty/blob/main/uglytasty/src/main/webapp/resources/readmeImages/sujin/%EB%8B%A8%ED%92%88_%EC%83%81%EC%84%B8%ED%8E%98%EC%9D%B4%EC%A7%80_%EB%8C%93%EA%B8%80_%EB%A0%88%EC%8B%9C%ED%94%BC_.gif?raw=true">
 <br/><br/>
 
 #### - 상품 수정
+조건문을 통해 상품 정보만 수정할 경우 / 첨부파일만 수정할 경우 / 기존 첨부파일은 update, 새로운 첨부파일은 insert 등 모든 경우의 수 처리
 <img src="https://github.com/squidsquad6/uglytasty/blob/main/uglytasty/src/main/webapp/resources/readmeImages/sujin/%EB%8B%A8%ED%92%88_%EC%83%81%EC%84%B8%ED%8E%98%EC%9D%B4%EC%A7%80_%EC%88%98%EC%A0%95_.gif?raw=true">
 <br/><br/>
 
@@ -91,6 +95,7 @@ ajax를 활용하여 아이디 중복 체크 기능 구현
 ## ⭐장바구니⭐
 #### - 전체 선택 / 선택 상품 삭제
 #### - 수량(max값 : 재고량) 변경
+장바구니 상품 수량 : + / - 클릭할 때마다 해당 상품별 구매 가격 동적으로 변동 & 총 결제 금액에도 자동 반영 <br/>
 #### - 선택 상품 주문하기
 <img src="https://github.com/squidsquad6/uglytasty/blob/main/uglytasty/src/main/webapp/resources/readmeImages/sujin/%EC%9E%A5%EB%B0%94%EA%B5%AC%EB%8B%88.gif?raw=true">
 <br/><br/>
@@ -100,6 +105,11 @@ ajax를 활용하여 아이디 중복 체크 기능 구현
 ## ⭐주문하기 + 결제하기⭐
 #### - 배송정보 (주소 API)
 #### - 결제하기 (toss API)
+결제 후 처리<br/>
+- 주문번호 생성<br/>
+- 상품 전체 재고량 - 주문한 상품 수량 차감 <br/>
+- 장바구니 리스트에서 주문한 상품만 삭제 <br/>
+- 주문 코드 번호 업데이트 (1:미결제 → 2:결제완료) <br/>
 <img src="https://github.com/squidsquad6/uglytasty/blob/main/uglytasty/src/main/webapp/resources/readmeImages/sujin/%EC%A3%BC%EB%AC%B8%ED%95%98%EA%B8%B0_%EA%B2%B0%EC%A0%9C%ED%95%98%EA%B8%B0.gif?raw=true">
 <br/><br/>
 <br/><br/>
