@@ -36,7 +36,7 @@ END;
 ---------------------------회원 MEMBER-----------------------------
 CREATE TABLE MEMBER(
     USER_ID VARCHAR2(50) PRIMARY KEY,
-    USER_PWD VARCHAR2(50) NOT NULL,
+    USER_PWD VARCHAR2(200) NOT NULL,
     USER_NAME VARCHAR2(50) NOT NULL,
     PHONE VARCHAR2(20) NOT NULL,
     EMAIL VARCHAR2(50) NOT NULL,
@@ -79,14 +79,14 @@ INSERT
 VALUES
       (
        'admin'
-     , '1234'
+     , '$2a$10$Y/sqU6veRhDmcwPDFAjbEeyxuSdOEvtPc0xzHR4QVbuF8Orb.TZ7q'
      , '관리자'
      , '010-1111-1111'
      , 'admin@naver.com'
      , '서울시 강남구'
      , '논현동 13-7'
      , 'Y'
-     , 'N'
+     , 'Y'
      );
      
 INSERT
@@ -105,7 +105,7 @@ INSERT
 VALUES
       (
        'user01'
-     , 'pass01'
+     , '$2a$10$YMwGi8MNp74obor9sU5iBuJ4wo3NDN3dFpuz3ykeXeohNfIRX9S8G'
      , '나구독'
      , '010-1111-2222'
      , 'user01@naver.com'
@@ -131,14 +131,14 @@ INSERT
 VALUES
       (
        'user02'
-     , 'pass02'
+     , '$2a$10$JwzWlDFDAHktI0l3BgIxFuAs9gAV2fJMxVqAua6gvkiu3e9fSPcYi'
      , '나일반'
      , '010-1111-3333'
      , 'user02@naver.com'
      , '서울시 동작구'
      , '흑석동 15-9번지'
      , default
-     , default
+     , 'Y'
      );
      
 INSERT
@@ -157,14 +157,14 @@ INSERT
 VALUES
       (
        'user03'
-     , 'pass03'
+     , '$2a$10$OdZTblRWO4JufCqz3zTlCO1niRjFIpFIN3rkrew3wvGWEh6mqWECG'
      , '이둥이'
      , '010-3333-3333'
      , 'user03@naver.com'
      , '서울시 동작구'
      , '노량진동 23-1번지'
      , default
-     , default
+     , 'Y'
      );
      
 INSERT
@@ -183,7 +183,7 @@ INSERT
 VALUES
       (
        'user04'
-     , 'pass04'
+     , '$2a$10$hJ.xkNH/xoYiBb90fzlVleR58HyhAk07UJu7DYFuwY.JW6o4Moowe'
      , '차은우'
      , '010-4444-4444'
      , 'user04@naver.com'
@@ -192,32 +192,38 @@ VALUES
      , default
      , 'Y'
      );
-  
+ 
+
+ 
    
 ----------------------------레시피 RECIPE----------------------------
 
 CREATE TABLE RECIPE(
     RECIPE_NO NUMBER PRIMARY KEY,
-    RECIPE_WRITER VARCHAR2(50) DEFAULT '관리자' NOT NULL,
+    RECIPE_WRITER VARCHAR2(50) DEFAULT 'admin' NOT NULL,
     RECIPE_TITLE VARCHAR2(100) NOT NULL,
-    RECIPE_IMG VARCHAR2(500) NOT NULL,
+    RECIPE_ORIGIN_NAME VARCHAR2(200),
+    RECIPE_CHANGE_NAME VARCHAR2(200),
     RECIPE_EXP VARCHAR2(2000) NOT NULL,
     RECIPE_CONTENT VARCHAR2(4000) NOT NULL,
     COUNT NUMBER DEFAULT 0 NOT NULL,
     DIFFICULTY VARCHAR2(50) NOT NULL,
     TIME VARCHAR2(50) NOT NULL,
+    RECIPE_DATE  DATE DEFAULT SYSDATE NOT NULL,
     STATUS VARCHAR2(5) DEFAULT 'Y' NOT NULL
 );
 
 COMMENT ON COLUMN RECIPE.RECIPE_NO IS '글 번호';
 COMMENT ON COLUMN RECIPE.RECIPE_WRITER IS '작성자';
 COMMENT ON COLUMN RECIPE.RECIPE_TITLE IS '레시피 제목';
-COMMENT ON COLUMN RECIPE.RECIPE_IMG IS '레시피 이미지';
+COMMENT ON COLUMN RECIPE.RECIPE_ORIGIN_NAME IS '레시피 이미지 원래 이름';
+COMMENT ON COLUMN RECIPE.RECIPE_CHANGE_NAME IS '레시피 이미지 변경 이름';
 COMMENT ON COLUMN RECIPE.RECIPE_EXP IS '간단 설명';
 COMMENT ON COLUMN RECIPE.RECIPE_CONTENT IS '레시피 내용';
 COMMENT ON COLUMN RECIPE.COUNT IS '조회수';
 COMMENT ON COLUMN RECIPE.DIFFICULTY IS '난이도';
 COMMENT ON COLUMN RECIPE.TIME IS '소요 시간';
+COMMENT ON COLUMN RECIPE.RECIPE_DATE IS '레시피 작성일';
 COMMENT ON COLUMN RECIPE.STATUS IS '상태';
 
 CREATE SEQUENCE SEQ_RECIPE_NO
@@ -233,12 +239,14 @@ INSERT
          RECIPE_NO
        , RECIPE_WRITER
        , RECIPE_TITLE
-       , RECIPE_IMG
+       , RECIPE_ORIGIN_NAME
+       , RECIPE_CHANGE_NAME
        , RECIPE_EXP
        , RECIPE_CONTENT
        , COUNT
        , DIFFICULTY
        , TIME
+       , RECIPE_DATE	
        , STATUS
       )
 VALUES
@@ -247,11 +255,13 @@ VALUES
        , DEFAULT
        , '아직도 안 먹어봤나요? <br>토마토 달걀 볶음'
        , 'https://all-to-delicious.s3.ap-northeast-2.amazonaws.com/atd/a2dcorp.co.kr/earth/recipe/image/20220123/bd89a01dbda445c29e5b6ab56eb061cb.jpg'
+       , ''
        , '한 번도 안 먹어본 사람은 있어도, 한 번만 먹어본 사람은 없다는! 토마토 달걀 볶음'
        , '1. 대파는 파기름을 내기 좋게 쫑쫑 썰어줍니다.<br>2. 토마토는 꼭지를 제거하고 먹기좋은 크기로 잘라주세요.<br>3. 볼에 달걀을 넣고 소금간을 한 다음 곱게 풀어줍니다.<br>4. 기름 두른 팬을 달궈준 다음 달걀물을 붓고 휘저어줍니다. 적당히 익은 스크램블에그는 접시에 덜어주세요.<br>5. 팬에 기름을 다시 두르고 대파를 볶아 파기름을 내줍니다.<br>6. 파향이 솔솔 올라오면 토마토를 넣고 같이 볶으면서 간장과 연두를 넣고 눌리듯 볶아줍니다. 센불에서 짧게 볶아주면 좋습니다.<br>7. 만들어둔 스크램블을 같이 넣고 볶다가 참기름, 후추로 마무리하면 완성!'
        , DEFAULT
        , '누구나'
        , '5분 이내'
+       , DEFAULT 	
        , DEFAULT
      );
      
@@ -261,12 +271,14 @@ INSERT
          RECIPE_NO
        , RECIPE_WRITER
        , RECIPE_TITLE
-       , RECIPE_IMG
+       , RECIPE_ORIGIN_NAME
+       , RECIPE_CHANGE_NAME
        , RECIPE_EXP
        , RECIPE_CONTENT
        , COUNT
        , DIFFICULTY
        , TIME
+       , RECIPE_DATE	
        , STATUS
       )
 VALUES
@@ -275,11 +287,13 @@ VALUES
        , DEFAULT
        , '남녀노소 좋아하는, 표고버섯 불고기'
        , 'https://all-to-delicious.s3.ap-northeast-2.amazonaws.com/atd/a2dcorp.co.kr/earth/recipe/image/20220123/788e8a55646b440ba75956f503fa1e49.jpg'
+       , ''
        , '건강에 좋은 표고버섯을 듬뿍 넣어 든든한 표고버섯불고기로 든든하게 즐겨보세요!'
        , '1. 불고기용 소고기는 키친타월로 핏물을 닦아 준비해줍니다.<br>2. 간장 4스푼, 다진마늘 1스푼, 맛술 1스푼, 후추와 참기름을 조금씩 넣고 설탕 4스푼을 넣어 양념을 만들어주세요.<br>3. 고기를 양념에 잘 버무려 잠시 냉장고에서 숙성시켜줍니다.<br>4. 표고버섯은 깨끗히 씻어 먹기 좋은 크기로 썰어주시고, 기호에 따라 대파, 양파. 홍고추 등 먹기 좋은 크기로 썰어 준비해줍니다.<br>5. 달궈진 프라이팬에 고기를 넣고 볶아줍니다. <br>6. 고기가 어느정도 익으면 준비해둔 표고버섯과 홍고추를 제외한 채소들을 넣고 함께 볶아줍니다.<br>7. 마지막으로 홍고추를 넣고, 대파를 채썰어 가득 얹어 마무리해주면, 표고버섯불고기 완성!'
        , DEFAULT
        , '초급'
        , '60분 이내'
+       , DEFAULT 
        , DEFAULT
      );
      
@@ -289,12 +303,14 @@ INSERT
          RECIPE_NO
        , RECIPE_WRITER
        , RECIPE_TITLE
-       , RECIPE_IMG
+       , RECIPE_ORIGIN_NAME
+       , RECIPE_CHANGE_NAME
        , RECIPE_EXP
        , RECIPE_CONTENT
        , COUNT
        , DIFFICULTY
        , TIME
+       , RECIPE_DATE	
        , STATUS
       )
 VALUES
@@ -303,11 +319,13 @@ VALUES
        , DEFAULT
        , '한입에 쏙 들어가는 브로콜리 계란말이'
        , 'https://all-to-delicious.s3.ap-northeast-2.amazonaws.com/atd/a2dcorp.co.kr/earth/recipe/image/20220123/299b531c42924ea492978540a2f4c8ab.jpg'
+       , ''
        , '예쁜 색감으로 아기자기한 비주얼! 한입 크기로 부드럽게 먹기에도 간편한 브로콜리 계란말이입니다.'
        , '1. 끓는 물에 소금을 넣고 브로콜리를 살짝 데쳐주세요. 색이 진해지면 꺼내 찬물에 헹궈 물기를 제거해주고 잘게 다져줍니다.<br>2. 달걀은 흰자, 노른자를 분리해 준비합니다.<br>3. 흰자에 생크림, 전분, 다진 브로콜리를 넣어 잘 섞어주세요.<br>4. 팬에 식용유를 두르고 흰달걀물을 얇게 펴 부쳐줍니다. 약불에 은근히 익혀준 뒤 돌돌 말아가며 모양을 잡아주세요.<br>5. 흰자를 다 부쳐준 뒤 겉면의 노른자 달걀물을 지단처럼 부쳐 감싸듯 익혀주세요.<br>6. 다 익으면 김발로 눌러 모양을 잡아주고, 한 김 식으면 알맞은 크기로 썰어 완성합니다.'
        , DEFAULT
        , '중급'
        , '15분 이내'
+       , DEFAULT 
        , DEFAULT
      );
      
@@ -317,12 +335,14 @@ INSERT
          RECIPE_NO
        , RECIPE_WRITER
        , RECIPE_TITLE
-       , RECIPE_IMG
+       , RECIPE_ORIGIN_NAME
+       , RECIPE_CHANGE_NAME
        , RECIPE_EXP
        , RECIPE_CONTENT
        , COUNT
        , DIFFICULTY
        , TIME
+       , RECIPE_DATE	
        , STATUS
       )
 VALUES
@@ -331,11 +351,13 @@ VALUES
        , DEFAULT
        , '부드러우면서 꾸덕한 단호박 바스크 치즈케이크'
        , 'https://all-to-delicious.s3.ap-northeast-2.amazonaws.com/atd/a2dcorp.co.kr/earth/recipe/image/20220329/9f6a416cb2c147bb92e7366e840af11f.jpg'
+       , ''
        , '노릇노릇 구워지는 모습만 봐도 행복! 재료들만 잘 섞어 오븐에 굽기만하면 완성되는 심플한 부드러움, 단호박 바스크 치즈케이크 입니다'
        , '1. 실온에 둔 크림치즈를 볼에 담고 주걱으로 잘 풀어줍니다.<br>2. 풀어둔 크림치즈에 설탕과 넣고 섞어줍니다.<br>3. 단호박은 쪄낸 뒤 부드럽게 으깨 준비해주고 크림치즈 혼합물어 생크림과 단호박을 넣어준 뒤 잘 섞어주세요.<br>4. 크림치즈 혼합물에 계란과 바닐라 익스트랙을 넣고 고르게 섞어줍니다.<br>5. 마지막으로 박력분과 시나몬파우더를 체쳐 넣어준 뒤 주걱으로 섞어주세요.<br>6. 유산지를 깐 원형 틀에 반죽을 팬닝하고 230도로 예열된 오븐에서 25~30분 간 구워주면 완성!'
        , DEFAULT
        , '고급'
        , '60분 이내'
+       , DEFAULT 
        , DEFAULT
      );
      
@@ -345,12 +367,14 @@ INSERT
          RECIPE_NO
        , RECIPE_WRITER
        , RECIPE_TITLE
-       , RECIPE_IMG
+       , RECIPE_ORIGIN_NAME
+       , RECIPE_CHANGE_NAME
        , RECIPE_EXP
        , RECIPE_CONTENT
        , COUNT
        , DIFFICULTY
        , TIME
+       , RECIPE_DATE	
        , STATUS
       )
 VALUES
@@ -359,13 +383,16 @@ VALUES
        , DEFAULT
        , '통마늘이 쏙! 너 마늘 찾고 있어~? <br>마늘떡볶이'
        , 'https://all-to-delicious.s3.ap-northeast-2.amazonaws.com/atd/a2dcorp.co.kr/earth/recipe/image/20220123/f1fc331052f04654a5886a8d780204ad.jpg'
+       , ''
        , '튀기듯 구워내 풍미를 끌어올린 통마늘에 바삭한 마늘 후레이크까지 더하니 금상첨화! 입안 가득 마늘 향을 선사하는 마성의 떡볶이, 마늘떡볶이'
        , '1. 마늘 10톨은 기름을 두른 팬에 튀기듯 볶아주세요.<br>2. 마늘 5톨은 굵직하게 다져서 노릇노릇 빛깔이 돌도록 튀겨 마늘후레이크를 만듭니다.<br>3. 양파, 당근, 어묵은 먹기좋은 크기로 썰어줍니다.<br>4. 고추장, 고운고춧가루, 설탕, 물엿, 간장을 배합하여 양념장을 만들어주세요.<br>5. 오목한 팬이나 널찍한 냄비에 떡, 채소, 양념장, 육수(닭or멸치 등)를 부어 끓여줍니다.<br>6. 국물이 자작하게 졸아들면 볶은 마늘을 넣고 버무려주세요.<br>7. 떡볶이를 그릇에 옮겨담고 마늘후레이크를 솔솔 뿌려주면 완성!'
        , DEFAULT
        , '중급'
        , '30분 이내'
+       , DEFAULT 
        , DEFAULT
      );
+     
      
 
 ----------------------------재료 INGREDIENTS----------------------------
@@ -620,13 +647,13 @@ CREATE TABLE LIKED(
     RECIPE_NO NUMBER NOT NULL,
     USER_ID VARCHAR2(50) NOT NULL,
     
-    FOREIGN KEY (RECIPE_NO) REFERENCES RECIPE (RECIPE_NO),
-    FOREIGN KEY (USER_ID) REFERENCES MEMBER (USER_ID)
+    PRIMARY KEY(RECIPE_NO,USER_ID)
 );
 
 
 COMMENT ON COLUMN LIKED.RECIPE_NO IS '참조 레시피글 번호';
 COMMENT ON COLUMN LIKED.USER_ID IS '회원 아이디';
+
 
 ----------------     PRODUCT 관련     -----------------
 
@@ -678,11 +705,11 @@ VALUES
        SEQ_PRODUCT_NO.NEXTVAL
      , '못생겼지만 맛좋은 고구마'
      , 25000
-     , 50
+     , 30
      , '못생긴게 더 맛있다?? 겨울대비용 고구마'
-     , '전북 고창'
+     , '전북 고창군 고창읍 고인돌공원길 75'
      , '2023-09-18'
-     , 8
+     , 50
      , 'Y'
      , DEFAULT
      , DEFAULT
@@ -708,11 +735,11 @@ VALUES
        SEQ_PRODUCT_NO.NEXTVAL
      , '크기는 작지만 야무진 양파'
      , 18000
-     , 30
+     , 10
      , '요리할 때 무조건 필요한 재료는 바로 양파!'
-     , '전남 광주'
+     , '전남 순천시 가곡길 9'
      , '2023-09-10'
-     , 12
+     , 30
      , DEFAULT
      , DEFAULT
      , DEFAULT
@@ -736,11 +763,11 @@ INSERT
 VALUES
       (
        SEQ_PRODUCT_NO.NEXTVAL
-     , '당근 1.5kg'
+     , '요리에 생기를 불어 넣는 당근'
      , 15000
      , 10
      , '유기농인가요? 당근!!'
-     , '전북 정읍'
+     , '강원특별자치도 강릉시 가작로 21'
      , '2023-09-28'
      , 15
      , 'Y'
@@ -768,11 +795,11 @@ VALUES
        SEQ_PRODUCT_NO.NEXTVAL
      , '울퉁불퉁 토마토'
      , 22000
-     , 20
+     , 15
      , '울퉁불퉁 멋진몸매~가 되고 싶다면 토마토를 사세요!'
-     , '경기도 평택'
+     , '경기 평택시 진위면 갈곶길 64'
      , '2023-10-10'
-     , 22
+     , 20
      , DEFAULT
      , DEFAULT
      , DEFAULT
@@ -798,16 +825,66 @@ VALUES
        SEQ_PRODUCT_NO.NEXTVAL
      , '피망 친구 파프리카'
      , 12000
-     , 15
+     , 10
      , '혈당 낮추는데에 아주 좋은 파프리카'
-     , '경기도 파주'
+     , '경기 파주시 월롱면 다락고개길 8'
      , '2023-10-05'
-     , 6
+     , 10
      , 'Y'
      , DEFAULT
      , DEFAULT
      );
 
+-----------------------------------주문 ORDERS--------------------------------       
+CREATE TABLE ORDERS (
+   ORDER_NO NUMBER PRIMARY KEY,
+   USER_ID VARCHAR2(50) NOT NULL,
+   PRODUCT_NO NUMBER DEFAULT 0 NOT NULL,
+   ORDER_DATE DATE DEFAULT SYSDATE NOT NULL,
+   ORDER_CODE NUMBER DEFAULT 1 NOT NULL,
+   TRACKING_NO VARCHAR2(2000),
+   ADDRESS_MAIN VARCHAR2(2000) NOT NULL,
+   ADDRESS_DETAIL VARCHAR2(2000) NOT NULL,
+   RECEIVER VARCHAR2(50) NOT NULL,
+   RECEIVER_PHONE VARCHAR2(20) NOT NULL,
+   DELIVERY_MEMO VARCHAR2(2000),
+   DELIVERY_FEE NUMBER DEFAULT 2500 NOT NULL,
+   TOTAL_PRICE NUMBER DEFAULT 0 NOT NULL,
+ 
+   FOREIGN KEY (USER_ID) REFERENCES MEMBER(USER_ID)
+
+);
+
+CREATE SEQUENCE SEQ_ORDERS_NO NOCACHE;
+
+COMMENT ON COLUMN ORDERS.ORDER_NO IS '주문번호';
+COMMENT ON COLUMN ORDERS.USER_ID IS '회원아이디';
+COMMENT ON COLUMN ORDERS.PRODUCT_NO IS '상품번호';
+COMMENT ON COLUMN ORDERS.ORDER_DATE IS '주문일자';
+COMMENT ON COLUMN ORDERS.ORDER_CODE IS '1:미결제 / 2:결제완료(주문번호) / 3:배송준비중(송장번호) / 4:배송중 / 5:배송완료';
+COMMENT ON COLUMN ORDERS.TRACKING_NO IS '송장번호';
+COMMENT ON COLUMN ORDERS.ADDRESS_MAIN IS '배송지(주소)';
+COMMENT ON COLUMN ORDERS.ADDRESS_DETAIL IS '배송지(상세)';
+COMMENT ON COLUMN ORDERS.RECEIVER IS '받는사람';
+COMMENT ON COLUMN ORDERS.RECEIVER_PHONE IS '받는사람 연락처';
+COMMENT ON COLUMN ORDERS.DELIVERY_MEMO IS '배송 요청사항';
+COMMENT ON COLUMN ORDERS.DELIVERY_FEE IS '배송비';
+COMMENT ON COLUMN ORDERS.TOTAL_PRICE IS '총 주문 금액';
+
+
+--------------------주문 상세 ORDERS_DETAIL--------------------
+CREATE TABLE ORDERS_DETAIL(
+    ORDER_NO NUMBER NOT NULL,
+    PRODUCT_NO NUMBER NOT NULL,
+    QUANTITY NUMBER DEFAULT 0 NOT NULL,
+    
+    FOREIGN KEY (ORDER_NO) REFERENCES ORDERS (ORDER_NO),
+    FOREIGN KEY (PRODUCT_NO) REFERENCES PRODUCT (PRODUCT_NO)
+);
+
+COMMENT ON COLUMN ORDERS_DETAIL.ORDER_NO IS '주문번호';
+COMMENT ON COLUMN ORDERS_DETAIL.PRODUCT_NO IS '상품번호';
+COMMENT ON COLUMN ORDERS_DETAIL.QUANTITY IS '구매수량';
 
 ----------------     ATTACHMENT 관련     -----------------
 
@@ -901,9 +978,9 @@ CREATE TABLE QA(
     Q_CONTENT VARCHAR2(4000) NOT NULL,
     A_CONTENT VARCHAR2(4000),
     Q_STATUS VARCHAR2(5) DEFAULT 'Y' CHECK (Q_STATUS IN('Y', 'N')) ,
-    A_STATUS VARCHAR2(5) DEFAULT 'N' CHECK (A_STATUS IN('Y', 'N')) ,
+    A_STATUS VARCHAR2(5) DEFAULT 'Y' CHECK (A_STATUS IN('Y', 'N')) ,
     Q_DATE DATE DEFAULT SYSDATE,
-    A_DATE DATE,
+    A_DATE DATE DEFAULT SYSDATE,
     
     FOREIGN KEY (USER_ID) REFERENCES MEMBER (USER_ID)
 );
@@ -972,7 +1049,9 @@ CREATE TABLE SUBSCRIBE (
    BOX_SIZE VARCHAR2(5) NOT NULL,
    TERM VARCHAR2(5) NOT NULL,
    STATUS VARCHAR2(5) DEFAULT 'Y' NOT NULL,
-   DISLIKE VARCHAR2(2000)
+   DISLIKE VARCHAR2(2000),
+   ADDRESS VARCHAR2(2000) NOT NULL,
+   DETAIL_ADDRESS VARCHAR2(2000) NOT NULL
     
     
     );
@@ -986,6 +1065,8 @@ CREATE TABLE SUBSCRIBE (
     ,   TERM
     ,   STATUS
     ,   DISLIKE
+    ,  ADDRESS
+    ,  DETAIL_ADDRESS  
     )
     VALUES
     (
@@ -996,17 +1077,21 @@ CREATE TABLE SUBSCRIBE (
        ,2
        ,'Y'
        ,'당근,사과,오이'
+	,'서울시'
+	,'강남구'
        );
     
      INSERT INTO SUBSCRIBE
     (
-        USER_ID
+       USER_ID
     ,   START_DATE
     ,   END_DATE
     ,   BOX_SIZE
     ,   TERM
     ,   STATUS
     ,   DISLIKE
+    ,  ADDRESS
+    ,  DETAIL_ADDRESS  
     )
     VALUES
     (
@@ -1017,17 +1102,21 @@ CREATE TABLE SUBSCRIBE (
        ,1
        ,'Y'
        ,'배,당근,가지'
+,'서울시'
+	,'강남구'
        );
     
      INSERT INTO SUBSCRIBE
     (
-        USER_ID
+       USER_ID
     ,   START_DATE
     ,   END_DATE
     ,   BOX_SIZE
     ,   TERM
     ,   STATUS
     ,   DISLIKE
+    ,  ADDRESS
+    ,  DETAIL_ADDRESS  
     )
     VALUES
     (
@@ -1038,6 +1127,8 @@ CREATE TABLE SUBSCRIBE (
        ,3
        ,'Y'
        ,'사과'
+,'서울시'
+	,'강남구'
        );
        
         INSERT INTO SUBSCRIBE
@@ -1049,6 +1140,8 @@ CREATE TABLE SUBSCRIBE (
     ,   TERM
     ,   STATUS
     ,   DISLIKE
+    ,  ADDRESS
+    ,  DETAIL_ADDRESS  
     )
     VALUES
     (
@@ -1059,17 +1152,21 @@ CREATE TABLE SUBSCRIBE (
        ,1
        ,'Y'
        ,'당근'
+,'서울시'
+	,'강남구'
        );
        
         INSERT INTO SUBSCRIBE
     (
-        USER_ID
+       USER_ID
     ,   START_DATE
     ,   END_DATE
     ,   BOX_SIZE
     ,   TERM
     ,   STATUS
     ,   DISLIKE
+    ,  ADDRESS
+    ,  DETAIL_ADDRESS  
     )
     VALUES
     (
@@ -1080,197 +1177,11 @@ CREATE TABLE SUBSCRIBE (
        ,2
        ,'Y'
        ,'오이'
+,'서울시'
+	,'강남구'
        );
     
------------------------------- 주문 U_ORDER_STATUS----------------------------       
-    CREATE TABLE U_ORDER_STATUS(
-    ORDER_CODE NUMBER PRIMARY KEY,
-    ORDER_NAME VARCHAR2(50) NOT NULL
-    );
-       
-     INSERT INTO U_ORDER_STATUS
-     (
-         ORDER_CODE
-        ,ORDER_NAME
-        )
-        VALUES
-        (
-         1
-        ,'미접수'
-        );
-     
-    INSERT INTO U_ORDER_STATUS
-     (
-         ORDER_CODE
-        ,ORDER_NAME
-        )
-        VALUES
-        (
-         2
-        ,'주문완료'
-        );
-        
-        INSERT INTO U_ORDER_STATUS
-     (
-         ORDER_CODE
-        ,ORDER_NAME
-        )
-        VALUES
-        (
-         3
-        ,'배송준비중'
-        );
-        
-        INSERT INTO U_ORDER_STATUS
-     (
-         ORDER_CODE
-        ,ORDER_NAME
-        )
-        VALUES
-        (
-         4
-        ,'배송중'
-        );
-        
-INSERT INTO U_ORDER_STATUS
-     (
-         ORDER_CODE
-        ,ORDER_NAME
-        )
-        VALUES
-        (
-         5
-        ,'배송완료'
-        );
 
-
------------------------------------주문 U_ORDER--------------------------------       
-CREATE TABLE U_ORDER (
-   ORDER_NO NUMBER PRIMARY KEY,
-   USER_ID VARCHAR2(50) NOT NULL,
-   PRODUCT_NO NUMBER,
-   ORDER_CODE NUMBER NOT NULL,
-   ORDER_QUANTITY NUMBER,
-   ORDER_DATE DATE DEFAULT SYSDATE NOT NULL,
-   TOTAL_PRICE NUMBER DEFAULT 0 NOT NULL,
- 
-FOREIGN KEY (USER_ID) REFERENCES MEMBER(USER_ID),
-FOREIGN KEY (PRODUCT_NO) REFERENCES PRODUCT(PRODUCT_NO),
-FOREIGN KEY (ORDER_CODE) REFERENCES U_ORDER_STATUS(ORDER_CODE)
-    
-    );
-    
-CREATE SEQUENCE SEQ_ORDER_NO
-START WITH 1
-INCREMENT BY 1
-MAXVALUE 99999999999
-NOCYCLE
-NOCACHE;
-
-INSERT INTO U_ORDER
-    (
-        ORDER_NO
-    ,   USER_ID
-    ,   PRODUCT_NO
-    ,   ORDER_CODE
-    ,   ORDER_QUANTITY
-    ,   ORDER_DATE
-    ,   TOTAL_PRICE
-    )
-    VALUES
-    (
-        SEQ_ORDER_NO.NEXTVAL
-       ,'admin'
-       ,1
-       ,1
-       ,10
-       ,SYSDATE
-       ,10000
-       );
-
-INSERT INTO U_ORDER
-    (
-        ORDER_NO
-    ,   USER_ID
-    ,   PRODUCT_NO
-    ,   ORDER_CODE
-    ,   ORDER_QUANTITY
-    ,   ORDER_DATE
-    ,   TOTAL_PRICE
-    )
-    VALUES
-    (
-        SEQ_ORDER_NO.NEXTVAL
-       ,'user02'
-       ,2
-       ,2
-       ,20
-       ,SYSDATE
-       ,20000
-       );
-       
-    INSERT INTO U_ORDER
-    (
-        ORDER_NO
-    ,   USER_ID
-    ,   PRODUCT_NO
-    ,   ORDER_CODE
-    ,   ORDER_QUANTITY
-    ,   ORDER_DATE
-    ,   TOTAL_PRICE
-    )
-    VALUES
-    (
-        SEQ_ORDER_NO.NEXTVAL
-       ,'user03'
-       ,3
-       ,3
-       ,30
-       ,SYSDATE
-       ,30000
-       );
-       
-       INSERT INTO U_ORDER
-    (
-        ORDER_NO
-    ,   USER_ID
-    ,   PRODUCT_NO
-    ,   ORDER_CODE
-    ,   ORDER_QUANTITY
-    ,   ORDER_DATE
-    ,   TOTAL_PRICE
-    )
-    VALUES
-    (
-        SEQ_ORDER_NO.NEXTVAL
-       ,'user03'
-       ,4
-       ,4
-       ,40
-       ,SYSDATE
-       ,40000
-       );
-       
-       INSERT INTO U_ORDER
-    (
-        ORDER_NO
-    ,   USER_ID
-    ,   PRODUCT_NO
-    ,   ORDER_CODE
-    ,   ORDER_QUANTITY
-    ,   ORDER_DATE
-    ,   TOTAL_PRICE
-    )
-    VALUES
-    (
-        SEQ_ORDER_NO.NEXTVAL
-       ,'user04'
-       ,5
-       ,5
-       ,50
-       ,SYSDATE
-       ,50000
-       );
 
 
 ----------------------------구성품 SUB_COMP-------------------------
@@ -1295,7 +1206,7 @@ INSERT INTO SUB_COMP
    VALUES
    (
     SEQ_COMP_NO.NEXTVAL
-    ,'사과'
+    ,'양파'
     );
 INSERT INTO SUB_COMP
 (
@@ -1305,7 +1216,7 @@ INSERT INTO SUB_COMP
    VALUES
    (
     SEQ_COMP_NO.NEXTVAL
-    ,'오이'
+    ,'손질대파'
     );
     
     INSERT INTO SUB_COMP
@@ -1316,10 +1227,1309 @@ INSERT INTO SUB_COMP
    VALUES
    (
     SEQ_COMP_NO.NEXTVAL
-    ,'당근'
+    ,'통마늘'
     );
     
     INSERT INTO SUB_COMP
+(
+    COMP_NO
+   ,COMP_NAME
+   )
+   VALUES
+   (
+    SEQ_COMP_NO.NEXTVAL
+    ,'꽈리고추'
+    );
+
+INSERT INTO SUB_COMP
+(
+    COMP_NO
+   ,COMP_NAME
+   )
+   VALUES
+   (
+    SEQ_COMP_NO.NEXTVAL
+    ,'적양파'
+    );
+
+INSERT INTO SUB_COMP
+(
+    COMP_NO
+   ,COMP_NAME
+   )
+   VALUES
+   (
+    SEQ_COMP_NO.NEXTVAL
+    ,'쪽파'
+    );
+
+
+INSERT INTO SUB_COMP
+(
+    COMP_NO
+   ,COMP_NAME
+   )
+   VALUES
+   (
+    SEQ_COMP_NO.NEXTVAL
+    ,'깐마늘'
+    );
+
+INSERT INTO SUB_COMP
+(
+    COMP_NO
+   ,COMP_NAME
+   )
+   VALUES
+   (
+    SEQ_COMP_NO.NEXTVAL
+    ,'풋고추'
+    );
+
+INSERT INTO SUB_COMP
+(
+    COMP_NO
+   ,COMP_NAME
+   )
+   VALUES
+   (
+    SEQ_COMP_NO.NEXTVAL
+    ,'줄기양파'
+    );
+
+INSERT INTO SUB_COMP
+(
+    COMP_NO
+   ,COMP_NAME
+   )
+   VALUES
+   (
+    SEQ_COMP_NO.NEXTVAL
+    ,'중파'
+    );
+
+INSERT INTO SUB_COMP
+(
+    COMP_NO
+   ,COMP_NAME
+   )
+   VALUES
+   (
+    SEQ_COMP_NO.NEXTVAL
+    ,'오이고추'
+    );
+
+INSERT INTO SUB_COMP
+(
+    COMP_NO
+   ,COMP_NAME
+   )
+   VALUES
+   (
+    SEQ_COMP_NO.NEXTVAL
+    ,'청양고추'
+    );
+
+INSERT INTO SUB_COMP
+(
+    COMP_NO
+   ,COMP_NAME
+   )
+   VALUES
+   (
+    SEQ_COMP_NO.NEXTVAL
+    ,'대파'
+    );
+
+INSERT INTO SUB_COMP
+(
+    COMP_NO
+   ,COMP_NAME
+   )
+   VALUES
+   (
+    SEQ_COMP_NO.NEXTVAL
+    ,'부추'
+    );
+
+INSERT INTO SUB_COMP
+(
+    COMP_NO
+   ,COMP_NAME
+   )
+   VALUES
+   (
+    SEQ_COMP_NO.NEXTVAL
+    ,'풋마늘'
+    );
+
+INSERT INTO SUB_COMP
+(
+    COMP_NO
+   ,COMP_NAME
+   )
+   VALUES
+   (
+    SEQ_COMP_NO.NEXTVAL
+    ,'당조고추'
+    );
+
+INSERT INTO SUB_COMP
+(
+    COMP_NO
+   ,COMP_NAME
+   )
+   VALUES
+   (
+    SEQ_COMP_NO.NEXTVAL
+    ,'사과'
+    );
+
+INSERT INTO SUB_COMP
+(
+    COMP_NO
+   ,COMP_NAME
+   )
+   VALUES
+   (
+    SEQ_COMP_NO.NEXTVAL
+    ,'배'
+    );
+
+INSERT INTO SUB_COMP
+(
+    COMP_NO
+   ,COMP_NAME
+   )
+   VALUES
+   (
+    SEQ_COMP_NO.NEXTVAL
+    ,'복숭아'
+    );
+
+INSERT INTO SUB_COMP
+(
+    COMP_NO
+   ,COMP_NAME
+   )
+   VALUES
+   (
+    SEQ_COMP_NO.NEXTVAL
+    ,'참외'
+    );
+
+INSERT INTO SUB_COMP
+(
+    COMP_NO
+   ,COMP_NAME
+   )
+   VALUES
+   (
+    SEQ_COMP_NO.NEXTVAL
+    ,'대추단감'
+    );
+
+INSERT INTO SUB_COMP
+(
+    COMP_NO
+   ,COMP_NAME
+   )
+   VALUES
+   (
+    SEQ_COMP_NO.NEXTVAL
+    ,'라임'
+    );
+
+INSERT INTO SUB_COMP
+(
+    COMP_NO
+   ,COMP_NAME
+   )
+   VALUES
+   (
+    SEQ_COMP_NO.NEXTVAL
+    ,'감귤'
+    );
+
+INSERT INTO SUB_COMP
+(
+    COMP_NO
+   ,COMP_NAME
+   )
+   VALUES
+   (
+    SEQ_COMP_NO.NEXTVAL
+    ,'카라향'
+    );
+
+INSERT INTO SUB_COMP
+(
+    COMP_NO
+   ,COMP_NAME
+   )
+   VALUES
+   (
+    SEQ_COMP_NO.NEXTVAL
+    ,'황금향'
+    );
+
+INSERT INTO SUB_COMP
+(
+    COMP_NO
+   ,COMP_NAME
+   )
+   VALUES
+   (
+    SEQ_COMP_NO.NEXTVAL
+    ,'레드향'
+    );
+
+INSERT INTO SUB_COMP
+(
+    COMP_NO
+   ,COMP_NAME
+   )
+   VALUES
+   (
+    SEQ_COMP_NO.NEXTVAL
+    ,'한라봉'
+    );
+
+INSERT INTO SUB_COMP
+(
+    COMP_NO
+   ,COMP_NAME
+   )
+   VALUES
+   (
+    SEQ_COMP_NO.NEXTVAL
+    ,'미니사과'
+    );
+
+INSERT INTO SUB_COMP
+(
+    COMP_NO
+   ,COMP_NAME
+   )
+   VALUES
+   (
+    SEQ_COMP_NO.NEXTVAL
+    ,'레드키위'
+    );
+
+INSERT INTO SUB_COMP
+(
+    COMP_NO
+   ,COMP_NAME
+   )
+   VALUES
+   (
+    SEQ_COMP_NO.NEXTVAL
+    ,'골드키위'
+    );
+
+INSERT INTO SUB_COMP
+(
+    COMP_NO
+   ,COMP_NAME
+   )
+   VALUES
+   (
+    SEQ_COMP_NO.NEXTVAL
+    ,'그린키위'
+    );
+
+INSERT INTO SUB_COMP
+(
+    COMP_NO
+   ,COMP_NAME
+   )
+   VALUES
+   (
+    SEQ_COMP_NO.NEXTVAL
+    ,'레몬'
+    );
+
+INSERT INTO SUB_COMP
+(
+    COMP_NO
+   ,COMP_NAME
+   )
+   VALUES
+   (
+    SEQ_COMP_NO.NEXTVAL
+    ,'그린레몬'
+    );
+
+INSERT INTO SUB_COMP
+(
+    COMP_NO
+   ,COMP_NAME
+   )
+   VALUES
+   (
+    SEQ_COMP_NO.NEXTVAL
+    ,'체리'
+    );
+
+INSERT INTO SUB_COMP
+(
+    COMP_NO
+   ,COMP_NAME
+   )
+   VALUES
+   (
+    SEQ_COMP_NO.NEXTVAL
+    ,'사과대추'
+    );
+
+INSERT INTO SUB_COMP
+(
+    COMP_NO
+   ,COMP_NAME
+   )
+   VALUES
+   (
+    SEQ_COMP_NO.NEXTVAL
+    ,'블루베리'
+    );
+
+INSERT INTO SUB_COMP
+(
+    COMP_NO
+   ,COMP_NAME
+   )
+   VALUES
+   (
+    SEQ_COMP_NO.NEXTVAL
+    ,'자두'
+    );
+
+INSERT INTO SUB_COMP
+(
+    COMP_NO
+   ,COMP_NAME
+   )
+   VALUES
+   (
+    SEQ_COMP_NO.NEXTVAL
+    ,'천혜향'
+    );
+
+INSERT INTO SUB_COMP
+(
+    COMP_NO
+   ,COMP_NAME
+   )
+   VALUES
+   (
+    SEQ_COMP_NO.NEXTVAL
+    ,'시금치'
+    );
+
+INSERT INTO SUB_COMP
+(
+    COMP_NO
+   ,COMP_NAME
+   )
+   VALUES
+   (
+    SEQ_COMP_NO.NEXTVAL
+    ,'얼갈이배추'
+    );
+
+INSERT INTO SUB_COMP
+(
+    COMP_NO
+   ,COMP_NAME
+   )
+   VALUES
+   (
+    SEQ_COMP_NO.NEXTVAL
+    ,'버터헤드레터스'
+    );
+
+INSERT INTO SUB_COMP
+(
+    COMP_NO
+   ,COMP_NAME
+   )
+   VALUES
+   (
+    SEQ_COMP_NO.NEXTVAL
+    ,'양배추'
+    );
+
+INSERT INTO SUB_COMP
+(
+    COMP_NO
+   ,COMP_NAME
+   )
+   VALUES
+   (
+    SEQ_COMP_NO.NEXTVAL
+    ,'미니 양배추'
+    );
+
+INSERT INTO SUB_COMP
+(
+    COMP_NO
+   ,COMP_NAME
+   )
+   VALUES
+   (
+    SEQ_COMP_NO.NEXTVAL
+    ,'로마네스크'
+    );
+
+INSERT INTO SUB_COMP
+(
+    COMP_NO
+   ,COMP_NAME
+   )
+   VALUES
+   (
+    SEQ_COMP_NO.NEXTVAL
+    ,'케일'
+    );
+
+INSERT INTO SUB_COMP
+(
+    COMP_NO
+   ,COMP_NAME
+   )
+   VALUES
+   (
+    SEQ_COMP_NO.NEXTVAL
+    ,'적상추'
+    );
+
+INSERT INTO SUB_COMP
+(
+    COMP_NO
+   ,COMP_NAME
+   )
+   VALUES
+   (
+    SEQ_COMP_NO.NEXTVAL
+    ,'아이스플랜트'
+    );
+
+INSERT INTO SUB_COMP
+(
+    COMP_NO
+   ,COMP_NAME
+   )
+   VALUES
+   (
+    SEQ_COMP_NO.NEXTVAL
+    ,'적겨자'
+    );
+
+INSERT INTO SUB_COMP
+(
+    COMP_NO
+   ,COMP_NAME
+   )
+   VALUES
+   (
+    SEQ_COMP_NO.NEXTVAL
+    ,'깻잎'
+    );
+
+INSERT INTO SUB_COMP
+(
+    COMP_NO
+   ,COMP_NAME
+   )
+   VALUES
+   (
+    SEQ_COMP_NO.NEXTVAL
+    ,'김장배추'
+    );
+
+INSERT INTO SUB_COMP
+(
+    COMP_NO
+   ,COMP_NAME
+   )
+   VALUES
+   (
+    SEQ_COMP_NO.NEXTVAL
+    ,'청경채'
+    );
+
+INSERT INTO SUB_COMP
+(
+    COMP_NO
+   ,COMP_NAME
+   )
+   VALUES
+   (
+    SEQ_COMP_NO.NEXTVAL
+    ,'청근대'
+    );
+
+INSERT INTO SUB_COMP
+(
+    COMP_NO
+   ,COMP_NAME
+   )
+   VALUES
+   (
+    SEQ_COMP_NO.NEXTVAL
+    ,'적양배추'
+    );
+
+INSERT INTO SUB_COMP
+(
+    COMP_NO
+   ,COMP_NAME
+   )
+   VALUES
+   (
+    SEQ_COMP_NO.NEXTVAL
+    ,'양배추'
+    );
+
+INSERT INTO SUB_COMP
+(
+    COMP_NO
+   ,COMP_NAME
+   )
+   VALUES
+   (
+    SEQ_COMP_NO.NEXTVAL
+    ,'쑥갓'
+    );
+
+INSERT INTO SUB_COMP
+(
+    COMP_NO
+   ,COMP_NAME
+   )
+   VALUES
+   (
+    SEQ_COMP_NO.NEXTVAL
+    ,'열무'
+    );
+
+INSERT INTO SUB_COMP
+(
+    COMP_NO
+   ,COMP_NAME
+   )
+   VALUES
+   (
+    SEQ_COMP_NO.NEXTVAL
+    ,'청상추'
+    );
+
+INSERT INTO SUB_COMP
+(
+    COMP_NO
+   ,COMP_NAME
+   )
+   VALUES
+   (
+    SEQ_COMP_NO.NEXTVAL
+    ,'봄동'
+    );
+
+INSERT INTO SUB_COMP
+(
+    COMP_NO
+   ,COMP_NAME
+   )
+   VALUES
+   (
+    SEQ_COMP_NO.NEXTVAL
+    ,'브로콜리니'
+    );
+
+INSERT INTO SUB_COMP
+(
+    COMP_NO
+   ,COMP_NAME
+   )
+   VALUES
+   (
+    SEQ_COMP_NO.NEXTVAL
+    ,'알배추'
+    );
+
+INSERT INTO SUB_COMP
+(
+    COMP_NO
+   ,COMP_NAME
+   )
+   VALUES
+   (
+    SEQ_COMP_NO.NEXTVAL
+    ,'비타민'
+    );
+
+INSERT INTO SUB_COMP
+(
+    COMP_NO
+   ,COMP_NAME
+   )
+   VALUES
+   (
+    SEQ_COMP_NO.NEXTVAL
+    ,'적근대'
+    );
+
+INSERT INTO SUB_COMP
+(
+    COMP_NO
+   ,COMP_NAME
+   )
+   VALUES
+   (
+    SEQ_COMP_NO.NEXTVAL
+    ,'방울 양배추'
+    );
+
+INSERT INTO SUB_COMP
+(
+    COMP_NO
+   ,COMP_NAME
+   )
+   VALUES
+   (
+    SEQ_COMP_NO.NEXTVAL
+    ,'고깔 양배추'
+    );
+
+INSERT INTO SUB_COMP
+(
+    COMP_NO
+   ,COMP_NAME
+   )
+   VALUES
+   (
+    SEQ_COMP_NO.NEXTVAL
+    ,'베이비브로콜리'
+    );
+
+INSERT INTO SUB_COMP
+(
+    COMP_NO
+   ,COMP_NAME
+   )
+   VALUES
+   (
+    SEQ_COMP_NO.NEXTVAL
+    ,'콜리플라워'
+    );
+
+INSERT INTO SUB_COMP
+(
+    COMP_NO
+   ,COMP_NAME
+   )
+   VALUES
+   (
+    SEQ_COMP_NO.NEXTVAL
+    ,'포기상추'
+    );
+
+INSERT INTO SUB_COMP
+(
+    COMP_NO
+   ,COMP_NAME
+   )
+   VALUES
+   (
+    SEQ_COMP_NO.NEXTVAL
+    ,'프릴드아이스'
+    );
+
+INSERT INTO SUB_COMP
+(
+    COMP_NO
+   ,COMP_NAME
+   )
+   VALUES
+   (
+    SEQ_COMP_NO.NEXTVAL
+    ,'청치커리'
+    );
+
+INSERT INTO SUB_COMP
+(
+    COMP_NO
+   ,COMP_NAME
+   )
+   VALUES
+   (
+    SEQ_COMP_NO.NEXTVAL
+    ,'쌈배추'
+    );
+
+INSERT INTO SUB_COMP
+(
+    COMP_NO
+   ,COMP_NAME
+   )
+   VALUES
+   (
+    SEQ_COMP_NO.NEXTVAL
+    ,'청겨자'
+    );
+
+INSERT INTO SUB_COMP
+(
+    COMP_NO
+   ,COMP_NAME
+   )
+   VALUES
+   (
+    SEQ_COMP_NO.NEXTVAL
+    ,'아욱'
+    );
+
+INSERT INTO SUB_COMP
+(
+    COMP_NO
+   ,COMP_NAME
+   )
+   VALUES
+   (
+    SEQ_COMP_NO.NEXTVAL
+    ,'브로콜리'
+    );
+
+INSERT INTO SUB_COMP
+(
+    COMP_NO
+   ,COMP_NAME
+   )
+   VALUES
+   (
+    SEQ_COMP_NO.NEXTVAL
+    ,'청치콘'
+    );
+
+INSERT INTO SUB_COMP
+(
+    COMP_NO
+   ,COMP_NAME
+   )
+   VALUES
+   (
+    SEQ_COMP_NO.NEXTVAL
+    ,'적치커리'
+    );
+
+INSERT INTO SUB_COMP
+(
+    COMP_NO
+   ,COMP_NAME
+   )
+   VALUES
+   (
+    SEQ_COMP_NO.NEXTVAL
+    ,'로메인'
+    );
+
+INSERT INTO SUB_COMP
+(
+    COMP_NO
+   ,COMP_NAME
+   )
+   VALUES
+   (
+    SEQ_COMP_NO.NEXTVAL
+    ,'비트잎'
+    );
+
+INSERT INTO SUB_COMP
+(
+    COMP_NO
+   ,COMP_NAME
+   )
+   VALUES
+   (
+    SEQ_COMP_NO.NEXTVAL
+    ,'적치콘'
+    );
+
+INSERT INTO SUB_COMP
+(
+    COMP_NO
+   ,COMP_NAME
+   )
+   VALUES
+   (
+    SEQ_COMP_NO.NEXTVAL
+    ,'생채잎'
+    );
+
+INSERT INTO SUB_COMP
+(
+    COMP_NO
+   ,COMP_NAME
+   )
+   VALUES
+   (
+    SEQ_COMP_NO.NEXTVAL
+    ,'감자'
+    );
+
+INSERT INTO SUB_COMP
+(
+    COMP_NO
+   ,COMP_NAME
+   )
+   VALUES
+   (
+    SEQ_COMP_NO.NEXTVAL
+    ,'호박고구마'
+    );
+
+INSERT INTO SUB_COMP
+(
+    COMP_NO
+   ,COMP_NAME
+   )
+   VALUES
+   (
+    SEQ_COMP_NO.NEXTVAL
+    ,'옐로우비트'
+    );
+
+INSERT INTO SUB_COMP
+(
+    COMP_NO
+   ,COMP_NAME
+   )
+   VALUES
+   (
+    SEQ_COMP_NO.NEXTVAL
+    ,'레디쉬'
+    );
+
+INSERT INTO SUB_COMP
+(
+    COMP_NO
+   ,COMP_NAME
+   )
+   VALUES
+   (
+    SEQ_COMP_NO.NEXTVAL
+    ,'홍감자'
+    );
+
+INSERT INTO SUB_COMP
+(
+    COMP_NO
+   ,COMP_NAME
+   )
+   VALUES
+   (
+    SEQ_COMP_NO.NEXTVAL
+    ,'달수고구마'
+    );
+
+INSERT INTO SUB_COMP
+(
+    COMP_NO
+   ,COMP_NAME
+   )
+   VALUES
+   (
+    SEQ_COMP_NO.NEXTVAL
+    ,'순무'
+    );
+
+INSERT INTO SUB_COMP
+(
+    COMP_NO
+   ,COMP_NAME
+   )
+   VALUES
+   (
+    SEQ_COMP_NO.NEXTVAL
+    ,'레인보우비트'
+    );
+
+INSERT INTO SUB_COMP
+(
+    COMP_NO
+   ,COMP_NAME
+   )
+   VALUES
+   (
+    SEQ_COMP_NO.NEXTVAL
+    ,'당근'
+    );
+
+INSERT INTO SUB_COMP
+(
+    COMP_NO
+   ,COMP_NAME
+   )
+   VALUES
+   (
+    SEQ_COMP_NO.NEXTVAL
+    ,'레드비트'
+    );
+
+INSERT INTO SUB_COMP
+(
+    COMP_NO
+   ,COMP_NAME
+   )
+   VALUES
+   (
+    SEQ_COMP_NO.NEXTVAL
+    ,'우엉'
+    );
+
+INSERT INTO SUB_COMP
+(
+    COMP_NO
+   ,COMP_NAME
+   )
+   VALUES
+   (
+    SEQ_COMP_NO.NEXTVAL
+    ,'콜라비'
+    );
+
+INSERT INTO SUB_COMP
+(
+    COMP_NO
+   ,COMP_NAME
+   )
+   VALUES
+   (
+    SEQ_COMP_NO.NEXTVAL
+    ,'밤고구마'
+    );
+
+INSERT INTO SUB_COMP
+(
+    COMP_NO
+   ,COMP_NAME
+   )
+   VALUES
+   (
+    SEQ_COMP_NO.NEXTVAL
+    ,'슈가비트'
+    );
+
+INSERT INTO SUB_COMP
+(
+    COMP_NO
+   ,COMP_NAME
+   )
+   VALUES
+   (
+    SEQ_COMP_NO.NEXTVAL
+    ,'무'
+    );
+
+INSERT INTO SUB_COMP
+(
+    COMP_NO
+   ,COMP_NAME
+   )
+   VALUES
+   (
+    SEQ_COMP_NO.NEXTVAL
+    ,'연근'
+    );
+
+INSERT INTO SUB_COMP
+(
+    COMP_NO
+   ,COMP_NAME
+   )
+   VALUES
+   (
+    SEQ_COMP_NO.NEXTVAL
+    ,'미니새송이버섯'
+    );
+
+INSERT INTO SUB_COMP
+(
+    COMP_NO
+   ,COMP_NAME
+   )
+   VALUES
+   (
+    SEQ_COMP_NO.NEXTVAL
+    ,'주니어새송이버섯'
+    );
+
+INSERT INTO SUB_COMP
+(
+    COMP_NO
+   ,COMP_NAME
+   )
+   VALUES
+   (
+    SEQ_COMP_NO.NEXTVAL
+    ,'느타리버섯'
+    );
+
+INSERT INTO SUB_COMP
+(
+    COMP_NO
+   ,COMP_NAME
+   )
+   VALUES
+   (
+    SEQ_COMP_NO.NEXTVAL
+    ,'애느타리버섯'
+    );
+
+INSERT INTO SUB_COMP
+(
+    COMP_NO
+   ,COMP_NAME
+   )
+   VALUES
+   (
+    SEQ_COMP_NO.NEXTVAL
+    ,'흰양송이버섯'
+    );
+
+INSERT INTO SUB_COMP
+(
+    COMP_NO
+   ,COMP_NAME
+   )
+   VALUES
+   (
+    SEQ_COMP_NO.NEXTVAL
+    ,'송화버섯'
+    );
+
+INSERT INTO SUB_COMP
+(
+    COMP_NO
+   ,COMP_NAME
+   )
+   VALUES
+   (
+    SEQ_COMP_NO.NEXTVAL
+    ,'브라운양송이버섯'
+    );
+
+INSERT INTO SUB_COMP
+(
+    COMP_NO
+   ,COMP_NAME
+   )
+   VALUES
+   (
+    SEQ_COMP_NO.NEXTVAL
+    ,'표고버섯'
+    );
+
+INSERT INTO SUB_COMP
+(
+    COMP_NO
+   ,COMP_NAME
+   )
+   VALUES
+   (
+    SEQ_COMP_NO.NEXTVAL
+    ,'팽이버섯'
+    );
+
+INSERT INTO SUB_COMP
+(
+    COMP_NO
+   ,COMP_NAME
+   )
+   VALUES
+   (
+    SEQ_COMP_NO.NEXTVAL
+    ,'흰만가닥버섯'
+    );
+
+INSERT INTO SUB_COMP
+(
+    COMP_NO
+   ,COMP_NAME
+   )
+   VALUES
+   (
+    SEQ_COMP_NO.NEXTVAL
+    ,'참송이버섯'
+    );
+
+INSERT INTO SUB_COMP
+(
+    COMP_NO
+   ,COMP_NAME
+   )
+   VALUES
+   (
+    SEQ_COMP_NO.NEXTVAL
+    ,'달래'
+    );
+
+INSERT INTO SUB_COMP
+(
+    COMP_NO
+   ,COMP_NAME
+   )
+   VALUES
+   (
+    SEQ_COMP_NO.NEXTVAL
+    ,'숙주나물'
+    );
+
+INSERT INTO SUB_COMP
+(
+    COMP_NO
+   ,COMP_NAME
+   )
+   VALUES
+   (
+    SEQ_COMP_NO.NEXTVAL
+    ,'콜나물'
+    );
+
+INSERT INTO SUB_COMP
+(
+    COMP_NO
+   ,COMP_NAME
+   )
+   VALUES
+   (
+    SEQ_COMP_NO.NEXTVAL
+    ,'두릅'
+    );
+
+INSERT INTO SUB_COMP
+(
+    COMP_NO
+   ,COMP_NAME
+   )
+   VALUES
+   (
+    SEQ_COMP_NO.NEXTVAL
+    ,'미나리'
+    );
+
+INSERT INTO SUB_COMP
+(
+    COMP_NO
+   ,COMP_NAME
+   )
+   VALUES
+   (
+    SEQ_COMP_NO.NEXTVAL
+    ,'미니단호박'
+    );
+
+INSERT INTO SUB_COMP
+(
+    COMP_NO
+   ,COMP_NAME
+   )
+   VALUES
+   (
+    SEQ_COMP_NO.NEXTVAL
+    ,'완숙토마토'
+    );
+
+INSERT INTO SUB_COMP
+(
+    COMP_NO
+   ,COMP_NAME
+   )
+   VALUES
+   (
+    SEQ_COMP_NO.NEXTVAL
+    ,'애호박'
+    );
+
+INSERT INTO SUB_COMP
+(
+    COMP_NO
+   ,COMP_NAME
+   )
+   VALUES
+   (
+    SEQ_COMP_NO.NEXTVAL
+    ,'가시오이'
+    );
+
+INSERT INTO SUB_COMP
+(
+    COMP_NO
+   ,COMP_NAME
+   )
+   VALUES
+   (
+    SEQ_COMP_NO.NEXTVAL
+    ,'절단만차량'
+    );
+
+INSERT INTO SUB_COMP
+(
+    COMP_NO
+   ,COMP_NAME
+   )
+   VALUES
+   (
+    SEQ_COMP_NO.NEXTVAL
+    ,'방울토마토'
+    );
+
+INSERT INTO SUB_COMP
+(
+    COMP_NO
+   ,COMP_NAME
+   )
+   VALUES
+   (
+    SEQ_COMP_NO.NEXTVAL
+    ,'쥬키니호박'
+    );
+
+INSERT INTO SUB_COMP
+(
+    COMP_NO
+   ,COMP_NAME
+   )
+   VALUES
+   (
+    SEQ_COMP_NO.NEXTVAL
+    ,'미니파프리카'
+    );
+
+INSERT INTO SUB_COMP
+(
+    COMP_NO
+   ,COMP_NAME
+   )
+   VALUES
+   (
+    SEQ_COMP_NO.NEXTVAL
+    ,'땅콩단호박'
+    );
+
+INSERT INTO SUB_COMP
+(
+    COMP_NO
+   ,COMP_NAME
+   )
+   VALUES
+   (
+    SEQ_COMP_NO.NEXTVAL
+    ,'파프리카'
+    );
+
+INSERT INTO SUB_COMP
 (
     COMP_NO
    ,COMP_NAME
@@ -1338,7 +2548,40 @@ INSERT INTO SUB_COMP
    VALUES
    (
     SEQ_COMP_NO.NEXTVAL
-    ,'고구마'
+    ,'풋호박'
+    );
+
+INSERT INTO SUB_COMP
+(
+    COMP_NO
+   ,COMP_NAME
+   )
+   VALUES
+   (
+    SEQ_COMP_NO.NEXTVAL
+    ,'피망'
+    );
+
+INSERT INTO SUB_COMP
+(
+    COMP_NO
+   ,COMP_NAME
+   )
+   VALUES
+   (
+    SEQ_COMP_NO.NEXTVAL
+    ,'다다기오이'
+    );
+
+INSERT INTO SUB_COMP
+(
+    COMP_NO
+   ,COMP_NAME
+   )
+   VALUES
+   (
+    SEQ_COMP_NO.NEXTVAL
+    ,'취청오이'
     );
 
 CREATE TABLE SUB_HISTORY(
@@ -1477,178 +2720,9 @@ INSERT INTO SUB_HISTORY
     ,SYSDATE
     );
 
------------------------------------- 배송 DELIVERY-------------------------
 
 
-  CREATE TABLE DELIVERY (
-   DELIVERY_NO NUMBER PRIMARY KEY,
-   ORDER_NO NUMBER NOT NULL,
-   USER_ID VARCHAR2(50) NOT NULL,
-   D_ADDRESS VARCHAR2(500) NOT NULL,
-   DETAIL_ADDRESS VARCHAR2(500),
-   RECEIVER VARCHAR2(50) NOT NULL,
-   DELIVERY_FEE NUMBER DEFAULT 2500 NOT NULL,
-   DELIVERYMEMO VARCHAR2(1000) NOT NULL,
-   POST_NO NUMBER NOT NULL,
-   PHONE VARCHAR2(2000),
- 
- FOREIGN KEY (USER_ID) REFERENCES MEMBER(USER_ID),
- FOREIGN KEY (ORDER_NO) REFERENCES U_ORDER(ORDER_NO)
-    
-    
-    );
-    
-CREATE SEQUENCE SEQ_DELIVERY_NO
-START WITH 1
-INCREMENT BY 1
-MAXVALUE 99999999999
-NOCYCLE
-NOCACHE;
-
-
-INSERT INTO DELIVERY
-    (
-        DELIVERY_NO
-    ,   ORDER_NO
-    ,   USER_ID
-    ,   D_ADDRESS
-    ,   DETAIL_ADDRESS
-    ,   RECEIVER
-    ,   DELIVERY_FEE
-    ,   DELIVERYMEMO
-    ,   POST_NO
-    ,   PHONE
-    )
-    VALUES
-    (
-        SEQ_DELIVERY_NO.NEXTVAL
-        , 1
-        ,'admin'
-        ,'경기도 부천시'
-        ,'어딘가'
-        ,'관리자'
-        ,DEFAULT
-        ,'빨리 내놔'
-        ,123456
-        ,'010-1111-2222'
-      
-       );
-
-INSERT INTO DELIVERY
-    (
-        DELIVERY_NO
-    ,   ORDER_NO
-    ,   USER_ID
-    ,   D_ADDRESS
-    ,   DETAIL_ADDRESS
-    ,   RECEIVER
-    ,   DELIVERY_FEE
-    ,   DELIVERYMEMO
-    ,   POST_NO
-    ,   PHONE
-    )
-    VALUES
-    (
-        SEQ_DELIVERY_NO.NEXTVAL
-        , 2
-        ,'user01'
-        ,'서울광역시'
-        ,'강남'
-        ,'사과좋아'
-        ,DEFAULT
-        ,'사과 많이주세요'
-        ,12345126
-        ,'010-2222-2222'
-      
-       );
-       
-    INSERT INTO DELIVERY
-    (
-        DELIVERY_NO
-    ,   ORDER_NO
-    ,   USER_ID
-    ,   D_ADDRESS
-    ,   DETAIL_ADDRESS
-    ,   RECEIVER
-    ,   DELIVERY_FEE
-    ,   DELIVERYMEMO
-    ,   POST_NO
-    ,   PHONE
-    )
-    VALUES
-    (
-        SEQ_DELIVERY_NO.NEXTVAL
-        , 3
-        ,'user02'
-        ,'제주도'
-        ,'서귀포시'
-        ,'말키우는사람'
-        ,DEFAULT
-        ,'말들이 좋아해요'
-        ,123454566
-        ,'010-3333-2222'
-      
-       );
-       
-       INSERT INTO DELIVERY
-    (
-        DELIVERY_NO
-    ,   ORDER_NO
-    ,   USER_ID
-    ,   D_ADDRESS
-    ,   DETAIL_ADDRESS
-    ,   RECEIVER
-    ,   DELIVERY_FEE
-    ,   DELIVERYMEMO
-    ,   POST_NO
-    ,   PHONE
-    )
-    VALUES
-    (
-        SEQ_DELIVERY_NO.NEXTVAL
-        , 4
-        ,'user03'
-        ,'미국 뉴욕'
-        ,'뉴욕시'
-        ,'에이미'
-        ,DEFAULT
-        ,'한국 채소 맛있어요'
-        ,123454512656
-        ,'010-4444-2222'
-      
-       );
-
-INSERT INTO DELIVERY
-    (
-        DELIVERY_NO
-    ,   ORDER_NO
-    ,   USER_ID
-    ,   D_ADDRESS
-    ,   DETAIL_ADDRESS
-    ,   RECEIVER
-    ,   DELIVERY_FEE
-    ,   DELIVERYMEMO
-    ,   POST_NO
-    ,   PHONE
-    )
-    VALUES
-    (
-        SEQ_DELIVERY_NO.NEXTVAL
-        , 5
-        ,'user04'
-        ,'일본 홋카이도'
-        ,'어딘가'
-        ,'일본인'
-        ,DEFAULT
-        ,'아리가또'
-        ,12789345456
-        ,'010-4511-2222'
-      
-       );
-
-
-
------------------------------------- 질문 카테고리 QA_CATEGORY -------------------------
+------------------------QA_CATEGORY
 
 CREATE TABLE QA_CATEGORY(
     CATEGORY_NO NUMBER PRIMARY KEY,
@@ -1664,9 +2738,6 @@ INSERT INTO QA_CATEGORY VALUES(6,'정기구독문의');
 INSERT INTO QA_CATEGORY VALUES(7,'쿠폰/적립금');
 INSERT INTO QA_CATEGORY VALUES(8,'회원정보관련');
 INSERT INTO QA_CATEGORY VALUES(9,'기타문의');
-
-
-
 
 
 commit;
