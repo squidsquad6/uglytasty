@@ -178,22 +178,6 @@ ajax를 활용하여 아이디 중복 체크 기능 구현
 
 
 
-
-*양식(리드미 작성 완료 후 지울 예정)*
-## ⭐양식⭐
-#### - 기능
-(간단 설명)
-<img src="">
-<br/><br/> 
-<br/><br/>
-(별표시 메뉴 사이에는 br 두 줄, - 메뉴 사이에는 br 한 줄)
-
-
-
-
-
-
-
 ### 🛠 Technology Stack
 <div style="display:flex; flex-direction:row;">
     <img src="https://img.shields.io/badge/Java-007396?style=for-the-badge&logo=Java&logoColor=white"> 
